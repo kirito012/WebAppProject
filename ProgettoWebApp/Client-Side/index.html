@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="input">
                                     <span class="icon">
-                                        <input class="i5" name="reapeatPassword" type="password" >
+                                        <input class="i5" name="reapeatPassword" type="password" disabled>
                                         <span class="toggleIcon repeat">
                                             <ion-icon class="eyeOn" name="eye-outline"></ion-icon>
                                             <hr class="line1">
@@ -49,15 +49,15 @@
                             </div>
                             <div class="column">
                                 <div class="input">
-                                    <input class="i3" name="name" type="text" >
+                                    <input class="i3" name="name" type="text" disabled>
                                     <h3 class="t3">Nome</h3>
                                 </div>
                                 <div class="input">
-                                    <input class="i4" name="surname" type="text">
+                                    <input class="i4" name="surname" type="text" disabled>
                                     <h3 class="t4">Cognome</h3>
                                 </div>
                                 <div class="input">
-                                    <input class="i6" name="date" type="date">
+                                    <input class="i6" name="date" type="date" disabled>
                                     <h3 class="t6">Data di nascita</h3>
                                 </div>
                             </div>
@@ -106,7 +106,6 @@
 
             var register = document.getElementById("register");
             var form = document.querySelector("form");
-
 
             
             i1.addEventListener('focus', function(){
@@ -218,6 +217,11 @@
                         i4.required = true;
                         i5.required = true;
                         i6.required = true;
+
+                        i3.disabled = false;
+                        i4.disabled = false;
+                        i5.disabled = false;
+                        i6.disabled = false;
                     }
             })
 
@@ -230,7 +234,12 @@
                         i3.required = false;
                         i4.required = false;
                         i5.required = false;
-                        i6.required = false  ;
+                        i6.required = false;
+
+                        i3.disabled = true;
+                        i4.disabled = true;
+                        i5.disabled = true;
+                        i6.disabled = true;
                     }
             })
 
