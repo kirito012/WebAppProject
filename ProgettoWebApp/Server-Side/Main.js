@@ -1,16 +1,13 @@
-let http = require('http');
-let fs = require("fs");
+let express = require("express")
+let app = express()
+let port = 8081
 
-let html = fs.readFile('./Client Side/index.html', function (err) {
-    if (err) {
-        throw err; 
-    }
-});
+app.use(express.static("../Client-Side"));
 
-http.createServer(function (request, response) {
-  response.writeHead(200, {'Content-Type': 'text/html'});
-  response.write(html);
-  response.end('Hello World');
-}).listen(8081);
+app.get("/", (req, res) => {
+  res.send("")
+})
 
-console.log('Server running at http://127.0.0.1:8081/');
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
