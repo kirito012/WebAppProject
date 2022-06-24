@@ -60,17 +60,16 @@ app.post("/register", (req, res) => {
   let surname = req.body.surname;
   let date = req.body.date;
 
-  console.log(req.body);
-
   if (password == repeatPassword){
+    console.log("entered");
     con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
       if (error) throw error;
-      if (results != undefined){
+      if (results.length > 0){
         console.log("Already found");
         res.redirect("/");
       }
       else{
-        let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", ' + date + ', ' + '1);'
+        let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
 
         console.log(qr);
 
@@ -80,6 +79,9 @@ app.post("/register", (req, res) => {
         })
       }
     })
+  }
+  else{
+    console.log("not entered");
   }
 })
 
