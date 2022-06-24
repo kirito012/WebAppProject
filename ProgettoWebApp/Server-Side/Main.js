@@ -59,8 +59,28 @@ app.post("/register", (req, res) => {
   let name = req.body.name;
   let surname = req.body.surname;
   let date = req.body.date;
-  
-  res.redirect("/home");
+
+  console.log(req.body);
+
+  if (password == repeatPassword){
+    con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
+      if (error) throw error;
+      if (results != undefined){
+        console.log("Already found");
+        res.redirect("/");
+      }
+      else{
+        let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", ' + date + ', ' + '1);'
+
+        console.log(qr);
+
+        con.query(qr, function(error, results, fields) {
+          if (error) throw error;
+          res.redirect("/");
+        })
+      }
+    })
+  }
 })
 
 app.post("/login", (req, res) => {
@@ -73,13 +93,20 @@ app.post("/login", (req, res) => {
       if (results.length > 0){
         req.session.secret = generateRandomKey();
         res.redirect("/home");
-      }
+      } 
       else{
         res.redirect("/");
       }
     })
   }
   else{
+    res.redirect("/");
+  }
+})
+
+app.post("/logout", (req, res) => {
+  if(req.session){
+    req.session.secret = undefined;
     res.redirect("/");
   }
 })
