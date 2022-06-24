@@ -1,3 +1,213 @@
-@media only screen and (max-width: 700px) {
-    
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana;
+}
+
+body{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    min-height: 200vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+#login{
+    position: relative;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+
+#login .logo, #login .loginForm{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#login .logo{
+    flex-direction: column;
+}
+
+#login .loginForm{
+    width: 80%;
+}
+
+#login .logo{
+    width: 20%;
+}
+
+#login .loginForm form{
+    position: relative;
+    padding: 30px 20px;
+    width: 300px;
+    border-radius: 7px;
+    background:rgba(255,255,255,1);
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.2), 
+    -5px -5px 10px rgba(0,0,0,0.2),
+    inset 5px 5px 10px rgba(255,255,255,0.2), 
+    inset -5px -5px 10px rgba(255,255,255,0.2);
+    color: #4f829c;
+    z-index: 10;
+    backdrop-filter: blur(25px);
+    transition: 0.3s ease;
+    overflow: hidden;
+}
+
+#login .loginForm form .row{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+#login .loginForm form .row .column{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+
+#login .loginForm form .row .column:nth-child(1){
+    margin-right: 30px;
+}
+
+#login .loginForm form.register .row .column:nth-child(1){
+    margin-right: 30px;
+}
+
+#login .loginForm form .row .column .input .i5, #login .loginForm form .row .column .input .t5{
+    display: none;
+}
+
+#login .loginForm form.register .row .column .input .i5, #login .loginForm form.register .row .column .input .t5{
+    display: flex;
+}
+
+#login .loginForm form.register{
+    width: 700px;
+}
+
+
+#login .loginForm form .input{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 25px 0;
+}
+
+#login .loginForm form .input input{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    width: 260px;
+    height: 30px;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    background: #4f829c;
+    border: 1px solid white;
+    color: white;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+#login .loginForm form .input .icon{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 260px;
+    height: 30px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+
+#login .loginForm form .input .icon.active .eyeOn{
+    display: flex;
+}
+
+
+#login .loginForm form .input .icon .toggleIcon{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: 0;
+    border: 1px solid white;
+}
+
+#login .loginForm form .input .icon .toggleIcon.repeat{
+    display: none;
+}
+
+#login .loginForm form.register .input .icon .toggleIcon.repeat{
+    display: flex;
+}
+
+#login .loginForm form .input .icon .toggleIcon .line{
+    position: absolute;
+    width: 2px;
+    height: 25px;
+    transform: rotate(-45deg);
+    background: white;
+    border: none;
+    transition: 0.3s ease;
+}
+
+#login .loginForm form .input .icon .toggleIcon .line1{
+    position: absolute;
+    width: 2px;
+    height: 25px;
+    transform: rotate(-45deg);
+    background: white;
+    border: none;
+    transition: 0.3s ease;
+}
+
+#login .loginForm form .input .icon ion-icon{
+    position: absolute;
+    z-index: 100;
+    transition: 0.3s ease;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+#login .loginForm form .input h3{
+    position: absolute;
+    z-index: 5;
+    margin: 5px;
+    transition: 0.3s ease;
+    z-index: 3;
+    letter-spacing: 2px;
+    text-shadow: 0px 0px 10px #4f829c;
+}
+
+#login .loginForm form .input h3.active{
+    transform: scale(0.8) translateX(-10px) translateY(-35px);
+}
+
+#login .loginForm form .input .t5.active{
+    transform: scale(0.8) translateX(-20px) translateY(-35px);
+}
+
+#login .loginForm form .input .t6{
+    transform: scale(0.8) translateX(-20px) translateY(-35px);
 }

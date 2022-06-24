@@ -12,6 +12,7 @@ body{
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
+    background: #f1f1f1;
 }
 
 #login{
@@ -210,6 +211,7 @@ body{
     transition: 0.3s ease;
     z-index: 3;
     letter-spacing: 2px;
+    text-shadow: 0px 0px 10px #4f829c;
 }
 
 #login .loginForm form .input h3.active{
@@ -284,8 +286,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 300px;
+    width: 25vw;
+    height: 25vw;
     background: #ba3030;
     border-radius: 40px;
     margin-left: 5px;
@@ -294,15 +296,15 @@ body{
 #login .logo .O::after{
     content: '';
     position: absolute;
-    width: 30px;
-    height: 180px;
+    width: 3vw;
+    height: 15vw;
     border-radius: 40px;
     background: #fff;
 }
 
 
 #login .logo .write{
-    font-size: 7em;
+    font-size: 8vw;
     color: #222;
     font-weight: 900;
     letter-spacing: -5px;

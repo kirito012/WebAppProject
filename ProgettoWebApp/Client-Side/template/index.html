@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./styles/styleLogin.css" class="css">
+    <link rel="stylesheet" href="../styles/styleLogin.css" class="css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
 
@@ -242,6 +242,28 @@
                         i6.disabled = true;
                     }
             })
+
+
+
+        </script>
+
+
+
+        <script>
+            var e = window.matchMedia("(max-width: 700px)")
+            var css = document.querySelector(".css");
+
+            function responsive(e) {
+                if (e.matches) { 
+                    css.href = "../styles/mobileStyleLogin.css";
+                    
+                } else {
+                    css.href = "../styles/styleLogin.css";
+                }
+            }
+
+            responsive(e);
+            e.addListener(responsive);
 
 
 
