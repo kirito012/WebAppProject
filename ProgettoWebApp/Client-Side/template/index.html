@@ -213,6 +213,7 @@
                     login.type = "checkbox";
                     register.type = "submit";
                     if(form.className == "register"){
+                        form.action = "register";
                         i3.required = true;
                         i4.required = true;
                         i5.required = true;
@@ -231,6 +232,8 @@
                     login.type = "submit";
                     register.type = "checkbox";
                     if(form.className == ""){
+                        form.action = "login";
+
                         i3.required = false;
                         i4.required = false;
                         i5.required = false;
