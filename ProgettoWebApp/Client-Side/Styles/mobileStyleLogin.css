@@ -9,7 +9,6 @@ body{
     position: relative;
     display: flex;
     justify-content: center;
-    min-height: 200vh;
     overflow-x: hidden;
     overflow-y: scroll;
 }
@@ -17,11 +16,10 @@ body{
 #login{
     position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
 }
 
 #login .logo, #login .loginForm{
@@ -34,20 +32,22 @@ body{
 
 #login .logo{
     flex-direction: column;
+    margin-bottom: 100px;
 }
 
 #login .loginForm{
-    width: 80%;
+    width: 70%;
 }
 
 #login .logo{
-    width: 20%;
+    width: 30%;
 }
 
 #login .loginForm form{
     position: relative;
     padding: 30px 20px;
     width: 300px;
+    margin-bottom: 50px;
     border-radius: 7px;
     background:rgba(255,255,255,1);
     box-shadow: 5px 5px 10px rgba(0,0,0,0.2), 
@@ -96,6 +96,7 @@ body{
 
 #login .loginForm form.register{
     width: 700px;
+    margin-bottom: 70px;
 }
 
 
@@ -198,16 +199,108 @@ body{
     z-index: 3;
     letter-spacing: 2px;
     text-shadow: 0px 0px 10px #4f829c;
+    color: #fff;
 }
 
 #login .loginForm form .input h3.active{
     transform: scale(0.8) translateX(-10px) translateY(-35px);
+    color: #4f829c;
 }
 
 #login .loginForm form .input .t5.active{
     transform: scale(0.8) translateX(-20px) translateY(-35px);
+    color: #4f829c;
 }
 
 #login .loginForm form .input .t6{
     transform: scale(0.8) translateX(-20px) translateY(-35px);
+    color: #4f829c;
+}
+
+#login .loginForm form .column.c2{
+    display: none;
+}
+
+#login .loginForm form.register .column.c1{
+    margin-left: 30px;
+}
+
+#login .loginForm form .column.c1{
+    margin-left: 30px;
+}
+
+#login .loginForm form.register .column.c2{
+    display: flex;
+}
+
+
+
+#login .loginForm form .validation{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 300px;
+    height: 30px;
+}
+
+#login .loginForm form .validation input, label{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    background: #4f829c;
+    color: #fff;
+    border: 1px solid white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    font-size: 14px;
+}
+
+#login .loginForm form .validation label input{
+    display: none;
+}
+
+#login .loginForm form .validation input:hover, label:hover{
+    background: white;
+    color: #4f829c;
+}
+
+
+
+
+
+
+
+#login .logo .O{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+    height: 25vw;
+    background: #ba3030;
+    border-radius: 40px;
+    margin-left: 5px;
+}
+
+#login .logo .O::after{
+    content: '';
+    position: absolute;
+    width: 3vw;
+    height: 15vw;
+    border-radius: 40px;
+    background: #fff;
+}
+
+
+#login .logo .write{
+    font-size: 8vw;
+    color: #222;
+    font-weight: 900;
+    letter-spacing: -5px;
 }
