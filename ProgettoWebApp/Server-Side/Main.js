@@ -89,6 +89,9 @@ app.post("/login", (req, res) => {
       if (error) throw error;
       if (results.length > 0){
         req.session.secret = Functions.generateRandomKey();
+        con.query('UPDATE utenti.utenti SET lastsession = ? WHERE email = ? AND password = ?', [req.session.secret,email, password], function(error, results, fields) {
+          if (error) throw error;
+        })
         Functions.Redirect(res,"/home");
       } 
       else{
@@ -105,6 +108,17 @@ app.post("/logout", (req, res) => {
   if(req.session){
     req.session.secret = undefined;
     Functions.Redirect(res,"/");
+  }
+})
+
+app.post("/aggiungiMacchina", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+      return;
+    }
+
+
   }
 })
 
