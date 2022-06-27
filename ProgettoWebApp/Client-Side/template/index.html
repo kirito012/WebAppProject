@@ -76,12 +76,10 @@
         </section>
 
         <script>
-            var app = angular.module('myApp', []);
-            app.controller('customersCtrl', function($scope, $http) {
-                $http.get("/?wrongPassword").then(function (response) {
-                    $scope.wrongPassword = response.data.records;
-                });
-            });
+            let params = new URLSearchParams(window.location.search);
+
+            console.log(params.get('error'));
+
         </script>
 
 
