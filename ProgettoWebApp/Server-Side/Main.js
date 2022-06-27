@@ -50,6 +50,17 @@ app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname+"/../Client-Side/template/home.html"));
 })
 
+app.get("/personal", (req, res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+      return;
+    }
+  }
+
+  res.sendFile(path.join(__dirname+"/../Client-Side/template/personal.html"));
+})
+
 app.post("/register", (req, res) => {
   let email = req.body.email;
 	let password = req.body.password;
