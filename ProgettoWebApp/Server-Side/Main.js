@@ -75,6 +75,9 @@ app.post("/register", (req, res) => {
       }
     })
   }
+  else{
+    Functions.Redirect(res,"/","repeatMissType");
+  }
 })
 
 app.post("/login", (req, res) => {
