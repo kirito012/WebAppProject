@@ -1,0 +1,156 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana;
+}
+
+body{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 90px;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #4f829c;
+    padding: 40px 0;;
+}
+
+header .bottom{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+header .add, header .menu, header .personal, header .logout{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header .add a, header .personal a, header .logout label{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+header .logout label input{
+    display: none;
+}
+
+header .add a ion-icon{
+    position: relative;
+    font-size: 2em;
+    color: #4f829c;
+}
+
+header .personal a ion-icon, header .logout label ion-icon {
+    position: relative;
+    font-size: 1.5em;
+    color: #4f829c;
+}
+
+header .menu .menuToggle{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    gap: 5px;
+    cursor: pointer;
+}
+
+header .menu .menuToggle .line{
+    position: relative;
+    width: 25px;
+    height: 2px;
+    border-radius: 8px;
+    background: #4f829c;
+    transition: 0.3s ease;
+}
+
+header .menu .menuToggle.active .line{
+    position: absolute;
+}
+
+header .menu .menuToggle.active{
+    gap: 0;
+}
+
+header .menu .menuToggle.active .line:nth-child(1){
+    display: none;
+}
+
+header .menu .menuToggle.active .line:nth-child(2){
+    transform: rotate(45deg);
+}
+
+header .menu .menuToggle.active .line:nth-child(3){
+    transform: rotate(-45deg);
+}
+
+
+
+
+
+
+header .add .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    right: -250px;
+    background: #4f829c;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: 0.3s ease;
+    width: 80px;
+}
+
+header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before{
+    content: '';
+    position: absolute;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background: #4f829c;
+}
+
+header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle, header .logout label:hover ~ .subtitle{
+    opacity: 1;
+    transform: translateX(-130px);
+}
+
+
+
+
