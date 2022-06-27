@@ -104,6 +104,7 @@ app.post("/login", (req, res) => {
 	let password = req.body.password;
 
   if (email && password) {
+    console.log("here");
     con.query('SELECT * FROM utenti WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
@@ -111,7 +112,7 @@ app.post("/login", (req, res) => {
         res.redirect("/home");
       } 
       else{
-        res.redirect("/");
+        res.redirect("/?wrongPassword");
       }
     })
   }
