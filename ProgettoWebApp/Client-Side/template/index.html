@@ -80,9 +80,10 @@
             let error = document.querySelector(".error");
 
             if(params.has('error')){
-                    console.log(params.get("error"))
-
-            
+                if(params.get('error') == "wrongError"){
+                    error.innerHTML = "Password errata";
+                }
+  
             }
 
         </script>
