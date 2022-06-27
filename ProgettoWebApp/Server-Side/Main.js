@@ -27,6 +27,15 @@ function DayCheck(Day){
   }
 }
 
+function RedirectError(res,url,error){
+  if (error){
+    res.redirect(url + "?error=" + error);
+  }
+  else{
+    res.redirect(url);
+  }
+}
+
 let app = express()
 let jsonParser = bodyParser.json()
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -65,7 +74,7 @@ app.get("/home", (req, res) => {
 
   if (req.session){
     if (!req.session.secret){
-      res.redirect("/")
+      RedirectError(res,"/","missingSession");
     }
   }
 })
@@ -79,13 +88,13 @@ app.post("/register", (req, res) => {
   let date = req.body.date;
 
   if (password == repeatPassword){
-    if (password.length < 8){res.redirect("/"); return;}
-    if (!DayCheck(date)){res.redirect("/"); return;}
+    if (password.length < 8){RedirectError(res,"/","passwordLength"); return;}
+    if (!DayCheck(date)){RedirectError(res,"/","dateIncorrect"); return;}
 
     con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
-        res.redirect("/");
+        RedirectError(res,"/","emailExists");
       }
       else{
         let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
@@ -104,20 +113,19 @@ app.post("/login", (req, res) => {
 	let password = req.body.password;
 
   if (email && password) {
-    console.log("here");
     con.query('SELECT * FROM utenti WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
         req.session.secret = generateRandomKey();
-        res.redirect("/home");
+        RedirectError(res,"/home");
       } 
       else{
-        res.redirect("/?error=wrongPassword");
+        RedirectError(res,"/","wrongPassword");
       }
     })
   }
   else{
-    res.redirect("/");
+    RedirectError(res,"/","missingInputs");
   }
 })
 
