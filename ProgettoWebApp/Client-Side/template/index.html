@@ -108,6 +108,7 @@
             var form = document.querySelector("form");
 
             window.onload = function(){
+                let body = document.querySelector("body");
                 if(i1.value != ""){
                     t1.classList.toggle('active');
                 }
@@ -123,6 +124,7 @@
                 if(i5.value != ""){
                     t5.classList.toggle('active');
                 }
+                body.click();
             }
 
 
