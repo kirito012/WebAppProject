@@ -18,7 +18,7 @@
             </div>
             <hr>
             <div class="loginForm">
-                <form action="login" method="post">
+                <form action="login" method="post" ng-app="myApp" ng-controller="customersCtrl">
                     <h1 class="title">Accedi</h1>
                         <div class="row">
                             <div class="column c1">
@@ -35,6 +35,7 @@
                                         </span>
                                     </span>
                                     <h3 class="t2">Password</h3>
+                                    <h2 class="error" ng-bind="wrongPassword"></h2>
                                 </div>
                                 <div class="input">
                                     <span class="icon">
@@ -73,6 +74,15 @@
                 </form>
             </div>
         </section>
+
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('customersCtrl', function($scope, $http) {
+                $http.get("/?wrongPassword").then(function (response) {
+                    $scope.wrongPassword = response.data.records;
+                });
+            });
+        </script>
 
 
         <script>
