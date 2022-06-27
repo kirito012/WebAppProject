@@ -77,8 +77,13 @@
 
         <script>
             let params = new URLSearchParams(window.location.search);
+            let error = querySelector(".error");
 
-            console.log(params.has('error'));
+            if(params.has('error')){
+                if(params.get('wrongPassword')){
+                    error.innerHTML = "Password errata";
+                }
+            }
 
         </script>
 
