@@ -98,6 +98,9 @@
                 else if(params.get('error') == "missingSession"){
                     error.innerHTML = "Devi essere loggato per accedere";
                 }
+                else if(params.get('error') == "repeatMissType"){
+                    error.innerHTML = "Le password non corrispondono";
+                }
             }
 
         </script>
