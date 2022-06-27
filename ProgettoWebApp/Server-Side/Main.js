@@ -71,8 +71,6 @@ app.post("/register", (req, res) => {
       else{
         let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
 
-        console.log(qr);
-
         con.query(qr, function(error, results, fields) {
           if (error) throw error;
           res.redirect("/");
