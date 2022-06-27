@@ -127,6 +127,17 @@ app.post("/logout", (req, res) => {
   }
 })
 
+app.post("/personalArea", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+    }
+    else{
+      Functions.Redirect(res,"/personal",);
+    }
+  }
+})
+
 app.post("/aggiungiMacchina", (req,res) => {
   if (req.session){
     if (!req.session.secret){
