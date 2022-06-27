@@ -3,38 +3,7 @@ let bodyParser = require("body-parser");
 let session = require('express-session');
 let path = require('path');
 let mysql = require("mysql");
-let crypto = require('crypto');
-
-function generateRandomKey(){
-  return crypto.randomBytes(48).toString('hex');
-}
-
-function DayCheck(Day){
-  let Today = new Date;
-  Today.setHours(23,59,59,998);
-  
-  Day = new Date(Day);
-  Day.setHours(23,59,59,998);
-
-  if (Today < Day){
-    return false;
-  }
-  else if (Today.getFullYear - 16 > Day.getFullYear){
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-function RedirectError(res,url,error){
-  if (error){
-    res.redirect(url + "?error=" + error);
-  }
-  else{
-    res.redirect(url);
-  }
-}
+let Functions = require("./Modules/FunctionModule");
 
 let app = express()
 let jsonParser = bodyParser.json()
@@ -64,7 +33,7 @@ app.get("/", (req, res) => {
 
   if (req.session){
     if (req.session.secret){
-      res.redirect("/home");
+      Functions.Redirect(res,"/home");
     }
   }
 })
@@ -74,7 +43,7 @@ app.get("/home", (req, res) => {
 
   if (req.session){
     if (!req.session.secret){
-      RedirectError(res,"/","missingSession");
+      Functions.Redirect(res,"/","missingSession");
     }
   }
 })
@@ -88,20 +57,20 @@ app.post("/register", (req, res) => {
   let date = req.body.date;
 
   if (password == repeatPassword){
-    if (password.length < 8){RedirectError(res,"/","passwordLength"); return;}
-    if (!DayCheck(date)){RedirectError(res,"/","dateIncorrect"); return;}
+    if (password.length < 8){Functions.Redirect(res,"/","passwordLength"); return;}
+    if (!Functions.DayCheck(date)){Functions.Redirect(res,"/","dateIncorrect"); return;}
 
     con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
-        RedirectError(res,"/","emailExists");
+        Functions.Redirect(res,"/","emailExists");
       }
       else{
         let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
 
         con.query(qr, function(error, results, fields) {
           if (error) throw error;
-          res.redirect("/");
+          Functions.Redirect(res,"/");
         })
       }
     })
@@ -116,23 +85,23 @@ app.post("/login", (req, res) => {
     con.query('SELECT * FROM utenti WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
-        req.session.secret = generateRandomKey();
-        RedirectError(res,"/home");
+        req.session.secret = Functions.generateRandomKey();
+        Functions.Redirect(res,"/home");
       } 
       else{
-        RedirectError(res,"/","wrongPassword");
+        Functions.Redirect(res,"/","wrongPassword");
       }
     })
   }
   else{
-    RedirectError(res,"/","missingInputs");
+    Functions.Redirect(res,"/","missingInputs");
   }
 })
 
 app.post("/logout", (req, res) => {
   if(req.session){
     req.session.secret = undefined;
-    res.redirect("/");
+    Functions.Redirect(res,"/");
   }
 })
 
