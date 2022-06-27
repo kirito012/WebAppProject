@@ -8,36 +8,37 @@
     <link rel="stylesheet" href="../styles/homeStyle.css">
 </head>
 <body>
-    <header>
-        <div class="add">
-            <a href="">
-                <ion-icon name="add-outline"></ion-icon>
-            </a>
-            <span class="subtitle">Aggiungi macchina</span>
-        </div>
-        <div class="menu">
-            <div class="menuToggle">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
+    <header class="active">
+            <div class="remove">
+                <div class="menuToggle1 active">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+                <span class="subtitle">Chiudi menù</span>
             </div>
-            <span class="subtitle">Menu</span>
-        </div>
-        <div class="bottom">
-            <div class="personal">
-                <a href="">
-                    <ion-icon name="person-outline"></ion-icon>
-                </a>
-                <span class="subtitle">Area personale</span>
+            <div class="menu">
+                <div class="menuToggle">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+                <span class="subtitle">Menu</span>
             </div>
-            <form action="logout" method="post" class="logout">
-                <label for="logout">
-                    <ion-icon name="log-out-outline"></ion-icon>
-                    <input type="button" value="logout" id="logout">
-                </label>
-                <span class="subtitle">Logout</span>
-            </form>
-        </div>
+            <div class="bottom">
+                <div class="personal">
+                    <a href="">
+                        <ion-icon name="person-outline"></ion-icon>
+                    </a>
+                    <span class="subtitle">Area personale</span>
+                </div>
+                <form action="logout" method="post" class="logout">
+                    <label for="logout">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                        <input type="submit" value="logout" id="logout">
+                    </label>
+                    <span class="subtitle">Logout</span>
+                </form>
+            </div>
     </header>
 
     <script>
@@ -45,6 +46,15 @@
         menu.onclick = () =>{
             menu.classList.toggle("active");
         }
+
+        let toggle = document.querySelector(".menuToggle1");
+        let header = document.querySelector("header");
+        toggle.onclick = () => {
+            header.classList.toggle("active");
+            toggle.classList.toggle("active");
+        }
+
+
     </script>
 
 

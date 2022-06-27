@@ -10,7 +10,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 200vh;
 }
 
 header{
@@ -24,7 +24,8 @@ header{
     top: 0;
     left: 0;
     background: #4f829c;
-    padding: 40px 0;;
+    padding: 40px 0;
+    transition: 0.3s ease;
 }
 
 header .bottom{
@@ -36,7 +37,7 @@ header .bottom{
     gap: 10px;
 }
 
-header .add, header .menu, header .personal, header .logout{
+header .add, header .menu, header .personal, header .logout, header .remove{
     position: relative;
     display: flex;
     justify-content: center;
@@ -72,7 +73,7 @@ header .personal a ion-icon, header .logout label ion-icon {
     color: #4f829c;
 }
 
-header .menu .menuToggle{
+header .menu .menuToggle, header .remove .menuToggle1{
     position: relative;
     display: flex;
     justify-content: center;
@@ -86,7 +87,7 @@ header .menu .menuToggle{
     cursor: pointer;
 }
 
-header .menu .menuToggle .line{
+header .menu .menuToggle .line, header .remove .menuToggle1 .line{
     position: relative;
     width: 25px;
     height: 2px;
@@ -95,9 +96,19 @@ header .menu .menuToggle .line{
     transition: 0.3s ease;
 }
 
-header .menu .menuToggle.active .line{
+header .remove .menuToggle1.active {
+    background: #4f829c;
+}
+
+header .remove .menuToggle1.active .line{
+    background: #fff;
+}
+
+header .menu .menuToggle.active .line, header .remove .menuToggle1 .line{
     position: absolute;
 }
+
+header .remove .menuToggle .line
 
 header .menu .menuToggle.active{
     gap: 0;
@@ -107,20 +118,17 @@ header .menu .menuToggle.active .line:nth-child(1){
     display: none;
 }
 
-header .menu .menuToggle.active .line:nth-child(2){
+header .menu .menuToggle.active .line:nth-child(2), 
+header .remove .menuToggle .line:nth-child(1){
     transform: rotate(45deg);
 }
 
-header .menu .menuToggle.active .line:nth-child(3){
+header .menu .menuToggle.active .line:nth-child(3),
+header .remove .menuToggle .line:nth-child(2){
     transform: rotate(-45deg);
 }
 
-
-
-
-
-
-header .add .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle{
+header .add .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle, header .remove .subtitle{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -136,7 +144,7 @@ header .add .subtitle, header .menu .subtitle, header .personal .subtitle, heade
     width: 80px;
 }
 
-header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before{
+header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .logout .subtitle::before{
     content: '';
     position: absolute;
     left: -5px;
@@ -146,7 +154,7 @@ header .add .subtitle::before,  header .menu .subtitle::before, header .personal
     background: #4f829c;
 }
 
-header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle, header .logout label:hover ~ .subtitle{
+header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle, header .logout label:hover ~ .subtitle, header .remove .menuToggle1:hover ~ .subtitle{
     opacity: 1;
     transform: translateX(-130px);
 }
@@ -154,3 +162,16 @@ header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, hea
 
 
 
+header.active .add, 
+header.active .menu,
+header.active .bottom{
+    display: none;
+}
+
+header.active{
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 50%;
+}
