@@ -9,6 +9,24 @@ function generateRandomKey(){
   return crypto.randomBytes(48).toString('hex');
 }
 
+function DayCheck(Day){
+  let Today = new Date;
+  Today.setHours(23,59,59,998);
+  
+  Day = new Date(Day);
+  Day.setHours(23,59,59,998);
+
+  if (Today < Day){
+    return false;
+  }
+  else if (Today.getFullYear - 16 > Day.getFullYear){
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 let app = express()
 let jsonParser = bodyParser.json()
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
@@ -61,11 +79,12 @@ app.post("/register", (req, res) => {
   let date = req.body.date;
 
   if (password == repeatPassword){
-    console.log("entered");
+    if (password.length < 8){res.redirect("/"); return;}
+    if (!DayCheck(date)){res.redirect("/"); return;}
+
     con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
-        console.log("Already found");
         res.redirect("/");
       }
       else{
@@ -77,9 +96,6 @@ app.post("/register", (req, res) => {
         })
       }
     })
-  }
-  else{
-    console.log("not entered");
   }
 })
 
