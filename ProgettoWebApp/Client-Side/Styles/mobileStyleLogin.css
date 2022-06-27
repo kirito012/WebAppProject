@@ -32,7 +32,8 @@ body{
 
 #login .logo{
     flex-direction: column;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+    padding: 20px;
 }
 
 #login .loginForm{
