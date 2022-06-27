@@ -118,24 +118,23 @@ app.post("/aggiungiMacchina", (req,res) => {
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
-      return;
     }
+    else{
+      let model = req.body.model;
+      let id = req.body.id;
+      let customname = req.body.customname;
 
-    let model = req.body.model;
-    let id = req.body.id;
-    let customname = req.body.customname;
-
-    con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
-      if (error) throw error;
-      if (results.length > 0){
-        let qr = 'INSERT INTO macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
-        con.query(qr, function(error, results, fields) {
-          if (error) throw error;
-          Functions.Redirect(res,"/home");
-        })
-      }
-    })
-
+      con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0){
+          let qr = 'INSERT INTO macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
+          con.query(qr, function(error, results, fields) {
+            if (error) throw error;
+            Functions.Redirect(res,"/home");
+          })
+        }
+      })
+    }
   }
 })
 
