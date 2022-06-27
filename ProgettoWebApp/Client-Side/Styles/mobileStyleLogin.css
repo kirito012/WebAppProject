@@ -284,8 +284,8 @@ body{
     align-items: center;
     width: 25vw;
     height: 25vw;
-    background: #ba3030;
-    border-radius: 40px;
+    background: green;
+    border-radius: 20px;
     margin-left: 5px;
 }
 
@@ -301,7 +301,7 @@ body{
 
 #login .logo .write{
     font-size: 8vw;
-    color: #222;
+    color: rgb(197, 35, 35);
     font-weight: 900;
     letter-spacing: -5px;
 }
