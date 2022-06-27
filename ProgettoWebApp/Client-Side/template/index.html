@@ -95,6 +95,9 @@
                 else if(params.get('error') == "passwordLenght"){
                     error.innerHTML = "Lunghezza password non corretta";
                 }
+                else if(params.get('error') == "missingSession"){
+                    error.innerHTML = "Devi essere loggato per accedere";
+                }
             }
 
         </script>
