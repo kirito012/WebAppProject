@@ -107,6 +107,40 @@
             var register = document.getElementById("register");
             var form = document.querySelector("form");
 
+            window.onload = function(){
+                if(i1.value != ""){
+                    t1.classList.toggle('active');
+                }
+                if(i2.value != ""){
+                    t2.classList.toggle('active');
+                }
+                if(i3.value != ""){
+                    t3.classList.toggle('active');
+                }
+                if(i4.value != ""){
+                    t4.classList.toggle('active');
+                }
+                if(i5.value != ""){
+                    t5.classList.toggle('active');
+                }
+            }
+
+
+            t1.onclick = function(){
+                i1.focus();   
+            }
+            t2.onclick = function(){
+                i2.focus();   
+            }
+            t3.onclick = function(){
+                i3.focus();   
+            }
+            t4.onclick = function(){
+                i4.focus();   
+            }
+            t5.onclick = function(){
+                i5.focus();   
+            }
             
             i1.addEventListener('focus', function(){
                 if(i1.value == ""){
