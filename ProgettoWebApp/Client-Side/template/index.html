@@ -77,7 +77,7 @@
 
         <script>
             let params = new URLSearchParams(window.location.search);
-            let error = querySelector(".error");
+            let error = document.querySelector(".error");
 
             if(params.has('error')){
                 if(params.get('wrongPassword')){
