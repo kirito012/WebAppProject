@@ -83,7 +83,18 @@
                 if(params.get('error') == "wrongPassword"){
                     error.innerHTML = "Credenziali errate o account inesistente";
                 }
-  
+                else if(params.get('error') == "missingInputs"){
+                    error.innerHTML = "Dati inseriti non validi";
+                }
+                else if(params.get('error') == "emailExists"){
+                    error.innerHTML = "Account già esistente";
+                }
+                else if(params.get('error') == "dateIncorrect"){
+                    error.innerHTML = "Data di nascita non valida";
+                }
+                else if(params.get('error') == "passwordLenght"){
+                    error.innerHTML = "Lunghezza password nom corretta";
+                }
             }
 
         </script>
