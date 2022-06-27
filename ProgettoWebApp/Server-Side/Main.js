@@ -112,7 +112,7 @@ app.post("/login", (req, res) => {
         res.redirect("/home");
       } 
       else{
-        res.redirect("/?wrongPassword");
+        res.redirect("/?error=wrongPassword");
       }
     })
   }
