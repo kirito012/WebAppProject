@@ -88,7 +88,10 @@ app.post("/login", (req, res) => {
     con.query('SELECT * FROM utenti WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
+        req.session.name = results[0].name;
+        req.session.permission = results[0].permission;
         req.session.secret = Functions.generateRandomKey();
+
         con.query('UPDATE utenti.utenti SET lastsession = ? WHERE email = ? AND password = ?', [req.session.secret,email, password], function(error, results, fields) {
           if (error) throw error;
         })
@@ -118,6 +121,20 @@ app.post("/aggiungiMacchina", (req,res) => {
       return;
     }
 
+    let model = req.body.model;
+    let id = req.body.id;
+    let customname = req.body.customname;
+
+    con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
+      if (error) throw error;
+      if (results.length > 0){
+        let qr = 'INSERT INTO macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
+        con.query(qr, function(error, results, fields) {
+          if (error) throw error;
+          Functions.Redirect(res,"/home");
+        })
+      }
+    })
 
   }
 })
