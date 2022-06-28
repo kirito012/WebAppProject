@@ -61,7 +61,7 @@
                 <div class="add">
                     <div class="adding">
                         <div class="machines">
-                            <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
+                            <form action="addMachine" method="post">
                                 <div class="search">
                                     <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi...">
                                 </div>
@@ -73,8 +73,8 @@
                                 </div>
                                 <input type="submit" name="submit">
                             </form>
-                            <div class="machine">
-                                <h4 ng-bind="$scope.models.model0"></h4>
+                            <div class="machine" ng-app="myApp" ng-controller="myCtrl">
+                                <h4 ng-repeat="model in models">{{ model }}</h4>
                             </div>
                         </div>
                     </div>
