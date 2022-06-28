@@ -116,7 +116,26 @@ app.post("/logout", (req, res) => {
   }
 })
 
-app.post("/aggiungiMacchina", (req,res) => {
+app.get("/getModels", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+    }
+    else{
+      let lightTable = [];
+
+      con.query('SELECT * FROM macchine.modelli',function(error, results, fields) {
+        results.forEach(element => {
+          lightTable.push(element.name);
+        });
+      })
+
+      res.send(lightTable);
+    }
+  }
+})
+
+app.post("/addMachine", (req,res) => {
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
@@ -138,20 +157,19 @@ app.post("/aggiungiMacchina", (req,res) => {
           })
 
           let qr = 'INSERT INTO utenti.macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
-          con.query(qr, function(error, results, fields) {
+          con.query(qr, function(error, resultsl, fields) {
             if (error) throw error;
             con.query('SELECT * FROM macchine.matricole WHERE uniqueid = ?', [id], function(error, resultsm, fields) {
               if (!resultsm[0]){
-                let baseJson = [
-                  results[0].id,
-                ];
+                let baseJson = {};
+                baseJson[results[0].id] = id;
 
                 let newqr = 'INSERT INTO macchine.matricole (uniqueid, model, attachedusers) VALUES("' + id +'","'+ model  +'",' + JSON.stringify(baseJson) + ')';
                 con.query(newqr, function(error, results, fields) {if (error) throw error;})
               }
               else{
                 let newJson = resultsm[0].attachedusers;
-                newJson.push(results[0].id);
+                newJson[results[0].id] = id;
 
                 con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE uniqueid = ?', [JSON.stringify(newJson),id], function(error, results, fields) {if (error) throw error;})
               }
