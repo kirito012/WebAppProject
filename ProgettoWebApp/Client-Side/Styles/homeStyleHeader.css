@@ -405,11 +405,13 @@ header .navigation .add .adding{
 }
 
 
-
+header .navigation .add .adding form .search input:focus ~ .models{
+    display: flex;
+}
 
 header .navigation .add .adding form .search .models{
     position: relative;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
