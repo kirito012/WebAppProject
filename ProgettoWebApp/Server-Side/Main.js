@@ -141,9 +141,9 @@ app.post("/addMachine", (req,res) => {
       Functions.Redirect(res,"/","missingSession");
     }
     else{
-      let model = req.body.model;
-      let id = req.body.id;
-      let customname = req.body.customname;
+      let model = req.body.search;
+      let id = req.body.badgeNumber;
+      let customname = req.body.name;
 
       con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
         if (error) throw error;
@@ -156,25 +156,25 @@ app.post("/addMachine", (req,res) => {
             }
           })
 
-          let qr = 'INSERT INTO utenti.macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
+          let qr = 'INSERT INTO utenti.macchine (uniqueid, parent, customname) VALUES ("' + id + '", "' + results[0].id + '", "' + customname + '");'
           con.query(qr, function(error, resultsl, fields) {
             if (error) throw error;
-            con.query('SELECT * FROM macchine.matricole WHERE uniqueid = ?', [id], function(error, resultsm, fields) {
+            con.query('SELECT * FROM macchine.matricole WHERE model = ?', [model], function(error, resultsm, fields) {
               if (!resultsm[0]){
                 let baseJson = {};
-                baseJson[results[0].id] = id;
+                baseJson[id] = results[0].id;
 
-                let newqr = 'INSERT INTO macchine.matricole (uniqueid, model, attachedusers) VALUES("' + id +'","'+ model  +'",' + JSON.stringify(baseJson) + ')';
+                let newqr = "INSERT INTO macchine.matricole (model,attachedusers) VALUES('"+ model  +"','" + JSON.stringify(baseJson) + "')";
                 con.query(newqr, function(error, results, fields) {if (error) throw error;})
               }
               else{
-                let newJson = resultsm[0].attachedusers;
-                newJson[results[0].id] = id;
+                let newJson = JSON.parse(resultsm[0].attachedusers);
+                newJson[id] = results[0].id;
 
-                con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE uniqueid = ?', [JSON.stringify(newJson),id], function(error, results, fields) {if (error) throw error;})
+                con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE model = ?', [JSON.stringify(newJson),model], function(error, results, fields) {if (error) throw error;})
               }
+              return res.status(204).send();
             })
-            Functions.Redirect(res,"/home");
           })
         }
       })
