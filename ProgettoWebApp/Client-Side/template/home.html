@@ -63,7 +63,7 @@
                         <div class="machines">
                             <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
                                 <div class="search">
-                                    <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi...">
+                                    <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi..." ng-filter="test">
                                 </div>
                                 <div class="badgeNumber">
                                     <input type="text" name="badgeNumber">
@@ -73,7 +73,7 @@
                                 </div>
                                 <input type="submit" name="submit">
                                 <div class="machine">
-                                    <h4 ng-repeat="model in models">{{ model }}</h4>
+                                    <h4 ng-repeat="model in models | filter: test">{{ model }}</h4>
                                 </div>
                             </form>
                         </div>
