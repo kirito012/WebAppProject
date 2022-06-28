@@ -147,7 +147,7 @@
         var input = document.querySelector("#inputSearch");
 
         var app = angular.module('myApp', []);
-        /*app.controller('myCtrl', function($scope, $http) {
+        app.controller('myCtrl', function($scope, $http) {
             $http({
                 method : "GET",
                 url : "/home/getModels"
@@ -156,16 +156,8 @@
             }, function myError(response) {
                 console.log(response.statusText);
             });
-        });*/
-        app.controller('myCtrl', function($scope){
-            $scope.models = [
-                    'Form100',
-                    'Form200',
-                    'Form300',
-                    'Form400',
-                    'Form500'
-                ];
         });
+
     </script>
 
 
