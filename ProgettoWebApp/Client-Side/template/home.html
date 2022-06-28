@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../styles/homeStyle.css">
+    <link rel="stylesheet" href="../styles/homeStyleHeader.css">
 </head>
 <body>
     <header class="active">
@@ -13,8 +13,9 @@
                 <div class="menuToggle1 active">
                     <span class="line"></span>
                     <span class="line"></span>
+                    <span class="line"></span>
                 </div>
-                <span class="subtitle">Chiudi menù</span>
+                <span class="subtitle change">Apri menù</span>
             </div>
             <div class="menu">
                 <div class="menuToggle">
@@ -22,7 +23,7 @@
                     <span class="line"></span>
                     <span class="line"></span>
                 </div>
-                <span class="subtitle">Menu</span>
+                <span class="subtitle">Menù</span>
             </div>
             <div class="bottom">
                 <div class="personal">
@@ -33,25 +34,53 @@
                 </div>
                 <form action="logout" method="post" class="logout">
                     <label for="logout">
-                        <ion-icon name="log-out-outline"></ion-icon>
+                        <div class="rect">
+                            <div class="white">
+                                <div class="arrow">
+
+                                </div>
+                            </div>
+                        </div>
                         <input type="submit" value="logout" id="logout">
                     </label>
                     <span class="subtitle">Logout</span>
                 </form>
             </div>
+            <ul class="navigation active">
+                <li><a href="" data-after="Link">Link</a></li>
+                <li><a href="" data-after="Link">Link</a></li>
+                <li><a href="" data-after="Link">Link</a></li>
+                <li><a href="" data-after="Link">Link</a></li>
+            </ul>
     </header>
 
     <script>
         let menu = document.querySelector(".menuToggle");
+        let navigation = document.querySelector(".navigation");
         menu.onclick = () =>{
             menu.classList.toggle("active");
+            if(menu.className == "menuToggle active"){
+                navigation.classList.toggle("active");
+            }
+            else if(menu.className == "menuToggle"){
+                navigation.classList.toggle("active");
+            }
         }
+        
 
         let toggle = document.querySelector(".menuToggle1");
         let header = document.querySelector("header");
+        let subt = document.querySelector(".subtitle.change")
         toggle.onclick = () => {
             header.classList.toggle("active");
             toggle.classList.toggle("active");
+            if(header.className == ""){
+                subt.innerHTML = "Chiudi menù";
+            }else{
+                subt.innerHTML = "Apri menù";
+                menu.classList.remove("active");
+                navigation.classList.add("active");
+            }
         }
 
 
