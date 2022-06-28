@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../styles/homeStyleHeader.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
 </head>
 <body>
     <header class="active">
@@ -37,7 +38,6 @@
                         <div class="rect">
                             <div class="white">
                                 <div class="arrow">
-
                                 </div>
                             </div>
                         </div>
@@ -51,6 +51,34 @@
                 <li><a href="" data-after="Link">Link</a></li>
                 <li><a href="" data-after="Link">Link</a></li>
                 <li><a href="" data-after="Link">Link</a></li>
+                <div class="activator">
+                    <div class="content">
+                        <hr class="orizontal">
+                        <hr class="vertical">
+                    </div>
+                    <span class="subtitle">Aggiungi macchina</span>
+                </div>
+                <div class="add">
+                    <div class="adding">
+                        <div class="machines">
+                            <form action="addMachine" method="post" ng-app="myApp">
+                                <div class="search">
+                                    <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi...">
+                                </div>
+                                <div class="badgeNumber">
+                                    <input type="text" name="badgeNumber">
+                                </div>
+                                <div class="customName">
+                                    <input type="text" name="name">
+                                </div>
+                                <input type="submit" name="submit">
+                            </form>
+                            <div class="machine">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ul>
     </header>
 
@@ -80,10 +108,42 @@
                 subt.innerHTML = "Apri menù";
                 menu.classList.remove("active");
                 navigation.classList.add("active");
+                box.style.animationName = "boxRemove";
+                box.classList.remove("active");
+                add.classList.remove("active");
             }
         }
 
 
+
+        let adding = document.querySelector(".content");
+        let add = document.querySelector(".add");
+        let box = document.querySelector(".machines");
+        adding.onclick = () => {
+            box.classList.toggle("active");
+            if(box.className == "machines active"){
+                box.style.animationName = "boxReveal";
+                add.classList.toggle("active");
+            }else if(box.className == "machines"){
+                box.style.animationName = "boxRemove";
+                add.classList.toggle("active");
+            }
+        }
+
+    </script>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope, $http) {
+            $http({
+                method : "GET",
+                url : "/getModels"
+            }).then(function mySuccess(response) {
+                $scope.models = response.data;
+                }, function myError(response) {
+                console.log(response.statusText);
+            });
+        });
     </script>
 
 

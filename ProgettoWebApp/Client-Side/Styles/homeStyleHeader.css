@@ -37,7 +37,7 @@ header .bottom{
     gap: 10px;
 }
 
-header .add, header .menu, header .personal, header .logout, header .remove{
+header .menu, header .personal, header .logout, header .remove{
     position: relative;
     display: flex;
     justify-content: center;
@@ -45,7 +45,17 @@ header .add, header .menu, header .personal, header .logout, header .remove{
     flex-direction: column;
 }
 
-header .add a, header .personal a, header .logout label{
+header .navigation .activator{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 40px;
+    right: 40px;
+}
+
+header .personal a, header .logout label{
     position: relative;
     display: flex;
     justify-content: center;
@@ -58,14 +68,37 @@ header .add a, header .personal a, header .logout label{
     cursor: pointer;
 }
 
-header .logout label input{
-    display: none;
+header .navigation .activator .content{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    background: #fff;
+    cursor: pointer;
+    background: #4f829c;
 }
 
-header .add a ion-icon{
-    position: relative;
-    font-size: 2em;
-    color: #4f829c;
+header .navigation .activator .content .orizontal{
+    position: absolute;
+    width: 25px;
+    height: 2px;
+    background: #fff;
+    border: none;
+}
+
+header .navigation .activator .content .vertical{
+    position: absolute;
+    width: 2px;
+    height: 25px;
+    background: #fff;
+    border: none;
+}
+
+header .logout label input{
+    display: none;
 }
 
 header .personal a ion-icon {
@@ -131,12 +164,12 @@ header .remove .menuToggle .line:nth-child(2){
     transform: rotate(-45deg);
 }
 
-header .add .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle, header .remove .subtitle{
+header .navigation .activator .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle, header .remove .subtitle{
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
+    font-size: 13px;
     right: -250px;
     background: #4f829c;
     color: #fff;
@@ -145,9 +178,10 @@ header .add .subtitle, header .menu .subtitle, header .personal .subtitle, heade
     opacity: 0;
     transition: 0.3s ease;
     width: 80px;
+    height: 40px;
 }
 
-header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .remove .subtitle::before{
+header .navigation .activator .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .remove .subtitle::before{
     content: '';
     position: absolute;
     left: -5px;
@@ -157,12 +191,16 @@ header .add .subtitle::before,  header .menu .subtitle::before, header .personal
     background: #4f829c;
 }
 
-header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle, header .logout label:hover ~ .subtitle, header .remove .menuToggle1:hover ~ .subtitle{
+header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle, header .logout label:hover ~ .subtitle, header .remove .menuToggle1:hover ~ .subtitle{
     opacity: 1;
     transform: translateX(-130px);
 }
 
-header.active .add, 
+header .navigation .activator .content:hover ~ .subtitle{
+    opacity: 1;
+    transform: translateX(-110px);
+}
+
 header.active .menu,
 header.active .bottom{
     display: none;
@@ -189,7 +227,6 @@ header .navigation{
     height: 100%;
     width: 500px;
     gap: 25px;
-    overflow: hidden;
     transition: 0.3s ease;
 }
 
@@ -202,6 +239,7 @@ header .navigation li{
 
 header .navigation.active{
     width: 0px;
+    overflow: hidden;
 }
 
 header .navigation li a{
@@ -297,4 +335,71 @@ header .bottom label .rect .white .arrow::after{
 
 header .bottom label:hover .rect .white .arrow{
     transform: translateX(7px);
+}
+
+
+
+header .navigation .add .adding .machines{
+    display: none;
+}
+
+header .navigation .add .adding .machines{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 60px;
+    width: 0px;
+    height: 40px;
+    background: #f1f1f1;
+    z-index: 5;
+    animation: 1s ease forwards;
+    overflow: hidden;
+}
+
+@keyframes boxReveal {
+    50%{
+        width: 500px;
+        height: 40px;
+    }100%{
+        height: 500px;
+        width: 500px;
+    }
+}
+
+header .navigation .add .adding .machines.active{
+    animation: 1s ease forwards;
+}
+
+@keyframes boxRemove {
+    0%{
+        width: 500px;
+        height: 500px;
+    }
+    50%{
+        width: 500px;
+        height: 40px;
+    }100%{
+        height: 40px;
+        width: 0px;
+    }
+}
+
+
+
+header .navigation .add{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 20px;
+    left: 440px;
+}
+
+header .navigation .add .adding{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
