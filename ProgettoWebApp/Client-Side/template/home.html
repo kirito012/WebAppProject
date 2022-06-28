@@ -137,7 +137,7 @@
         app.controller('myCtrl', function($scope, $http) {
             $http({
                 method : "GET",
-                url : "localhost:8081/home/getModels"
+                url : "localhost:8081/home"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
                 console.log("ciao");
