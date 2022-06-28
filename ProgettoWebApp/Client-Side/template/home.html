@@ -61,24 +61,25 @@
                 <div class="add">
                     <div class="adding">
                         <div class="machines">
+                            <h2 class="title">Aggiungi un nuovo dispositivo</h2>
                             <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
                                 <div class="search">
-                                    <input type="text" name="search" id="" placeholder="Cerca il modello..." ng-model="test">
+                                    <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li ng-repeat="model in models | filter: test">{{ model }}></li>
+                                            <li class="list" onmouseover="input.value = this.innerHTML; console.log(this.innerHTML);" ng-repeat="model in models | filter: test">{{ model }}</li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="badgeNumber">
-                                    <input type="text" name="badgeNumber" placeholder="Numero di matricola">
+                                    <input type="text" name="badgeNumber" placeholder="Numero di matricola" autocomplete="off">
                                 </div>
                                 <div class="customName">
-                                    <input type="text" name="name" placeholder="Nome personalizzato">
+                                    <input type="text" name="name" placeholder="Nome personalizzato" autocomplete="off">
                                 </div>
                                 <input type="submit" value="Aggiungi" name="submit">
                                 <div class="machine">
-                                    <h4 ng-repeat="model in models | filter: test">{{ model }}</h4>
+                                    
                                 </div>
                             </form>
                         </div>
@@ -135,11 +136,18 @@
             }
         }
 
+
+
+
+
     </script>
 
     <script>
+        var machineList = document.querySelector(".list");
+        var input = document.querySelector("#inputSearch");
+
         var app = angular.module('myApp', []);
-        app.controller('myCtrl', function($scope, $http) {
+        /*app.controller('myCtrl', function($scope, $http) {
             $http({
                 method : "GET",
                 url : "/home/getModels"
@@ -148,6 +156,15 @@
             }, function myError(response) {
                 console.log(response.statusText);
             });
+        });*/
+        app.controller('myCtrl', function($scope){
+            $scope.models = [
+                    'Form100',
+                    'Form200',
+                    'Form300',
+                    'Form400',
+                    'Form500'
+                ];
         });
     </script>
 

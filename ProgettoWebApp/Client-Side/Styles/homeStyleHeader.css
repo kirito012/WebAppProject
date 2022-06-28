@@ -338,21 +338,18 @@ header .bottom label:hover .rect .white .arrow{
 }
 
 
-
-header .navigation .add .adding .machines{
-    display: none;
-}
-
 header .navigation .add .adding .machines{
     position: absolute;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+    flex-direction: column;
     top: 0;
     left: 60px;
     width: 0px;
     height: 40px;
     background: #f1f1f1;
+    border-left: 2px solid #fff;
     z-index: 5;
     animation: 1s ease forwards;
     overflow: hidden;
@@ -406,17 +403,21 @@ header .navigation .add .adding{
 
 
 header .navigation .add .adding form .search input:focus ~ .models{
-    display: flex;
+    height: 120px;
 }
 
 header .navigation .add .adding form .search .models{
-    position: relative;
-    display: none;
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    display: flex;
     flex-direction: column;
-    width: 200px;
+    width: auto;
+    height: 0;
     background: #4f829c;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    transition: 0.3s ease;
+    transition-delay: 0.1s;
+    z-index: 6;
 }
 
 header .navigation .add .adding form .search .models ul{
@@ -428,11 +429,57 @@ header .navigation .add .adding form .search .models ul{
 }
 
 header .navigation .add .adding form .search .models ul li{
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     list-style: none;
     width: 200px;
     height: 40px;
-    border: 1px solid black;
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+header .navigation .add .adding .machines .title{
+    color: #4f829c;
+}
+
+header .navigation .add .adding .machines form{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+header .navigation .add .adding .machines form input[type='text']{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 260px;
+    height: 40px;
+    background: #4f829c;
+    border: 5px solid #fff;
+    color: #fff;
+    padding: 5px;
+}
+
+::-webkit-input-placeholder { 
+    color: #fff;
+}
+
+header .navigation .add .adding .machines form input[type='submit']{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4f829c;
+    border: 5px solid #fff;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
 }
