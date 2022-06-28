@@ -125,12 +125,15 @@ app.get("/home/getModels", (req,res) => {
       let lightTable = [];
 
       con.query('SELECT * FROM macchine.modelli',function(error, results, fields) {
+        let i = 0;
+        
         results.forEach(element => {
-          lightTable.push(element.name);
+          lightTable[i] = element.name;
+          i++;
         });
-      })
 
-      res.send(lightTable);
+        res.send(lightTable);
+      })
     }
   }
 })
