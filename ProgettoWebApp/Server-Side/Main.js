@@ -125,11 +125,8 @@ app.get("/home/getModels", (req,res) => {
       let lightTable = [];
 
       con.query('SELECT * FROM macchine.modelli',function(error, results, fields) {
-        let i = 0;
-        
-        results.forEach(element => {
+        results.forEach((element, i) => {
           lightTable[i] = element.name;
-          i++;
         });
 
         res.send(lightTable);
@@ -184,6 +181,8 @@ app.post("/addMachine", (req,res) => {
     }
   }
 })
+
+
 
 con.connect(function(err) {
   if (err) throw err;
