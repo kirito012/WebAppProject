@@ -29,23 +29,36 @@ app.use(session({
 }));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname+"/../Client-Side/template/index.html"));
-
   if (req.session){
     if (req.session.secret){
       Functions.Redirect(res,"/home");
+      return;
     }
   }
+
+  res.sendFile(path.join(__dirname+"/../Client-Side/template/index.html"));
 })
 
 app.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname+"/../Client-Side/template/home.html"));
-
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
+      return;
     }
   }
+
+  res.sendFile(path.join(__dirname+"/../Client-Side/template/home.html"));
+})
+
+app.get("/personal", (req, res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+      return;
+    }
+  }
+
+  res.sendFile(path.join(__dirname+"/../Client-Side/template/personal.html"));
 })
 
 app.post("/register", (req, res) => {
@@ -114,28 +127,38 @@ app.post("/logout", (req, res) => {
   }
 })
 
+app.post("/personalArea", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+    }
+    else{
+      Functions.Redirect(res,"/personal",);
+    }
+  }
+})
+
 app.post("/aggiungiMacchina", (req,res) => {
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
-      return;
     }
+    else{
+      let model = req.body.model;
+      let id = req.body.id;
+      let customname = req.body.customname;
 
-    let model = req.body.model;
-    let id = req.body.id;
-    let customname = req.body.customname;
-
-    con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
-      if (error) throw error;
-      if (results.length > 0){
-        let qr = 'INSERT INTO macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
-        con.query(qr, function(error, results, fields) {
-          if (error) throw error;
-          Functions.Redirect(res,"/home");
-        })
-      }
-    })
-
+      con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0){
+          let qr = 'INSERT INTO macchine (model, uniqueid, parent, customname) VALUES ("' + model + '", "' + id + '", "' + results[0].id + '", "' + customname + '");'
+          con.query(qr, function(error, results, fields) {
+            if (error) throw error;
+            Functions.Redirect(res,"/home");
+          })
+        }
+      })
+    }
   }
 })
 
