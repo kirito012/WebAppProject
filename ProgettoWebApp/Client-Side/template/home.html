@@ -136,7 +136,7 @@
         var app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope, $http) {
             $http({
-                method : "POSTd",
+                method : "GET",
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
