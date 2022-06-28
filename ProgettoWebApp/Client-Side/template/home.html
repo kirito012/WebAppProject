@@ -61,7 +61,7 @@
                 <div class="add">
                     <div class="adding">
                         <div class="machines">
-                            <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl as main">
+                            <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
                                 <div class="search">
                                     <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi...">
                                 </div>
@@ -74,7 +74,7 @@
                                 <input type="submit" name="submit">
                             </form>
                             <div class="machine">
-                                <h4 ng-repeat="model in response.models">{{ main.model }}</h4>
+                                <h4 ng-repeat="model in models">{{ model }}</h4>
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 method : "GET",
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
-                $scope.models = response.data;
+                $scope.models = response.data.records;
                 }, function myError(response) {
                 console.log(response.statusText);
             });
