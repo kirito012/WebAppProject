@@ -140,7 +140,7 @@
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
-                console.log(response.data);
+                console.log(models.model0);
                 }, function myError(response) {
                 console.log(response.statusText);
             });
