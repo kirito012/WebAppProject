@@ -63,15 +63,20 @@
                         <div class="machines">
                             <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
                                 <div class="search">
-                                    <input type="text" name="search" id="" placeholder="Cerca tra i tuoi dispositivi..." ng-model="test">
+                                    <input type="text" name="search" id="" placeholder="Cerca il modello..." ng-model="test">
+                                    <div class="models">
+                                        <ul class="model">
+                                            <li ng-repeat="model in models | filter: test">{{ model }}></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="badgeNumber">
-                                    <input type="text" name="badgeNumber">
+                                    <input type="text" name="badgeNumber" placeholder="Numero di matricola">
                                 </div>
                                 <div class="customName">
-                                    <input type="text" name="name">
+                                    <input type="text" name="name" placeholder="Nome personalizzato">
                                 </div>
-                                <input type="submit" name="submit">
+                                <input type="submit" value="Aggiungi" name="submit">
                                 <div class="machine">
                                     <h4 ng-repeat="model in models | filter: test">{{ model }}</h4>
                                 </div>
@@ -139,8 +144,8 @@
                 method : "GET",
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
-                $scope.models = response.data.records;
-                }, function myError(response) {
+                $scope.models = response.data;
+            }, function myError(response) {
                 console.log(response.statusText);
             });
         });
