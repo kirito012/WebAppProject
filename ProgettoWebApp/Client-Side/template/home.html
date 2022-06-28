@@ -74,7 +74,7 @@
                                 <input type="submit" name="submit">
                             </form>
                             <div class="machine">
-                                <h4 ng-init="firstName='John';lastName='Doe'" ng-bind="firstname"></h4>
+                                <h4 ng.repeat="model in vm.models">{{ model }}</h4>
                             </div>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 method : "GET",
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
-                $scope.models = "ciao";
+                $scope.models = response.data;
                 }, function myError(response) {
                 console.log(response.statusText);
             });
