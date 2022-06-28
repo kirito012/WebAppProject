@@ -116,7 +116,7 @@ app.post("/logout", (req, res) => {
   }
 })
 
-app.get("/getModels", (req,res) => {
+app.post("/getModels", (req,res) => {
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
