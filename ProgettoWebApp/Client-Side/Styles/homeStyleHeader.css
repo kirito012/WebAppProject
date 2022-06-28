@@ -20,7 +20,7 @@ header{
     align-items: center;
     flex-direction: column;
     width: 90px;
-    height: 100%;
+    height: 100vh;
     top: 0;
     left: 0;
     background: #4f829c;
@@ -53,8 +53,9 @@ header .add a, header .personal a, header .logout label{
     flex-direction: column;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 15px;
     background: #fff;
+    cursor: pointer;
 }
 
 header .logout label input{
@@ -67,7 +68,7 @@ header .add a ion-icon{
     color: #4f829c;
 }
 
-header .personal a ion-icon, header .logout label ion-icon {
+header .personal a ion-icon {
     position: relative;
     font-size: 1.5em;
     color: #4f829c;
@@ -81,7 +82,7 @@ header .menu .menuToggle, header .remove .menuToggle1{
     flex-direction: column;
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 15px;
     background: #fff;
     gap: 5px;
     cursor: pointer;
@@ -108,7 +109,9 @@ header .menu .menuToggle.active .line, header .remove .menuToggle1 .line{
     position: absolute;
 }
 
-header .remove .menuToggle .line
+header .remove .menuToggle1.active .line{
+    position: relative;
+}
 
 header .menu .menuToggle.active{
     gap: 0;
@@ -144,7 +147,7 @@ header .add .subtitle, header .menu .subtitle, header .personal .subtitle, heade
     width: 80px;
 }
 
-header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .logout .subtitle::before{
+header .add .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .remove .subtitle::before{
     content: '';
     position: absolute;
     left: -5px;
@@ -159,9 +162,6 @@ header .add a:hover ~ .subtitle, header .menu .menuToggle:hover ~ .subtitle, hea
     transform: translateX(-130px);
 }
 
-
-
-
 header.active .add, 
 header.active .menu,
 header.active .bottom{
@@ -173,5 +173,128 @@ header.active{
     width: 40px;
     height: 40px;
     margin: 10px;
-    border-radius: 50%;
+    border-radius: 15px;
+}
+
+header .navigation{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    background: #f1f1f1;
+    left: 90px;
+    top: 0;
+    height: 100%;
+    width: 500px;
+    gap: 25px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+header .navigation li{
+    position: relative;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+header .navigation.active{
+    width: 0px;
+}
+
+header .navigation li a{
+    text-decoration: none;
+    font-size: 2.5em;
+    color: #4f829c;
+    letter-spacing: 2px;
+    transition: 0.3s ease;
+    z-index: 5;
+}
+
+header .navigation li a:hover{
+    letter-spacing: 5px;
+}
+
+header .navigation li a::before{
+    content: attr(data-after);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    color: #4f829c;
+    opacity: 0.2;
+    z-index: -1;
+    font-size: 4rem;
+    letter-spacing: 250px;
+    transition: 0.3s ease letter-spacing;
+}
+
+header .navigation li:hover a::before{
+    transform: translate(-50%, -50%) scale(1);
+    letter-spacing: initial;
+}
+
+
+
+
+
+
+header .bottom label .rect{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 17px;
+    height: 22px;
+    border: 2px solid #4f829c;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+header .bottom label .rect .white{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: -5px;
+    width: 10px;
+    height: 12px;
+    background: #fff;
+}
+
+header .bottom label .rect .white .arrow{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 2px;
+    background: #4f829c;
+    transition: 0.3s ease;
+}
+
+header .bottom label .rect .white .arrow::before{
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 7px;
+    width: 2px;
+    background: #4f829c;
+    transform:translateY(-2px) translateX(-1.5px) rotate(-45deg);
+}
+
+header .bottom label .rect .white .arrow::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 7px;
+    width: 2px;
+    background: #4f829c;
+    transform:translateY(2px) translateX(-1.5px) rotate(45deg);
+}
+
+header .bottom label:hover .rect .white .arrow{
+    transform: translateX(7px);
 }
