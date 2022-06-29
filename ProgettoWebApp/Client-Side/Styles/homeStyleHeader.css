@@ -201,6 +201,14 @@ header .navigation .activator .content:hover ~ .subtitle{
     transform: translateX(-110px);
 }
 
+header .navigation .activator .content hr{
+    transition: 0.3s ease;
+}
+
+header .navigation .activator .content.active hr{
+    transform: rotate(45deg);
+}
+
 header.active .menu,
 header.active .bottom{
     display: none;
@@ -221,7 +229,7 @@ header .navigation{
     align-items: center;
     flex-direction: column;
     align-items: center;
-    background: #f1f1f1;
+    background: #d1d1d1;
     left: 90px;
     top: 0;
     height: 100%;
@@ -348,10 +356,10 @@ header .navigation .add .adding .machines{
     left: 60px;
     width: 0px;
     height: 40px;
-    background: #f1f1f1;
+    background: #d1d1d1;
     border-left: 2px solid #fff;
     z-index: 5;
-    animation: 1s ease forwards;
+    animation: 0.7s ease forwards;
     overflow: hidden;
 }
 
@@ -366,7 +374,7 @@ header .navigation .add .adding .machines{
 }
 
 header .navigation .add .adding .machines.active{
-    animation: 1s ease forwards;
+    animation: 0.7s ease forwards;
 }
 
 @keyframes boxRemove {

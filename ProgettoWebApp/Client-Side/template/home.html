@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="logout" id="logout">
+                        <input type="submit" value="logout" id="logout" >
                     </label>
                     <span class="subtitle">Logout</span>
                 </form>
@@ -67,7 +67,7 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li class="list" onmouseover="input.value = this.innerHTML; console.log(this.innerHTML);" ng-repeat="model in models | filter: test">{{ model }}</li>
+                                            <li class="list" onmouseover="input.value = this.innerHTML;" ng-repeat="model in models | filter: test">{{ model }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -98,6 +98,9 @@
             }
             else if(menu.className == "menuToggle"){
                 navigation.classList.toggle("active");
+                adding.classList.remove("active");
+                box.style.animationName = "boxRemove";
+                box.classList.remove("active");
             }
         }
         
@@ -116,7 +119,7 @@
                 navigation.classList.add("active");
                 box.style.animationName = "boxRemove";
                 box.classList.remove("active");
-                add.classList.remove("active");
+                adding.classList.remove("active");
             }
         }
 
@@ -129,10 +132,10 @@
             box.classList.toggle("active");
             if(box.className == "machines active"){
                 box.style.animationName = "boxReveal";
-                add.classList.toggle("active");
+                adding.classList.toggle("active");
             }else if(box.className == "machines"){
                 box.style.animationName = "boxRemove";
-                add.classList.toggle("active");
+                adding.classList.toggle("active");
             }
         }
 
