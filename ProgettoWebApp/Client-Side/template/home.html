@@ -223,8 +223,11 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
-                let list = document.querySelectorAll(".listDevice");
-                console.log(list.length);
+                $scope.class = function(){
+                    let list = document.querySelectorAll(".listDevice");
+                    console.log(list.length);
+                }
+                setTimeout(class(), 1000);
             }, function myError(response) {
                 
             });
