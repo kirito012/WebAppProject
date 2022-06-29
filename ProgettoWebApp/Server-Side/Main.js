@@ -147,46 +147,49 @@ app.get("/home/getMachines", (req,res) => {
         if (error) throw error;
         if (results.length > 0){
           let utente = results[0];
+          let JsonData = [];
+          let querydata = [];
 
-          var querydata = [];
-
-          con.query('SELECT * FROM macchine.matricole where JSON_CONTAINS(matricole.attacchedusers, "['+ utente.id +']")', function(error, resultsf, fields){
+          let qr = 'SELECT * FROM macchine.matricole WHERE NOT JSON_SEARCH(attachedusers,"all","'+ utente.id +'") IS NULL';
+          con.query(qr, function(error, resultsf, fields){
             if (error) throw error;
             resultsf.forEach((device, index) => {
               let model = device.model;
               let machines = [];
 
-              device.forEach((element, uniqueid) => {
-                if (element == utente.id){
-                  machines.push(uniqueid);
+              let resultArray = JSON.parse(JSON.parse(JSON.stringify(device.attachedusers)));
+
+              for (let key in resultArray){
+                if (parseInt(resultArray[key]) == utente.id){
+                  machines.push(key);
                 }
-              });
+              }
 
               querydata.push({
                 model: model,
                 machines: machines
               })
+
+            });
+
+            querydata.forEach((element, i) => {
+              con.query('SELECT * FROM utenti.macchine WHERE uniqueid in (?)', [element.machines], function(error, results, fields) {
+                if (error) throw error;
+                if(results.length > 0){
+                  results.forEach(machine => {
+                    JsonData.push({
+                      model: element.model,
+                      uniqueid: machine.uniqueid,
+                      customname: machine.customname,
+                    });
+                  });
+                  if (i == querydata.length -1){
+                    res.send(JsonData);
+                  }
+                }
+              })
             });
           })
-
-          var JsonData = [];
-
-          querydata.forEach((element, i) => {
-            con.query('SELECT * FROM utenti.macchine WHERE uniqueid=?', [element.machines], function(error, results, fields) {
-              if (error) throw error;
-              if(results.length > 0){
-                results.forEach(machine => {
-                  JsonData.push({
-                    model: element.model,
-                    uniqueid: machine.uniqueid,
-                    customname: machine.customname,
-                  });
-                });
-              }
-            })
-          });
-
-          res.send(JsonData);
         }
       })
     }
@@ -223,14 +226,14 @@ app.post("/addMachine", (req,res) => {
             con.query('SELECT * FROM macchine.matricole WHERE model = ?', [model], function(error, resultsm, fields) {
               if (!resultsm[0]){
                 let baseJson = {};
-                baseJson[id] = utente.id;
+                baseJson[id] = results[0].id.toString();
 
                 let newqr = "INSERT INTO macchine.matricole (model,attachedusers) VALUES('"+ model  +"','" + JSON.stringify(baseJson) + "')";
                 con.query(newqr, function(error, results, fields) {if (error) throw error;})
               }
               else{
                 let newJson = JSON.parse(resultsm[0].attachedusers);
-                newJson[id] = utente.id;
+                newJson[id] = results[0].id.toString();
 
                 con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE model = ?', [JSON.stringify(newJson),model], function(error, results, fields) {if (error) throw error;})
               }
