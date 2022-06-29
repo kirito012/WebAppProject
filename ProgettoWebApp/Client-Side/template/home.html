@@ -99,7 +99,7 @@
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
                 <div class="devices">
-                    <ul class="device" ng-app="myAppDevice" ng-controller="myCtrlDevice">
+                    <ul class="device" ng-app="myApp" ng-controller="myCtrl">
                         <li ng-repeat="device in machines">{{ device.model }}</li>
                     </ul>
                 </div>
@@ -217,19 +217,19 @@
             }, function myError(response) {
                 
             });
+            $http({
+                method : "GET",
+                url : "/home/getMachines"
+            }).then(function mySuccess(response) {
+                $scope.machines = response.data;
+                console.log($scope.machines);
+            }, function myError(response) {
+                
+            });
         });
 
     </script>
-
-    <script>
-        var appDevice = angular.module('myAppDevice', []);
-        appDevice.controller('myCtrlDevice', function($scope, $http) {
-        $http.get("/home/getMachines").then(function(response) {
-            $scope.devices = response.data.records;
-            console.log($scope.devices)
-        });
-        });
-    </script>
+    
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
