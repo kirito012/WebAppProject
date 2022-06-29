@@ -90,8 +90,10 @@ app.post("/login", (req, res) => {
     con.query('SELECT * FROM utenti WHERE email = ? AND password = ?', [email, password], function(error, results, fields) {
       if (error) throw error;
       if (results.length > 0){
-        req.session.name = results[0].name;
-        req.session.permission = results[0].permission;
+        let utente = results[0];
+
+        req.session.name = utente.name;
+        req.session.permission = utente.permission;
         req.session.secret = Functions.generateRandomKey();
 
         con.query('UPDATE utenti.utenti SET lastsession = ? WHERE email = ? AND password = ?', [req.session.secret,email, password], function(error, results, fields) {
@@ -135,6 +137,62 @@ app.get("/home/getModels", (req,res) => {
   }
 })
 
+app.get("/home/getMachines", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+    }
+    else{
+      con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0){
+          let utente = results[0];
+
+          var querydata = [];
+
+          con.query('SELECT * FROM macchine.matricole where JSON_CONTAINS(matricole.attacchedusers, "['+ utente.id +']")', function(error, resultsf, fields){
+            if (error) throw error;
+            resultsf.forEach((device, index) => {
+              let model = device.model;
+              let machines = [];
+
+              device.forEach((element, uniqueid) => {
+                if (element == utente.id){
+                  machines.push(uniqueid);
+                }
+              });
+
+              querydata.push({
+                model: model,
+                machines: machines
+              })
+            });
+          })
+
+          var JsonData = [];
+
+          querydata.forEach((element, i) => {
+            con.query('SELECT * FROM utenti.macchine WHERE uniqueid=?', [element.machines], function(error, results, fields) {
+              if (error) throw error;
+              if(results.length > 0){
+                results.forEach(machine => {
+                  JsonData.push({
+                    model: element.model,
+                    uniqueid: machine.uniqueid,
+                    customname: machine.customname,
+                  });
+                });
+              }
+            })
+          });
+
+          res.send(JsonData);
+        }
+      })
+    }
+  }
+})
+
 app.post("/addMachine", (req,res) => {
   if (req.session){
     if (!req.session.secret){
@@ -148,6 +206,8 @@ app.post("/addMachine", (req,res) => {
       con.query('SELECT * FROM utenti WHERE lastsession = ? AND name = ?', [req.session.secret, req.session.name], function(error, results, fields) {
         if (error) throw error;
         if (results.length > 0){
+          let utente = results[0];
+
           con.query('SELECT * FROM macchine.modelli WHERE name = ?', [model], function(error, resultsm, fields) {
             if (error) throw error;
             if (!resultsm[0]){
@@ -156,20 +216,21 @@ app.post("/addMachine", (req,res) => {
             }
           })
 
-          let qr = 'INSERT INTO utenti.macchine (uniqueid, parent, customname) VALUES ("' + id + '", "' + results[0].id + '", "' + customname + '");'
+          let qr = 'INSERT INTO utenti.macchine (uniqueid, parent, customname) VALUES ("' + id + '", "' + utente.id + '", "' + customname + '");'
           con.query(qr, function(error, resultsl, fields) {
             if (error) throw error;
+
             con.query('SELECT * FROM macchine.matricole WHERE model = ?', [model], function(error, resultsm, fields) {
               if (!resultsm[0]){
                 let baseJson = {};
-                baseJson[id] = results[0].id;
+                baseJson[id] = utente.id;
 
                 let newqr = "INSERT INTO macchine.matricole (model,attachedusers) VALUES('"+ model  +"','" + JSON.stringify(baseJson) + "')";
                 con.query(newqr, function(error, results, fields) {if (error) throw error;})
               }
               else{
                 let newJson = JSON.parse(resultsm[0].attachedusers);
-                newJson[id] = results[0].id;
+                newJson[id] = utente.id;
 
                 con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE model = ?', [JSON.stringify(newJson),model], function(error, results, fields) {if (error) throw error;})
               }
