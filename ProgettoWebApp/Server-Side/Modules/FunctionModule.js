@@ -8,13 +8,15 @@ module.exports.DayCheck = function(Day){
   let Today = new Date;
   Today.setHours(23,59,59,998);
   
-  Day = new Date(Day);
-  Day.setHours(23,59,59,998);
+  let newDay = new Date(Day);
+  newDay.setHours(23,59,59,998);
 
-  if (Today < Day){
+  console.log(Today.getFullYear());
+
+  if (Today < newDay){
     return false;
   }
-  else if (Today.getFullYear - 16 > Day.getFullYear){
+  else if (Today.getFullYear() - 16 > newDay.getFullYear()){
     return true;
   }
   else {
