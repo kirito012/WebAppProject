@@ -67,7 +67,7 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li class="list" onmouseover="input.value = this.innerHTML;" ng-repeat="model in models | filter: test">{{ model }}</li>
+                                            <li onmouseover="input.value = this.innerHTML;" onmouseout="input.value ='';" ng-repeat="model in models | filter: test">{{ model }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -78,9 +78,6 @@
                                     <input type="text" name="name" placeholder="Nome personalizzato" autocomplete="off">
                                 </div>
                                 <input type="submit" value="Aggiungi" name="submit">
-                                <div class="machine">
-                                    
-                                </div>
                             </form>
                         </div>
                     </div>
@@ -157,7 +154,7 @@
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
             }, function myError(response) {
-                console.log(response.statusText);
+                
             });
         });
 

@@ -269,8 +269,8 @@ header .navigation li a::before{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    color: #4f829c;
-    opacity: 0.2;
+    color: #fff;
+    opacity: 0.5;
     z-index: -1;
     font-size: 4rem;
     letter-spacing: 250px;
