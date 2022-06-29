@@ -68,7 +68,7 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li onmouseover="input.value = this.innerHTML;" onmouseout="input.value ='';" onclick="setTimeout(()=>{input.value = this.innerHTML;},100);" ng-repeat="model in models | filter: test">{{ model }}</li>
+                                            <li onmouseover="input.value = this.innerHTML;" onmouseout="input.value ='';" onclick="setTimeout(()=>{input.value = this.innerHTML;},350);" ng-repeat="model in models | filter: test">{{ model }}</li>
                                         </ul>
                                     </div>
                                 </div>
