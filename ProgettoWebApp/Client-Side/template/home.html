@@ -180,7 +180,7 @@
                 method : "GET",
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
-                $scope.machines = response.data;
+                $scope.machines = response.data.records;
                 console.log($scope.machines);
             }, function myError(response) {
                 
