@@ -85,7 +85,7 @@
                 </div>
                 <div class="showDevices">
                     <div class="content">
-                        
+
                     </div>
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
@@ -180,8 +180,8 @@
                 method : "GET",
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
-                $scope.machines = response.data.records;
-                console.log(machines);
+                $scope.machines = response.data;
+                console.log(response.data);
             }, function myError(response) {
                 
             });
