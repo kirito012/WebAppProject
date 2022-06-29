@@ -11,8 +11,6 @@ module.exports.DayCheck = function(Day){
   let newDay = new Date(Day);
   newDay.setHours(23,59,59,998);
 
-  console.log(Today.getFullYear());
-
   if (Today < newDay){
     return false;
   }

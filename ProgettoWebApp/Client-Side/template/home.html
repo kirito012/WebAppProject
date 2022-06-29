@@ -100,7 +100,7 @@
                 </div>
                 <div class="devices">
                     <ul class="device" ng-controller="myCtrlDevice">
-                        <li class="listDevice" ng-repeat="device in devices">{{ device.customname + "," + device.model }}</li>
+                        <li class="listDevice" ng-repeat="device in devices">{{ class() + device.customname + "," + device.model }}</li>
                     </ul>
                 </div>
             </ul>
@@ -227,7 +227,6 @@
                     let list = document.querySelectorAll(".listDevice");
                     console.log(list.length);
                 }
-                setTimeout(class(), 1000);
             }, function myError(response) {
                 
             });
