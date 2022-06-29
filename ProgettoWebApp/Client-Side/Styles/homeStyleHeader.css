@@ -496,3 +496,111 @@ header .navigation .add .adding .machines form input[type='submit']{
     padding: 10px;
     cursor: pointer;
 }
+
+
+
+
+
+header .navigation .showDevices .content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+header .navigation .showDevices .content .cashRegister{
+    position: relative;
+    display: flex;
+    justify-items: center;
+    align-items: bottom;
+    width: 20px;
+    border-bottom:10px solid #fff;
+    border-left:2px solid transparent;
+    border-right:2px solid transparent;
+}
+
+header .navigation .showDevices .content .cashRegister .button{
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #4f829c;
+    bottom: -5px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(1){
+    margin: 0 2px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(2){
+    margin: 0 12px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(3){
+    margin: -4px 2px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(4){
+    margin: -4px 12px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(5){
+    margin: 0px 7px;
+}
+
+header .navigation .showDevices .content .cashRegister .button:nth-child(6){
+    margin: -4px 7px;
+}
+
+header .navigation .showDevices .content .cashRegisterBottom{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 7px;
+    background: #fff;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    transition: 0.5s ease;
+    top: 29px;
+}
+
+header .navigation .showDevices .content .cashRegisterBottom::after{
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 3px;
+    border-radius: 8px;
+    background: #4f829c;
+}
+
+header .navigation .showDevices .content .display{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 5px;
+    border-radius: 2px;
+    background: #fff;
+    margin-bottom: 3px;
+}
+
+header .navigation .showDevices .content .display::after{
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 3px;
+    background: #fff;
+    bottom: -3px;
+}
+
+header .navigation .showDevices .content .display::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    border-radius: 5px;
+    background: #4f829c;
+}

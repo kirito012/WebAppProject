@@ -85,7 +85,16 @@
                 </div>
                 <div class="showDevices">
                     <div class="content">
-
+                        <div class="display"></div>
+                        <div class="cashRegister">
+                            <span class="button"></span>
+                            <span class="button"></span>
+                            <span class="button"></span>
+                            <span class="button"></span>
+                            <span class="button"></span>
+                            <span class="button"></span>
+                        </div>
+                        <div class="cashRegisterBottom"></div>
                     </div>
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
@@ -180,7 +189,7 @@
                 method : "GET",
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
-                $scope.machines = response.data.records;
+                $scope.machines = response.data;
                 console.log($scope.machines);
             }, function myError(response) {
                 
