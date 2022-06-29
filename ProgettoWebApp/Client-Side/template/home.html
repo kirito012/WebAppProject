@@ -199,10 +199,6 @@
             }
         }
 
-
-        var list = document.querySelectorAll(".listDevice");
-        console.log(list.length);
-
     </script>
 
     <script>
@@ -227,6 +223,8 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
+                let list = document.querySelectorAll(".listDevice");
+                console.log(list.length);
             }, function myError(response) {
                 
             });
