@@ -172,7 +172,6 @@ app.get("/home/getMachines", (req,res) => {
 
             });
 
-
             querydata.forEach((element, i) => {
               con.query('SELECT * FROM utenti.macchine WHERE uniqueid in (?)', [element.machines], function(error, results, fields) {
                 if (error) throw error;
