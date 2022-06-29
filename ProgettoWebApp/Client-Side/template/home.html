@@ -218,7 +218,7 @@
             });
         });
 
-        app.controller('myCtrlDevice', function($scope) {
+        app.controller('myCtrlDevice', function($scope, $http) {
             $http({
                 method : "GET",
                 url : "/home/getMachines"
