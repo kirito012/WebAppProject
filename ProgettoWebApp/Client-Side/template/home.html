@@ -181,7 +181,7 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.machines = response.data;
-                console.log(machines);
+                console.log($scope.machines);
             }, function myError(response) {
                 
             });
