@@ -57,7 +57,7 @@
                         <hr class="orizontal">
                         <hr class="vertical">
                     </div>
-                    <span class="subtitle">Aggiungi macchina</span>
+                    <span class="subtitle">Aggiungi dispositivo </span>
                 </div>
                 <div class="add">
                     <div class="adding">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
                 <div class="showDevices">
-                    <div class="content">
+                    <div class="content c1">
                         <div class="display"></div>
                         <div class="cashRegister">
                             <span class="button"></span>
@@ -99,7 +99,9 @@
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
                 <div class="devices">
-
+                    <ul class="device" ng-app="myApp" ng-controller="myCtrl">
+                        <li ng-repeat="device in machines">{{ device.customname }}</li>
+                    </ul>
                 </div>
             </ul>
     </header>
@@ -117,6 +119,8 @@
                 adding.classList.remove("active");
                 box.style.animationName = "boxRemove";
                 box.classList.remove("active");
+                devices.style.animationName = "boxRemove1";
+                devices.classList.remove("active");
             }
         }
         
@@ -136,24 +140,52 @@
                 box.style.animationName = "boxRemove";
                 box.classList.remove("active");
                 adding.classList.remove("active");
+                devices.style.animationName = "boxRemove1";
+                devices.classList.remove("active");
             }
         }
 
-
+        let opened= false;
+        let openedTwice = false;
 
         let adding = document.querySelector(".content");
         let add = document.querySelector(".add");
         let box = document.querySelector(".machines");
         adding.onclick = () => {
             box.classList.toggle("active");
+            openedTwice = true;
             if(box.className == "machines active"){
                 box.style.animationName = "boxReveal";
+                if(opened){
+                    devices.style.animationName = "boxRemove1";
+                    devices.classList.remove("active");
+                }
                 adding.classList.toggle("active");
             }else if(box.className == "machines"){
                 box.style.animationName = "boxRemove";
                 adding.classList.toggle("active");
             }
         }
+
+
+        let devicesToggle = document.querySelector(".content.c1");
+        let devices = document.querySelector(".devices")
+        devicesToggle.onclick = () => {
+            devices.classList.toggle("active");
+            opened = true;
+            if(devices.className == "devices active"){
+                devices.style.animationName = "boxReveal1";
+                if(openedTwice){
+                    box.style.animationName = "boxRemove";
+                    box.classList.remove("active");
+                    adding.classList.remove("active");
+                }
+            }else if(devices.className == "devices"){
+                devices.style.animationName = "boxRemove1";
+            }
+        }
+
+
 
         var clicked = false;
 

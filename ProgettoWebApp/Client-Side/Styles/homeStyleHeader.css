@@ -604,3 +604,53 @@ header .navigation .showDevices .content .display::before{
     border-radius: 5px;
     background: #4f829c;
 }
+
+
+
+
+
+header .navigation .devices{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 0;
+    height: 40px;
+    background: #d1d1d1;
+    top: 70px;
+    left: 500px;
+    border-left: 2px solid #fff;
+    z-index: 5;
+    animation: 0.7s ease forwards;
+    overflow: hidden;
+}
+
+header .navigation .add .adding .machines.active{
+    animation: 0.7s ease forwards;
+}
+
+
+
+@keyframes boxReveal1 {
+    50%{
+        width: 300px;
+        height: 40px;
+    }100%{
+        height: 300px;
+        width: 300px;
+    }
+}
+
+
+@keyframes boxRemove1 {
+    0%{
+        width: 300px;
+        height: 300px;
+    }
+    50%{
+        width: 300px;
+        height: 40px;
+    }100%{
+        height: 40px;
+        width: 0px;
+    }
+}
