@@ -100,7 +100,7 @@
                 </div>
                 <div class="devices">
                     <ul class="device" ng-controller="myCtrlDevice">
-                        <li class="listDevice" ng-repeat="device in devices">{{ device }}</li>
+                        <li class="listDevice" ng-repeat="device in devices">{{ device.customname, device.models }}</li>
                     </ul>
                 </div>
             </ul>
