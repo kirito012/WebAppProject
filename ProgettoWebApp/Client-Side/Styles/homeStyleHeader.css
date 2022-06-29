@@ -45,7 +45,7 @@ header .menu, header .personal, header .logout, header .remove{
     flex-direction: column;
 }
 
-header .navigation .activator{
+header .navigation .activator,  header .navigation .showDevices{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -54,6 +54,12 @@ header .navigation .activator{
     top: 40px;
     right: 40px;
 }
+
+header .navigation .showDevices{
+    top: 90px;
+}
+
+
 
 header .personal a, header .logout label{
     position: relative;
@@ -68,7 +74,7 @@ header .personal a, header .logout label{
     cursor: pointer;
 }
 
-header .navigation .activator .content{
+header .navigation .activator .content,  header .navigation .showDevices .content{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -76,7 +82,6 @@ header .navigation .activator .content{
     width: 40px;
     height: 40px;
     border-radius: 15px;
-    background: #fff;
     cursor: pointer;
     background: #4f829c;
 }
@@ -164,7 +169,7 @@ header .remove .menuToggle .line:nth-child(2){
     transform: rotate(-45deg);
 }
 
-header .navigation .activator .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle, header .remove .subtitle{
+header .navigation .activator .subtitle, header .menu .subtitle, header .personal .subtitle, header .logout .subtitle, header .remove .subtitle, header .navigation .showDevices .subtitle{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -181,7 +186,7 @@ header .navigation .activator .subtitle, header .menu .subtitle, header .persona
     height: 40px;
 }
 
-header .navigation .activator .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .remove .subtitle::before{
+header .navigation .activator .subtitle::before,  header .menu .subtitle::before, header .personal .subtitle::before, header .logout .subtitle::before, header .remove .subtitle::before, header .navigation .showDevices .subtitle::before{
     content: '';
     position: absolute;
     left: -5px;
@@ -196,7 +201,7 @@ header .menu .menuToggle:hover ~ .subtitle, header .personal a:hover ~ .subtitle
     transform: translateX(-130px);
 }
 
-header .navigation .activator .content:hover ~ .subtitle{
+header .navigation .activator .content:hover ~ .subtitle, header .navigation .showDevices .content:hover ~ .subtitle{
     opacity: 1;
     transform: translateX(-110px);
 }
