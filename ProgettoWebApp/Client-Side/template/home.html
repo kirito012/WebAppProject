@@ -83,6 +83,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="showDevices">
+                    <div class="content">
+                        
+                    </div>
+                    <span class="subtitle">I tuoi dispositivi</span>
+                </div>
+                <div class="devices">
+
+                </div>
             </ul>
     </header>
 
@@ -164,6 +173,15 @@
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
+            }, function myError(response) {
+                
+            });
+            $http({
+                method : "GET",
+                url : "/home/getMachines"
+            }).then(function mySuccess(response) {
+                $scope.machines = response.data.records;
+                console.log(machines);
             }, function myError(response) {
                 
             });
