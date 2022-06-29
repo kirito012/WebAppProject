@@ -9,7 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 </head>
-<body>
+<body ng-app="myApp">
     <header class="active">
             <div class="remove">
                 <div class="menuToggle1 active">
@@ -63,7 +63,7 @@
                     <div class="adding">
                         <div class="machines">
                             <h2 class="title">Aggiungi un nuovo dispositivo</h2>
-                            <form action="addMachine" method="post" ng-app="myApp" ng-controller="myCtrl">
+                            <form action="addMachine" method="post" ng-controller="myCtrl">
                                 <div class="search">
                                     <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
                                     <div class="models">
@@ -99,8 +99,8 @@
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
                 <div class="devices">
-                    <ul class="device" ng-app="myApp" ng-controller="myCtrl">
-                        <li ng-repeat="device in machines">{{ device.model }}</li>
+                    <ul class="device" ng-controller="myCtrlDevice">
+                        <li class="listDevice" ng-repeat="device in devices">{{ device }}</li>
                     </ul>
                 </div>
             </ul>
@@ -200,7 +200,6 @@
         }
 
 
-
     </script>
 
     <script>
@@ -217,17 +216,18 @@
             }, function myError(response) {
                 
             });
+        });
+
+        app.controller('myCtrlDevice', function($scope) {
             $http({
                 method : "GET",
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
-                $scope.machines = response.data;
-                console.log($scope.machines);
+                $scope.devices = response.data;
             }, function myError(response) {
                 
             });
         });
-
     </script>
     
 
