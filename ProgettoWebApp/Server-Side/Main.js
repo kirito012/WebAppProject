@@ -3,19 +3,54 @@ let bodyParser = require("body-parser");
 let session = require('express-session');
 let path = require('path');
 let mysql = require("mysql");
+let mqtt = require("mqtt");
 let Functions = require("./Modules/FunctionModule");
 
+let connectUrl = "mqtt://localhost:1883"
 let app = express()
 let jsonParser = bodyParser.json()
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
 let port = 8081
+let usersTopics = {};
 
 let con = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Olivetti1",
-  database: "utenti"
+  database: "utenti",
+  multipleStatements: true
 });
+
+const client = mqtt.connect(connectUrl, {
+  clientId: Functions.generateRandomKey(),
+  clean: true,
+  connectTimeout: 4000,
+  username: 'User1',
+  password: 'Olivetti',
+  reconnectPeriod: 1000,
+})
+
+function connectToNewTopic(model,id,user){
+  usersTopics[user] = {model: model, id: id, data: {}};
+
+  let topic = `${model}/${id}/test`;
+
+  client.subscribe([topic], () => {
+    console.log(`${user} subscribed to topic '${topic}'`);
+  })
+}
+
+function disconnectFromTopic(user){
+  let model = usersTopics[user].model;
+  let id = usersTopics[user].id;
+
+  let topic = `${model}/${id}/test`;
+  
+  client.unsubscribe([topic], () => {
+    usersTopics[user] = {};
+    console.log(`${user} unsubscribed to topic '${topic}'`);
+  })
+}
 
 app.use(jsonParser);
 app.use(urlencodedParser);
@@ -118,6 +153,25 @@ app.post("/logout", (req, res) => {
   }
 })
 
+app.post("/changeDevice", (req,res) => {
+  if (req.session){
+    if (!req.session.secret){
+      Functions.Redirect(res,"/","missingSession");
+    }
+    else{
+      let model = req.body.model;
+      let id = req.body.id;
+      let user = req.session.name;
+
+      if (usersTopics[user] && usersTopics[user].length > 0){
+        disconnectFromTopic(user);
+      }
+
+      connectToNewTopic(model,id,user);
+    }
+  }
+})
+
 app.get("/home/getModels", (req,res) => {
   if (req.session){
     if (!req.session.secret){
@@ -147,48 +201,22 @@ app.get("/home/getMachines", (req,res) => {
         if (error) throw error;
         if (results.length > 0){
           let utente = results[0];
-          let JsonData = [];
-          let querydata = [];
 
-          let qr = 'SELECT * FROM macchine.matricole WHERE NOT JSON_SEARCH(attachedusers,"all","'+ utente.id +'") IS NULL';
-          con.query(qr, function(error, resultsf, fields){
+          let query = `SELECT utenti.matricole.customname,  utenti.utenti.name as parentName, macchine.modelli.name as model, utenti.matricole.uniqueid
+          FROM macchine.corrispondenze JOIN utenti.matricole on corrispondenze.matricola_id = utenti.matricole.id
+                         JOIN utenti.utenti on corrispondenze.utente_id = utenti.utenti.id
+                                       JOIN macchine.modelli on corrispondenze.modello_id = macchine.modelli.idmodelli
+          WHERE corrispondenze.utente_id = ?;`
+          
+          con.query(query, [utente.id], function(error, Data, fields) {
             if (error) throw error;
-            resultsf.forEach((device, index) => {
-              let model = device.model;
-              let machines = [];
 
-              let resultArray = JSON.parse(JSON.parse(JSON.stringify(device.attachedusers)));
+            let newJson = [];
 
-              for (let key in resultArray){
-                if (parseInt(resultArray[key]) == utente.id){
-                  machines.push(key);
-                }
-              }
-
-              querydata.push({
-                model: model,
-                machines: machines
-              })
-
-            });
-
-            querydata.forEach((element, i) => {
-              con.query('SELECT * FROM utenti.macchine WHERE uniqueid in (?)', [element.machines], function(error, results, fields) {
-                if (error) throw error;
-                if(results.length > 0){
-                  results.forEach(machine => {
-                    JsonData.push({
-                      model: element.model,
-                      uniqueid: machine.uniqueid,
-                      customname: machine.customname,
-                    });
-                  });
-                  if (i == querydata.length -1){
-                    res.send(JsonData);
-                  }
-                }
-              })
-            });
+            Data.forEach((element) => {
+              newJson.push(JSON.parse(JSON.stringify(element)));
+            })
+            res.send(newJson);
           })
         }
       })
@@ -211,34 +239,24 @@ app.post("/addMachine", (req,res) => {
         if (results.length > 0){
           let utente = results[0];
 
+          let modelId = 0
+
           con.query('SELECT * FROM macchine.modelli WHERE name = ?', [model], function(error, resultsm, fields) {
             if (error) throw error;
             if (!resultsm[0]){
               Functions.Redirect(res,"/home","machinemissing");
               return;
             }
+            modelId = resultsm[0].idmodelli;
           })
 
-          let qr = 'INSERT INTO utenti.macchine (uniqueid, parent, customname) VALUES ("' + id + '", "' + utente.id + '", "' + customname + '");'
+          let qr = 'INSERT INTO utenti.matricole (uniqueid, parent, customname) VALUES ("' + id + '", "' + utente.id + '", "' + customname + '"); SELECT * FROM utenti.matricole WHERE uniqueid = "' + id + '";'
           con.query(qr, function(error, resultsl, fields) {
             if (error) throw error;
-
-            con.query('SELECT * FROM macchine.matricole WHERE model = ?', [model], function(error, resultsm, fields) {
-              if (!resultsm[0]){
-                let baseJson = {};
-                baseJson[id] = results[0].id.toString();
-
-                let newqr = "INSERT INTO macchine.matricole (model,attachedusers) VALUES('"+ model  +"','" + JSON.stringify(baseJson) + "')";
-                con.query(newqr, function(error, results, fields) {if (error) throw error;})
-              }
-              else{
-                let newJson = JSON.parse(resultsm[0].attachedusers);
-                newJson[id] = results[0].id.toString();
-
-                con.query('UPDATE macchine.matricole SET attachedusers = ? WHERE model = ?', [JSON.stringify(newJson),model], function(error, results, fields) {if (error) throw error;})
-              }
-              return res.status(204).send();
-            })
+            con.query('INSERT INTO macchine.corrispondenze VALUES(?, ?, ?)',[resultsl[1][0].id,utente.id,modelId], function(error, resultsl, fields) {
+              if (error) throw error;
+              res.status(204).send({});
+            });
           })
         }
       })
@@ -246,13 +264,19 @@ app.post("/addMachine", (req,res) => {
   }
 })
 
+client.on('connect', () => {
+  console.log('Connected to the broker!');
+});
 
+client.on('message', (topic, payload) => {
+  console.log('Received Message:', topic, payload.toString())
+})
 
 con.connect(function(err) {
   if (err) throw err;
-  console.log("Connected!");
+  console.log("Started server!");
 });
  
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-}) 
+  console.log(`Web app listening on port ${port}`)
+});
