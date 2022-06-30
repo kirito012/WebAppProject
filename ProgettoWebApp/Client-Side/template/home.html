@@ -103,7 +103,7 @@
                     <ul class="device" ng-controller="myCtrlDevice">
                         <li class="listDevice" ng-repeat="device in devices | filter: device">
                             <div class="img">
-                                <img src="{{ device.model }}" alt="">
+                                <img src="../images/{{ device.model }}" alt="">
                             </div>
                             <div class="info">
                                 <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
