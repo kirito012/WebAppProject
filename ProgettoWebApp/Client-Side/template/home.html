@@ -258,11 +258,14 @@
             }, function myError(response) {
                 
             });
-            $http({
-                method: "POST",
-                url : "/home/subscribe"
-            }).then(function mySuccess(response){
-                $scope.array = {model: "modello", id: "id", topics: ["f", "j", "h", "g"]};
+
+            var array = {model: "modello", id: "id", topics: ["f", "j", "h", "g"]};
+
+
+            $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                if(response.data){
+                    console.log("Sent");
+                }
             }, function myError(response) {
                 
             });
