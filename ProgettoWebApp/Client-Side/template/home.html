@@ -68,7 +68,7 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li onmouseover="clicked = false;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
+                                            <li onmouseover="clicked = false; input.value = productName.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
                                                 <div class="img">
                                                     <img src="../images/{{ model }}" alt="">
                                                 </div>
