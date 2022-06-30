@@ -68,7 +68,7 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li onmouseover="clicked = false; input.value = this.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
+                                            <li onmouseover="clicked = false; input.value = this.productName.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
                                                 <div class="img">
                                                     <img src="../images/{{ model + '.png'}}" alt="">
                                                 </div>
@@ -149,7 +149,7 @@
 
     <script>
 
-        var productName = document.querySelector(".productName");
+       
 
         let menu = document.querySelector(".menuToggle");
         let navigation = document.querySelector(".navigation");
@@ -255,6 +255,9 @@
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
+                $scope.write = function(){
+                    var productName = document.querySelector(".productName");
+                }
             }, function myError(response) {
                 
             });
