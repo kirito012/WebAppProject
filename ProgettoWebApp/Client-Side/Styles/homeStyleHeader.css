@@ -52,7 +52,7 @@ header .navigation .activator,  header .navigation .showDevices{
     align-items: center;
     flex-direction: column;
     top: 40px;
-    right: 40px;
+    right: 45px;
 }
 
 header .navigation .showDevices{
@@ -645,10 +645,6 @@ header .navigation .devices{
     animation: 0.7s ease forwards;
     overflow-x: hidden;
     overflow-y: scroll;
-}
-
-header .navigation .devices::-webkit-scrollbar{
-    display: none;
 }
 
 header .navigation .add .adding .machines.active{
