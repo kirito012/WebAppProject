@@ -124,7 +124,13 @@
 
 
 
-
+    <script>
+        list.forEach((item) => {
+                        item.classList.remove("active");
+                        this.classList.add("active");
+                    })
+                list.addEventListene("click", $scope.class());
+    </script>
 
 
 
@@ -262,12 +268,7 @@
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
                 $scope.class = function(){
-                    let list = document.querySelectorAll(".listDevice");
-                    list.forEach((item) => {
-                        item.classList.remove("active");
-                        this.classList.add("active");
-                    })
-                list.addEventListene("click", $scope.class());
+                    var list = document.querySelectorAll(".listDevice");
                 }
               }, function myError(response) {
                 
