@@ -103,7 +103,7 @@
                     <ul class="device" ng-controller="myCtrlDevice">
                         <li class="listDevice" ng-repeat="device in devices | filter: device">
                             <div class="img">
-                                <img src="" alt="">
+                                <img src="{{ device.model }}" alt="">
                             </div>
                             <div class="info">
                                 <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
@@ -114,6 +114,42 @@
                 </div>
             </ul>
     </header>
+
+
+    <section id="data">
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <script>
         let menu = document.querySelector(".menuToggle");
