@@ -270,7 +270,7 @@
                 
             });
            
-            var array = {model: devices.model, id: "id", topics: ["f", "j", "h", "g"]};
+            var array = {model: devices[0].model, id: "id", topics: ["f", "j", "h", "g"]};
 
 
             $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
