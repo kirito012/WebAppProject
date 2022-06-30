@@ -125,11 +125,6 @@
 
 
 
-    
-
-
-
-
 
 
 
@@ -262,6 +257,8 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
+                $scope.list = document.querySelectorAll(".listDevice");
+                console.log(list.lenght);
               }, function myError(response) {
                 
             });
