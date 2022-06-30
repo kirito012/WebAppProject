@@ -117,6 +117,7 @@
                                 <h4 class="badge">{{ device.uniqueid }}</h4>
                             </div>
                         </li>
+                        {{ device() }}
                     </ul>
                 </div>
             </ul>
@@ -266,8 +267,10 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
-                $scope.list = document.querySelectorAll(".listDevice");
-                console.log(list.lenght);
+                $scope.device = function(){
+                    $scope.list = document.querySelectorAll(".listDevice");
+                    console.log(list.lenght);
+                }
               }, function myError(response) {
                 
             });
