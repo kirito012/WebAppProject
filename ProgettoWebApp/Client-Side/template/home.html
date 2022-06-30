@@ -232,6 +232,7 @@
 
 
         var clicked = false;
+        var input = document.querySelector("#inputSearch");
 
         function disable(){
             clicked = true;
@@ -246,8 +247,6 @@
     </script>
 
     <script>
-        var machineList = document.querySelector(".list");
-        var input = document.querySelector("#inputSearch");
 
         let app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope, $http) {
