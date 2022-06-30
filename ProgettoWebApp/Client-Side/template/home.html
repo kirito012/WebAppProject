@@ -261,10 +261,11 @@
             $http({
                 method: "POST",
                 url : "/home/subscribe"
-            }).then(function(response){
+            }).then(function mySuccess(response){
                 $scope.array = {model: "modello", id: "id", topics: ["f", "j", "h", "g"]};
-            })
-        });
+            }, function myError(response) {
+                
+            });
 
         app.controller('myCtrlDevice', function($scope, $http) {
             $http({
