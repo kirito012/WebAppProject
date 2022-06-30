@@ -124,13 +124,7 @@
 
 
 
-    <script>
-        $scope.list.forEach((item) => {
-                        item.classList.remove("active");
-                        this.classList.add("active");
-                    })
-                $scope.list.addEventListene("click", $scope.class());
-    </script>
+    
 
 
 
@@ -267,9 +261,12 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
-                $scope.class = function(){
-                    var list = document.querySelectorAll(".listDevice");
-                }
+                $scope.list = document.querySelectorAll(".listDevice");
+                $scope.list.forEach((item) => {
+                    item.classList.remove("active");
+                    this.classList.add("active");
+                    })
+                $scope.list.addEventListene("click", $scope.class());
               }, function myError(response) {
                 
             });
