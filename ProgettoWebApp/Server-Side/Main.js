@@ -30,13 +30,15 @@ const client = mqtt.connect(connectUrl, {
   reconnectPeriod: 1000,
 })
 
-function connectToNewTopic(model,id,user){
-  usersTopics[user] = {model: model, id: id, data: {}};
+function connectToNewTopic(model,id,topics,user){
+  usersTopics[user] = {model: model, id: id, data: {},subbedTopics: topics};
 
-  let topic = `${model}/${id}/test`;
+  usersTopics[user].subbedTopics.forEach((element) =>{
+    let topic = `${model}/${id}/${element}`;
 
-  client.subscribe([topic], () => {
-    console.log(`${user} subscribed to topic '${topic}'`);
+    client.subscribe([topic], () => {
+      console.log(`${user} subscribed to topic '${topic}'`);
+    })
   })
 }
 
@@ -44,12 +46,16 @@ function disconnectFromTopic(user){
   let model = usersTopics[user].model;
   let id = usersTopics[user].id;
 
-  let topic = `${model}/${id}/test`;
-  
-  client.unsubscribe([topic], () => {
-    usersTopics[user] = {};
-    console.log(`${user} unsubscribed to topic '${topic}'`);
+  usersTopics[user].subbedTopics.forEach((element) =>{
+    let topic = `${model}/${id}/${element}`;
+
+    client.unsubscribe([topic], () => {
+      console.log(`${user} subscribed to topic '${topic}'`);
+    })
+    
   })
+
+  usersTopics[user] = {};
 }
 
 app.use(jsonParser);
@@ -153,7 +159,7 @@ app.post("/logout", (req, res) => {
   }
 })
 
-app.post("/changeDevice", (req,res) => {
+app.post("/home/subscribe", (req,res) => {
   if (req.session){
     if (!req.session.secret){
       Functions.Redirect(res,"/","missingSession");
@@ -161,13 +167,14 @@ app.post("/changeDevice", (req,res) => {
     else{
       let model = req.body.model;
       let id = req.body.id;
+      let topics = req.body.topics
       let user = req.session.name;
 
       if (usersTopics[user] && usersTopics[user].length > 0){
         disconnectFromTopic(user);
       }
 
-      connectToNewTopic(model,id,user);
+      connectToNewTopic(model,id,topics,user);
     }
   }
 })
