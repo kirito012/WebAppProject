@@ -770,4 +770,5 @@ header .navigation .devices .device li:hover .info .badge{
   ::-webkit-scrollbar-thumb {
     background: #4f829c;
     border-radius: 4px;
+    border: 1px solid #fff;
   }
