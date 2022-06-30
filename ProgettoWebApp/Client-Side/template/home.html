@@ -261,11 +261,13 @@
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
                 $scope.list = document.querySelectorAll(".listDevice");
-                $scope.list.forEach((item) => {
-                    item.classList.remove("active");
-                    this.classList.add("active");
+                $scope.remove = function(){
+                    $scope.list.forEach((item) => {
+                        item.classList.remove("active");
+                        this.classList.add("active");
                     })
-                $scope.list.addEventListene("click", $scope.class());
+                }
+                $scope.list.addEventListene("click",remove());
               }, function myError(response) {
                 
             });
