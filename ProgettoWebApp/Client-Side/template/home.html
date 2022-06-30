@@ -116,6 +116,8 @@
     </header>
 
 
+
+
     <section id="data">
 
     </section>
@@ -260,14 +262,6 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
-                $scope.list = document.querySelectorAll(".listDevice");
-                $scope.remove = function(){
-                    $scope.list.forEach((item) => {
-                        item.classList.remove("active");
-                        this.classList.add("active");
-                    })
-                }
-                list.addEventListener("click", alert("ddd"));
               }, function myError(response) {
                 
             });
