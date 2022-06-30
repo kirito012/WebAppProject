@@ -65,10 +65,10 @@
                             <h2 class="title">Aggiungi un nuovo dispositivo</h2>
                             <form action="addMachine" method="post" ng-controller="myCtrl">
                                 <div class="search">
-                                    <input type="text" name="search" id="inputSearch" placeholder="Cerca il modello..." ng-model="test" autocomplete="off">
+                                    <input type="text" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li onmouseover="clicked = false; input.value = this.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: test">{{ model }}</li>
+                                            <li onmouseover="clicked = false; input.value = this.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">{{ model }}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -99,8 +99,17 @@
                     <span class="subtitle">I tuoi dispositivi</span>
                 </div>
                 <div class="devices">
+                    <input type="text" ng-model="device" placeholder="Nome del dispositivo...">
                     <ul class="device" ng-controller="myCtrlDevice">
-                        <li class="listDevice" ng-repeat="device in devices">{{ class() + device.customname + "," + device.model }}</li>
+                        <li class="listDevice" ng-repeat="device in devices | filter: device">
+                            <div class="img">
+                                <img src="" alt="">
+                            </div>
+                            <div class="info">
+                                <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
+                                <h4 class="badge">{{ device.uniqueid }}</h4>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </ul>
@@ -227,7 +236,7 @@
                     let list = document.querySelectorAll(".listDevice");
                     console.log(list.length);
                 }
-            }, function myError(response) {
+              }, function myError(response) {
                 
             });
         });
