@@ -647,6 +647,10 @@ header .navigation .devices{
     overflow-y: scroll;
 }
 
+header .navigation .devices::-webkit-scrollbar{
+    display: none;
+}
+
 header .navigation .add .adding .machines.active{
     animation: 0.7s ease forwards;
 }
