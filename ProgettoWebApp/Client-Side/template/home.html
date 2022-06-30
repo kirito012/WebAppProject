@@ -264,7 +264,7 @@
 
             $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
                 if(response.data){
-                    console.log("Sent");
+                    console.log(response.data);
                 }
             }, function myError(response) {
                 
