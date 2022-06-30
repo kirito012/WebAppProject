@@ -125,11 +125,11 @@
 
 
     <script>
-        list.forEach((item) => {
+        $scope.list.forEach((item) => {
                         item.classList.remove("active");
                         this.classList.add("active");
                     })
-                list.addEventListene("click", $scope.class());
+                $scope.list.addEventListene("click", $scope.class());
     </script>
 
 
