@@ -456,7 +456,7 @@ header .navigation .add .adding form .search .models ul li{
 }
 
 header .navigation .add .adding form .search .models ul li .img{
-    width: 30%;
+    width: 20%;
     height: 100%;
     padding: 5px;
 }
@@ -467,7 +467,7 @@ header .navigation .add .adding form .search .models ul li .img img{
 }
 
 header .navigation .add .adding form .search .models ul li .info{
-    width: 70%;
+    width: 80%;
     height: 100%;
     padding: 5px;
     margin-left: 5px;
