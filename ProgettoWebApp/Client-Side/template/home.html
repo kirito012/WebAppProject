@@ -263,7 +263,11 @@
                 $scope.devices = response.data;
                 $scope.class = function(){
                     let list = document.querySelectorAll(".listDevice");
-                    console.log(list.length);
+                    list.forEach((item) => {
+                        item.classList.remove("active");
+                        this.classList.add("active");
+                    })
+                list.addEventListene("click", $scope.class());
                 }
               }, function myError(response) {
                 
