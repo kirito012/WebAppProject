@@ -433,7 +433,7 @@ header .navigation .add .adding form .search .models{
     z-index: 6;
 }
 
-header .navigation .add .adding form .search .models ul{
+header .navigation .add .adding form .search .models select{
     position: relative;
     display: flex;
     justify-content: center;
@@ -441,7 +441,7 @@ header .navigation .add .adding form .search .models ul{
     flex-direction: column;
 }
 
-header .navigation .add .adding form .search .models ul li{
+header .navigation .add .adding form .search .models select li{
     position: relative;
     display: flex;
     justify-content: center;

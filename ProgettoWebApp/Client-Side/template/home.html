@@ -117,7 +117,6 @@
                                 <h4 class="badge">{{ device.uniqueid }}</h4>
                             </div>
                         </li>
-                        {{ device() }}
                     </ul>
                 </div>
             </ul>
@@ -259,6 +258,12 @@
             }, function myError(response) {
                 
             });
+            $http({
+                method: "POST",
+                url : "/home/subscribe"
+            }).then(function(response){
+                $scope.array = {model: "modello", name: "nome"};
+            })
         });
 
         app.controller('myCtrlDevice', function($scope, $http) {
@@ -267,10 +272,6 @@
                 url : "/home/getMachines"
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
-                $scope.device = function(){
-                    $scope.list = document.querySelectorAll(".listDevice");
-                    console.log($scope.list.lenght);
-                }
               }, function myError(response) {
                 
             });
