@@ -446,6 +446,7 @@ header .navigation .add .adding form .search .models ul li{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: row;
     list-style: none;
     width: 200px;
     height: 40px;
@@ -454,6 +455,21 @@ header .navigation .add .adding form .search .models ul li{
     cursor: pointer;
 }
 
+header .navigation .add .adding form .search .models ul li .img{
+    width: 30%;
+    height: 100%;
+    padding: 5px;
+}
+
+header .navigation .add .adding form .search .models ul li .info{
+    width: 70%;
+    height: 100%;
+    padding: 5px;
+}
+
+header .navigation .add .adding form .search .models ul li .info .name{
+    font-size: 14px;
+}
 
 header .navigation .add .adding .machines .title{
     color: #4f829c;
