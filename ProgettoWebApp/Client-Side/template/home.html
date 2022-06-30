@@ -258,17 +258,6 @@
             }, function myError(response) {
                 
             });
-
-            var array = {model: "modello", id: "id", topics: ["f", "j", "h", "g"]};
-
-
-            $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
-                if(response.data){
-                    console.log(response.data);
-                }
-            }, function myError(response) {
-                
-            });
         });
 
         app.controller('myCtrlDevice', function($scope, $http) {
@@ -278,6 +267,17 @@
             }).then(function mySuccess(response) {
                 $scope.devices = response.data;
               }, function myError(response) {
+                
+            });
+           
+            var array = {model: $devices.model, id: "id", topics: ["f", "j", "h", "g"]};
+
+
+            $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                if(response.data){
+                    console.log(response.data);
+                }
+            }, function myError(response) {
                 
             });
         });
