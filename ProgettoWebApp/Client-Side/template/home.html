@@ -70,7 +70,7 @@
                                         <ul class="model">
                                             <li onmouseover="clicked = false; input.value = $scope.model;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
                                                 <div class="img">
-                                                    <img src="../images/{{ model }}" alt="">
+                                                    <img src="../images/{{ model + '.png'}}" alt="">
                                                 </div>
                                                 <div class="info">
                                                     <h3 class="name" ng-bind="model"></h3>
