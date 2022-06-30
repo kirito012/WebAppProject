@@ -753,3 +753,21 @@ header .navigation .devices .device li:hover .info .name{
 header .navigation .devices .device li:hover .info .badge{
     color: #fff;
 }
+
+
+
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #4f829c;
+    border-radius: 4px;
+  }
