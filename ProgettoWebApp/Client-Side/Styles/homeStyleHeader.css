@@ -416,7 +416,7 @@ header .navigation .add .adding{
 
 
 header .navigation .add .adding form .search input:focus ~ .models{
-    height: 120px;
+    height: 150px;
 }
 
 header .navigation .add .adding form .search .models{
@@ -448,8 +448,8 @@ header .navigation .add .adding form .search .models ul li{
     align-items: center;
     flex-direction: row;
     list-style: none;
-    width: 200px;
-    height: 40px;
+    width: 260px;
+    height: 50px;
     border: 1px solid #fff;
     color: #fff;
     cursor: pointer;
