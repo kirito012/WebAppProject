@@ -25,6 +25,7 @@ var inputValue = document.querySelector("#inputSearch");
             });
         });
 
+        var sel = document.querySelector(".selecotr");
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -35,10 +36,10 @@ var inputValue = document.querySelector("#inputSearch");
                 }, function myError(response) {
                     
                 });
-
                 $scope.selected;
                 $scope.selection = function(obj){
                     selected = obj.$index;
+                    sel.innerHTML = devices[$scope.selected].customname;
                 }
         });
 
