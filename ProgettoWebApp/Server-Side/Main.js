@@ -111,7 +111,7 @@ app.get("/home/getMachines", (req, res) => {
   });
 });
 
-app.post("/addMachine", (req, res) => {
+app.post("/home/addMachine", (req, res) => {
   server.sessionCheck(res, req, () => {
     let body = req.body;
 
@@ -138,7 +138,7 @@ app.post("/addMachine", (req, res) => {
   });
 });
 
-app.post("/removeMachine", (req, res) => {
+app.post("/home/removeMachine", (req, res) => {
   server.sessionCheck(res, req, () => {
     let body = req.body;
 
