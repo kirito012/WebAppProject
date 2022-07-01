@@ -25,7 +25,6 @@ var inputValue = document.querySelector("#inputSearch");
             });
         });
 
-        var submit = document.querySelector(".sub");
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -36,19 +35,6 @@ var inputValue = document.querySelector("#inputSearch");
                 }, function myError(response) {
                     
                 });
-        });
-
-        app.controller('reloadMachine', function($scope, $http) {
-            $scope.reGetMachine = function(){
-                $http({
-                    method : "GET",
-                    url : "/home/getMachines"
-                }).then(function mySuccess(response) {
-                    $scope.devices = response.data;
-                }, function myError(response) {
-                    
-                });
-            }
         });
 
         app.controller('postController', function($scope, $http) {

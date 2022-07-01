@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../styles/homeStyleHeader.css">
+    <link rel="stylesheet" href="../styles/homeStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
     <script src="angularHeader.js"></script>
@@ -91,8 +92,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="showDevices" ng-controller="reloadMachine">
-                    <div class="content c1 sub" ng-click="reGetMachine()">
+                <div class="showDevices">
+                    <div class="content c1 sub">
                         <div class="display"></div>
                         <div class="cashRegister">
                             <span class="button"></span>
@@ -127,7 +128,19 @@
 
 
     <section id="data">
+        <section id="up">
+            <div class="table" ng-controller="myCtrlDevice">
+                <div class="title">
+                    <h1 class="select">{{ models[0] }}Nessuna macchina selezionata</h1>
+                </div>
+                <div class="machineSelected">
+                    <h4 class="selector">Selezionare una macchina dal menù</h4>
+                </div>                
+            </div>
+            <div class="location">
 
+            </div>
+        </section>
     </section>
 
 

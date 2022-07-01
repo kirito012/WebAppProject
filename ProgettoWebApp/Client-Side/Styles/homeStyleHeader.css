@@ -26,6 +26,7 @@ header{
     background: #4f829c;
     padding: 40px 0;
     transition: 0.3s ease;
+    z-index: 100;
 }
 
 header .bottom{
