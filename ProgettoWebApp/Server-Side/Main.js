@@ -1,4 +1,3 @@
-let path = require("path");
 let utility = require("./Modules/utility");
 let mqtt = require("./Modules/mqtt");
 let server = require("./Modules/server")
@@ -126,7 +125,7 @@ app.post("/addMachine", (req, res) => {
             modelId = models[0].idmodelli;
 
             database.query("generateSelectMatricola",[body.badgeNumber,utente.id,body.name,body.badgeNumber], (matricola) => {
-              database.query("generateCorrispondeza",[resultsl[1][0].id, utente.id, modelId],() => {
+              database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
                 res.status(204).send({});
               })
             })
@@ -134,6 +133,20 @@ app.post("/addMachine", (req, res) => {
             server.Redirect(res, "/home", "machinemissing");
           });
         })
+      });
+    });
+  });
+});
+
+app.post("/removeMachine", (req, res) => {
+  server.sessionCheck(res, req, () => {
+    let body = req.body;
+
+    database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name],(results) => {
+      utility.checklength(results,() => {
+        res.status(204).send({});
+      },() => {
+        server.Redirect(res,"/home","machineNotFound");
       });
     });
   });

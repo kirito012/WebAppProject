@@ -19,6 +19,8 @@ let queryPreset = {
     WHERE corrispondenze.utente_id = ?;`,
   updateSession:
     "UPDATE utenti SET lastsession = ? WHERE email = ? AND password = ?;",
+  selectDeleteMatricolaParent: `DELETE FROM matricole WHERE uniqueid = ? AND EXISTS(
+    SELECT * FROM utenti WHERE lastsession = ? AND name = ?) LIMIT 1;`,
 };
 
 module.exports.query = (qr, params, callback) => {
