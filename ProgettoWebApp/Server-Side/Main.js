@@ -126,7 +126,7 @@ app.post("/addMachine", (req, res) => {
 
             database.query("generateSelectMatricola",[body.badgeNumber,utente.id,body.name,body.badgeNumber], (matricola) => {
               database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
-                res.status(204).send({});
+                res.send("getMachines");
               })
             })
           }, () => {
@@ -144,7 +144,7 @@ app.post("/removeMachine", (req, res) => {
 
     database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name],(results) => {
       utility.checklength(results,() => {
-        res.send("Funziona");
+        res.send("getMachines");
       },() => {
         server.Redirect(res,"/home","machineNotFound");
       });
