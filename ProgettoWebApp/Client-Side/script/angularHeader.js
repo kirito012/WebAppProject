@@ -35,6 +35,7 @@ var inputValue = document.querySelector("#inputSearch");
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
                     var dev = response.data;
+                    
                     for(let i = 0; i < dev.lenght; i++){
                         devicesArray[i] = dev[i];
                         console.log(devicesArray[i]);
@@ -45,7 +46,7 @@ var inputValue = document.querySelector("#inputSearch");
                 $scope.selected;
                 $scope.selection = function(obj){
                     selected = obj.$index;
-                    console.log(devices[$scope.selected]);
+                    console.log($scope.selected);
                     
                 }
         });
