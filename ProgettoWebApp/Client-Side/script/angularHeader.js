@@ -34,10 +34,11 @@ var inputValue = document.querySelector("#inputSearch");
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
-                    JSON.parse(devices).foreach((element , i) => {
-                        devicesArray[i] = element;
+                    var dev = $scope.devices;
+                    for(let i = 0; i < dev.lenght; i++){
+                        devicesArray[i] = dev[i];
                         console.log(devicesArray[i]);
-                    });
+                    }
                 }, function myError(response) {
                     
                 });
