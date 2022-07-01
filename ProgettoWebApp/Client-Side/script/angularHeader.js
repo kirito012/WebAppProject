@@ -26,14 +26,16 @@ var inputValue = document.querySelector("#inputSearch");
         });
 
         app.controller('myCtrlDevice', function($scope, $http) {
-            $http({
-                method : "GET",
-                url : "/home/getMachines"
-            }).then(function mySuccess(response) {
-                $scope.devices = response.data;
-              }, function myError(response) {
-                
-            });
+            $scope.get = function(){
+                $http({
+                    method : "GET",
+                    url : "/home/getMachines"
+                }).then(function mySuccess(response) {
+                    $scope.devices = response.data;
+                }, function myError(response) {
+                    
+                });
+            }
         });
 
         app.controller('postController', function($scope, $http) {
