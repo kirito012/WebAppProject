@@ -38,7 +38,7 @@ var inputValue = document.querySelector("#inputSearch");
                 });
                 $scope.selected;
                 $scope.selection = function(obj){
-                    console.log(sele);
+                    console.log($scope.sele);
                     
                 }
         });
