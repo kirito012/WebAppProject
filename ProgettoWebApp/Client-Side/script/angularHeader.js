@@ -38,8 +38,7 @@ var inputValue = document.querySelector("#inputSearch");
                     
                 });
             }
-            window.onload = $scope.getDevices();
-            submit.addEventListener("click", $scope.getDevices());
+            window.onload = () => {$scope.getDevices();}
         });
 
         app.controller('postController', function($scope, $http) {

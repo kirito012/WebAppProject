@@ -86,13 +86,13 @@
                                 <div class="customName">
                                     <input type="text" name="name" placeholder="Nome personalizzato" autocomplete="off">
                                 </div>
-                                <input type="submit" value="Aggiungi" name="submit">
+                                <input type="submit" ng-click="alert()" value="Aggiungi" name="submit">
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="showDevices">
-                    <div class="content c1 sub">
+                <div class="showDevices" ng-controller="myCtrlDevice">
+                    <div class="content c1 sub" ng-click="getDevice()">
                         <div class="display"></div>
                         <div class="cashRegister">
                             <span class="button"></span>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="devices">
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
-                    <ul class="device" ng-controller="myCtrlDevice">
+                    <ul class="device">
                         <li class="listDevice" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
