@@ -68,7 +68,8 @@
                                     <input type="text" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
-                                            <li onmouseover="clicked = false; input.value = this.innerHTML;" onmouseout="mouseOut(input)" onclick="disable()" ng-repeat="model in models | filter: machines">
+                                            <li ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter: machines">
+                                               
                                                 <div class="img">
                                                     <img src="../images/{{ model + '.png'}}" alt="">
                                                 </div>
@@ -133,6 +134,9 @@
 
     <script>
 
+        var inputValue = document.querySelector("#inputSearch");
+        var clicked = false;
+
         let app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope, $http) {
             $http({
@@ -140,6 +144,18 @@
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
+                $scope.myFunction = function(index){
+                    clicked = false;
+                    inputValue.value = index;
+                }
+                $scope.disable = function(){
+                    clicked = true;
+                }
+                $scope.mouseOut = function(){
+                    if(!clicked){
+                        inputValue.value = '';
+                    }
+                }
             }, function myError(response) {
                 
             });

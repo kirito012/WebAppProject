@@ -52,7 +52,7 @@ header .navigation .activator,  header .navigation .showDevices{
     align-items: center;
     flex-direction: column;
     top: 40px;
-    right: 50px;
+    right: 40px;
 }
 
 header .navigation .showDevices{
@@ -425,7 +425,6 @@ header .navigation .add .adding form .search .models{
     flex-direction: column;
     width: auto;
     height: 0;
-    background: #4f829c;
     overflow-x: hidden;
     overflow-y: scroll;
     transition: 0.3s ease;
@@ -433,15 +432,7 @@ header .navigation .add .adding form .search .models{
     z-index: 6;
 }
 
-header .navigation .add .adding form .search .models select{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-header .navigation .add .adding form .search .models select li{
+header .navigation .add .adding form .search .models li{
     position: relative;
     display: flex;
     justify-content: center;
@@ -453,6 +444,15 @@ header .navigation .add .adding form .search .models select li{
     border: 1px solid #fff;
     color: #fff;
     cursor: pointer;
+    background: #4f829c;
+}
+
+header .navigation .add .adding form .search .models li:hover{
+    background: #fff;
+}
+
+header .navigation .add .adding form .search .models li:hover .info .productName{
+    color: #4f829c;
 }
 
 header .navigation .add .adding form .search .models ul li .img{
@@ -473,8 +473,9 @@ header .navigation .add .adding form .search .models ul li .info{
     margin-left: 5px;
 }
 
-header .navigation .add .adding form .search .models ul li .info .name{
+header .navigation .add .adding form .search .models ul li .info .productName{
     font-size: 14px;
+    color: #fff;
 }
 
 header .navigation .add .adding .machines .title{
@@ -644,6 +645,10 @@ header .navigation .devices{
     z-index: 5;
     animation: 0.7s ease forwards;
     overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+header .navigation .devices.active{
     overflow-y: scroll;
 }
 

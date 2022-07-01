@@ -77,16 +77,3 @@ let menu = document.querySelector(".menuToggle");
         }
 
 
-
-        var clicked = false;
-        var input = document.querySelector("#inputSearch");
-
-        function disable(){
-            clicked = true;
-        }
-
-        function mouseOut(list){
-            if(!clicked){
-                list.value = '';
-            }
-        }
