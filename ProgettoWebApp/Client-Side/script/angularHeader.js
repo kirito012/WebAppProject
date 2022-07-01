@@ -38,7 +38,8 @@ var inputValue = document.querySelector("#inputSearch");
                 });
                 $scope.selected;
                 $scope.selection = function(obj){
-                    console.log($scope.sele);
+                    selected = obj.$index;
+                    console.log($scope.devices[$scope.selected]);
                     
                 }
         });
