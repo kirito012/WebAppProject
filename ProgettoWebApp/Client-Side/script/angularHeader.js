@@ -25,6 +25,8 @@ var inputValue = document.querySelector("#inputSearch");
             });
         });
 
+        var submit = document.querySelector(".sub");
+
         app.controller('myCtrlDevice', function($scope, $http) {
             $scope.getDevices = function(){
                 $http({
@@ -37,6 +39,7 @@ var inputValue = document.querySelector("#inputSearch");
                 });
             }
             window.onload = $scope.getDevices();
+            submit.addEventListener("click", $scope.getDevices());
         });
 
         app.controller('postController', function($scope, $http) {
