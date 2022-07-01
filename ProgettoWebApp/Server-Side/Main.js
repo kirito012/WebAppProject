@@ -144,7 +144,7 @@ app.post("/removeMachine", (req, res) => {
 
     database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name],(results) => {
       utility.checklength(results,() => {
-        res.status(204).send({});
+        res.send("Funziona");
       },() => {
         server.Redirect(res,"/home","machineNotFound");
       });

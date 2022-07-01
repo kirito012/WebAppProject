@@ -25,8 +25,8 @@ var inputValue = document.querySelector("#inputSearch");
             });
         });
 
-        var sel = document.querySelector(".selecotr");
-        var devicesArray = [];
+        var sel = document.querySelector(".selector");
+        var dev;
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -34,20 +34,24 @@ var inputValue = document.querySelector("#inputSearch");
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
-                    var dev = response.data;
-                    console.log(dev);
-                    for(let i = 0; i < dev.lenght; i++){
-                        devicesArray[i] = dev[i];
-                        console.log(devicesArray[i]);
-                    }
+                    dev = response.data;
                 }, function myError(response) {
                     
                 });
-                $scope.selected;
+                $scope.selected = undefined;
                 $scope.selection = function(obj){
                     $scope.selected = obj.$index;
-                    console.log($scope.selected);
-                    
+                    if($scope.selected == undefined){
+                        sel.innerHTML = "Selezionare un dispositivo dal menù";
+                    }else{
+                        sel.innerHTML = "Nome: " + dev[$scope.selected].customname;
+                    }
+                }
+                $scope.resetChoice = function(){
+                    $scope.selected = undefined;
+                    if($scope.selected == undefined){
+                        sel.innerHTML = "Selezionare un dispositivo dal menù";
+                    }
                 }
         });
 
@@ -64,5 +68,14 @@ var inputValue = document.querySelector("#inputSearch");
 
 
         app.controller('removeDevice', function($scope, $http){
-
+            var deviceToRemove = {badgeNumber: $scope.devices[$scope.selected]};
+            $scope.remove = function(){
+                $http.post("/home/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
+                    if(response.data){
+                        console.log(response.data);
+                    }
+                }, function myError(response) {
+                    
+                });
+            }
         });
