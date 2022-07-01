@@ -40,7 +40,7 @@ module.exports.logout = (req, res) => {
     }
 }
 
-module.exports.connectApp = (getMachines) => {
+module.exports.connectApp = (port) => {
   let app = express();
   let jsonParser = bodyParser.json();
   let urlencodedParser = bodyParser.urlencoded({ extended: false });
