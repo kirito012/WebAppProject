@@ -731,10 +731,18 @@ header .navigation .devices .device li .img img{
 header .navigation .devices .device li .info{
     display: flex;
     justify-content: space-evenly;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
     width: 70%;
     height: 100%;
     margin-left: 5px;
+}
+
+header .navigation .devices .device li .info .inside{
+    position: relative;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
 }
 
 header .navigation .devices .device li .info .name{
@@ -746,6 +754,74 @@ header .navigation .devices .device li .info .badge{
     font-size: 12px;
     color: #4f829c;
     opacity: 0.8;
+}
+
+header .navigation .devices .device li .info .remove{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border-radius: 15px;
+    margin-left: 90px;
+}
+
+header .navigation .devices .device li .info .remove .bottom{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 17px;
+    height: 17px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: red;
+    transition: 0.3s ease;
+}
+
+header .navigation .devices .device li .info .remove .bottom hr{
+    position: relative;
+    min-width: 2px;
+    height: 9px;
+    background: #fff;
+    margin: 0 -4px;
+    border: none;
+    border-radius: 2px;
+}
+
+header .navigation .devices .device li .info .remove .top{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 3px;
+    border-radius: 5px;
+    background: red;
+    margin-bottom: 2px;
+    transition: 0.3s ease;
+}
+
+header .navigation .devices .device li .info .remove .top::after{
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 2px;
+    background: red;
+    top: -2px;
+    transform-origin: bottom left;
+}
+
+header .navigation .devices .device li .info .remove:hover .top{
+    transform: rotate(30deg) translateX(3px) translateY(-3px);
+}
+
+header .navigation .devices .device li .info .remove:hover .bottom{
+    transform: rotate(-5deg) translateY(3px);
 }
 
 header .navigation .devices .device li:hover{

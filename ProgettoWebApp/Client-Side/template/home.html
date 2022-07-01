@@ -115,8 +115,18 @@
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
                             <div class="info" ng-controller="postController">
-                                <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
-                                <h4 class="badge">{{ device.uniqueid }}</h4>
+                                <div class="inside">
+                                    <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
+                                    <h4 class="badge">{{ device.uniqueid }}</h4>
+                                </div>
+                                <div class="remove" ng-controller="removeDevice">
+                                    <div class="top"></div>
+                                    <div class="bottom">
+                                        <hr>
+                                        <hr>
+                                        <hr>
+                                    </div>
+                                </div>
                             </div>
                         </li>
                     </ul>

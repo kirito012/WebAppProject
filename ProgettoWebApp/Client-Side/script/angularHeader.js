@@ -53,3 +53,8 @@ var inputValue = document.querySelector("#inputSearch");
                 
             });
         });
+
+
+        app.controller('removeDevice', function($scope, $http){
+            
+        });
