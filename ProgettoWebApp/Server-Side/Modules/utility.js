@@ -1,10 +1,10 @@
 let crypto = require('crypto');
 
-module.exports.generateRandomKey = function(){
+module.exports.generateRandomKey = () => {
   return crypto.randomBytes(48).toString('hex');
 }
 
-module.exports.DayCheck = function(Day){
+module.exports.DayCheck = (Day) => {
   let Today = new Date;
   Today.setHours(23,59,59,998);
   
@@ -22,11 +22,11 @@ module.exports.DayCheck = function(Day){
   }
 }
 
-module.exports.Redirect = function(res,url,error){
-  if (error){
-    res.redirect(url + "?error=" + error);
+module.exports.checklength = (obj,callback,error) => {
+  if (obj.length > 0){
+    callback();
   }
   else{
-    res.redirect(url);
+    error();
   }
-}
+};
