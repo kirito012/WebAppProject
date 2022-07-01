@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../styles/homeStyleHeader.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>  
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="angularHeader.js"></script>
 </head>
 <body ng-app="myApp">
     <header class="active">
@@ -113,7 +114,7 @@
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
-                            <div class="info">
+                            <div class="info" ng-controller="postController">
                                 <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
                                 <h4 class="badge">{{ device.uniqueid }}</h4>
                             </div>
@@ -131,50 +132,8 @@
     </section>
 
 
-
-    <script>
-
-        var inputValue = document.querySelector("#inputSearch");
-        var clicked = false;
-
-        let app = angular.module('myApp', []);
-        app.controller('myCtrl', function($scope, $http) {
-            $http({
-                method : "GET",
-                url : "/home/getModels"
-            }).then(function mySuccess(response) {
-                $scope.models = response.data;
-                $scope.myFunction = function(index){
-                    clicked = false;
-                    inputValue.value = index;
-                }
-                $scope.disable = function(){
-                    clicked = true;
-                }
-                $scope.mouseOut = function(){
-                    if(!clicked){
-                        inputValue.value = '';
-                    }
-                }
-            }, function myError(response) {
-                
-            });
-        });
-
-        app.controller('myCtrlDevice', function($scope, $http) {
-            $http({
-                method : "GET",
-                url : "/home/getMachines"
-            }).then(function mySuccess(response) {
-                $scope.devices = response.data;
-              }, function myError(response) {
-                
-            });
-        });
-    
-    </script>
-    
     <script src="../script/scriptHeader.js"></script>
+    <script src="../script/angularHeader.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
