@@ -45,7 +45,7 @@ var inputValue = document.querySelector("#inputSearch");
                 });
                 $scope.selected;
                 $scope.selection = function(obj){
-                    selected = obj.$index;
+                    selected = obj["$index"];
                     console.log($scope.selected);
                     
                 }
