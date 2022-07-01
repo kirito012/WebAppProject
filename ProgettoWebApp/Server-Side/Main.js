@@ -5,7 +5,7 @@ let database = require("./Modules/database")
 
 let client = mqtt.Connect("mqtt://localhost:1883");
 let con = database.connectDatabase("localhost","databasev1");
-let app = server.connectApp();
+let app = server.connectApp(8081);
 
 app.get("/", (req, res) => {
   server.sendStatic(req,res,"index.html",true);
