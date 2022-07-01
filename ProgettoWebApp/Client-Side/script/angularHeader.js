@@ -39,7 +39,7 @@ var inputValue = document.querySelector("#inputSearch");
                 $scope.selected;
                 $scope.selection = function(obj){
                     selected = obj.$index;
-                    console.log(devices[selected]);
+                    console.log($scope.devices[selected]);
                 }
         });
 
@@ -56,5 +56,5 @@ var inputValue = document.querySelector("#inputSearch");
 
 
         app.controller('removeDevice', function($scope, $http){
-            
+
         });
