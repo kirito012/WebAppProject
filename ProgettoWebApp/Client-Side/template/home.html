@@ -110,7 +110,7 @@
                 <div class="devices">
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
                     <ul class="device" ng-controller="myCtrlDevice">
-                        <li class="listDevice" ng-repeat="device in devices | filter: device">
+                        <li class="listDevice" ng-click="select = this.$index; console.log(selected);" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
@@ -134,7 +134,7 @@
                     <h1 class="select">Nessuna macchina selezionata</h1>
                 </div>
                 <div class="machineSelected">
-                    <h4 class="selector">Selezionare una macchina dal menù {{ devices[0] }}</h4>
+                    <h4 class="selector">Selezionare una macchina dal menù</h4>
                 </div>                
             </div>
             <div class="location">

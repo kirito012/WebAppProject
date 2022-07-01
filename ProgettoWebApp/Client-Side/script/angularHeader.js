@@ -35,6 +35,8 @@ var inputValue = document.querySelector("#inputSearch");
                 }, function myError(response) {
                     
                 });
+
+                $scope.selected = undefined;
         });
 
         app.controller('postController', function($scope, $http) {
