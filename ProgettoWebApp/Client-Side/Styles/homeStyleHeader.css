@@ -52,7 +52,7 @@ header .navigation .activator,  header .navigation .showDevices{
     align-items: center;
     flex-direction: column;
     top: 40px;
-    right: 50px;
+    right: 40px;
 }
 
 header .navigation .showDevices{
