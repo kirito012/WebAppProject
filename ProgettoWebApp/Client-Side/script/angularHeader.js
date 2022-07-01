@@ -26,7 +26,7 @@ var inputValue = document.querySelector("#inputSearch");
         });
 
         app.controller('myCtrlDevice', function($scope, $http) {
-            $scope.get = function(){
+            $scope.getDevices = function(){
                 $http({
                     method : "GET",
                     url : "/home/getMachines"
@@ -36,7 +36,7 @@ var inputValue = document.querySelector("#inputSearch");
                     
                 });
             }
-            window.onload = $scope.get();
+            window.onload = $scope.getDevices();
         });
 
         app.controller('postController', function($scope, $http) {
