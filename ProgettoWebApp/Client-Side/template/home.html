@@ -131,10 +131,10 @@
         <section id="up">
             <div class="table" ng-controller="myCtrlDevice">
                 <div class="title">
-                    <h1 class="select" ng-repeat="device in devices">{{ device.customname }}</h1>
+                    <h1 class="select">Nessuna macchina selezionata</h1>
                 </div>
                 <div class="machineSelected">
-                    <h4 class="selector">Selezionare una macchina dal menù</h4>
+                    <h4 class="selector">Selezionare una macchina dal menù {{ devices[0] }}</h4>
                 </div>                
             </div>
             <div class="location">
