@@ -37,6 +37,10 @@ var inputValue = document.querySelector("#inputSearch");
                 });
 
                 $scope.selected = undefined;
+                $scope.selection = function(obj){
+                    selected = obj.$index;
+                    console.log(selected);
+                }
         });
 
         app.controller('postController', function($scope, $http) {
