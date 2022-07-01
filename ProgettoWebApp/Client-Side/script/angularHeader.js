@@ -26,6 +26,7 @@ var inputValue = document.querySelector("#inputSearch");
         });
 
         var sel = document.querySelector(".selecotr");
+        var devicesArray = [];
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -33,6 +34,10 @@ var inputValue = document.querySelector("#inputSearch");
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
+                    devices.foreach(element , i => {
+                        devicesArray[i] = element;
+                        console.log(devicesArray[i]);
+                    });
                 }, function myError(response) {
                     
                 });
