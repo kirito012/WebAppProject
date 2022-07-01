@@ -34,7 +34,7 @@ var inputValue = document.querySelector("#inputSearch");
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
-                    $scope.devices.foreach((element , i) => {
+                    JSON.parse(devices).foreach((element , i) => {
                         devicesArray[i] = element;
                         console.log(devicesArray[i]);
                     });
