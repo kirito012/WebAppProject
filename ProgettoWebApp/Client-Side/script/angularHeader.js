@@ -36,7 +36,7 @@ var inputValue = document.querySelector("#inputSearch");
                     
                 });
             }
-            window.onload = $scope.get();debugger
+            window.onload = $scope.get();
         });
 
         app.controller('postController', function($scope, $http) {
