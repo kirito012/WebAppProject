@@ -36,7 +36,7 @@ var inputValue = document.querySelector("#inputSearch");
                     
                 });
 
-                $scope.selected = undefined;
+                $scope.selected;
                 $scope.selection = function(obj){
                     selected = obj.$index;
                 }
