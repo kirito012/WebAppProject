@@ -50,12 +50,12 @@ function disconnectFromTopic(user){
     let topic = `${model}/${id}/${element}`;
 
     client.unsubscribe([topic], () => {
-      console.log(`${user} subscribed to topic '${topic}'`);
+      console.log(`${user} unsubscribed to topic '${topic}'`);
     })
     
   })
 
-  usersTopics[user] = {};
+  usersTopics[user] = undefined;
 }
 
 app.use(jsonParser);
@@ -99,28 +99,24 @@ app.post("/register", (req, res) => {
   let surname = req.body.surname;
   let date = req.body.date;
 
-  if (password == repeatPassword){
-    if (password.length < 8){Functions.Redirect(res,"/","passwordLength"); return;}
-    if (!Functions.DayCheck(date)){Functions.Redirect(res,"/","dateIncorrect"); return;}
+  if (password != repeatPassword){Functions.Redirect(res,"/","repeatMissType");}
+  if (password.length < 8){Functions.Redirect(res,"/","passwordLength"); return;}
+  if (!Functions.DayCheck(date)){Functions.Redirect(res,"/","dateIncorrect"); return;}
 
-    con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
-      if (error) throw error;
-      if (results.length > 0){
-        Functions.Redirect(res,"/","emailExists");
-      }
-      else{
-        let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
+  con.query('SELECT * FROM utenti WHERE email = ?', [email], function(error, results, fields) {
+    if (error) throw error;
+    if (results.length > 0){
+      Functions.Redirect(res,"/","emailExists");
+    }
+    else{
+      let qr = 'INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES ("' + email + '", "' + password + '", "' + name + '", "' + surname + '", "' + date + '", ' + '1);'
 
-        con.query(qr, function(error, results, fields) {
-          if (error) throw error;
-          Functions.Redirect(res,"/");
-        })
-      }
-    })
-  }
-  else{
-    Functions.Redirect(res,"/","repeatMissType");
-  }
+      con.query(qr, function(error, results, fields) {
+        if (error) throw error;
+        Functions.Redirect(res,"/");
+      })
+    }
+  })
 })
 
 app.post("/login", (req, res) => {
@@ -170,11 +166,13 @@ app.post("/home/subscribe", (req,res) => {
       let topics = req.body.topics
       let user = req.session.name;
 
-      if (usersTopics[user] && usersTopics[user].length > 0){
+      if (usersTopics[user]){
         disconnectFromTopic(user);
       }
 
       connectToNewTopic(model,id,topics,user);
+
+      res.send("Subbed succesfully");
     }
   }
 })
@@ -276,7 +274,14 @@ client.on('connect', () => {
 });
 
 client.on('message', (topic, payload) => {
-  console.log('Received Message:', topic, payload.toString())
+  usersTopics.forEach(user => {
+    let model = user.model;
+    let id = user.id;
+
+    usersTopics[user].subbedTopics.forEach((element) =>{
+      let topic = `${model}/${id}/${element}`;
+    });
+  });
 })
 
 con.connect(function(err) {
