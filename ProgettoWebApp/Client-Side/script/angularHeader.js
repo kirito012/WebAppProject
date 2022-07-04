@@ -35,7 +35,7 @@
 
         var deviceToRemove = {};
 
-        var remove = false;
+        var remove = true;
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -82,7 +82,7 @@
 
         app.controller('removeDevice', function($scope, $http) {
             $scope.remove = function(){
-                remove = true;
+                remove = false;
                 deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
                 $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
                     if(response.data){
@@ -91,6 +91,6 @@
                 }, function myError(response) {
                     
                 });
-                remove = false;
+                remove = true;
             }
         });
