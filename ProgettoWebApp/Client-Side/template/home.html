@@ -110,7 +110,7 @@
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
                     <ul class="device">
                         <li class="listDevice" onclick="removeAll()" ng-click="resetChoice()">Rimuovi selezione</li>
-                        <li class="listDevice" onclick="timeout = false; removeAll();" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
+                        <li class="listDevice" onclick="timeOut = false; removeAll();" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
@@ -119,7 +119,7 @@
                                     <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
                                     <h4 class="badge">{{ device.uniqueid }}</h4>
                                 </div>
-                                <div class="remove" ng-click="remove()">
+                                <div class="remove" onclick="timeOut = true" ng-click="remove()">
                                     <div class="top"></div>
                                     <div class="bottom">
                                         <hr> 
