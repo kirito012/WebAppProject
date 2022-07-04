@@ -37,6 +37,12 @@
 
         var remove = true;
 
+        var search;
+        var badgeNumber;
+        var nameCustom;
+        
+        var newMachine = {};
+
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
@@ -87,6 +93,20 @@
                                                     
                         });
                     }
+                }
+
+                $scope.addMachine = function(){
+                    badgeNumber = document.querySelector(".numeroMatricola").value;
+                    nameCustom = document.querySelector(".nomePersonalizzato").value;
+                    model = document.querySelector(".modello").value;
+                    newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
+                    $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                        if(response.data){
+                            console.log(response.data);
+                        }
+                    }, function myError(response) {
+                                                
+                    });
                 }
         });
 

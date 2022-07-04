@@ -65,9 +65,9 @@
                     <div class="adding">
                         <div class="machines">
                             <h2 class="title">Aggiungi un nuovo dispositivo</h2>
-                            <form action="addMachine" method="post" ng-controller="myCtrl">
+                            <form ng-controller="myCtrl">
                                 <div class="search">
-                                    <input type="text" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
+                                    <input type="text" class="modello" name="search" id="inputSearch" placeholder="Seleziona il modello..." ng-model="machines" autocomplete="off">
                                     <div class="models">
                                         <ul class="model">
                                             <li ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter: machines">   
@@ -82,12 +82,12 @@
                                     </div>
                                 </div>
                                 <div class="badgeNumber">
-                                    <input type="text" name="badgeNumber" placeholder="Numero di matricola" autocomplete="off">
+                                    <input type="text" class="numeroMatricola" name="badgeNumber" placeholder="Numero di matricola" autocomplete="off">
                                 </div>
                                 <div class="customName">
-                                    <input type="text" name="name" placeholder="Nome personalizzato" autocomplete="off">
+                                    <input type="text" class="nomePersonalizzato" name="name" placeholder="Nome personalizzato" autocomplete="off">
                                 </div>
-                                <input type="submit" value="Aggiungi" name="submit">
+                                <input type="button" value="Aggiungi" name="submit">
                             </form>
                         </div>
                     </div>
