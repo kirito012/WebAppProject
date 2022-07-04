@@ -83,8 +83,6 @@
                     }
                 }
 
-        });
-
         $scope.addMachine = function(){
             badgeNumber = document.querySelector(".numeroMatricola").value;
             nameCustom = document.querySelector(".nomePersonalizzato").value;
@@ -107,6 +105,11 @@
         }
 
         $scope.devices = dev;
+
+    });
+
+
+
 
         app.controller('removeDevice', function($scope, $http, $timeout) {
             $scope.remove = function(){
