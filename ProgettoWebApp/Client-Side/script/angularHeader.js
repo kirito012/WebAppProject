@@ -1,4 +1,3 @@
-        import { removeAll } from "./scriptHeader";
         
         var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
