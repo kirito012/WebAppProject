@@ -19,15 +19,17 @@
 
         function removeAll(){
             if(!timeOut){
-                header.classList.add("active");
-                toggle.classList.add("active");
-                menu.classList.remove("active");
-                navigation.classList.toggle("active");
-                adding.classList.remove("active");
-                box.style.animationName = "boxRemove";
-                box.classList.remove("active");
-                devices.style.animationName = "boxRemove1";
-                devices.classList.remove("active");
+                setTimeout(() => {
+                    header.classList.add("active");
+                    toggle.classList.add("active");
+                    menu.classList.remove("active");
+                    navigation.classList.toggle("active");
+                    adding.classList.remove("active");
+                    box.style.animationName = "boxRemove";
+                    box.classList.remove("active");
+                    devices.style.animationName = "boxRemove1";
+                    devices.classList.remove("active");
+                }, 150);
             }
         }
         
