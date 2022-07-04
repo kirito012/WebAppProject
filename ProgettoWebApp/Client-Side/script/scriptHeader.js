@@ -89,3 +89,4 @@ let menu = document.querySelector(".menuToggle");
         }
 
 
+        console.log(remove);

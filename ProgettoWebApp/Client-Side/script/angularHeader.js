@@ -1,4 +1,3 @@
-        
         var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
 
