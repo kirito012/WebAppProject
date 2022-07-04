@@ -61,7 +61,6 @@
                             method : "GET",
                             url : "/home/getMachines"
                         }).then(function mySuccess(response) {
-                            $scope.devices = response.data;
                             dev = response.data;
                             console.log(dev);
                         }, function myError(response) {
@@ -80,8 +79,8 @@
                     method : "GET",
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
-                    $scope.devices = response.data;
                     dev = response.data;
+                    $scope.devices = dev;
                     console.log(dev);
                 }, function myError(response) {
                     
