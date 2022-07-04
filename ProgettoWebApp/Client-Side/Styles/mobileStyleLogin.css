@@ -305,3 +305,8 @@ body{
     font-weight: 900;
     letter-spacing: -5px;
 }
+
+
+input{
+    outline: none;
+}

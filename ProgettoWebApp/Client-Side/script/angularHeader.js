@@ -26,7 +26,12 @@
         });
 
         var sel = document.querySelector(".selector");
+        var nameDevice = document.querySelector(".nameData span");
+        var idDevice = document.querySelector(".badgeNumberData span");
         var dev;
+        var index;
+
+        var array = {};
 
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
@@ -41,31 +46,32 @@
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
                     $scope.selected = obj.$index;
+                    index = obj.selected;
                     if($scope.selected == undefined){
                         sel.innerHTML = "Selezionare un dispositivo dal menù";
                     }else{
-                        sel.innerHTML = "Nome: " + dev[$scope.selected].customname;
+                        sel.innerHTML = "Modello: " + dev[$scope.selected].model
+                        nameDevice.innerHTML = dev[$scope.selected].customname;
+                        idDevice.innerHTML = dev[$scope.selected].uniqueid;
+                        array = {model: dev[$scope.selected].model, id: dev[$scope.slected].uniqueid, topics: ["f", "j", "h", "g"]};
+                        $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                            if(response.data){
+                                console.log(response.data);
+                            }
+                        }, function myError(response) {
+                            
+                        });
                     }
                 }
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
                     if($scope.selected == undefined){
                         sel.innerHTML = "Selezionare un dispositivo dal menù";
+                        nameDevice.innerHTML = "";
+                        idDevice.innerHTML = "";
                     }
                 }
         });
-
-        app.controller('postController', function($scope, $http) {
-            var array = {model: "modello", id: "id", topics: ["f", "j", "h", "g"]};
-            $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
-                if(response.data){
-                    console.log(response.data);
-                }
-            }, function myError(response) {
-                
-            });
-        });
-
 
         app.controller('removeDevice', function($scope, $http){
             var deviceToRemove = {badgeNumber: $scope.devices[$scope.selected]};

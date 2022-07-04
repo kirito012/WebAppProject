@@ -40,11 +40,10 @@ module.exports.logout = (req, res) => {
     }
 }
 
-module.exports.connectApp = () => {
+module.exports.connectApp = (port) => {
   let app = express();
   let jsonParser = bodyParser.json();
   let urlencodedParser = bodyParser.urlencoded({ extended: false });
-  let port = 8081;
 
   app.use(jsonParser);
   app.use(urlencodedParser);
