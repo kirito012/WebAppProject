@@ -46,10 +46,10 @@
                     
                 });
                 $scope.selected = undefined;
-                $scope.selection = function(obj){
+                $scope.selection = function(obj, className){
                         $scope.selected = obj.$index;
                         index = obj.selected;
-                        console.log(obj.className);
+                        console.log(className)
                         if($scope.selected == undefined){
                             sel.innerHTML = "Selezionare un dispositivo dal menù";
                         }else{
