@@ -21,67 +21,22 @@
         var newMachine = {};
 
 
-
-
-
-
-
         let app = angular.module('myApp', []);
-        app.controller('myCtrl', function($scope, $http) {
-            $http({
-                method : "GET",
-                url : "/home/getModels"
-            }).then(function mySuccess(response) {
-                $scope.models = response.data;
-            }, function myError(response) {
-                
-            });
-
-            $scope.myFunction = function(index){
-                clicked = false;
-                inputValue.value = index;
-            }
-            $scope.disable = function(){
-                clicked = true;
-            }
-            $scope.mouseOut = function(){
-                if(!clicked){
-                    inputValue.value = '';
-                }
-            }
-
-            $scope.addMachine = function(){
-                badgeNumber = document.querySelector(".numeroMatricola").value;
-                nameCustom = document.querySelector(".nomePersonalizzato").value;
-                model = document.querySelector(".modello").value;
-                newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
-                $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
-                    if(response.data){
-                        $http({
-                            method : "GET",
-                            url : "/home/getMachines"
-                        }).then(function mySuccess(response) {
-                            dev = response.data;
-                            console.log(dev);
-                        }, function myError(response) {
-                            
-                        });
-                    }
-                }, function myError(response) {
-                                             
-                });
-            }
-        });
-
-
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     dev = response.data;
-                    $scope.devices = dev;
-                    console.log(dev);
+                }, function myError(response) {
+                    
+                });
+
+                $http({
+                    method : "GET",
+                    url : "/home/getModels"
+                }).then(function mySuccess(response) {
+                    $scope.models = response.data;
                 }, function myError(response) {
                     
                 });
@@ -130,6 +85,28 @@
 
         });
 
+        $scope.addMachine = function(){
+            badgeNumber = document.querySelector(".numeroMatricola").value;
+            nameCustom = document.querySelector(".nomePersonalizzato").value;
+            model = document.querySelector(".modello").value;
+            newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
+            $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
+                if(response.data){
+                    $http({
+                        method : "GET",
+                        url : "/home/getMachines"
+                    }).then(function mySuccess(response) {
+                        dev = response.data;
+                    }, function myError(response) {
+                        
+                    });
+                }
+            }, function myError(response) {
+                                         
+            });
+        }
+
+        $scope.devices = dev;
 
         app.controller('removeDevice', function($scope, $http, $timeout) {
             $scope.remove = function(){
@@ -148,4 +125,18 @@
                     }, 500);
                 }, 100);
             }
+
+            $scope.myFunction = function(index){
+                clicked = false;
+                inputValue.value = index;
+            }
+            $scope.disable = function(){
+                clicked = true;
+            }
+            $scope.mouseOut = function(){
+                if(!clicked){
+                    inputValue.value = '';
+                }
+            }
+
         });
