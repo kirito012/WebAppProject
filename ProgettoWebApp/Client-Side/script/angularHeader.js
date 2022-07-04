@@ -42,6 +42,19 @@
                 }, function myError(response) {
                     console.log(response);
                 });
+
+                /*
+                ssetInterval(function () {
+                    $http({
+                        method : "GET",
+                        url : "/home/getData"
+                    }).then(function mySuccess(response) {
+                        console.log(response.data);
+                    }, function myError(response) {
+                        console.log(response);
+                    });
+                }, 3000);
+                */
                   
                 $scope.selected = undefined;
                 $scope.selection = function(obj){

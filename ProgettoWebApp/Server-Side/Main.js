@@ -93,6 +93,19 @@ app.post("/subscribe", (req, res) => {
   })
 });
 
+app.get("/home/getData", (req,res) => {
+  server.sessionCheck(res,req, () => {
+    let user = req.session.name;
+
+    if (mqtt.usersTopics[user]) {
+      res.send(mqtt.usersTopics[user]);
+    }
+    else{
+      res.send({});
+    }
+  });
+});
+
 app.get("/home/getModels", (req, res) => {
   server.sessionCheck(res, req, () =>{
     let jsonData = [];

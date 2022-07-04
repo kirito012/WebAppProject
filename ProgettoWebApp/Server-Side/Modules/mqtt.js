@@ -55,7 +55,6 @@ module.exports.Connect = (connectUrl) => {
 
           if (user.subbedTopics[builtTopic[builtTopic.length-1]]) {
             user.data[builtTopic[builtTopic.length-1]] = payload.toString();
-            console.log(payload.toString());
           }
         });
     });
