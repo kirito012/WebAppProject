@@ -47,7 +47,6 @@
                 });
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
-                    if(obj.className == "listDevice"){
                         $scope.selected = obj.$index;
                         index = obj.selected;
                         if($scope.selected == undefined){
@@ -65,7 +64,6 @@
                                 
                             });
                         }
-                    }
                 }
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
