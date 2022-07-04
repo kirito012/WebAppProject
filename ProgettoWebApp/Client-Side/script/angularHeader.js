@@ -28,6 +28,7 @@
                     url : "/home/getMachines"
                 }).then(function mySuccess(response) {
                     dev = response.data;
+                    $scope.devices = dev;
                 }, function myError(response) {
                     
                 });
@@ -95,6 +96,7 @@
                         url : "/home/getMachines"
                     }).then(function mySuccess(response) {
                         dev = response.data;
+                        $scope.devices = dev;
                     }, function myError(response) {
                         
                     });
@@ -103,8 +105,6 @@
                                          
             });
         }
-
-        $scope.devices = dev;
 
     });
 
