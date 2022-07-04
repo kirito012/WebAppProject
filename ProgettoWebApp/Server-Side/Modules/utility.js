@@ -23,10 +23,26 @@ module.exports.DayCheck = (Day) => {
 }
 
 module.exports.checklength = (obj,callback,error) => {
-  if (obj.length > 0){
+  if (Object.keys(obj).length > 0 || obj.length > 0){
     callback();
   }
   else{
     error();
   }
 };
+
+module.exports.forEach = (obj,callback) => {
+  if (typeof obj == "object"){
+    for (let key in obj) {
+      callback(obj[key],key);
+    }
+  }
+  else if (Array.isArray(obj)){
+    for (let i = 0; i < obj.length;i++){
+      callback(obj[i],i);
+    }
+  }
+  else {
+    throw console.error("you can't loop over a " + typeof obj);
+  }
+}
