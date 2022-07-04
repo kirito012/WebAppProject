@@ -212,7 +212,7 @@ header .navigation .activator .content hr{
 }
 
 header .navigation .activator .content.active hr{
-    transform: rotate(45deg);
+    transform: rotate(135deg);
 }
 
 header.active .menu,
@@ -532,6 +532,14 @@ header .navigation .showDevices .content{
     flex-direction: column;
 }
 
+header .navigation .showDevices .content .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transform: translateY(-3px);
+}
+
 header .navigation .showDevices .content .cashRegister{
     position: relative;
     display: flex;
@@ -580,14 +588,26 @@ header .navigation .showDevices .content .cashRegisterBottom{
     position: absolute;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: 20px;
     height: 7px;
     background: #fff;
     border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-    transition: 0.5s ease;
-    top: 29px;
+    transition: 0.3s ease;
+    top: 17px;
+}
+
+header .navigation .showDevices .content .cashRegisterBottom .open{
+    width: 10px;
+    height: 0px;
+    margin-top: 1px;
+    background: linear-gradient(to left, transparent, #a1a1a1, transparent);
+    transition: 0.3s ease;
+}
+
+header .navigation .showDevices .content.active .cashRegisterBottom .open{
+    height: 5px;
 }
 
 header .navigation .showDevices .content .cashRegisterBottom::after{
@@ -597,6 +617,7 @@ header .navigation .showDevices .content .cashRegisterBottom::after{
     height: 3px;
     border-radius: 8px;
     background: #4f829c;
+    bottom: 1px;
 }
 
 header .navigation .showDevices .content .display{
@@ -627,6 +648,10 @@ header .navigation .showDevices .content .display::before{
     height: 2px;
     border-radius: 5px;
     background: #4f829c;
+}
+
+header .navigation .showDevices .content.active .cashRegisterBottom{
+    height: 10px;
 }
 
 

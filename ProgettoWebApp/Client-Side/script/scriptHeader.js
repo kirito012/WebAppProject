@@ -12,6 +12,7 @@
                 box.classList.remove("active");
                 devices.style.animationName = "boxRemove1";
                 devices.classList.remove("active");
+                devicesToggle.classList.remove("active");
             }
         }
 
@@ -25,6 +26,7 @@
             box.classList.remove("active");
             devices.style.animationName = "boxRemove1";
             devices.classList.remove("active");
+            devicesToggle.classList.remove("active");
         }
         
 
@@ -45,6 +47,7 @@
                 adding.classList.remove("active");
                 devices.style.animationName = "boxRemove1";
                 devices.classList.remove("active");
+                devicesToggle.classList.remove("active");
             }
         }
 
@@ -62,6 +65,7 @@
                 if(opened){
                     devices.style.animationName = "boxRemove1";
                     devices.classList.remove("active");
+                    devicesToggle.classList.remove("active");
                 }
                 adding.classList.toggle("active");
             }else if(box.className == "machines"){
@@ -75,6 +79,7 @@
         let devices = document.querySelector(".devices")
         devicesToggle.onclick = () => {
             devices.classList.toggle("active");
+            devicesToggle.classList.toggle("active");
             opened = true;
             if(devices.className == "devices active"){
                 devices.style.animationName = "boxReveal1";
