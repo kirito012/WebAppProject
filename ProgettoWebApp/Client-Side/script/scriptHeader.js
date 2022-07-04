@@ -1,4 +1,4 @@
-let menu = document.querySelector(".menuToggle");
+        let menu = document.querySelector(".menuToggle");
         let navigation = document.querySelector(".navigation");
         menu.onclick = () =>{
             menu.classList.toggle("active");
@@ -15,16 +15,20 @@ let menu = document.querySelector(".menuToggle");
             }
         }
 
+        var timeOut = false;
+
         function removeAll(){
-            header.classList.add("active");
-            toggle.classList.add("active");
-            menu.classList.remove("active");
-            navigation.classList.toggle("active");
-            adding.classList.remove("active");
-            box.style.animationName = "boxRemove";
-            box.classList.remove("active");
-            devices.style.animationName = "boxRemove1";
-            devices.classList.remove("active");
+            if(!timeOut){
+                header.classList.add("active");
+                toggle.classList.add("active");
+                menu.classList.remove("active");
+                navigation.classList.toggle("active");
+                adding.classList.remove("active");
+                box.style.animationName = "boxRemove";
+                box.classList.remove("active");
+                devices.style.animationName = "boxRemove1";
+                devices.classList.remove("active");
+            }
         }
         
 
@@ -87,6 +91,3 @@ let menu = document.querySelector(".menuToggle");
                 devices.style.animationName = "boxRemove1";
             }
         }
-
-
-        console.log(remove);
