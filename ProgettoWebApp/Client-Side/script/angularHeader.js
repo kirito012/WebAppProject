@@ -1,4 +1,4 @@
-var inputValue = document.querySelector("#inputSearch");
+        var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
 
         let app = angular.module('myApp', []);
