@@ -106,6 +106,19 @@
             });
         }
 
+        $scope.myFunction = function(index){
+            clicked = false;
+            inputValue.value = index;
+        }
+        $scope.disable = function(){
+            clicked = true;
+        }
+        $scope.mouseOut = function(){
+            if(!clicked){
+                inputValue.value = '';
+            }
+        }
+
     });
 
 
@@ -127,19 +140,6 @@
                         remove = true;
                     }, 500);
                 }, 100);
-            }
-
-            $scope.myFunction = function(index){
-                clicked = false;
-                inputValue.value = index;
-            }
-            $scope.disable = function(){
-                clicked = true;
-            }
-            $scope.mouseOut = function(){
-                if(!clicked){
-                    inputValue.value = '';
-                }
             }
 
         });
