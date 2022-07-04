@@ -825,6 +825,7 @@ header .navigation .devices .device li .info .remove:hover .bottom{
 
 header .navigation .devices .device li:hover{
     background: #4f829c;
+    color: #d1d1d1;
 }
 
 header .navigation .devices .device li:hover .info .name{
@@ -834,8 +835,6 @@ header .navigation .devices .device li:hover .info .name{
 header .navigation .devices .device li:hover .info .badge{
     color: #fff;
 }
-
-
 
 
 ::-webkit-scrollbar {

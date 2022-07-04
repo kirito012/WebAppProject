@@ -30,7 +30,7 @@
                     dev = response.data;
                     $scope.devices = dev;
                 }, function myError(response) {
-                    
+                    console.log(response);
                 });
 
                 $http({
@@ -39,9 +39,9 @@
                 }).then(function mySuccess(response) {
                     $scope.models = response.data;
                 }, function myError(response) {
-                    
+                    console.log(response);
                 });
-                
+                  
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
                         $scope.selected = obj.$index;
@@ -60,7 +60,7 @@
                                                     idDevice.innerHTML = responseData.id;
                                                 }
                                             }, function myError(response) {
-                                                
+                                                console.log(response);
                                             });
                                         }
                                     }, 200);
@@ -79,7 +79,7 @@
                                 console.log(response.data);
                             }
                         }, function myError(response) {
-                                                    
+                            console.log(response);
                         });
                     }
                 }
@@ -98,7 +98,7 @@
                         dev = response.data;
                         $scope.devices = dev;
                     }, function myError(response) {
-                        
+                        console.log(response);
                     });
                 }
             }, function myError(response) {
@@ -132,11 +132,11 @@
                             dev = response.data;
                             $scope.devices = dev;
                         }, function myError(response) {
-                            
+                            console.log(response);
                         });
                     }
                 }, function myError(response) {
-                    
+                    console.log(response);
                 });
                 $timeout(function(){
                     remove = true;
