@@ -22,7 +22,7 @@
 
         var responseData;
 
-        let app = angular.module('myApp', ["ngRoute"]);
+        let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
@@ -146,3 +146,4 @@
                     }, 100);
                 }
         });
+
