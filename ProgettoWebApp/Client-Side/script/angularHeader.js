@@ -83,4 +83,7 @@
                         
                     });
                 }
+                $scope.test = function(){
+                    alert("FFF");
+                }
         });
