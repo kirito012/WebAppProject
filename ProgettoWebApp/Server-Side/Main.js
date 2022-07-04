@@ -1,7 +1,8 @@
 let utility = require("./Modules/utility");
 let mqtt = require("./Modules/mqtt");
 let server = require("./Modules/server")
-let database = require("./Modules/database")
+let database = require("./Modules/database");
+const { Console } = require("console");
 
 let client = mqtt.Connect("mqtt://localhost:1883");
 let con = database.connectDatabase("localhost","databasev1");
@@ -96,7 +97,7 @@ app.get("/home/getModels", (req, res) => {
   server.sessionCheck(res, req, () =>{
     let jsonData = [];
 
-    database.query("SELECT * FROM modelli",[],(results) => {
+    database.query("SELECT * FROM modelli;",[],(results) => {
 
       utility.forEach(results, (model,i) => {
         jsonData[i] = model.name;

@@ -37,6 +37,7 @@ module.exports.query = (qr, params, callback) => {
   if (!query) {
     query = qr;
   }
+
   con.query(query, params, (error, results, fields) => {
     if (error) throw error;
     callback(results);
