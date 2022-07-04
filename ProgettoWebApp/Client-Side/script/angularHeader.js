@@ -73,7 +73,7 @@
                         idDevice.innerHTML = "";
                     }
                 }
-                $scope.remove() = function(){
+                $scope.remove = function(){
                     deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
                     $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
                         if(response.data){
