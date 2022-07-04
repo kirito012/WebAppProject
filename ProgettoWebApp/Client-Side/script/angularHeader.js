@@ -31,7 +31,7 @@
                 model = document.querySelector(".modello").value;
                 newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
                 $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
-                    if(response.data == "getMachines"){
+                    if(response.data){
                         console.log("ddd");
                         $http({
                             method : "GET",
