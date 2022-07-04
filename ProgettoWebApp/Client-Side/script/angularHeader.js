@@ -54,7 +54,7 @@
                         nameDevice.innerHTML = dev[$scope.selected].customname;
                         idDevice.innerHTML = dev[$scope.selected].uniqueid;
                         array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
-                        $http.post("/home/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                        $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
                             if(response.data){
                                 console.log(response.data);
                             }
