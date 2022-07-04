@@ -111,7 +111,7 @@
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
                     <ul class="device" ng-controller="myCtrlDevice">
                         <li class="listDevice" onclick="removeAll()" ng-click="resetChoice()"></li>
-                        <li class="listDevice" onclick="removeAll()" ng-click="selection(this, this.class);" ng-repeat="device in devices | filter: device">
+                        <li class="listDevice" onclick="removeAll()" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>

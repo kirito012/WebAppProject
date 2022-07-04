@@ -35,6 +35,8 @@
 
         var deviceToRemove = {};
 
+        var remove = false;
+
         app.controller('myCtrlDevice', function($scope, $http) {
                 $http({
                     method : "GET",
@@ -46,10 +48,10 @@
                     
                 });
                 $scope.selected = undefined;
-                $scope.selection = function(obj, className){
+                $scope.selection = function(obj){
                         $scope.selected = obj.$index;
                         index = obj.selected;
-                        console.log(className)
+                    if(remove){
                         if($scope.selected == undefined){
                             sel.innerHTML = "Selezionare un dispositivo dal menù";
                         }else{
@@ -65,6 +67,7 @@
                                 
                             });
                         }
+                    }
                 }
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
@@ -79,6 +82,7 @@
 
         app.controller('removeDevice', function($scope, $http) {
             $scope.remove = function(){
+                remove = true;
                 deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
                 $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
                     if(response.data){
@@ -87,5 +91,6 @@
                 }, function myError(response) {
                     
                 });
+                remove = false;
             }
         });
