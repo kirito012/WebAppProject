@@ -31,15 +31,25 @@ module.exports.checklength = (obj,callback,error) => {
   }
 };
 
-module.exports.forEach = (obj,callback) => {
+module.exports.forEach = (obj,callback,lastindexcallback) => {
   if (typeof obj == "object"){
+    let keys = Object.keys(obj);
+
     for (let key in obj) {
       callback(obj[key],key);
+
+      if (key == keys[keys.length - 1] && lastindexcallback != undefined){
+        lastindexcallback();
+      }
     }
   }
   else if (Array.isArray(obj)){
     for (let i = 0; i < obj.length;i++){
       callback(obj[i],i);
+
+      if (i == obj.length -1 && lastindexcallback != undefined) {
+        lastindexcallback();
+      }
     }
   }
   else {

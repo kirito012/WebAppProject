@@ -97,11 +97,12 @@ app.get("/home/getModels", (req, res) => {
     let jsonData = [];
 
     database.query("SELECT * FROM modelli",[],(results) => {
-      results.forEach((model, i) => {
-        jsonData[i] = model.name;
-      });
 
-      res.send(jsonData);
+      utility.forEach(results, (model,i) => {
+        jsonData[i] = model.name;
+      }, () => {
+        res.send(jsonData);
+      });
     });
   });
 });
@@ -115,11 +116,11 @@ app.get("/home/getMachines", (req, res) => {
         database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
           let jsonData = [];
 
-          corrispondenze.forEach((corrispondenza) => {
+          utility.forEach(corrispondenze,(corrispondenza) => {
             jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+          }, () => {
+            res.send(jsonData);
           });
-
-          res.send(jsonData);
         });
       },() => {
         server.Redirect(res, "/", "dataNotFound");
