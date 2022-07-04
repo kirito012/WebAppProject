@@ -85,17 +85,19 @@
 
         app.controller('removeDevice', function($scope, $http, $timeout) {
             $scope.remove = function(){
-                remove = false;
-                deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
-                $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
-                    if(response.data){
-
-                    }
-                }, function myError(response) {
-                    
-                });
                 $timeout(function(){
-                    remove = true;
-                }, 500);
+                    remove = false;
+                    deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
+                    $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
+                        if(response.data){
+    
+                        }
+                    }, function myError(response) {
+                        
+                    });
+                    $timeout(function(){
+                        remove = true;
+                    }, 500);
+                }, 100);
             }
         });
