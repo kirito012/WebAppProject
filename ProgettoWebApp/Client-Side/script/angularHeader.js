@@ -20,6 +20,7 @@
         
         var newMachine = {};
 
+        var responseData;
 
         let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
@@ -49,15 +50,15 @@
                                 if($scope.selected == undefined){
                                     sel.innerHTML = "Selezionare un dispositivo dal menù";
                                 }else{
-                                    sel.innerHTML = "Modello: " + dev[$scope.selected].model
-                                    nameDevice.innerHTML = dev[$scope.selected].customname;
-                                    idDevice.innerHTML = dev[$scope.selected].uniqueid;
                                     $timeout(function(){
                                         if(remove){
                                             array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
                                             $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
                                                 if(response.data){
-                                                    console.log(response.data);
+                                                    responseData = response.data;
+                                                    sel.innerHTML = "Modello: " + responseData.model;
+                                                    nameDevice.innerHTML = dev[$scope.selected].customname;
+                                                    idDevice.innerHTML = responseData.id;
                                                 }
                                             }, function myError(response) {
                                                 
