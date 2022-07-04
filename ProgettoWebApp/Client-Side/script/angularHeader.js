@@ -32,7 +32,15 @@
                 newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
                 $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
                     if(response.data == "getMachines"){
-                        getMachines();
+                        $http({
+                            method : "GET",
+                            url : "/home/getMachines"
+                        }).then(function mySuccess(response) {
+                            $scope.devices = response.data;
+                            dev = response.data;
+                        }, function myError(response) {
+                            
+                        });
                     }
                 }, function myError(response) {
                                             
@@ -57,18 +65,6 @@
         var nameCustom;
         
         var newMachine = {};
-
-        function getMachines(){
-            $http({
-                method : "GET",
-                url : "/home/getMachines"
-            }).then(function mySuccess(response) {
-                $scope.devices = response.data;
-                dev = response.data;
-            }, function myError(response) {
-                
-            });
-        }
 
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
