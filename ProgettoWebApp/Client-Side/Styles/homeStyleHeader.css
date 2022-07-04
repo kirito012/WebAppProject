@@ -766,7 +766,6 @@ header .navigation .devices .device li .info .remove{
     height: 40px;
     background: #fff;
     border-radius: 15px;
-    margin-left: 90px;
 }
 
 header .navigation .devices .device li .info .remove .bottom{
@@ -853,4 +852,8 @@ header .navigation .devices .device li:hover .info .badge{
     background: #4f829c;
     border-radius: 4px;
     border: 1px solid #fff;
+  }
+
+  input{
+    outline:  none;
   }
