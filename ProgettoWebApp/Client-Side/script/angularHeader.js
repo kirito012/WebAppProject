@@ -1,6 +1,8 @@
+        
+        let Function = require("scriptHeader.js");
+        
         var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
-
 
         var sel = document.querySelector(".selector");
         var nameDevice = document.querySelector(".nameData span");
@@ -59,6 +61,7 @@
                                                     sel.innerHTML = "Modello: " + responseData.model;
                                                     nameDevice.innerHTML = dev[$scope.selected].customname;
                                                     idDevice.innerHTML = responseData.id;
+                                                    Function.removeAll();
                                                 }
                                             }, function myError(response) {
                                                 

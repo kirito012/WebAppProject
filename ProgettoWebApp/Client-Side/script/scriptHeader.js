@@ -15,7 +15,7 @@ let menu = document.querySelector(".menuToggle");
             }
         }
 
-        function removeAll(){
+        module.exports.removeAll = function(){
             header.classList.add("active");
             toggle.classList.add("active");
             menu.classList.remove("active");
