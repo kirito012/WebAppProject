@@ -56,7 +56,7 @@
                                         $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){    
                                             if(response.data){        
                                                 responseData = response.data;
-                                                select.innerHTML = "Disositivo selezionato:"
+                                                select.innerHTML = "Disositivo selezionato: ";
                                                 sel.innerHTML = "Modello: " + responseData.model;        
                                                 nameDevice.innerHTML = dev[$scope.selected].customname;       
                                                 idDevice.innerHTML = responseData.id;           
