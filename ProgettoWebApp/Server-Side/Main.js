@@ -58,20 +58,37 @@ app.post("/login", (req, res) => {
 
 app.post("/logout", server.logout);
 
-app.post("/home/subscribe", (req, res) => {
+app.post("/subscribe", (req, res) => {
   server.sessionCheck(res, req, () =>{
-    let model = req.body.model;
-    let id = req.body.id;
-    let topics = req.body.topics;
+    let body = req.body;
     let user = req.session.name;
 
     if (mqtt.usersTopics[user]) {
       mqtt.disconnectFromTopic(user);
     }
 
-    mqtt.connectToNewTopic(model, id, topics, user);
-
-    res.send("Subbed succesfully");
+    utility.checklength(body.topics,() => {
+      database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
+        utility.checklength(resultid, () => {
+          let id = resultid[0].matricola_id
+          if (id) {
+            database.query("updateSelectedMatricola",[id,req.session.secret,user], () => {
+              mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
+              res.send(mqtt.usersTopics[user]);
+            });
+          }
+          else{
+            console.log(resultid);
+          }
+        }, () => {
+          console.log("id not found");
+          console.log(resultid);
+        });
+      });
+    },() => {
+      console.log("body doesn't exitst")
+      res.send(mqtt.usersTopics[user]);
+    })
   })
 });
 
@@ -141,12 +158,14 @@ app.post("/addMachine", (req, res) => {
 app.post("/removeMachine", (req, res) => {
   server.sessionCheck(res, req, () => {
     let body = req.body;
+    let user = req.session.name;
 
-    database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name],(results) => {
-      utility.checklength(results,() => {
+    database.query("selectDeleteCorrispondenza",[body.badgeNumber], () => {
+      database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name,body.badgeNumber],(results) => {
+        if (mqtt.usersTopics[user] && mqtt.usersTopics[user].id == body.badgeNumber) {
+          mqtt.disconnectFromTopic(user);
+        }
         res.send("getMachines");
-      },() => {
-        server.Redirect(res,"/home","machineNotFound");
       });
     });
   });

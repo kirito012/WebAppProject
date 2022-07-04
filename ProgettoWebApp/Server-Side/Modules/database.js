@@ -12,6 +12,10 @@ let queryPreset = {
   selectEmailPsw: "SELECT * FROM utenti WHERE email = ? AND password = ?;",
   selectSessionName: "SELECT * FROM utenti WHERE lastsession = ? AND name = ?;",
   selectModelliName: "SELECT * FROM modelli WHERE name = ?;",
+  selectMatricolaId: `SELECT * FROM corrispondenze
+  JOIN matricole on corrispondenze.matricola_id = matricole.id
+  JOIN utenti on corrispondenze.utente_id = utenti.id
+  WHERE utenti.lastsession = ? AND utenti.name = ? AND matricole.uniqueid = ?;`,
   selectCorrispondenze: `SELECT matricole.customname,  utenti.name as parentName, modelli.name as model, matricole.uniqueid
     FROM corrispondenze JOIN matricole on corrispondenze.matricola_id = matricole.id
                                  JOIN utenti on corrispondenze.utente_id = utenti.id
@@ -19,6 +23,10 @@ let queryPreset = {
     WHERE corrispondenze.utente_id = ?;`,
   updateSession:
     "UPDATE utenti SET lastsession = ? WHERE email = ? AND password = ?;",
+  updateSelectedMatricola: "UPDATE utenti SET selectedmatricolaid = ? WHERE lastsession = ? AND name = ?;",
+  selectDeleteCorrispondenza: `DELETE corrispondenze FROM corrispondenze 
+  JOIN matricole on corrispondenze.matricola_id = matricole.id
+  WHERE matricole.uniqueid = ?;`,
   selectDeleteMatricolaParent: `DELETE FROM matricole WHERE uniqueid = ? AND EXISTS(
     SELECT * FROM utenti WHERE lastsession = ? AND name = ?) LIMIT 1;`,
 };
