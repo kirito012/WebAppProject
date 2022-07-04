@@ -110,7 +110,7 @@
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
                     <ul class="device">
                         <li class="listDevice" onclick="removeAll()" ng-click="resetChoice()">Rimuovi selezione</li>
-                        <li class="listDevice" onclick="timeOut = false; removeAll();" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
+                        <li class="listDevice" onclick="" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
@@ -119,7 +119,7 @@
                                     <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
                                     <h4 class="badge">{{ device.uniqueid }}</h4>
                                 </div>
-                                <div class="remove" onclick="timeOut = true;" ng-click="remove()">
+                                <div class="remove" onclick="" ng-click="remove()">
                                     <div class="top"></div>
                                     <div class="bottom">
                                         <hr> 
@@ -152,26 +152,6 @@
             </div>
         </section>
     </section>
-
-    <script>
-        var timeOut = false;
-
-        function removeAll(){
-                setTimeout(() => {
-                    if(!timeOut){
-                        header.classList.add("active");
-                        toggle.classList.add("active");
-                        menu.classList.remove("active");
-                        navigation.classList.toggle("active");
-                        adding.classList.remove("active");
-                        box.style.animationName = "boxRemove";
-                        box.classList.remove("active");
-                        devices.style.animationName = "boxRemove1";
-                        devices.classList.remove("active");
-                    }
-                }, 150);
-            }
-    </script>
 
     <script src="../script/scriptHeader.js"></script>
     <script src="../script/angularHeader.js"></script>

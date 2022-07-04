@@ -15,7 +15,17 @@
             }
         }
 
-    
+        function removeAll(){
+            header.classList.add("active");
+            toggle.classList.add("active");
+            menu.classList.remove("active");
+            navigation.classList.toggle("active");
+            adding.classList.remove("active");
+            box.style.animationName = "boxRemove";
+            box.classList.remove("active");
+            devices.style.animationName = "boxRemove1";
+            devices.classList.remove("active");
+        }
         
 
         let toggle = document.querySelector(".menuToggle1");
