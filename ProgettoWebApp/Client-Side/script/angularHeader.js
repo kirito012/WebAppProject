@@ -1,6 +1,31 @@
         var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
 
+
+        var sel = document.querySelector(".selector");
+        var nameDevice = document.querySelector(".nameData span");
+        var idDevice = document.querySelector(".badgeNumberData span");
+        var dev;
+        var index;
+
+        var array = {};
+
+        var deviceToRemove = {};
+
+        var remove = true;
+
+        var search;
+        var badgeNumber;
+        var nameCustom;
+        
+        var newMachine = {};
+
+
+
+
+
+
+
         let app = angular.module('myApp', []);
         app.controller('myCtrl', function($scope, $http) {
             $http({
@@ -38,6 +63,7 @@
                         }).then(function mySuccess(response) {
                             $scope.devices = response.data;
                             dev = response.data;
+                            console.log(dev);
                         }, function myError(response) {
                             
                         });
@@ -48,23 +74,6 @@
             }
         });
 
-        var sel = document.querySelector(".selector");
-        var nameDevice = document.querySelector(".nameData span");
-        var idDevice = document.querySelector(".badgeNumberData span");
-        var dev;
-        var index;
-
-        var array = {};
-
-        var deviceToRemove = {};
-
-        var remove = true;
-
-        var search;
-        var badgeNumber;
-        var nameCustom;
-        
-        var newMachine = {};
 
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
@@ -73,6 +82,7 @@
                 }).then(function mySuccess(response) {
                     $scope.devices = response.data;
                     dev = response.data;
+                    console.log(dev);
                 }, function myError(response) {
                     
                 });
