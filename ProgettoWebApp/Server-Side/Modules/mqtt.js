@@ -1,6 +1,7 @@
 let mqtt = require("mqtt");
 var child_process = require('child_process');
-let Functions = require("./utility");
+let utility = require("./utility");
+const e = require("express");
 
 let client;
 let usersTopics = {};
@@ -10,8 +11,8 @@ module.exports.usersTopics = usersTopics;
 module.exports.connectToNewTopic = (model, id, topics, user) => {
   usersTopics[user] = { model: model, id: id, data: {}, subbedTopics: topics };
 
-  usersTopics[user].subbedTopics.forEach((element) => {
-    let topic = `${model}/${id}/${element}`;
+  utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
+    let topic = `${model}/${id}/${key}`;
 
     client.subscribe([topic], () => {
       console.log(`${user} subscribed to topic '${topic}'`);
@@ -23,20 +24,20 @@ module.exports.disconnectFromTopic = (user) => {
   let model = usersTopics[user].model;
   let id = usersTopics[user].id;
 
-  usersTopics[user].subbedTopics.forEach((element) => {
-    let topic = `${model}/${id}/${element}`;
+  utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
+    let topic = `${model}/${id}/${key}`;
 
     client.unsubscribe([topic], () => {
       console.log(`${user} unsubscribed to topic '${topic}'`);
     });
-  });
+  })
 
   usersTopics[user] = undefined;
 }
 
 module.exports.Connect = (connectUrl) => {
     client = mqtt.connect(connectUrl, {
-        clientId: Functions.generateRandomKey(),
+        clientId: utility.generateRandomKey(),
         clean: true,
         connectTimeout: 4000,
         username: "User1",
@@ -49,13 +50,13 @@ module.exports.Connect = (connectUrl) => {
     });
 
     client.on("message", (topic, payload) => {
-        usersTopics.forEach((user) => {
-          let model = user.model;
-          let id = user.id;
-      
-          usersTopics[user].subbedTopics.forEach((element) => {
-            let topicBuild = `${model}/${id}/${element}`;
-          });
+        utility.forEach(usersTopics, (user) => {
+          let builtTopic = topic.split("/")
+
+          if (user.subbedTopics[builtTopic[builtTopic.length-1]]) {
+            user.data[builtTopic[builtTopic.length-1]] = payload.toString();
+            console.log(payload.toString());
+          }
         });
     });
 
