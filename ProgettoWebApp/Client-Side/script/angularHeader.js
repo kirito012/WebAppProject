@@ -78,6 +78,14 @@
                         sel.innerHTML = "Selezionare un dispositivo dal menù";
                         nameDevice.innerHTML = "";
                         idDevice.innerHTML = "";
+                        array = {model: "", id: "", topics: []};
+                        $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                            if(response.data){
+                                console.log(response.data);
+                            }
+                        }, function myError(response) {
+                                                    
+                        });
                     }
                 }
         });
