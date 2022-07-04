@@ -49,7 +49,7 @@
                 $scope.selection = function(obj){
                         $scope.selected = obj.$index;
                         index = obj.selected;
-                    if(obj.className == "listDevice"){
+                        console.log(obj.className);
                         if($scope.selected == undefined){
                             sel.innerHTML = "Selezionare un dispositivo dal menù";
                         }else{
@@ -65,7 +65,6 @@
                                 
                             });
                         }
-                    }
                 }
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
