@@ -23,6 +23,20 @@
             }, function myError(response) {
                 
             });
+
+            $scope.addMachine = function(){
+                badgeNumber = document.querySelector(".numeroMatricola").value;
+                nameCustom = document.querySelector(".nomePersonalizzato").value;
+                model = document.querySelector(".modello").value;
+                newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
+                $http.post("/addMachine", JSON.stringify(array)).then(function mySuccess(response){
+                    if(response.data){
+                        console.log(response.data);
+                    }
+                }, function myError(response) {
+                                            
+                });
+            }
         });
 
         var sel = document.querySelector(".selector");
@@ -95,19 +109,6 @@
                     }
                 }
 
-                $scope.addMachine = function(){
-                    badgeNumber = document.querySelector(".numeroMatricola").value;
-                    nameCustom = document.querySelector(".nomePersonalizzato").value;
-                    model = document.querySelector(".modello").value;
-                    newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
-                    $http.post("/addMachine", JSON.stringify(array)).then(function mySuccess(response){
-                        if(response.data){
-                            console.log(response.data);
-                        }
-                    }, function myError(response) {
-                                                
-                    });
-                }
         });
 
 

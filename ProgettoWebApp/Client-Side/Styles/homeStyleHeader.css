@@ -509,7 +509,7 @@ header .navigation .add .adding .machines form input[type='text']{
     color: #fff;
 }
 
-header .navigation .add .adding .machines form input[type='submit']{
+header .navigation .add .adding .machines form input[type='button']{
     position: relative;
     display: flex;
     justify-content: center;
