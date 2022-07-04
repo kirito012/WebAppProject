@@ -8,21 +8,22 @@
                 url : "/home/getModels"
             }).then(function mySuccess(response) {
                 $scope.models = response.data;
-                $scope.myFunction = function(index){
-                    clicked = false;
-                    inputValue.value = index;
-                }
-                $scope.disable = function(){
-                    clicked = true;
-                }
-                $scope.mouseOut = function(){
-                    if(!clicked){
-                        inputValue.value = '';
-                    }
-                }
             }, function myError(response) {
                 
             });
+
+            $scope.myFunction = function(index){
+                clicked = false;
+                inputValue.value = index;
+            }
+            $scope.disable = function(){
+                clicked = true;
+            }
+            $scope.mouseOut = function(){
+                if(!clicked){
+                    inputValue.value = '';
+                }
+            }
 
             $scope.addMachine = function(){
                 badgeNumber = document.querySelector(".numeroMatricola").value;
