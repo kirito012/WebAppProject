@@ -4,6 +4,7 @@
         var sel = document.querySelector(".selector");
         var nameDevice = document.querySelector(".nameData span");
         var idDevice = document.querySelector(".badgeNumberData span");
+        var select = document.querySelector(".select");
         var dev;
         var index;
 
@@ -54,7 +55,8 @@
                                         array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: {h: true, f: false, d: false, r: false}};    
                                         $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){    
                                             if(response.data){        
-                                                responseData = response.data;        
+                                                responseData = response.data;
+                                                select.innerHTML = "Disositivo selezionato:"
                                                 sel.innerHTML = "Modello: " + responseData.model;        
                                                 nameDevice.innerHTML = dev[$scope.selected].customname;       
                                                 idDevice.innerHTML = responseData.id;           
