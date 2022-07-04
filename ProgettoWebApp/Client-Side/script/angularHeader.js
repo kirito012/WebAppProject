@@ -31,8 +31,8 @@
                 model = document.querySelector(".modello").value;
                 newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
                 $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
-                    if(response.data){
-                        console.log(response.data);
+                    if(response.data == "getMachines"){
+                        getMachines();
                     }
                 }, function myError(response) {
                                             
@@ -68,6 +68,19 @@
                 }, function myError(response) {
                     
                 });
+
+                function getMachines(){
+                    $http({
+                        method : "GET",
+                        url : "/home/getMachines"
+                    }).then(function mySuccess(response) {
+                        $scope.devices = response.data;
+                        dev = response.data;
+                    }, function myError(response) {
+                        
+                    });
+                }
+
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
                         $scope.selected = obj.$index;
