@@ -120,7 +120,7 @@
                                     <h3 class="name">{{ device.model + " - " + device.customname }}</h3>
                                     <h4 class="badge">{{ device.uniqueid }}</h4>
                                 </div>
-                                <div class="remove" ng-click="remove()">
+                                <div class="remove" ng-click="remove()" ng-controller="removeDevice">
                                     <div class="top"></div>
                                     <div class="bottom">
                                         <hr>

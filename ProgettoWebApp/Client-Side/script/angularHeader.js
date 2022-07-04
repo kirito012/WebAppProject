@@ -75,14 +75,18 @@
                         idDevice.innerHTML = "";
                     }
                 }
-                $scope.remove = function(){
-                    deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
-                    $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
-                        if(response.data){
-                            console.log(response.data);
-                        }
-                    }, function myError(response) {
-                        
-                    });
-                }
+        });
+
+
+        app.controller('removeDevice', function($scope, $http) {
+            $scope.remove = function(){
+                deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
+                $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
+                    if(response.data){
+                        console.log(response.data);
+                    }
+                }, function myError(response) {
+                    
+                });
+            }
         });
