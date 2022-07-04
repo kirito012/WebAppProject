@@ -60,7 +60,7 @@
                                                     sel.innerHTML = "Modello: " + responseData.model;
                                                     nameDevice.innerHTML = dev[$scope.selected].customname;
                                                     idDevice.innerHTML = responseData.id;
-                                                    removeAll();
+                                                    
                                                 }
                                             }, function myError(response) {
                                                 console.log(response);
