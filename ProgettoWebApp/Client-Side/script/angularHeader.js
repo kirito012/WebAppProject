@@ -29,7 +29,7 @@
                 nameCustom = document.querySelector(".nomePersonalizzato").value;
                 model = document.querySelector(".modello").value;
                 newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
-                $http.post("/addMachine", JSON.stringify(array)).then(function mySuccess(response){
+                $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
                     if(response.data){
                         console.log(response.data);
                     }
