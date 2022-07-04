@@ -58,6 +58,18 @@
         
         var newMachine = {};
 
+        function getMachines(){
+            $http({
+                method : "GET",
+                url : "/home/getMachines"
+            }).then(function mySuccess(response) {
+                $scope.devices = response.data;
+                dev = response.data;
+            }, function myError(response) {
+                
+            });
+        }
+
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
@@ -68,18 +80,6 @@
                 }, function myError(response) {
                     
                 });
-
-                function getMachines(){
-                    $http({
-                        method : "GET",
-                        url : "/home/getMachines"
-                    }).then(function mySuccess(response) {
-                        $scope.devices = response.data;
-                        dev = response.data;
-                    }, function myError(response) {
-                        
-                    });
-                }
 
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
