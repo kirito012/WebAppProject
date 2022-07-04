@@ -32,6 +32,7 @@
                 newMachine = {search: model, name: nameCustom, badgeNumber: badgeNumber};
                 $http.post("/addMachine", JSON.stringify(newMachine)).then(function mySuccess(response){
                     if(response.data == "getMachines"){
+                        console.log("ddd");
                         $http({
                             method : "GET",
                             url : "/home/getMachines"
