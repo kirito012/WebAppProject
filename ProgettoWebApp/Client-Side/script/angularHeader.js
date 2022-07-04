@@ -37,7 +37,7 @@
 
         var remove = true;
 
-        app.controller('myCtrlDevice', function($scope, $http) {
+        app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
                     url : "/home/getMachines"
@@ -51,23 +51,25 @@
                 $scope.selection = function(obj){
                         $scope.selected = obj.$index;
                         index = obj.selected;
-                    if(remove){
-                        if($scope.selected == undefined){
-                            sel.innerHTML = "Selezionare un dispositivo dal menù";
-                        }else{
-                            sel.innerHTML = "Modello: " + dev[$scope.selected].model
-                            nameDevice.innerHTML = dev[$scope.selected].customname;
-                            idDevice.innerHTML = dev[$scope.selected].uniqueid;
-                            array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
-                            $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
-                                if(response.data){
-                                    console.log(response.data);
+                        $timeout(function(){
+                            if(remove){
+                                if($scope.selected == undefined){
+                                    sel.innerHTML = "Selezionare un dispositivo dal menù";
+                                }else{
+                                    sel.innerHTML = "Modello: " + dev[$scope.selected].model
+                                    nameDevice.innerHTML = dev[$scope.selected].customname;
+                                    idDevice.innerHTML = dev[$scope.selected].uniqueid;
+                                    array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
+                                    $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                                        if(response.data){
+                                            console.log(response.data);
+                                        }
+                                    }, function myError(response) {
+                                        
+                                    });
                                 }
-                            }, function myError(response) {
-                                
-                            });
-                        }
-                    }
+                            }
+                        }, 200);
                 }
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
@@ -80,7 +82,7 @@
         });
 
 
-        app.controller('removeDevice', function($scope, $http) {
+        app.controller('removeDevice', function($scope, $http, $timeout) {
             $scope.remove = function(){
                 remove = false;
                 deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
@@ -91,6 +93,8 @@
                 }, function myError(response) {
                     
                 });
-                remove = true;
+                $timeout(function(){
+                    remove = true;
+                }, 500);
             }
         });
