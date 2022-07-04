@@ -733,7 +733,6 @@ header .navigation .devices .device li .info{
     justify-content: space-evenly;
     align-items: center;
     flex-direction: row;
-    width: 60%;
     height: 100%;
     margin-left: 5px;
 }
@@ -762,8 +761,8 @@ header .navigation .devices .device li .info .remove{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 20%;
-    height: 100%;
+    width: 40px;
+    height: 40px;
     background: #fff;
     border-radius: 15px;
 }
