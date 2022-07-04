@@ -47,22 +47,24 @@
                 });
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
-                    $scope.selected = obj.$index;
-                    index = obj.selected;
-                    if($scope.selected == undefined){
-                        sel.innerHTML = "Selezionare un dispositivo dal menù";
-                    }else{
-                        sel.innerHTML = "Modello: " + dev[$scope.selected].model
-                        nameDevice.innerHTML = dev[$scope.selected].customname;
-                        idDevice.innerHTML = dev[$scope.selected].uniqueid;
-                        array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
-                        $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
-                            if(response.data){
-                                console.log(response.data);
-                            }
-                        }, function myError(response) {
-                            
-                        });
+                    if(obj.className == "listDevice"){
+                        $scope.selected = obj.$index;
+                        index = obj.selected;
+                        if($scope.selected == undefined){
+                            sel.innerHTML = "Selezionare un dispositivo dal menù";
+                        }else{
+                            sel.innerHTML = "Modello: " + dev[$scope.selected].model
+                            nameDevice.innerHTML = dev[$scope.selected].customname;
+                            idDevice.innerHTML = dev[$scope.selected].uniqueid;
+                            array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: ["f", "j", "h", "g"]};
+                            $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
+                                if(response.data){
+                                    console.log(response.data);
+                                }
+                            }, function myError(response) {
+                                
+                            });
+                        }
                     }
                 }
                 $scope.resetChoice = function(){
@@ -82,8 +84,5 @@
                     }, function myError(response) {
                         
                     });
-                }
-                $scope.test = function(){
-                    alert("FFF");
                 }
         });
