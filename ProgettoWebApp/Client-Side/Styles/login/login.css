@@ -299,6 +299,14 @@ input[type=date]:focus::-webkit-datetime-edit {
     font-size: 14px;
 }
 
-input:-webkit-autofill{
-    background: none !important;
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    background: transparent;
 }
