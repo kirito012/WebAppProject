@@ -25,7 +25,7 @@ module.exports.dayCheck = (day) => {
 
 module.exports.checkEmail = (Email) => {
   if (Email) {
-    return validator.validate(Email).valid;
+    return validator.validate(Email);
   }
   else{
     return false
