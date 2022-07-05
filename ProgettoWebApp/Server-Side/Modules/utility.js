@@ -1,20 +1,21 @@
 let crypto = require('crypto');
+let validator = require("email-validator");
 
 module.exports.generateRandomKey = () => {
   return crypto.randomBytes(48).toString('hex');
 }
 
-module.exports.DayCheck = (Day) => {
-  let Today = new Date;
-  Today.setHours(23,59,59,998);
+module.exports.dayCheck = (day) => {
+  let today = new Date;
+  today.setHours(23,59,59,998);
   
-  let newDay = new Date(Day);
+  let newDay = new Date(day);
   newDay.setHours(23,59,59,998);
 
-  if (Today < newDay){
+  if (today < newDay){
     return false;
   }
-  else if (Today.getFullYear() - 16 > newDay.getFullYear()){
+  else if (today.getFullYear() - 16 > newDay.getFullYear()){
     return true;
   }
   else {
@@ -22,7 +23,16 @@ module.exports.DayCheck = (Day) => {
   }
 }
 
-module.exports.checklength = (obj,callback,error) => {
+module.exports.checkEmail = (Email) => {
+  if (Email) {
+    return validator.validate(Email).valid;
+  }
+  else{
+    return false
+  }
+}
+
+module.exports.checkLength = (obj,callback,error) => {
   if (Object.keys(obj).length > 0 || obj.length > 0){
     callback();
   }
