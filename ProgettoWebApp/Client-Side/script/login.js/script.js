@@ -29,3 +29,15 @@ if(params.has('error')){
         }
     }
 }
+
+let hide = document.querySelector(".hide");
+let line = document.querySelector(".line");
+let password = document.querySelector(".password")
+hide.addEventListener("click", () => {
+    line.classList.toggle("active");
+    if(line.className == "line"){
+        password.type = "text";
+    }else if(line.className == "line active"){
+        password.type = "password";
+    }
+});

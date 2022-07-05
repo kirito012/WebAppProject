@@ -60,6 +60,13 @@ section .login form .inputBox{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    flex-direction: row;
+}
+
+section .login form .inputBox.submitBox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-direction: column;
 }
 
@@ -87,14 +94,66 @@ section .login form .inputBox .focus{
     margin-top: 10px;
 }
 
-section .login form .inputBox:nth-child(1) input:focus ~ span, section .login form .inputBox:nth-child(1) input:valid ~ span{
+section .login form .inputBox .hide{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 0px;
+    right: 45px;
+    transition: 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+section .login form .inputBox .hide .eye{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+section .login form .inputBox .hide .eye::after{
+    content: '';
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+    transform-origin: center;
+}
+
+section .login form .inputBox .hide .eye hr{
+    position: absolute;
+    background: #fff;
+    height: 0px;
+    width: 3px;
+    transform: rotate(-45deg);
+    transition: 0.3s ease;
+    border: none;
+}
+
+section .login form .inputBox .hide .eye hr.active{
+    height: 25px;
+}
+
+section .login form .inputBox:nth-child(1) input:focus ~ .focus, section .login form .inputBox:nth-child(1) input:valid ~ .focus{
     transform: translateY(-25px) translateX(-5px) scale(0.8);
     color: rgba(255, 255, 255, 1);
 }
 
-section .login form .inputBox:nth-child(2) input:focus ~ span, section .login form .inputBox:nth-child(2) input:valid ~ span{
+section .login form .inputBox:nth-child(2) input:focus ~ .focus, section .login form .inputBox:nth-child(2) input:valid ~ .focus{
     transform: translateY(-25px) translateX(-7px) scale(0.8);
     color: rgba(255, 255, 255, 1);
+}
+
+section .login form .inputBox:nth-child(2) input:focus ~ .hide, section .login form .inputBox:nth-child(2) input:valid ~ .hide{
+    height: 40px;
 }
 
 section .login .inputBox:nth-child(4) input{
