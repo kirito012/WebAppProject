@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../Styles/login/login.css">
+</head>
+<body>
+    <section>
+        <div class="login">
+            <h1 class="log">Accedi</h1>
+            <form action="login" method="post">
+                <div class="inputBox">
+                    <input type="text" name="" id="" required>
+                    <span class="focus">Email</span>
+                </div>
+                <div class="inputBox">
+                    <input type="password" name="" id="" required>
+                    <span class="focus">Password</span>
+                </div>
+                <div class="error">
+                    
+                </div>
+                <div class="inputBox">
+                    <input type="submit" value="Accedi">
+                    <div class="enableRegister">
+                        <label for="enableRegister">
+                            Non hai un account? Registrati &nbsp;<span>qui</span>
+                            <input type="checkbox" name="" id="enableRegister">
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="register">
+            <h1 class="reg">Registrati</h1>
+            <form action="register" method="post">
+                <div class="row">
+                    <div class="column">
+                        <div class="inputBox">
+                            <input type="text" name="" id="" required>
+                            <span class="focus">Email</span>
+                        </div>
+                        <div class="inputBox">
+                            <input type="password" name="" id="" required>
+                            <span class="focus">Password</span>
+                        </div>
+                        <div class="inputBox">
+                            <input type="password" name="" id="" required>
+                            <span class="focus">Ripeti password</span>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="inputBox">
+                            <input type="text" name="" id="" required>
+                            <span class="focus">Nome</span>
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" name="" id="" required>
+                            <span class="focus">Cognome</span>
+                        </div>
+                        <div class="inputBox">
+                            <input type="date" name="" id="" class="date" required>
+                            <span class="focus">Data di nascita</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit">
+                    <input type="submit" value="Registrati">
+                </div>
+            </form>       
+        </div>
+    </section>
+    <script src="../script/login.js/script.js"></script>
+</body>
+</html>

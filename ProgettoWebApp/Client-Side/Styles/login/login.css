@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+input{
+    outline: none;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+section{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 150px;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to left, #112d42 0%, #112d42 50%, #03a9f4 50.000000000000000000000001%, #03a9f4 100%);
+}
+
+section .login{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 320px;
+    height: 400px;
+    background: #112d42;
+    padding: 25px;
+    gap: 35px;
+    z-index: 5;
+}
+
+section .login .log{
+    color: #fff;
+    font-size: 27px;
+}
+
+section .login form{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 30px;
+}
+
+section .login form .inputBox{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+section .login form .inputBox input{
+    position: relative;
+    width: 250px;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #fff;
+    background: transparent;
+    padding: 0 5px;
+    caret-color: #fff;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+section .login form .inputBox .focus{
+    position: absolute;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: 0.3s ease;
+    margin-top: 10px;
+}
+
+section .login form .inputBox:nth-child(1) input:focus ~ span, section .login form .inputBox:nth-child(1) input:valid ~ span{
+    transform: translateY(-25px) translateX(-5px) scale(0.8);
+    color: rgba(255, 255, 255, 1);
+}
+
+section .login form .inputBox:nth-child(2) input:focus ~ span, section .login form .inputBox:nth-child(2) input:valid ~ span{
+    transform: translateY(-25px) translateX(-7px) scale(0.8);
+    color: rgba(255, 255, 255, 1);
+}
+
+section .login .inputBox:nth-child(4) input{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    color: #fff;
+    font-size: 18px;
+    background: none;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 2px solid #fff;
+    transition: 0.3s ease;
+}
+
+section .login .inputBox:nth-child(4) input:hover{
+    background: #fff;
+    color: #112d42;
+}
+
+section .login .inputBox:nth-child(4) .enableRegister{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section .login .inputBox:nth-child(4) .enableRegister label{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    color: #fff;
+    font-size: 16px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+section .login .inputBox:nth-child(4) .enableRegister label span{
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+section .login .inputBox:nth-child(4) .enableRegister label input{
+    display: none;
+}
+
+section .login form .error{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 250px;
+    height: 30px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+section .register{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 40px;
+    height: 400px;
+    background: #fff;
+    z-index: 1;
+    margin-left: -120px;
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+section .register.active{
+    width: 800px;
+    height: 500px;
+    padding-left: 150px;
+    padding-top: 75px;
+}
+
+section .register .reg{
+    color: #112d42;
+    font-size: 27px;
+    font-weight: 900;
+}
+
+section .register form{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+section .register form .row{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+section .register form .row .column{
+    position: relative;
+    font-display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+section .register form .row .column .inputBox{
+    margin: 30px 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+section .register form .row .column .inputBox input{
+    position: relative;
+    width: 250px;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #112d42;
+    background: transparent;
+    padding: 0 5px;
+    caret-color: #112d42;
+    font-size: 14px;
+    color: #112d42;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+section .register form .row .column .inputBox .focus{
+    position: absolute;
+    color: rgba(17, 45, 66, 0.8);
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: 0.3s ease;
+    margin-top: 10px;
+}
+
+section .register form .row .column .inputBox input:focus ~ .focus,
+section .register form .row .column .inputBox input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-5px) scale(0.8);
+    color: rgba(17, 45, 66, 1);
+}
+
+section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus ~ .focus,
+section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-8px) scale(0.8);
+}
+
+section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:focus ~ .focus,
+section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-13px) scale(0.8);
+}
+
+section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:focus ~ .focus,
+section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-9px) scale(0.8);
+}
+
+section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:focus ~ .focus,
+section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-13px) scale(0.8);
+}
+
+section .register form .submit input{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    color: #112d42;
+    font-size: 18px;
+    background: none;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 2px solid #112d42;
+    transition: 0.3s ease;
+}
+
+section .register form .submit input:hover{
+    background: #112d42;
+    color: #fff;
+}
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: #112d42 !important;
+    font-size: 14px;
+}
