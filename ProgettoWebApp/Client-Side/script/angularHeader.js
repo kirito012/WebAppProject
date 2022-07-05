@@ -7,6 +7,9 @@
         var select = document.querySelector(".select");
         var dev;
         var index;
+        
+        var deviceSelected = document.querySelector("body");
+        var clone;
 
         var array = {};
 
@@ -44,7 +47,7 @@
                 });
 
                 /*
-                ssetInterval(function () {
+                setInterval(function () {
                     $http({
                         method : "GET",
                         url : "/home/getData"
@@ -67,12 +70,17 @@
                                     if(remove){    
                                         array = {model: dev[$scope.selected].model, id: dev[$scope.selected].uniqueid, topics: {h: true, f: false, d: false, r: false}};    
                                         $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){    
-                                            if(response.data){        
+                                            if(response.data){    
+                                                deviceSelected.classList.remove("active");    
                                                 responseData = response.data;
                                                 select.innerHTML = "Disositivo selezionato: ";
                                                 sel.innerHTML = "Modello: " + responseData.model;        
                                                 nameDevice.innerHTML = dev[$scope.selected].customname;       
-                                                idDevice.innerHTML = responseData.id;           
+                                                idDevice.innerHTML = responseData.id;        
+                                                deviceSelected = document.querySelector("." + responseData.id);
+                                                clone = deviceSelected;
+                                                deviceSelected.classList.add("active");
+                                                $scope.removeAll();
                                             }
                                         }, function myError(response) {    
                                             console.log(response);
@@ -85,9 +93,11 @@
                 $scope.resetChoice = function(){
                     $scope.selected = undefined;
                     if($scope.selected == undefined){
+                        select.innerHTML = "Nessun dispositivo selezionato";
                         sel.innerHTML = "Selezionare un dispositivo dal menù";
                         nameDevice.innerHTML = "";
                         idDevice.innerHTML = "";
+                        deviceSelected.classList.remove("active");
                         array = {model: "", id: "", topics: {}};
                         $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){
                             if(response.data){
@@ -157,6 +167,19 @@
                             remove = true;
                         }, 500);
                     }, 100);
+                }
+
+                $scope.removeAll = function(){
+                    header.classList.add("active");
+                    toggle.classList.add("active");
+                    menu.classList.remove("active");
+                    navigation.classList.toggle("active");
+                    adding.classList.remove("active");
+                    box.style.animationName = "boxRemove";
+                    box.classList.remove("active");
+                    devices.style.animationName = "boxRemove1";
+                    devices.classList.remove("active");
+                    devicesToggle.classList.remove("active");
                 }
         });
 

@@ -113,7 +113,7 @@
                     <input type="text" ng-model="device" placeholder="Cerca tra i tuoi dispositivi...">
                     <ul class="device">
                         <li class="listDevice" onclick="removeAll()" ng-click="resetChoice()">Rimuovi selezione</li>
-                        <li class="listDevice" onclick="" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
+                        <li class="listDevice {{ device.uniqueid }}" onclick="" ng-click="selection(this);" ng-repeat="device in devices | filter: device">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png'}}" alt="">
                             </div>
@@ -141,7 +141,7 @@
         <section id="up">
             <div class="table" ng-controller="myCtrlDevice">
                 <div class="title">
-                    <h1 class="select">Nessuna macchina selezionata</h1>
+                    <h1 class="select">Nessun dispositivo selezionato</h1>
                 </div>
                 <div class="machineSelected">
                     <h4 class="selector">Selezionare un dispositivo dal menù</h4>
