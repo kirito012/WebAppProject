@@ -3,9 +3,16 @@ let bodyParser = require("body-parser");
 let session = require("express-session");
 let path = require("path");
 
-module.exports.sessionCheck = (res, req, callback) => {
+let rootHtml = "index.html";
+let mainHtml = "home.html";
+
+module.exports.sessionCheck = (res, req, callback,errorCallback) => {
   if (req.session) {
     if (!req.session.secret) {
+      if (errorCallback) {
+        errorCallback();
+        return;
+      }
       module.exports.Redirect(res, "/", "missingSession");
       return;
     } else {
@@ -24,7 +31,11 @@ module.exports.Redirect = function (res, url, error) {
 
 module.exports.sendStatic = (req, res, filepath, session) => {
   if (session){
-    res.sendFile(path.join(__dirname + "/../../Client-Side/template/" + filepath));
+    module.exports.sessionCheck(res, req, () => {
+      module.exports.Redirect(res,"/home")
+    }, () => {
+      res.sendFile(path.join(__dirname + "/../../Client-Side/template/" + filepath));
+    });
   }
   else{
     module.exports.sessionCheck(res, req, () => {

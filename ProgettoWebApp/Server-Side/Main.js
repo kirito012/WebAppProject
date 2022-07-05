@@ -2,11 +2,12 @@ let utility = require("./Modules/utility");
 let mqtt = require("./Modules/mqtt");
 let server = require("./Modules/server")
 let database = require("./Modules/database");
-const { Console } = require("console");
 
 let client = mqtt.Connect("mqtt://localhost:1883");
 let con = database.connectDatabase("localhost","databasev1");
 let app = server.connectApp(8081);
+
+//Get requests\\
 
 app.get("/", (req, res) => {
   server.sendStatic(req,res,"index.html",true);
@@ -15,6 +16,58 @@ app.get("/", (req, res) => {
 app.get("/home", (req, res) => {
   server.sendStatic(req,res,"home.html");
 });
+
+app.get("/home/getData", (req,res) => {
+  server.sessionCheck(res,req, () => {
+    let user = req.session.name;
+
+    if (mqtt.usersTopics[user]) {
+      res.send(mqtt.usersTopics[user]);
+    }
+    else{
+      res.send({});
+    }
+  });
+});
+
+app.get("/home/getModels", (req, res) => {
+  server.sessionCheck(res, req, () =>{
+    let jsonData = [];
+
+    database.query("SELECT * FROM modelli;",[],(results) => {
+
+      utility.forEach(results, (model,i) => {
+        jsonData[i] = model.name;
+      }, () => {
+        res.send(jsonData);
+      });
+    });
+  });
+});
+
+app.get("/home/getMachines", (req, res) => {
+  server.sessionCheck(res, req, () => {
+    database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
+      utility.checklength(results,() => {
+        let utente = results[0];
+
+        database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
+          let jsonData = [];
+
+          utility.forEach(corrispondenze,(corrispondenza) => {
+            jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+          }, () => {
+            res.send(jsonData);
+          });
+        });
+      },() => {
+        server.Redirect(res, "/", "dataNotFound");
+      });
+    });
+  });
+});
+
+//Post requests\\
 
 app.post("/register", (req, res) => {
   let body = req.body
@@ -72,6 +125,7 @@ app.post("/subscribe", (req, res) => {
       database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
         utility.checklength(resultid, () => {
           let id = resultid[0].matricola_id
+
           if (id) {
             database.query("updateSelectedMatricola",[id,req.session.secret,user], () => {
               mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
@@ -88,59 +142,9 @@ app.post("/subscribe", (req, res) => {
       });
     },() => {
       console.log("body doesn't exitst")
-      res.send(mqtt.usersTopics[user]);
+      res.send({});
     })
   })
-});
-
-app.get("/home/getData", (req,res) => {
-  server.sessionCheck(res,req, () => {
-    let user = req.session.name;
-
-    if (mqtt.usersTopics[user]) {
-      res.send(mqtt.usersTopics[user]);
-    }
-    else{
-      res.send({});
-    }
-  });
-});
-
-app.get("/home/getModels", (req, res) => {
-  server.sessionCheck(res, req, () =>{
-    let jsonData = [];
-
-    database.query("SELECT * FROM modelli;",[],(results) => {
-
-      utility.forEach(results, (model,i) => {
-        jsonData[i] = model.name;
-      }, () => {
-        res.send(jsonData);
-      });
-    });
-  });
-});
-
-app.get("/home/getMachines", (req, res) => {
-  server.sessionCheck(res, req, () => {
-    database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
-      utility.checklength(results,() => {
-        let utente = results[0];
-
-        database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
-          let jsonData = [];
-
-          utility.forEach(corrispondenze,(corrispondenza) => {
-            jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
-          }, () => {
-            res.send(jsonData);
-          });
-        });
-      },() => {
-        server.Redirect(res, "/", "dataNotFound");
-      });
-    });
-  });
 });
 
 app.post("/addMachine", (req, res) => {
