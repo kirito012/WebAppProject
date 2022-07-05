@@ -147,6 +147,7 @@
                 $scope.remove = function(){
                     $timeout(function(){
                         remove = false;
+                        clone.style.background = "red";
                         deviceToRemove = {badgeNumber: dev[$scope.selected].uniqueid};
                         $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
                             if(response.data){
