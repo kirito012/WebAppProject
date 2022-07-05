@@ -80,7 +80,7 @@
                                                 deviceSelected = document.querySelector("." + responseData.id);
                                                 clone = deviceSelected;
                                                 deviceSelected.classList.add("active");
-                                                $scope.removeAll();
+                                                
                                             }
                                         }, function myError(response) {    
                                             console.log(response);
