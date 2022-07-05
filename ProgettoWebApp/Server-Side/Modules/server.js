@@ -3,7 +3,7 @@ let bodyParser = require("body-parser");
 let session = require("express-session");
 let path = require("path");
 
-let rootHtml = "index.html";
+let rootHtml = "login.html";
 let mainHtml = "home.html";
 
 module.exports.sessionCheck = (res, req, callback,errorCallback) => {

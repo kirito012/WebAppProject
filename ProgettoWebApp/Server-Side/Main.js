@@ -10,7 +10,7 @@ let app = server.connectApp(8081);
 //Get requests\\
 
 app.get("/", (req, res) => {
-  server.sendStatic(req,res,"index.html",true);
+  server.sendStatic(req,res,"login.html",true);
 });
 
 app.get("/home", (req, res) => {
@@ -65,7 +65,7 @@ app.get("/home/getMachines", (req, res) => {
           });
         });
       },() => {
-        server.Redirect(res, "/", "dataNotFound");
+        server.Redirect(res, "/", "sessionNotValid");
       });
     });
   });
@@ -77,7 +77,7 @@ app.post("/register", (req, res) => {
   let body = req.body
 
   if (body.password != body.repeatPassword) {server.Redirect(res, "/", "repeatMissType"); return;}
-  if (body.password.length < 8) {server.Redirect(res, "/", "passwordLength"); return;}
+  if (body.password.length < 8 ||body.password.length > 30) {server.Redirect(res, "/", "passwordLength"); return;}
   if (!utility.checkEmail(body.email)){server.Redirect(res, "/", "emailNotCorrect"); return;}
   if (!utility.dayCheck(body.date)) {server.Redirect(res, "/", "dateIncorrect"); return;}
 
