@@ -299,7 +299,7 @@ input[type=date]:focus::-webkit-datetime-edit {
     font-size: 14px;
 }
 
-input:-internal-autofill-selected{
-    background: transparent !important;
-    border: none !important;
+input:-webkit-autofill,
+input:-webkit-autofill:focus{
+    transition: background 6000000s 0s, color 600000000s 0s;
 }
