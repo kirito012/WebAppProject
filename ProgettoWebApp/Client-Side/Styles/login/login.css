@@ -300,5 +300,5 @@ input[type=date]:focus::-webkit-datetime-edit {
 }
 
 input:-webkit-autofill{
-    background: none;
+    background: none !important;
 }
