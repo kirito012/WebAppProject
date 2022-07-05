@@ -17,6 +17,10 @@ app.get("/home", (req, res) => {
   server.sendStatic(req,res,"home.html");
 });
 
+app.get("/home/personal", (req, res) => {
+  server.sendStatic(req,res,"personal.html");
+});
+
 app.get("/home/getData", (req,res) => {
   server.sessionCheck(res,req, () => {
     let user = req.session.name;
@@ -48,7 +52,7 @@ app.get("/home/getModels", (req, res) => {
 app.get("/home/getMachines", (req, res) => {
   server.sessionCheck(res, req, () => {
     database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
-      utility.checklength(results,() => {
+      utility.checkLength(results,() => {
         let utente = results[0];
 
         database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
@@ -74,7 +78,8 @@ app.post("/register", (req, res) => {
 
   if (body.password != body.repeatPassword) {server.Redirect(res, "/", "repeatMissType"); return;}
   if (body.password.length < 8) {server.Redirect(res, "/", "passwordLength"); return;}
-  if (!utility.DayCheck(body.date)) {server.Redirect(res, "/", "dateIncorrect"); return;}
+  if (!utility.checkEmail(body.email)){server.Redirect(res, "/", "emailNotCorrect"); return;}
+  if (!utility.dayCheck(body.date)) {server.Redirect(res, "/", "dateIncorrect"); return;}
 
   database.query("selectUsersWhereEmail",[body.email], (results) => {
     if (results.length > 0) {
@@ -94,7 +99,7 @@ app.post("/login", (req, res) => {
   if (!body.email || !body.password){server.Redirect(res, "/", "missingInputs"); return;}
 
   database.query("selectEmailPsw",[body.email,body.password], (results) => {
-    utility.checklength(results,() => {
+    utility.checkLength(results,() => {
       let utente = results[0];
 
       req.session.name = utente.name;
@@ -121,9 +126,9 @@ app.post("/subscribe", (req, res) => {
       mqtt.disconnectFromTopic(user);
     }
 
-    utility.checklength(body.topics,() => {
+    utility.checkLength(body.topics,() => {
       database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
-        utility.checklength(resultid, () => {
+        utility.checkLength(resultid, () => {
           let id = resultid[0].matricola_id
 
           if (id) {
@@ -152,15 +157,15 @@ app.post("/addMachine", (req, res) => {
     let body = req.body;
 
     database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
-      utility.checklength(results,() => {
+      utility.checkLength(results,() => {
         let utente = results[0];
         let modelId = 0;
 
         database.query("selectModelliName",[body.search],(models) => {
-          utility.checklength(models,() => {
+          utility.checkLength(models,() => {
             modelId = models[0].idmodelli;
 
-            database.query("generateSelectMatricola",[body.badgeNumber,utente.id,body.name,body.badgeNumber], (matricola) => {
+            database.query("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
               database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
                 res.send("getMachines");
               })
@@ -179,9 +184,9 @@ app.post("/removeMachine", (req, res) => {
     let body = req.body;
     let user = req.session.name;
 
-    database.query("selectDeleteCorrispondenza",[body.badgeNumber], () => {
-      database.query("selectDeleteMatricolaParent",[body.badgeNumber,req.session.secret,req.session.name,body.badgeNumber],(results) => {
-        if (mqtt.usersTopics[user] && mqtt.usersTopics[user].id == body.badgeNumber) {
+    database.query("selectDeleteCorrispondenza",[body.id], () => {
+      database.query("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
+        if (mqtt.usersTopics[user] && mqtt.usersTopics[user].id == body.id) {
           mqtt.disconnectFromTopic(user);
         }
         res.send("getMachines");
