@@ -1,8 +1,9 @@
 let BertaFramework = require("./BertaFramework/mainFramework.js");
+let path = require("path");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
 fw.createServer({
-  staticRoot: "./../Client-Side",
+  staticRoot: path.resolve(__dirname +  "/../Client-Side"),
   cookieMaxAge: 1000 * 60 * 60,
   hostDB: "localhost",
   brokerHost: "localhost:1883",
@@ -23,7 +24,7 @@ fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, re
 fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
   let jsonData = [];
 
-  fw.database.query("SELECT * FROM modelli;",[],(results) => {
+  fw.queryDB("SELECT * FROM modelli;",[],(results) => {
     fw.utility.forEach(results, (model,i) => {
       jsonData[i] = model.name;
     }, () => {
@@ -33,7 +34,7 @@ fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req)
 });
 
 fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(res, req, utente) => {
-  fw.database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
+  fw.queryDB("selectCorrispondenze",[utente.id], (corrispondenze) => {
     let jsonData = [];
 
     fw.utility.forEach(corrispondenze,(corrispondenza) => {
@@ -49,29 +50,29 @@ fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(
 fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
 	let body = req.body
 
-  if (body.password != body.repeatPassword) {fw.server.Redirect(res, "/", "error", "repeatMissType"); return;}
-  if (body.password.length < 8 ||body.password.length > 30) {fw.server.Redirect(res, "/", "error", "passwordLength"); return;}
-  if (!fw.utility.checkEmail(body.email)){fw.server.Redirect(res, "/", "error", "emailNotCorrect"); return;}
-  if (!fw.utility.dayCheck(body.date)) {fw.server.Redirect(res, "/", "error", "dateIncorrect"); return;}
+  if (body.password != body.repeatPassword) {fw.redirect(res, "/", "error", "repeatMissType"); return;}
+  if (body.password.length < 8 ||body.password.length > 30) {fw.redirect(res, "/", "error", "passwordLength"); return;}
+  if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/", "error", "emailNotCorrect"); return;}
+  if (!fw.utility.dayCheck(body.date)) {fw.redirect(res, "/", "error", "dateIncorrect"); return;}
 
-  fw.database.query("selectUsersWhereEmail",[body.email], (results) => {
+  fw.queryDB("selectUsersWhereEmail",[body.email], (results) => {
     if (results.length > 0) {
-      fw.server.Redirect(res, "/", "error", "emailExists");
+      fw.redirect(res, "/", "error", "emailExists");
     } 
     else {
-      fw.database.query("generateUser",[body.email,body.password,body.name,body.surname,body.date,1], (results) => {
-        fw.server.Redirect(res, "/");
+      fw.queryDB("generateUser",[body.email,body.password,body.name,body.surname,body.date,1], (results) => {
+        fw.redirect(res, "/");
       });
     }
   });
 });
 
-fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
+fw.newRequest(["post", "/login", false, false, "log"],(res, req) => {
 	let body = req.body;
 
-  if (!body.email || !body.password){fw.server.Redirect(res, "/", "error", "missingInputs"); return;}
+  if (!body.email || !body.password){fw.redirect(res, "/", "error", "missingInputs"); return;}
 
-  fw.database.query("selectEmailPsw",[body.email,body.password], (results) => {
+  fw.queryDB("selectEmailPsw",[body.email,body.password], (results) => {
     fw.utility.checkLength(results,() => {
       let utente = results[0];
 
@@ -79,11 +80,11 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
       req.session.permission = utente.permission;
       req.session.secret = fw.utility.generateRandomKey();
 
-      fw.database.query("updateSession",[req.session.secret, body.email, body.password], () => {
-        fw.server.Redirect(res, "/home");
+      fw.queryDB("updateSession",[req.session.secret, body.email, body.password], () => {
+        fw.redirect(res, "/home");
       });
     },() => {
-      fw.server.Redirect(res, "/", "error", "wrongPassword");
+      fw.redirect(res, "/", "error", "wrongPassword");
     });
   });
 });
@@ -97,12 +98,12 @@ fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, re
 	}
 
 	fw.utility.checkLength(body.topics,() => {
-		fw.database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
+		fw.queryDB("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
 			fw.utility.checkLength(resultid, () => {
 				let id = resultid[0].matricola_id
 
 				if (id) {
-					fw.database.query("updateSelectedMatricola",[id,req.session.secret,user], () => {
+					fw.queryDB("updateSelectedMatricola",[id,req.session.secret,user], () => {
 						fw.mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
 						res.send(fw.mqtt.usersTopics[user]);
 					});
@@ -125,17 +126,17 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
 	let body = req.body;
 	let modelId = 0;
 
-  fw.database.query("selectModelliName",[body.search],(models) => {
+  fw.queryDB("selectModelliName",[body.search],(models) => {
     fw.utility.checkLength(models,() => {
       modelId = models[0].idmodelli;
 
-      fw.database.query("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
-        fw.database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
+      fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
+        fw.queryDB("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
           res.send("getMachines");
         })
       })
     }, () => {
-      fw.server.Redirect(res, "/home", "error", "machinemissing");
+      fw.redirect(res, "/home", "error", "machinemissing");
     });
   })
 });
@@ -144,8 +145,8 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
 	let body = req.body;
   let user = utente.name;
 
-  fw.database.query("selectDeleteCorrispondenza",[body.id], () => {
-    fw.database.query("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
+  fw.queryDB("selectDeleteCorrispondenza",[body.id], () => {
+    fw.queryDB("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
       if (fw.mqtt.usersTopics[user] && fw.mqtt.usersTopics[user].id == body.id) {
         fw.mqtt.disconnectFromTopic(user);
       }

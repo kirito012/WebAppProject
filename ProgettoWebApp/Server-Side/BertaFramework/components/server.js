@@ -1,6 +1,7 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let session = require("express-session");
+let path = require("path");
 
 let data = {};
 
@@ -62,18 +63,18 @@ module.exports.newRequest = data.newRequest = (app,settings,callback) => {
 
 module.exports.newStatic = data.newStatic = (app,link,redirectTo,requireSession,file) => {
 	data.newRequest(app,["get",link,requireSession,redirectTo],(res,req) => {
-		res.sendFile(file);
+		res.sendFile(path.resolve(file));
 	});
 };
 
-module.exports.logout = data.logout = (req, res,loginRoot) => {
+module.exports.logout = data.logout = (res, req, loginRoot) => {
     if (req.session) {
       req.session.secret = undefined;
-      data.Redirect(res, loginRoot);
+      data.redirect(res, loginRoot);
     }
 };
 
-module.exports.redirect = data.redirect = (res, url,variable , message) => {
+module.exports.redirect = data.redirect = (res, url, variable , message) => {
 	if (variable && message) {
 		res.redirect(url + "? " + variable + "=" + message);
 	} else {

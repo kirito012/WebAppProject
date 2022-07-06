@@ -3,7 +3,7 @@ let databasePath = "./components/database.js";
 let utilityPath = "./components/utility.js";
 let mqttPath = "./components/mqtt.js";
 
-let templates = "./../../Client-Side/template";
+let templates = __dirname + "/../../Client-Side/template";
 let index = templates + "/index.html";
 let login = templates + "/login.html";
 let home = templates + "/homePage.html";
@@ -31,31 +31,32 @@ class framework {
 		this.connectionDB = this.database.connectToDB(settings.hostDB, this.nameDB);
 		this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
 
-    this.server.startApp(this.app, settings.port, serverCallback);
-		this.database.onConnect(this.connectionDB, databaseCallback);
+    this.server.startApp(this.app, settings.port, () => {
+      this.database.onConnect(this.connectionDB, databaseCallback);
 
-    this.newStatic({
-      link: this.indexRoot,
-      requireSession: false,
-      file: index,
-    });
+      this.newStatic({
+        link: this.indexRoot,
+        requireSession: false,
+        file: index,
+      });
 
-    this.newStatic({
-      link: this.loginRoot,
-      redirectTo: this.homeRoot,
-      requireSession: false,
-      file: login,
-    });
+      this.newStatic({
+        link: this.loginRoot,
+        redirectTo: this.homeRoot,
+        requireSession: false,
+        file: login,
+      });
 
-    this.newStatic({
-      link: this.homeRoot,
-      redirectTo: this.loginRoot,
-      requireSession: true,
-      file: home,
-    });
+      this.newStatic({
+        link: this.homeRoot,
+        redirectTo: this.loginRoot,
+        requireSession: true,
+        file: home,
+      });
 
-    this.newRequest(["post", "/logout", true, false, "logout"], (res, req) => {
-      this.server.logout(res, req, this.loginRoot);
+      this.newRequest(["post", "/logout", false, false, "logout"], (res, req) => {
+        this.server.logout(res, req, this.loginRoot);
+      });
     });
   };
 
@@ -82,6 +83,14 @@ class framework {
           callback(res, req);
         }
       });
+  };
+
+  queryDB = (qr, params, callback) => {
+    this.database.query(this.connectionDB, qr, params, callback);
+  };
+
+  redirect = (res, url, variable , message) => {
+    this.server.redirect(res, url, variable , message);
   };
 }
 
