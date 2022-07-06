@@ -6,30 +6,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../Styles/home/style.css">
-    <link rel="stylesheet" href="../Styles/home/keyFrames.css">
+    <link rel="stylesheet" href="../Styles/home/icon.css">
+    <script src="https://kit.fontawesome.com/75e7801ae2.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
 <body>
     <section>
         <header>
-            <div class="menuContainer">
-                <div class="menu">
-                    <hr class="line" style="--i: 1;">
-                    <hr class="line">
-                    <hr class="line" style="--i: -1;">
+            <div class="headerContainer">
+                <div class="menuContainer">
+                    <div class="menu">
+                        <hr class="line" style="--i: 1;">
+                        <hr class="line">
+                        <hr class="line" style="--i: -1;">
+                    </div>
+                    <span>Menù</span>
                 </div>
-                <span>Menù</span>
+                <div class="navigator">
+                    <form>
+                        <label class="link active" style="--background: #c0e8ff;">
+                            <div class="indicator"></div>
+                            <input class="radio addDevice" type="radio" name="visualize" checked>
+                            <div class="icon">
+                                <hr class="cross" style="--deg: 90deg">
+                                <hr class="cross" style="--deg: 0deg">
+                            </div>
+                            <span>Aggiungi dispositivo</span>
+                        </label>
+                        <label class="link" style="--background: #d1ffd4;">
+                            <div class="indicator"></div>
+                            <input class="radio showDevice" type="radio" name="visualize">
+                            <div class="icon">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABbklEQVRoge2asUrEMBzGv9RSuOGGcAh1ddVugsvdYN/BUX0MNx3EV/AFbvQVxAM9xN3T1ckOKmS8Q/DicicISc5Y2/yb5rf1nwS+jyRfU1KgrfAsv+dZfld3fRWx7QAAu47qRqK/DKKIN0a8gWlbtvYTHr2fAdEBIDdq1KSiADAU894JHi8/VB3WdCN5mp4D7BhAtyp1FnQB9Dtsmsxen69UHQx7hB1WJKoMR7oGgxHny0lFqmvwJrW8MRIDAN/euwVj/WVRPFzr04wAPMvl94OUYzEZDZo/I4xJwPAe+eGaELrV0vwZWRCMUKN0av1XwtnsSa9TKwYAMRkN3KqxQ7UKmj8jC4IRaoSzFhlCahElGKFGSC0yhC9EogQj1AipRYaQWkRphZGiNhW/50XXYDIyrEBIWbSatHeIs/Wdmw6bJgA24f4esQBwIea9U7w9fTrWQgye5VIVzVXXV9GK1GoU9n8HSTleHgtqrbeFL8F9pZUMb+RLAAAAAElFTkSuQmCC">
+                            </div>
+                            <span>I tuoi dispositivi</span>
+                        </label>
+                        <label class="link" style="--background: #fffed1">
+                            <div class="indicator"></div>
+                            <input class="radio showTopics" type="radio" name="visualize">
+                            <div class="icon">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAEJklEQVRoge2ZX0xbdRTHP+cWSubE9RbQrUumMUtcAmVDl2V/1EBxvshiphITk+kTJsaY7MFMXjYm+IAucQ+aaHwxLsbEYLIo6sMmhciYmbro1iJOfVATwARoSbYMhHvv8YGWdICUe0sBsZ+Xnvxyzznfb87v9ndvCwUKFFgMmY0qG/2mMdoGxhHQLUtIHVbVF8fj0bN51LdkjHRgGmOtIMeWZgJAt4jw8aaq2t35EueG2YmY4cggEBLlQCIevZgtMRiOnFY4Clzb4N94/9Dlzpv5FJoNIyMOASzFBEBioqQZiAH3Tfx981QetLkicyIKkIxF5d8vv5VAZd1OMeQSUJIHbYsxBJxJOmUt9HdMwa0Tcc14f/cVhMZU4ZUkBDSbvsTJ9EJOE1ktzMq6AxhyARhKxqJbIceJrBbJ/u6+VBhKr/0njSxE0dwFMxwZBjavghY3/DV3YaGJrHUTsIDGeRMRZH8i1vXNyujxRrAqsl+Fvsy1eRNZ6yZg4UN73dzsBSNrjXVjZN631nIS2FUbEEea1JGnRNjOzMPlL4J8PlU09daNH3pHlqtX3iZiVtc/hG38jMobIuwBgsBGoEbR48VW8W+BqronlqtfXowEw/X7UP1K4C7gnKg8avmdCr8U3a5q1IF8CtwhIh2Bqsjh5eiZ89aqqKzdbBvSrsgjwG2InlN0L4pfkLZErOtE+trrMx89QI8ZjrwCtIvwfukDtb3XL/eM5qIjp4mU7qgvswzjkiLPAVsBE5WnUe4W6Mo0MZdkLPo6SiewqXhKXspFB+RopKhYW4BtCufV4h6fNR0CPgJw0LZs+apyGkCRQ7nogBy21qbwgybwOAAWTeMD0T8AaGx8NjgwNpKMd3+dtbk1+b3tLwHY7lVHGk8TKdsZ2WPgjwPbAGZNAHR02Il49Cig2eqMXutL3TaUmuHIe4HK2l1e9IAHI+U1B0Pq0MnM29lniBP22nwOTWIY3wbDdc97SXZtxLLslxXuFDibjD18OHm1J+6lcZpkLCo+azqE6DHAUeSdYHXtXrd1vGytxwAcx2mFk46H/HmMDvQOJ692nwI5ARiOGq1ua7g2Iqn7osTn/9VtbjZ8RcaHqR773OZ6mIiOAEzq9A73uUtv4jbBy9b6EsBQafGQuyi2ZR8BEPjOba7rc0R92i62PINwyKyOdBq2tI4RvJL+6dIL5TUHQykTrQCq+qbbGq6NjP/Y83uwqv5JFf0EpcExtMFkDMIRt6VmsS17NhZ4LRHv/sJtDU8HYiLedV4tqhHeBf4E7Gw5WbghEEW1IRGLHvdSwPMjSuo0f8Fr/nKzbl51C0bWGuvSyBCk/kRZ42RoHEyvZX5rnQGaMeSCmcOZsKKofpAOfelgsmJ37waZKAbuBUpXQ5cLBlF9O6nlrzLyU65nWIEC/wv+AamKUsyqUnLkAAAAAElFTkSuQmCC">
+                            </div>
+                        </label>
+                    </form>
+                </div>
             </div>
-            <ul class="navigator">
-                <li class="link"></li>
-                <li class="link"></li>
-                <li class="link"></li>
-            </ul>
             <div class="settings">
-
+                <div class="settingContainer">
+                    <div class="profileSettings">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABW0lEQVRIieWVvUoDQRSFv0mZ6EJUEMReiLWGNFpYSEp/EjsT7Cz0YbSw0zfwHfQJtNMqYBAsLDcpcywyYZfJzGajayEemGLZ83Nn7uxd+BeQ1JQUK0EsqZlHW8qZcQJUUs8VoD1voV5I2pTU0zR6kmqz9MYxM8A1sALcA7vAuctLS4Ab4AE4BD6BC2OMQtV2PZXOi07IfEHSewEBH5KiiW+6yWfAWuAo+sAxENl1ALwGuKtA17eDhqSBp6I3SUseftW+czGQ1AgdU13S0BEcBSpFUsvhDiXVQ/yJKHZEixncyOHGLifvhxZC6Pr6AyRte0L3MvT7rl/wiDKa/CKp6uEvS+rPanK62i2g7MneAJ5tQyO72sATsO7hl63XVEW/8qG5IZ0CAk7Tnu6wKwFXJMNuh/GwC922EeNh90gy7C6NMaMA37urmn4wrvOG3HkCbgsxtwHf/mX+fXwBrSyhPBzm5SYAAAAASUVORK5CYII=">
+                    </div>
+                    <span>Impostazioni</span>
+                </div>
+                <div class="logoutContainer">
+                    <label for="logout" class="logout">
+                        <div class="rect">
+                            <div class="white">
+                                <div class="arrow"></div>
+                            </div>
+                        </div>
+                        <form action="logout" method="post">
+                            <input type="submit" name="" id="logout">
+                        </form>
+                    </label>
+                    <span>Logout</span>
+                </div>
             </div>
         </header>
         <div class="navigation">
-
+            <div class="item active">
+                <div class="titleContainer">
+                    <h1 class="title">Aggiungi un dispositivo</h1>
+                </div>
+            </div>
+            <div class="item">
+                <div class="titleContainer">
+                    <h1 class="title">Seleziona un dispositivo</h1>
+                </div>
+                <div class="devices">
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                    <div class="device"></div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="titleContainer">
+                    <h1 class="title">Seleziona i dati da visualizzare</h1>
+                </div>
+            </div>
         </div>
         <div class="dashboard">
 
@@ -43,6 +121,60 @@
         menuToggle.addEventListener("click", () => {
             header.classList.toggle("active");
         });
+    </script>
+
+    <script>
+        let list = document.querySelectorAll(".link");
+        
+        function activeLink(){
+            list.forEach((element) => {
+                element.classList.remove("active");
+                this.classList.add("active");
+            });
+        }
+
+        list.forEach((item) => {
+            item.addEventListener("click", activeLink);
+        });
+
+    </script>
+
+    <script>
+        let radioButton = document.querySelectorAll(".radio");
+        let items = document.querySelectorAll(".item");
+
+        let name = ["radio addDevice", "radio showDevice", "radio showTopics"];
+
+
+        function changeDisplay(){
+            items.forEach((element) => {
+                element.classList.remove("active");
+            });
+            radioButton.forEach((element, i) => {
+                for(let key in name){
+                    if(this.className == name[key]){
+                        items[key].classList.add("active");
+                    }
+                }
+            });
+        }
+        
+
+        radioButton.forEach((item) => {
+            item.addEventListener("change", changeDisplay);
+        });
+
+    </script>
+
+    <script>
+        let device = document.querySelectorAll(".device");
+        let i = 1;
+        window.onload = () => {
+            device.forEach((element, i) => {
+                device[i].style.transitionDelay = i/31 + "s";
+                i++;
+            });
+        }
     </script>
 
 

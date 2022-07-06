@@ -537,6 +537,7 @@ header .navigation .showDevices .content .container{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    transform: translateY(-3px);
 }
 
 header .navigation .showDevices .content .cashRegister{
@@ -738,14 +739,6 @@ header .navigation .devices .device li{
     cursor: pointer;
 }
 
-header .navigation .devices .device li.active{
-    background: #4f829c;
-}
-
-header .navigation .devices .device li.active .info .name, header .navigation .devices .device li.active .info .badge{
-    color: #fff;
-}
-
 header .navigation .devices .device li .img{
     display: flex;
     justify-content: center;
@@ -797,7 +790,7 @@ header .navigation .devices .device li .info .remove{
     height: 40px;
     background: #fff;
     border-radius: 15px;
-    margin: 5px;
+    margin-right: 5px;
 }
 
 header .navigation .devices .device li .info .remove .bottom{
@@ -812,7 +805,6 @@ header .navigation .devices .device li .info .remove .bottom{
     border-bottom-right-radius: 5px;
     background: red;
     transition: 0.3s ease;
-    transform-origin: top right;
 }
 
 header .navigation .devices .device li .info .remove .bottom hr{

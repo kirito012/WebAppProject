@@ -43,10 +43,11 @@ section .navigation{
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
     min-width: 300px;
     height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 section .dashboard{
@@ -67,6 +68,14 @@ section .dashboard{
 
 section header.active{
     min-width: 250px;
+}
+
+section header .headerContainer{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 80px;
 }
 
 section header .menuContainer{
@@ -132,3 +141,280 @@ section header.active .menu .line:nth-child(2){
 
 /* end icon */
 
+/* end menu*/ 
+
+
+
+
+
+/* start link navigator */
+
+section header .navigator{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 15px;
+}
+
+section header .navigator .link{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    list-style: none;
+    width: 40px;
+    height: 40px;
+    transition: 0.5s ease;
+}
+
+section header.active .navigator .link{
+    width: 100%;
+}
+
+section header .navigator .link input{
+    display: none;
+}
+
+section header .navigator .link .indicator{
+    left: -50px;
+    transition: 0.3s ease;
+}
+
+section header .navigator .link.active .indicator{
+    position: absolute;
+    left: -10px;
+    width: 5px;
+    height: 25px;
+    border-radius: 4px;
+    background: #fff;
+}
+
+/* icons */
+
+section header .navigator .link .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 100%;
+    background: var(--background);
+    cursor: pointer;
+}
+
+section header .navigator .link .icon .cross{
+    position: absolute;
+    border: none;
+    opacity: .7;
+    background: #112d42;
+    width: 20px;
+    height: 2px;
+    transform: rotate(var(--deg));
+    transition: 0.5s ease;
+}
+
+
+
+
+/* start animazion 1 */
+
+section header .navigator .link:nth-child(1).active .icon .cross{
+    transform: rotate(calc(var(--deg) + 135deg));
+}
+
+/* end animazion 1 */
+
+section header .navigator .link .icon img{
+    width: 25px;
+    height: 25px;
+}
+
+/* end icons */
+
+section header .navigator .link span{
+    position: absolute;
+    left: 100px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: 0.5s ease;
+}
+
+section header.active .navigator .link span{
+    left: 50px;
+}
+
+section header .navigator li:hover span{
+    letter-spacing: 2.5px;
+}
+
+/* end link navigator */
+
+
+
+/* start settings */
+
+
+section header .settings{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+section header .settings .settingContainer,
+section header .settings .logoutContainer{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    height: 40px;
+    width: 40px;
+    overflow: hidden;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+section header.active .settings .settingContainer,
+section header .settings .logoutContainer{
+    width: 100%;
+}
+
+section header .settings .profileSettings,
+section header .settings .logout{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+section header .settings .logout form{
+    display: none;
+}
+
+section header .settings .profileSettings img{
+    transition: 0.5s ease;
+}
+
+section header .settings .profileSettings:hover img{
+    transform: rotate(90deg);
+}
+
+section header .settings .settingContainer span,
+section header .settings .logoutContainer span{
+    position: absolute;
+    left: 50px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: 0.5s ease;
+}
+
+section header .settings .settingContainer:hover span,
+section header .settings .logoutContainer:hover span{
+    letter-spacing: 2.5px;
+}
+
+/* end settings */
+
+/* end header */
+
+
+
+
+
+
+
+/* start navigation */
+
+section .navigation .item{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    right: calc(var(--margin)*-1%);
+    opacity: 0;
+}
+
+section .navigation .item.active{
+    opacity: 1;
+    z-index: 10;
+}
+
+section .navigation .item .titleContainer{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 70px;
+    padding: 40px 15px;
+}
+
+section .navigation .item .title{
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+section .navigation .item.active .title{
+    opacity: 1;
+    transform: none;
+    color: #112d42;
+    font-weight: 900;
+    transition: 0.3s ease;
+}
+
+section .navigation .item .devices{
+    position: relative;
+    width: 100%;
+    height: 800px;
+    margin-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    overflow-y: scroll;
+}
+
+section .navigation .item .devices .device{
+    position: relative;
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    transition: 0.5s ease;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+section .navigation .item.active .devices .device{
+    opacity: 1;
+    transform: none;
+}
+
+
+/* end navigation */
+
+
+
+
+
+::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #112d42;
+    border-radius: 8px;
+  }
