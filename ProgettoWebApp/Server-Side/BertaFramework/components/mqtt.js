@@ -42,10 +42,6 @@ module.exports.connectToBroker= (connectUrl) => {
     reconnectPeriod: 1000,
   });
 
-  client.on("connect", () => {
-    console.log("Connected to the broker!");
-  });
-
   client.on("message", (topic, payload) => {
     utility.forEach(usersTopics, (user) => {
       let builtTopic = topic.split("/");
@@ -56,5 +52,8 @@ module.exports.connectToBroker= (connectUrl) => {
     });
   });
 
-  return client;
+  client.on("connect", () => {
+    console.log("Connected to the broker!");
+    return client;
+  });
 };

@@ -28,11 +28,11 @@ class framework {
 
   createServer = (settings, serverCallback, databaseCallback) => {
     this.app = this.server.newApp([settings.staticRoot, settings.cookieMaxAge]);
-		this.connectionDB = this.database.connectToDB(settings.hostDB, this.nameDB);
-		this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
+    this.connectionDB = this.database.connectToDB(settings.hostDB, this.nameDB);
 
     this.server.startApp(this.app, settings.port, () => {
       this.database.onConnect(this.connectionDB, databaseCallback);
+		  this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
 
       this.newStatic({
         link: this.indexRoot,
