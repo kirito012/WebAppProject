@@ -1,196 +1,155 @@
-let utility = require("./Modules/utility");
-let mqtt = require("./Modules/mqtt");
-let server = require("./Modules/server")
-let database = require("./Modules/database");
+let BertaFramework = require("./BertaFramework/mainFramework.js");
 
-let client = mqtt.Connect("mqtt://localhost:1883");
-let con = database.connectDatabase("localhost","databasev1");
-let app = server.connectApp(8081);
+let fw = new BertaFramework.framework("/","/login","/home","databasev1");
+fw.createServer({
+  staticRoot: "./../Client-Side",
+  cookieMaxAge: 1000 * 60 * 60,
+  hostDB: "localhost",
+  brokerHost: "localhost:1883",
+  port: 8081,
+})
 
 //Get requests\\
 
-app.get("/", (req, res) => {
-  server.sendStatic(req,res,"login.html",true);
+fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, req, utente) => {
+  if (fw.mqtt.usersTopics[utente.name]) {
+    res.send(fw.mqtt.usersTopics[utente.name]);
+  } 
+	else {
+    res.send({});
+  }
 });
 
-app.get("/home", (req, res) => {
-  server.sendStatic(req,res,"home.html");
-});
+fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
+  let jsonData = [];
 
-app.get("/home/personal", (req, res) => {
-  server.sendStatic(req,res,"personal.html");
-});
-
-app.get("/home/getData", (req,res) => {
-  server.sessionCheck(res,req, () => {
-    let user = req.session.name;
-
-    if (mqtt.usersTopics[user]) {
-      res.send(mqtt.usersTopics[user]);
-    }
-    else{
-      res.send({});
-    }
+  fw.database.query("SELECT * FROM modelli;",[],(results) => {
+    fw.utility.forEach(results, (model,i) => {
+      jsonData[i] = model.name;
+    }, () => {
+      res.send(jsonData);
+    });
   });
 });
 
-app.get("/home/getModels", (req, res) => {
-  server.sessionCheck(res, req, () =>{
+fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(res, req, utente) => {
+  fw.database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
     let jsonData = [];
 
-    database.query("SELECT * FROM modelli;",[],(results) => {
-
-      utility.forEach(results, (model,i) => {
-        jsonData[i] = model.name;
-      }, () => {
-        res.send(jsonData);
-      });
-    });
-  });
-});
-
-app.get("/home/getMachines", (req, res) => {
-  server.sessionCheck(res, req, () => {
-    database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
-      utility.checkLength(results,() => {
-        let utente = results[0];
-
-        database.query("selectCorrispondenze",[utente.id], (corrispondenze) => {
-          let jsonData = [];
-
-          utility.forEach(corrispondenze,(corrispondenza) => {
-            jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
-          }, () => {
-            res.send(jsonData);
-          });
-        });
-      },() => {
-        server.Redirect(res, "/", "sessionNotValid");
-      });
-    });
+    fw.utility.forEach(corrispondenze,(corrispondenza) => {
+      jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+		}, () => {
+			res.send(jsonData);
+		});
   });
 });
 
 //Post requests\\
 
-app.post("/register", (req, res) => {
-  let body = req.body
+fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
+	let body = req.body
 
-  if (body.password != body.repeatPassword) {server.Redirect(res, "/", "repeatMissType"); return;}
-  if (body.password.length < 8 ||body.password.length > 30) {server.Redirect(res, "/", "passwordLength"); return;}
-  if (!utility.checkEmail(body.email)){server.Redirect(res, "/", "emailNotCorrect"); return;}
-  if (!utility.dayCheck(body.date)) {server.Redirect(res, "/", "dateIncorrect"); return;}
+  if (body.password != body.repeatPassword) {fw.server.Redirect(res, "/", "error", "repeatMissType"); return;}
+  if (body.password.length < 8 ||body.password.length > 30) {fw.server.Redirect(res, "/", "error", "passwordLength"); return;}
+  if (!fw.utility.checkEmail(body.email)){fw.server.Redirect(res, "/", "error", "emailNotCorrect"); return;}
+  if (!fw.utility.dayCheck(body.date)) {fw.server.Redirect(res, "/", "error", "dateIncorrect"); return;}
 
-  database.query("selectUsersWhereEmail",[body.email], (results) => {
+  fw.database.query("selectUsersWhereEmail",[body.email], (results) => {
     if (results.length > 0) {
-      server.Redirect(res, "/", "emailExists");
+      fw.server.Redirect(res, "/", "error", "emailExists");
     } 
     else {
-      database.query("generateUser",[body.email,body.password,body.name,body.surname,body.date,1], (results) => {
-        server.Redirect(res, "/");
+      fw.database.query("generateUser",[body.email,body.password,body.name,body.surname,body.date,1], (results) => {
+        fw.server.Redirect(res, "/");
       });
     }
   });
 });
 
-app.post("/login", (req, res) => {
-  let body = req.body;
+fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
+	let body = req.body;
 
-  if (!body.email || !body.password){server.Redirect(res, "/", "missingInputs"); return;}
+  if (!body.email || !body.password){fw.server.Redirect(res, "/", "error", "missingInputs"); return;}
 
-  database.query("selectEmailPsw",[body.email,body.password], (results) => {
-    utility.checkLength(results,() => {
+  fw.database.query("selectEmailPsw",[body.email,body.password], (results) => {
+    fw.utility.checkLength(results,() => {
       let utente = results[0];
 
       req.session.name = utente.name;
       req.session.permission = utente.permission;
-      req.session.secret = utility.generateRandomKey();
+      req.session.secret = fw.utility.generateRandomKey();
 
-      database.query("updateSession",[req.session.secret, body.email, body.password], () => {
-        server.Redirect(res, "/home");
+      fw.database.query("updateSession",[req.session.secret, body.email, body.password], () => {
+        fw.server.Redirect(res, "/home");
       });
     },() => {
-      server.Redirect(res, "/", "wrongPassword");
+      fw.server.Redirect(res, "/", "error", "wrongPassword");
     });
   });
 });
 
-app.post("/logout", server.logout);
+fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, req, utente) => {
+	let body = req.body;
+	let user = utente.name;
 
-app.post("/subscribe", (req, res) => {
-  server.sessionCheck(res, req, () =>{
-    let body = req.body;
-    let user = req.session.name;
+	if (fw.mqtt.usersTopics[user]) {
+		fw.mqtt.disconnectFromTopic(user);
+	}
 
-    if (mqtt.usersTopics[user]) {
-      mqtt.disconnectFromTopic(user);
-    }
+	fw.utility.checkLength(body.topics,() => {
+		fw.database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
+			fw.utility.checkLength(resultid, () => {
+				let id = resultid[0].matricola_id
 
-    utility.checkLength(body.topics,() => {
-      database.query("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
-        utility.checkLength(resultid, () => {
-          let id = resultid[0].matricola_id
+				if (id) {
+					fw.database.query("updateSelectedMatricola",[id,req.session.secret,user], () => {
+						fw.mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
+						res.send(fw.mqtt.usersTopics[user]);
+					});
+				}
+				else{
+					console.log(resultid);
+				}
+			}, () => {
+				console.log("id not found");
+				console.log(resultid);
+			});
+		});
+	},() => {
+		console.log("body doesn't exitst")
+		res.send({});
+	})
+});
 
-          if (id) {
-            database.query("updateSelectedMatricola",[id,req.session.secret,user], () => {
-              mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
-              res.send(mqtt.usersTopics[user]);
-            });
-          }
-          else{
-            console.log(resultid);
-          }
-        }, () => {
-          console.log("id not found");
-          console.log(resultid);
-        });
-      });
-    },() => {
-      console.log("body doesn't exitst")
-      res.send({});
-    })
+fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, req, utente) => {
+	let body = req.body;
+	let modelId = 0;
+
+  fw.database.query("selectModelliName",[body.search],(models) => {
+    fw.utility.checkLength(models,() => {
+      modelId = models[0].idmodelli;
+
+      fw.database.query("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
+        fw.database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
+          res.send("getMachines");
+        })
+      })
+    }, () => {
+      fw.server.Redirect(res, "/home", "error", "machinemissing");
+    });
   })
 });
 
-app.post("/addMachine", (req, res) => {
-  server.sessionCheck(res, req, () => {
-    let body = req.body;
+fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],(res, req, utente) => {
+	let body = req.body;
+  let user = utente.name;
 
-    database.query("selectSessionName", [req.session.secret, req.session.name], (results) => {
-      utility.checkLength(results,() => {
-        let utente = results[0];
-        let modelId = 0;
-
-        database.query("selectModelliName",[body.search],(models) => {
-          utility.checkLength(models,() => {
-            modelId = models[0].idmodelli;
-
-            database.query("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
-              database.query("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
-                res.send("getMachines");
-              })
-            })
-          }, () => {
-            server.Redirect(res, "/home", "machinemissing");
-          });
-        })
-      });
-    });
-  });
-});
-
-app.post("/removeMachine", (req, res) => {
-  server.sessionCheck(res, req, () => {
-    let body = req.body;
-    let user = req.session.name;
-
-    database.query("selectDeleteCorrispondenza",[body.id], () => {
-      database.query("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
-        if (mqtt.usersTopics[user] && mqtt.usersTopics[user].id == body.id) {
-          mqtt.disconnectFromTopic(user);
-        }
-        res.send("getMachines");
-      });
+  fw.database.query("selectDeleteCorrispondenza",[body.id], () => {
+    fw.database.query("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
+      if (fw.mqtt.usersTopics[user] && fw.mqtt.usersTopics[user].id == body.id) {
+        fw.mqtt.disconnectFromTopic(user);
+      }
+      res.send("getMachines");
     });
   });
 });

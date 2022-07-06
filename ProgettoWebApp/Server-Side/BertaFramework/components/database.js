@@ -1,7 +1,5 @@
 let mysql = require("mysql");
 
-let con;
-
 let queryPreset = {
   selectUsersWhereEmail: "SELECT * FROM utenti WHERE email = ?;",
   generateUser:
@@ -31,7 +29,7 @@ let queryPreset = {
     SELECT * FROM utenti WHERE lastsession = ? AND name = ?) LIMIT 1;`,
 };
 
-module.exports.query = (qr, params, callback) => {
+module.exports.query = (con, qr, params, callback) => {
   let query = queryPreset[qr];
 
   if (!query) {
@@ -44,7 +42,7 @@ module.exports.query = (qr, params, callback) => {
   });
 };
 
-module.exports.connectDatabase = (host, db) => {
+module.exports.connectToDB = (host, db) => {
   con = mysql.createConnection({
     host: host,
     user: "root",
@@ -53,10 +51,17 @@ module.exports.connectDatabase = (host, db) => {
     multipleStatements: true,
   });
 
-  con.connect(function (err) {
-    if (err) throw err;
-    console.log("Started Database!");
-  });
-
   return con;
 };
+
+module.exports.onConnect = (con,callback) => {
+  con.connect(function (err) {
+    if (err) throw err;
+    if (!callback){
+      console.log("Started Database!");
+    }
+    else{
+      callback();
+    }
+  });
+}
