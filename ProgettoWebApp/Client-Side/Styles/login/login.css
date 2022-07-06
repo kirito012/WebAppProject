@@ -15,7 +15,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     min-height: 100vh;
+    overflow: hidden;
 }
 
 section{
@@ -90,7 +92,7 @@ section .login form .inputBox .focus{
     color: rgba(255, 255, 255, 0.5);
     font-weight: 700;
     letter-spacing: 2px;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
     margin-top: 10px;
 }
 
@@ -102,7 +104,7 @@ section .login form .inputBox .hide{
     width: 40px;
     height: 0px;
     right: 45px;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
     overflow: hidden;
     cursor: pointer;
 }
@@ -134,7 +136,7 @@ section .login form .inputBox .hide .eye hr{
     height: 0px;
     width: 3px;
     transform: rotate(-45deg);
-    transition: 0.3s ease;
+    transition: 0.5s ease;
     border: none;
 }
 
@@ -171,7 +173,7 @@ section .login .inputBox:nth-child(4) input{
     font-weight: bolder;
     cursor: pointer;
     border: 2px solid #fff;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
 }
 
 section .login .inputBox:nth-child(4) input:hover{
@@ -230,7 +232,7 @@ section .register{
     z-index: 1;
     margin-left: -120px;
     overflow: hidden;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
 }
 
 section .register.active{
@@ -297,7 +299,7 @@ section .register form .row .column .inputBox .focus{
     color: rgba(17, 45, 66, 0.8);
     font-weight: 700;
     letter-spacing: 2px;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
     margin-top: 10px;
 }
 
@@ -342,7 +344,7 @@ section .register form .submit input{
     font-weight: bolder;
     cursor: pointer;
     border: 2px solid #112d42;
-    transition: 0.3s ease;
+    transition: 0.5s ease;
 }
 
 section .register form .submit input:hover{
