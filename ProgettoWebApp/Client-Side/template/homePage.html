@@ -5,8 +5,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../Styles/home/style.css">
+    <link rel="stylesheet" href="../Styles/home/keyFrames.css">
 </head>
 <body>
-    
+    <section>
+        <header>
+            <div class="menuContainer">
+                <div class="menu">
+                    <hr class="line" style="--i: 1;">
+                    <hr class="line">
+                    <hr class="line" style="--i: -1;">
+                </div>
+                <span>Menù</span>
+            </div>
+            <ul class="navigator">
+                <li class="link"></li>
+                <li class="link"></li>
+                <li class="link"></li>
+            </ul>
+            <div class="settings">
+
+            </div>
+        </header>
+        <div class="navigation">
+
+        </div>
+        <div class="dashboard">
+
+        </div>
+    </section>
+
+
+    <script>
+        let menuToggle = document.querySelector(".menu");
+        let header = document.querySelector("header");
+        menuToggle.addEventListener("click", () => {
+            header.classList.toggle("active");
+        });
+    </script>
+
+
 </body>
 </html>
