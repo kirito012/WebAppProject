@@ -788,6 +788,7 @@ section .personal .profile .notification{
 section .personal .profile .notification ion-icon{
     width: 25px;
     height: 25px;
+    color: #112d42;
 }
 
 section .personal .profile .profileName{
@@ -796,6 +797,10 @@ section .personal .profile .profileName{
     justify-content: center;
     align-items: center;
     margin-left: 50px;
+}
+
+section .personal .profile .profileName h4{
+    color: #112d42;
 }
 
 section .personal .profile .profilePicture{
