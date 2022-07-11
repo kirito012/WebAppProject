@@ -37,9 +37,9 @@
                     dev = response.data;
                     $scope.devices = dev;
                     $scope.device = document.querySelectorAll(".device .ng-scope");
-                    console.log($scope.device.length);
+                    console.log($scope.device.lenght);
                     let time = 3;
-                    if(device.length > 15){
+                    /*if(device.length > 15){
                         for(let i = 0; i < 15; i++){
                             device[i].style.transitionDelay = time/32 + "s";
                             time++;
@@ -49,7 +49,7 @@
                             device[i].style.transitionDelay = time/32 + "s";
                             time++;
                         });
-                    }
+                    }*/
                 }, function myError(response) {
                     console.log(response);
                 });
