@@ -118,3 +118,26 @@
         profileToggle.addEventListener("click", () => {
             profileSettings.classList.toggle("active");
         });
+
+
+        
+        let settigs1 = document.querySelector(".itemSetting.i1");
+        let settigs2 = document.querySelector(".itemSetting.i2");
+
+        let content1 = document.querySelector(".content.I1");
+        let content2 = document.querySelector(".content.I2");
+
+
+        settigs1.addEventListener("click", () =>{
+            settigs2.classList.remove("active");
+            settigs1.classList.toggle("active");
+            content2.classList.remove("active");
+            content1.classList.toggle("active");
+        });
+
+        settigs2.addEventListener("click", () =>{
+            settigs1.classList.remove("active");
+            settigs2.classList.toggle("active");
+            content1.classList.remove("active");
+            content2.classList.toggle("active");
+        });

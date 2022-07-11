@@ -834,7 +834,7 @@ section .personal .profile{
     align-items: center;
     flex-direction: row;
     width: 100%;
-    height: 70px;
+    min-height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -881,17 +881,79 @@ section .personal .profile .profilePicture{
 
 
 
+section .personal .settingsConfiguration{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+}
 
+section .personal .settingsConfiguration .container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 300px;
+    margin: 20px 0;
+}
 
+section .personal .settingsConfiguration .itemSetting{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-height: 70px;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 25px;
+}
 
+section .personal .settingsConfiguration .itemSetting .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
 
+section .personal .settingsConfiguration .itemSetting .icon .line{
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: #112d42;
+    transform: rotate(var(--rot));
+    transition: 0.5s ease;
+}
 
+section .personal .settingsConfiguration .itemSetting.active .icon .line{
+    transform: rotate(calc(var(--rot) + 135deg));
+}
 
+section .personal .settingsConfiguration .container .content{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 0px;
+    border-bottom: none;
+    transition: 0.5s ease;
+}
 
-
-
-
-
+section .personal .settingsConfiguration .container .content.active{
+    height: 300px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
 
 
 
