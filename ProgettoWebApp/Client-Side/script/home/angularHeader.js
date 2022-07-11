@@ -46,6 +46,8 @@
                     console.log(response);
                 });
 
+
+
                 /*
                 setInterval(function () {
                     $http({
@@ -57,7 +59,7 @@
                         console.log(response);
                     });
                 }, 3000);
-                */
+                
                   
                 $scope.selected = undefined;
                 $scope.selection = function(obj){
@@ -129,7 +131,7 @@
                     }, function myError(response) {
                                                 
                     });
-                }
+                }*/
 
                 $scope.myFunction = function(index){
                     clicked = false;
@@ -143,7 +145,7 @@
                         inputValue.value = '';
                     }
                 }
-
+                /*
                 $scope.remove = function(){
                     $timeout(function(){
                         remove = false;
@@ -181,6 +183,6 @@
                     devices.style.animationName = "boxRemove1";
                     devices.classList.remove("active");
                     devicesToggle.classList.remove("active");
-                }
+                }*/
         });
 

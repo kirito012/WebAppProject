@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/75e7801ae2.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
-<body>
+<body ng-app="myApp" ng-controller="myCtrlDevice">
     <section>
         <header>
             <div class="headerContainer">
@@ -78,25 +78,25 @@
                 <div class="addDevice">
                     <form action="addMachine" method="post">
                         <div class="inputBox">
-                            <input type="text" class="input" required>
+                            <input type="text" name="search" class="input" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
                             <span class="focus f1">Modello</span>
                             <div class="models">
-                                <div class="model">
+                                <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter:modelsFilter">
                                     <div class="img">
-
+                                        <img src="../images/{{ model + '.png' }}" alt="">
                                     </div>
                                     <div class="modelName">
-                                        <h4>Modello</h4>
+                                        <h4>{{ model }}</h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="inputBox">
-                            <input type="text" class="input" required>
+                            <input type="text" name="id" class="input" autocomplete="off" required>
                             <span class="focus f2">Numero di serie</span>
                         </div>
                         <div class="inputBox">
-                            <input type="text" class="input" required>
+                            <input type="text" name="name" class="input" autocomplete="off" required>
                             <span class="focus f3">Nome personalizzato</span>
                         </div>
                         <div class="submit">
@@ -118,13 +118,13 @@
                         <div class="removeSelection">
                             <h4>Rimuovi selezione</h4>
                         </div>
-                        <div class="device">
+                        <div class="device" ng-repeat="device in devices">
                             <div class="img">
-
+                                <img src="../images/{{ device.model + '.png' }}" alt="">
                             </div>
                             <div class="info">
-                                <h3>Nome - Modello</h4>
-                                <h5>Numero di serie</h4>
+                                <h3>{{ device.customname + " - " + device.model  }}</h4>
+                                <h5>{{ device.uniqueid }}</h4>
                             </div>
                         </div>
                     </div>
@@ -165,6 +165,7 @@
 
 
     <script src="../script/home/script.js"></script>
+    <script src="../script/home/angularHeader.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

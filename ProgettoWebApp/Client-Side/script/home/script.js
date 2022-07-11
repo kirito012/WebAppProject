@@ -38,7 +38,6 @@
             });
         }
         
-
         radioButton.forEach((item) => {
             item.addEventListener("change", changeDisplay);
         });

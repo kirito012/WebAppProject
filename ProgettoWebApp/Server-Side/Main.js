@@ -125,7 +125,7 @@ fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, re
 fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, req, utente) => {
 	let body = req.body;
 	let modelId = 0;
-
+  
   fw.queryDB("selectModelliName",[body.search],(models) => {
     fw.utility.checkLength(models,() => {
       modelId = models[0].idmodelli;
