@@ -1,4 +1,4 @@
-let BertaFramework = require("./BertaFramework/mainFramework.js");
+let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
