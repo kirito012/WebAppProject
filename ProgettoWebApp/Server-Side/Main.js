@@ -67,7 +67,7 @@ fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
   });
 });
 
-fw.newRequest(["post", "/login", false, false, "log"],(res, req) => {
+fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
 	let body = req.body;
 
   if (!body.email || !body.password){fw.redirect(res, "/", "error", "missingInputs"); return;}
