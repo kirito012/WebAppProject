@@ -92,6 +92,10 @@ class framework {
   redirect = (res, url, variable , message) => {
     this.server.redirect(res, url, variable , message);
   };
+
+  saveFile = (res,file,directory,newName,callback) => {
+    this.server.saveFile(res,file,directory,newName,callback);
+  }
 }
 
 module.exports.framework = framework;

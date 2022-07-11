@@ -10,6 +10,26 @@ fw.createServer({
   port: 8081,
 })
 
+//Request Guide\\
+/*
+
+fw.newRequest(settings,callback);
+
+settings: 
+  type of request = String: "get" - "post" - "put", // required
+  request url = String: "/something/somethingElse", // required
+  session check = boolean: true - false, // set false if you don't need a session
+  session redirect = String: "/" - "/login", // can be undefined
+  request name = String: "getSomething" - "Login", // required normally use the url name
+  check utente from db = boolean: true - false, // can be omitted
+
+callback:
+  results: res, // required
+  request: req, // required
+  user data: utente, // undefined unless "check utente from db" == true
+
+*/
+
 //Get requests\\
 
 fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, req, utente) => {
@@ -153,4 +173,30 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
       res.send("getMachines");
     });
   });
+});
+
+fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, req, utente) => {
+  let files = req.files;
+
+  if (files.profilepicture) {
+    fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
+      let root = results[0];
+
+      if (root){
+        fw.saveFile(res, files.profilepicture, "ProfilePictures", root, () => {
+          res.send("getProfile");
+        });
+      }
+      else{
+        let key = fw.utility.generateRandomKey(15);
+
+        fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
+          fw.saveFile(res, files.profilepicture, "ProfilePictures", key, () => {
+            res.send("getProfile");
+          });
+        })
+      }
+    });
+  }
+
 });

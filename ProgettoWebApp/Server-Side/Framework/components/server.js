@@ -1,6 +1,8 @@
 let express = require("express");
 let bodyParser = require("body-parser");
 let session = require("express-session");
+let fileUpload = require("express-fileupload");
+let cors = require("cors");
 let path = require("path");
 
 let data = {};
@@ -12,7 +14,15 @@ module.exports.newApp = data.newApp = (settings) => {
 
   app.use(jsonParser);
   app.use(urlencodedParser);
+  app.use(cors());
   app.use(express.static(settings[0] || settings.staticRoot));
+
+  app.use(fileUpload({
+    createParentPath: true,
+		limits: { 
+			fileSize: 8 * 1024 * 1024 * 1024
+	},
+	}));
 
   app.use(
     session({
@@ -96,3 +106,12 @@ module.exports.sessionCheck = data.sessionCheck =  (res, req, loginRoot, callbac
     }
   }
 };
+
+module.exports.saveFile = data.saveFile = (res,file,directory,newName,callback) => {
+	file.mv(__dirname + "/../../" + directory + "/" + newName,(err) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		callback();
+	});
+}
