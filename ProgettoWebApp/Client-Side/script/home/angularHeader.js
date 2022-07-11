@@ -37,7 +37,7 @@
                     dev = response.data;
                     $scope.devices = dev;
                     $scope.device = document.querySelectorAll(".device .ng-scope");
-                    console.log($scope.device.lenght);
+                    console.log($scope.device);
                     let time = 3;
                     /*if(device.length > 15){
                         for(let i = 0; i < 15; i++){
