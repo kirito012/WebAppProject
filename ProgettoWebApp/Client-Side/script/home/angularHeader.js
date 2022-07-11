@@ -1,3 +1,7 @@
+        let fileReader = new FileReader();
+        let pfp = document.querySelector(".pfp");
+        
+        
         var inputValue = document.querySelector("#inputSearch");
         var clicked = false;
 
@@ -63,7 +67,10 @@
                     url : "/home/getProfilePicture"
                 }).then(function mySuccess(response) {
                     $scope.profilePicture = response.data;
-                    console.log($scope.profilePicture);
+                    fileReader.readAsDataURL($scope.profilePicture);
+                    fileReader.addEventListener("load", () =>{
+                        pfp.src = fileReader.result;
+                    });
                 }, function myError(response) {
                     console.log(response);
                 });
