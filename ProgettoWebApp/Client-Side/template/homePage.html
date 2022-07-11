@@ -111,14 +111,14 @@
                 </div>
                 <div class="devicesContainer">
                     <div class="search">
-                        <input type="text" class="searchInput" required>
+                        <input type="text" class="searchInput" ng-model="searchDevice" required>
                         <span class="focus f4">Cerca un dispositivo...</span>
                     </div>
                     <div class="devices">
                         <div class="removeSelection">
                             <h4>Rimuovi selezione</h4>
                         </div>
-                        <div class="device" ng-repeat="device in devices">
+                        <div class="device" ng-repeat="device in devices | filter: searchDevice">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png' }}" alt="">
                             </div>
