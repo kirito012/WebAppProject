@@ -610,7 +610,7 @@ section .navigation .item .search .focus{
     font-weight: 700;
     letter-spacing: 2px;
     transition: 0.5s ease;
-    bottom: 12px;
+    bottom: 14px;
 }
 
 section .navigation .item .devicesContainer{

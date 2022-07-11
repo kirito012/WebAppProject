@@ -41,3 +41,20 @@ hide.addEventListener("click", () => {
         password.type = "password";
     }
 });
+
+
+let focusWrites = document.querySelectorAll(".focus");
+let inputs = document.querySelectorAll(".input");
+
+let classes = ["focus f1", "focus f2", "focus f3", "focus f4", "focus f5", "focus f6", "focus f7", "focus f8"];
+
+function textTransition(){
+    for(let key in classes){
+        if(this.className == classes[key]){
+            inputs[key].focus();
+        }
+    }
+}
+focusWrites.forEach((item) => {
+    item.addEventListener("click", textTransition);
+});
