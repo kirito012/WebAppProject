@@ -25,6 +25,9 @@
 
         var responseData;
 
+        var device;
+
+
         let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
@@ -33,6 +36,7 @@
                 }).then(function mySuccess(response) {
                     dev = response.data;
                     $scope.devices = dev;
+                    device = document.querySelectorAll(".device");
                 }, function myError(response) {
                     console.log(response);
                 });

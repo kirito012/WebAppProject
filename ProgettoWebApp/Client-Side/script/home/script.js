@@ -44,8 +44,6 @@
 
 
 
-
-        let device = document.querySelectorAll(".device");
         let time = 3;
         if(device.length > 15){
             for(let i = 0; i < 15; i++){
