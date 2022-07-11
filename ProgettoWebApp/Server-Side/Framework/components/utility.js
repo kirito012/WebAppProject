@@ -37,7 +37,9 @@ module.exports.checkLength = (obj,callback,error) => {
     callback();
   }
   else{
-    error();
+    if (error){
+      error();
+    }
   }
 };
 

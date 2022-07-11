@@ -183,7 +183,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
       let root = results[0];
 
       if (root){
-        fw.saveFile(res, files.profilepicture, "ProfilePictures", root, () => {
+        fw.saveFile(res, files.profilepicture, "ProfilePictures", root.pictureroot.toString(), () => {
           res.send("getProfile");
         });
       }
@@ -191,7 +191,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
         let key = fw.utility.generateRandomKey(15);
 
         fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
-          fw.saveFile(res, files.profilepicture, "ProfilePictures", key, () => {
+          fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
             res.send("getProfile");
           });
         })
