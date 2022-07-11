@@ -49,7 +49,14 @@
                     console.log(response);
                 });
 
-
+                $http({
+                    method : "GET",
+                    url : "/home/profile"
+                }).then(function mySuccess(response) {
+                    $scope.profileData = response.data;
+                }, function myError(response) {
+                    console.log(response);
+                });
 
                 /*
                 setInterval(function () {
@@ -114,7 +121,7 @@
                         inputValue.value = '';
                     }
                 }
-                
+
                 /*
                 $scope.remove = function(){
                     $timeout(function(){

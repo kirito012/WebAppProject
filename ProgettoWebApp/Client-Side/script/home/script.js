@@ -114,9 +114,14 @@
 
         let profileToggle = document.querySelector(".settingContainer");
         let profileSettings = document.querySelector(".personal");
+        let profileRemove = document.querySelector(".notification");
 
         profileToggle.addEventListener("click", () => {
             profileSettings.classList.toggle("active");
+        });
+
+        profileRemove.addEventListener("click", () => {
+            profileSettings.classList.remove("active");
         });
 
 

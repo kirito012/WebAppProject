@@ -151,7 +151,8 @@
         <div class="personal">
             <div class="profile">
                 <div class="notification">
-                    <ion-icon name="notifications-outline"></ion-icon>
+                    <div class="line" style="--not: 0deg;"></div>
+                    <div class="line" style="--not: 90deg;"></div>
                 </div>
                 <div class="profileName">
                     <h4>Nome Cognome</h4>
@@ -163,19 +164,25 @@
             <div class="settingsConfiguration">
                 <div class="container">
                     <div class="itemSetting i1">
-                        <h4>Impostazioni profilo</h4>
+                        <h3>Impostazioni profilo</h3>
                         <div class="icon">
                             <div class="line" style="--rot: 0deg;"></div>
                             <div class="line" style="--rot: 90deg;"></div>
                         </div>
                     </div>
                     <div class="content I1">
-                            
+                            <h4>Informazioni personali</h4>
+                            <ul>
+                                <li>Nome: <span>{{ profileData.name }}</span></li>
+                                <li>Cognome: <span>{{ profileData.surname }}</span></li>
+                                <li>E-mail: <span>{{ profileData.email }}</span></li>
+                                <li>Data di nascita: <span>{{ profileData.birthday }}</span></li>
+                            </ul>
                     </div>
                 </div>
                 <div class="container">
                     <div class="itemSetting i2">
-                        <h4>Impostazioni notifiche</h4>
+                        <h3>Impostazioni notifiche</h3>
                         <div class="icon">
                             <div class="line" style="--rot: 0deg;"></div>
                             <div class="line" style="--rot: 90deg;"></div>

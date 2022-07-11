@@ -836,6 +836,7 @@ section .personal .profile{
     width: 100%;
     min-height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 0 20px;
 }
 
 section .personal .profile .notification{
@@ -849,10 +850,13 @@ section .personal .profile .notification{
     cursor: pointer;
 }
 
-section .personal .profile .notification ion-icon{
-    width: 25px;
-    height: 25px;
-    color: #112d42;
+section .personal .profile .notification .line{
+    position: absolute;
+    width: 30px;
+    height: 2px;
+    background: #112d42;
+    transform: rotate(calc(var(--not) + 45deg));
+    transition: 0.5s ease;
 }
 
 section .personal .profile .profileName{
@@ -860,7 +864,7 @@ section .personal .profile .profileName{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 50px;
+    margin-left: 30px;
 }
 
 section .personal .profile .profileName h4{
@@ -941,19 +945,52 @@ section .personal .settingsConfiguration .itemSetting.active .icon .line{
 section .personal .settingsConfiguration .container .content{
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     flex-direction: column;
     width: 100%;
     height: 0px;
     border-bottom: none;
     transition: 0.5s ease;
+    overflow: hidden;
+    padding: 0px;
 }
 
 section .personal .settingsConfiguration .container .content.active{
     height: 300px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
 }
+
+section .personal .settingsConfiguration .container .content.I1 ul{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+section .personal .settingsConfiguration .container .content.I1 ul li{
+    list-style: none;
+    font-size: 13px;
+    font-weight: 900;
+    width: 250px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .personal .settingsConfiguration .container .content.I1 ul li span{
+    text-align: right;
+}
+
+
+
+
+
+
+
+
 
 
 
