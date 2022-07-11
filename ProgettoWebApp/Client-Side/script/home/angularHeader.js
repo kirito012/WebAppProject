@@ -69,6 +69,7 @@
                 }).then(function mySuccess(response) {
                     $scope.profilePicture = response.data;
                     img = $scope.profilePicture.toString();
+                    console.log(img);
                 }, function myError(response) {
                     console.log(response);
                 });
