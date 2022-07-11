@@ -1,5 +1,6 @@
 let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
+const { blob } = require("stream/consumers");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
 fw.createServer({
@@ -62,6 +63,31 @@ fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(
 		}, () => {
 			res.send(jsonData);
 		});
+  });
+});
+
+fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(res, req, utente) => {
+  let profile = {};
+
+  profile.name = utente.name;
+  profile.surname = utente.surname;
+  profile.email = utente.email;
+  profile.birthday = fw.utility.formatDate(utente.birthday);
+
+  res.send(profile);
+});
+
+fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePicture",true],(res, req, utente) => {
+  let image;
+
+  fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
+    if (results[0]) {
+      image = path.join(__dirname, "ProfilePictures", results[0].pictureroot.toString() + ".png");
+      res.sendFile(image);
+    }
+    else {
+      res.send("image not found");
+    }
   });
 });
 

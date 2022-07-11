@@ -68,3 +68,7 @@ module.exports.forEach = (obj,callback,lastindexcallback) => {
     throw console.error("you can't loop over a " + typeof obj);
   }
 }
+
+module.exports.formatDate = (date) => {
+  return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+}

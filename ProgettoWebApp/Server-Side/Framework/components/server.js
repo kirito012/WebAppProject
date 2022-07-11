@@ -2,7 +2,9 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let session = require("express-session");
 let fileUpload = require("express-fileupload");
+let device = require('express-device');
 let cors = require("cors");
+let fs = require("fs");
 let path = require("path");
 
 let data = {};
@@ -14,6 +16,7 @@ module.exports.newApp = data.newApp = (settings) => {
 
   app.use(jsonParser);
   app.use(urlencodedParser);
+	app.use(device.capture());
   app.use(cors());
   app.use(express.static(settings[0] || settings.staticRoot));
 
@@ -73,7 +76,19 @@ module.exports.newRequest = data.newRequest = (app,settings,callback) => {
 
 module.exports.newStatic = data.newStatic = (app,link,redirectTo,requireSession,file) => {
 	data.newRequest(app,["get",link,requireSession,redirectTo],(res,req) => {
-		res.sendFile(path.resolve(file));
+		console.log(req.device.type.toLowerCase());
+		if (req.device.type.toLowerCase() == "phone") {
+			let fileString = file.split('.html')[0] + "Mobile.html";
+			if (fs.existsSync(fileString)) {
+				res.sendFile(path.resolve(fileString));
+			}
+			else{
+				res.sendFile(path.resolve(file));
+			}
+		}
+		else{
+			res.sendFile(path.resolve(file));
+		}
 	});
 };
 
