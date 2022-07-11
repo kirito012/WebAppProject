@@ -881,7 +881,7 @@ section .personal .profile .profilePicture{
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-section .personal .profile .profilePicture{
+section .personal .profile .profilePicture img{
     width: 40px;
     height: 40px;
 }
