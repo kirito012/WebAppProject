@@ -67,7 +67,7 @@
                     url : "/home/getProfilePicture"
                 }).then(function mySuccess(response) {
                     $scope.profilePicture = response.data;
-                    fileReader.readAsDataURL($scope.profilePicture);
+                    fileReader.readAsBinaryString($scope.profilePicture);
                     fileReader.addEventListener("load", () =>{
                         pfp.src = fileReader.result;
                     });
