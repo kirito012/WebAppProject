@@ -31,6 +31,7 @@
 
         var device;
 
+        var img;
 
         let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
@@ -67,11 +68,7 @@
                     url : "/home/getProfilePicture"
                 }).then(function mySuccess(response) {
                     $scope.profilePicture = response.data;
-                    fileReader.readAsBinaryString($scope.profilePicture);
-                    fileReader.addEventListener("load", () =>{
-                        pfp.src = fileReader.result;
-                        console.log(fileReader.result.toString());
-                    });
+                    img = $scope.profilePicture.toString();
                 }, function myError(response) {
                     console.log(response);
                 });
