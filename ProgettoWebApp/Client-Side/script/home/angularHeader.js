@@ -60,7 +60,7 @@
 
                 $http({
                     method : "GET",
-                    url : "/home/getProfilePictures"
+                    url : "/home/getProfilePicture"
                 }).then(function mySuccess(response) {
                     $scope.profilePicture = response.data;
                     console.log(profilePicture);
