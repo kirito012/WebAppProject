@@ -51,7 +51,7 @@
 
                 $http({
                     method : "GET",
-                    url : "/home/profile"
+                    url : "/home/getProfile"
                 }).then(function mySuccess(response) {
                     $scope.profileData = response.data;
                 }, function myError(response) {
