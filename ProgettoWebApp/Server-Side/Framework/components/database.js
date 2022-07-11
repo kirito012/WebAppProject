@@ -5,11 +5,13 @@ let queryPreset = {
   generateUser:
     "INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES (?,?,?,?,?,?);",
   generateCorrispondeza: "INSERT INTO corrispondenze VALUES(?, ?, ?);",
+  generateProfilePicture: "INSERT INTO profilepictures (utente_id, pictureroot) VALUES (?, ?)",
   generateSelectMatricola:
     "INSERT INTO matricole (uniqueid, parent, customname) VALUES (?,?,?); SELECT * FROM matricole WHERE uniqueid=? ;",
   selectEmailPsw: "SELECT * FROM utenti WHERE email = ? AND password = ?;",
   selectSessionName: "SELECT * FROM utenti WHERE lastsession = ? AND name = ?;",
   selectModelliName: "SELECT * FROM modelli WHERE name = ?;",
+  selectProfilePictureRoot: "SELECT pictureroot FROM profilepictures WHERE utente_id = ?",
   selectMatricolaId: `SELECT * FROM corrispondenze
   JOIN matricole on corrispondenze.matricola_id = matricole.id
   JOIN utenti on corrispondenze.utente_id = utenti.id

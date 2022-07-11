@@ -106,3 +106,12 @@ module.exports.sessionCheck = data.sessionCheck =  (res, req, loginRoot, callbac
     }
   }
 };
+
+module.exports.saveFile = data.saveFile = (res,file,directory,newName,callback) => {
+	file.mv(__dirname + "/../../" + directory + "/" + newName,(err) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		callback();
+	});
+}
