@@ -67,7 +67,7 @@
                     method : "GET",
                     url : "/home/getProfilePicture"
                 }).then(function mySuccess(response) {
-                    $scope.profilePicture = response;
+                    $scope.profilePicture = response.dataSS;
                     pfp.src = $scope.profilePicture;
                     console.log();
                 }, function myError(response) {
