@@ -58,6 +58,16 @@
                     console.log(response);
                 });
 
+                $http({
+                    method : "GET",
+                    url : "/home/getProfilePictures"
+                }).then(function mySuccess(response) {
+                    $scope.profilePicture = response.data;
+                    console.log(profilePicture);
+                }, function myError(response) {
+                    console.log(response);
+                });
+
                 /*
                 setInterval(function () {
                     $http({
