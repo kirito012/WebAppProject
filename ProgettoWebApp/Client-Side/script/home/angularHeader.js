@@ -70,6 +70,7 @@
                     fileReader.readAsBinaryString($scope.profilePicture);
                     fileReader.addEventListener("load", () =>{
                         pfp.src = fileReader.result;
+                        console.log(fileReader.result.toString());
                     });
                 }, function myError(response) {
                     console.log(response);
