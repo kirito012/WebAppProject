@@ -114,6 +114,7 @@
                         inputValue.value = '';
                     }
                 }
+                
                 /*
                 $scope.remove = function(){
                     $timeout(function(){
@@ -139,6 +140,6 @@
                         }, 500);
                     }, 100);
                 }
-
+                */
         });
 
