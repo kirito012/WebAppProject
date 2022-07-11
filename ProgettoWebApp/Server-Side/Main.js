@@ -154,3 +154,14 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
     });
   });
 });
+
+fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, req, utente) => {
+  let body = req.body;
+  let user = utente.name;
+  let files = req.files;
+
+  if (files.profilepicture) {
+    
+  }
+
+});
