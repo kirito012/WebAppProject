@@ -36,22 +36,6 @@
                 }).then(function mySuccess(response) {
                     dev = response.data;
                     $scope.devices = dev;
-                    $timeout(() => {
-                        device = document.querySelectorAll(".device");
-                    }, 500);
-                    console.log($scope.device);
-                    let time = 3;
-                    /*if(device.length > 15){
-                        for(let i = 0; i < 15; i++){
-                            device[i].style.transitionDelay = time/32 + "s";
-                            time++;
-                        }
-                    }else{
-                        device.forEach((element, i) => {
-                            device[i].style.transitionDelay = time/32 + "s";
-                            time++;
-                        });
-                    }*/
                 }, function myError(response) {
                     console.log(response);
                 });
