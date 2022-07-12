@@ -39,9 +39,9 @@
 
         let newData = {};
 
-        let profilepictures = {};
+        let profilepicture;
         
-
+        var formdata;
 
         let app = angular.module('myApp', []);
 
@@ -123,7 +123,7 @@
 
 
 
-                var formdata = new FormData();
+                formdata = new FormData();
                 $scope.getTheFiles = function ($files) {
                     angular.forEach($files, function (value, key) {
                         formdata.append(key, value);
@@ -131,8 +131,7 @@
                 };
 
                 $scope.uploadFile = () => {
-                    profilepictures = {profilepicture: formdata};
-                    $http.post("/uploadpfp", JSON.stringify(profilepicture)).then(function mySuccess(response){    
+                    $http.post("/uploadpfp", formdata).then(function mySuccess(response){    
                         if(response.data){    
                             console.log("dd");
                         }
