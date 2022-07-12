@@ -1087,6 +1087,22 @@ section .inputSettings form .title{
     width: 100%;
 }
 
+section .inputSettings form .close{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 200px;
+}
+
+section .inputSettings form .close h5{
+    position: relative;
+    color: #112d42;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
 section .inputSettings form .title .iconSettings{
     position: relative;
     display: flex;
@@ -1096,6 +1112,11 @@ section .inputSettings form .title .iconSettings{
     height: 40px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
+}
+
+section .inputSettings form .title .iconSettings:hover ~ h5{
+    opacity: 1;
+    transform: translateX(50px);
 }
 
 section .inputSettings form .title .iconSettings .line{
