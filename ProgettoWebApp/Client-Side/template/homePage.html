@@ -247,7 +247,7 @@
             </form>
         </div>
         <div class="uploadPfp">
-            <form class="form" action="uploadpfp" method="post" enctype="multipart/form-data">
+            <form action="uploadpfp" method="post" enctype="multipart/form-data">
                 <div class="title">
                     <h1>Carica il tuo file:</h1>
                     <div class="close">
@@ -266,10 +266,13 @@
                         <input type="file" class="fileInput" name="profilepicture" id="pfp">
                     </label>
                     <div class="buttons">
-                        <input type="button" class="upPfp" ng-click="uploadFile()" value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
+                        <input type="submit" class="upPfp" ng-click="uploadFile()" value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
                         <input type="button" class="reset" value="Cancella" style="--bgInput: #112d42; --color: #fff;">
                     </div>
                 </div>
+            </form>
+            <form action="/home/getProfilePicture" method="get">
+                <input type="submit" name="" id="">
             </form>
         </div>
     </section>

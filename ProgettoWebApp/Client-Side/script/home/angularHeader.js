@@ -39,10 +39,6 @@
 
         let newData = {};
 
-        let profilepicture;
-        
-        var formdata;
-
         let app = angular.module('myApp', []);
 
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
@@ -107,7 +103,7 @@
 
 
 
-                formdata = new FormData(document.querySelector(".form"));
+               /* formdata = new FormData(document.querySelector(".form"));
 
 
                 $scope.uploadFile = () => {
@@ -119,7 +115,7 @@
                         }
                     }, function myError(response) {    
                             console.log(response);
-                    });*/
+                    });
                 }
 
 
