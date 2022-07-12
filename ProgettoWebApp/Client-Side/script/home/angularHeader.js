@@ -58,7 +58,7 @@
                     method : "GET",
                     url : "/home/getProfile"
                 }).then(function mySuccess(response) {
-                    $scope.profileData = $scope.response.data;
+                    $scope.profileData = response.data;
                     $scope.name = $scope.profileData.name;
                     $scope.surname = $scope.profileData.surname;
                     $scope.email = $scope.profileData.email;
