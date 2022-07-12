@@ -67,6 +67,15 @@
                     console.log(response);
                 });
 
+                array = {};    
+                $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){    
+                    if(response.data){    
+                                               
+                    }
+                }, function myError(response) {    
+                        onsole.log(response);
+                });
+
                 /*
                 setInterval(function () {
                     $http({
