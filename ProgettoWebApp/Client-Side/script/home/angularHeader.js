@@ -110,14 +110,15 @@
                 formdata = new FormData();
 
                 $scope.uploadFile = () => {
-                    formdata.append("profilepicture", document.querySelector(".fileInput").files[0]);
-                    $http.post("/uploadpfp", formdata).then(function mySuccess(response){    
+                    let form = formdata.append("profilepicture", document.querySelector(".fileInput").files[0]);
+                    console.log(form);
+                    /*$http.post("/uploadpfp", formdata).then(function mySuccess(response){    
                         if(response.data){    
                             console.log("dd");
                         }
                     }, function myError(response) {    
                             console.log(response);
-                    });
+                    });*/
                 }
 
 
