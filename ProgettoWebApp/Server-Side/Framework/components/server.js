@@ -1,5 +1,6 @@
 let express = require("express");
 let bodyParser = require("body-parser");
+let multer = require('multer');
 let session = require("express-session");
 let fileUpload = require("express-fileupload");
 let device = require('express-device');
@@ -11,12 +12,13 @@ let data = {};
 
 module.exports.newApp = data.newApp = (settings) => {
   let app = express();
+  let upload = multer();
   let jsonParser = bodyParser.json();
   let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
   app.use(jsonParser);
   app.use(urlencodedParser);
-	app.use(device.capture());
+  app.use(device.capture());
   app.use(cors());
   app.use(express.static(settings[0] || settings.staticRoot));
 
