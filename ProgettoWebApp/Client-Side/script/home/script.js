@@ -226,4 +226,7 @@
 
         function fun(){
             pfpImg.src = "";
+            setTimeout(() => {
+                pfpImg.src = "/home/getProfilePicture";
+            });
         }
