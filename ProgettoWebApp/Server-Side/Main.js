@@ -162,6 +162,7 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
   });
 });
 
+
 fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, req, utente) => {
 	let body = req.body;
 	let user = utente.name;
