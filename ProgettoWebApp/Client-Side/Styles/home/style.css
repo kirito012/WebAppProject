@@ -1057,6 +1057,29 @@ section .inputSettings form{
     gap: 30px;
 }
 
+section .inputSettings form .submit input{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    color: #112d42;
+    font-size: 18px;
+    background: none;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 2px solid #112d42;
+    transition: 0.5s ease;
+}
+
+section .inputSettings form .submit input:hover{
+    background: #112d42;
+    color: #fff;
+}
+
 section .inputSettings form .title{
     position: relative;
     display: flex;
