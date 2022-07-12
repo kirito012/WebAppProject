@@ -33,12 +33,14 @@ module.exports.checkEmail = (Email) => {
 }
 
 module.exports.checkLength = (obj,callback,error) => {
-  if (Object.keys(obj).length > 0 || obj.length > 0){
-    callback();
-  }
-  else{
-    if (error){
-      error();
+  if (obj) {
+    if (Object.keys(obj).length > 0 || obj.length > 0){
+      callback();
+    }
+    else{
+      if (error){
+        error();
+      }
     }
   }
 };
