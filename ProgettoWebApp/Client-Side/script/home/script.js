@@ -186,5 +186,8 @@
         let img = document.querySelector(".pfp");
 
         fileUpload.addEventListener("input", () => {
-            pfp.src = "/home/getProfilePicture";
+            pfp.src = "";
+            setTimeout(() => {
+                pfp.src = "/home/getProfilePicture";
+            }, 1000);
         });
