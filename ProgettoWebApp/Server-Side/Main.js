@@ -1,6 +1,5 @@
 let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
-const { blob } = require("stream/consumers");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
 fw.createServer({
@@ -238,7 +237,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 
       if (root){
         fw.saveFile(res, files.profilepicture, "ProfilePictures", root.pictureroot.toString(), () => {
-          res.send("getProfile");
+          res.status(204).send({});
         });
       }
       else{
@@ -246,7 +245,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 
         fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
           fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
-            res.send("getProfile");
+            res.status(204).send({});
           });
         })
       }
