@@ -852,11 +852,35 @@ section .personal .profile .notification{
 
 section .personal .profile .notification .line{
     position: absolute;
-    width: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 20px;
     height: 2px;
     background: #112d42;
-    transform: rotate(calc(var(--not) + 45deg));
     transition: 0.5s ease;
+}
+
+section .personal .profile .notification .line::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(-3px) translateX(-1.25px) rotate(-45deg);
+    background: #112d42;
+}
+
+section .personal .profile .notification .line::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(3px) translateX(-1.25px) rotate(45deg);
+    background: #112d42;
+}
+
+section .personal .profile .notification:hover .line{
+    transform: translateX(-4px);
 }
 
 section .personal .profile .profileName{
@@ -965,6 +989,23 @@ section .personal .settingsConfiguration .container .content.active{
     padding: 20px;
 }
 
+section .personal .settingsConfiguration .container .content.I1 .settingsInfo{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 250px;
+}
+
+section .personal .settingsConfiguration .container .content.I1 .settingsInfo .changeSettings ion-icon{
+    width: 20px;
+    height: 20px;
+    color: #112d42;
+    cursor: pointer;
+    font-size: 18px;
+}
+
 section .personal .settingsConfiguration .container .content.I1 ul{
     position: relative;
     display: flex;
@@ -985,13 +1026,111 @@ section .personal .settingsConfiguration .container .content.I1 ul li{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+section .inputSettings{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    z-index: 100;
+    transition: 0.5s ease;
+}
+
+section .inputSettings.active{
+    display: flex;
+}
+
+section .inputSettings form{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 40px;
+    width: 700px;
+    height: 500px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    gap: 30px;
+}
 
 
+section .inputSettings form .row{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
 
+section .inputSettings .row .column{
+    position: relative;
+    font-display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
 
+section .inputSettings form .row .column .inputBox{
+    margin: 30px 25px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
 
+section .inputSettings form .row .column .inputBox input{
+    position: relative;
+    width: 250px;
+    height: 40px;
+    border: none;
+    border-bottom: 2px solid #112d42;
+    background: transparent;
+    padding: 0 5px;
+    caret-color: #112d42;
+    font-size: 14px;
+    color: #112d42;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
 
+section .inputSettings form .row .column .inputBox .focus{
+    position: absolute;
+    color: rgba(17, 45, 66, 0.8);
+    font-weight: 700;
+    letter-spacing: 2px;
+    transition: 0.5s ease;
+    margin-top: 10px;
+}
 
+section .inputSettings form .row .column .inputBox input:focus ~ .focus,
+section .inputSettings form .row .column .inputBox input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-5px) scale(0.8);
+    color: rgba(17, 45, 66, 1);
+}
+
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus ~ .focus,
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-8px) scale(0.8);
+}
+
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(3) input:focus ~ .focus,
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(3) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-13px) scale(0.8);
+}
+
+section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(2) input:focus ~ .focus,
+section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(2) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-9px) scale(0.8);
+}
+
+section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(3) input:focus ~ .focus,
+section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(3) input:valid ~ .focus{
+    transform: translateY(-25px) translateX(-13px) scale(0.8);
+}
 
 
 
@@ -1020,3 +1159,11 @@ section .personal .settingsConfiguration .container .content.I1 ul li{
   input{
     outline: none;
   }
+
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: #112d42 !important;
+    font-size: 14px;
+}

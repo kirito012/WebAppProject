@@ -151,8 +151,7 @@
         <div class="personal">
             <div class="profile">
                 <div class="notification">
-                    <div class="line" style="--not: 0deg;"></div>
-                    <div class="line" style="--not: 90deg;"></div>
+                    <div class="line"></div>
                 </div>
                 <div class="profileName">
                     <h4>{{ profileData.name + " " + profileData.surname}}</h4>
@@ -171,7 +170,12 @@
                         </div>
                     </div>
                     <div class="content I1">
+                        <div class="settingsInfo">
                             <h4>Informazioni personali</h4>
+                            <div class="changeSettings">
+                                <ion-icon name="pencil-outline"></ion-icon>
+                            </div>
+                        </div>
                             <ul>
                                 <li>Nome: <span>{{ profileData.name }}</span></li>
                                 <li>Cognome: <span>{{ profileData.surname }}</span></li>
@@ -193,6 +197,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="inputSettings">
+            <form action="changeSettings" method="post">
+                <div class="title">
+                    Cambia i tuoi dati:
+                </div>
+                <div class="inputs">
+                    <div class="row">
+                        <div class="column">
+                            <div class="inputBox">
+                                <input type="text" class="input" name="email" autocomplete="off" id="" required>
+                                <span class="focus f5">Email</span>
+                            </div>
+                            <div class="inputBox">
+                                <input type="password" class="input" name="password" autocomplete="off" id="" required>
+                                <span class="focus f6">Password</span>
+                            </div>
+                            <div class="inputBox">
+                                <input type="password" class="input" name="repeatPassword" autocomplete="off" id="" required>
+                                <span class="focus f7">Ripeti password</span>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="inputBox">
+                                <input type="text" class="input" name="name" id="" autocomplete="off" required>
+                                <span class="focus f8">Nome</span>
+                            </div>
+                            <div class="inputBox">
+                                <input type="text" class="input" name="surname" id="" autocomplete="off" required>
+                                <span class="focus f9">Cognome</span>
+                            </div>
+                            <div class="inputBox">
+                                <input type="date" class="input" name="date" id="" autocomplete="off" class="date" required>
+                                <span class="focus f10">Data di nascita</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 

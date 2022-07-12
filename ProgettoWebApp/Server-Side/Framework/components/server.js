@@ -76,7 +76,6 @@ module.exports.newRequest = data.newRequest = (app,settings,callback) => {
 
 module.exports.newStatic = data.newStatic = (app,link,redirectTo,requireSession,file) => {
 	data.newRequest(app,["get",link,requireSession,redirectTo],(res,req) => {
-		console.log(req.device.type.toLowerCase());
 		if (req.device.type.toLowerCase() == "phone") {
 			let fileString = file.split('.html')[0] + "Mobile.html";
 			if (fs.existsSync(fileString)) {
