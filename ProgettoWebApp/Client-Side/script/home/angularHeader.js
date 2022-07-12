@@ -38,6 +38,8 @@
         let birthday;
 
         let newData = {};
+
+        let img = {};
         
 
 
@@ -129,7 +131,8 @@
                 };
 
                 $scope.uploadFile = () => {
-                    $http.post("/changeUserData", formadata).then(function mySuccess(response){    
+                    img = {profilepicture: formdata}
+                    $http.post("/changeUserData", JSON.stringify(img)).then(function mySuccess(response){    
                         if(response.data){    
                             console.log("dd");
                         }
