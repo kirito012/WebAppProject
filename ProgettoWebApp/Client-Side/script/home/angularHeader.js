@@ -15,7 +15,6 @@
         var deviceSelected = document.querySelector("body");
         var clone;
 
-        var array = {};
 
         var deviceToRemove = {};
 
