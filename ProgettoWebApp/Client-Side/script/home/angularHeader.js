@@ -131,7 +131,7 @@
                 $scope.uploadFile = () => {
                     $http.post("/changeUserData", formadata).then(function mySuccess(response){    
                         if(response.data){    
-
+                            console.log("dd");
                         }
                     }, function myError(response) {    
                             console.log(response);
