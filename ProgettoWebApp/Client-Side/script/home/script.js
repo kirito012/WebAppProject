@@ -228,5 +228,5 @@
             pfpImg.src = "";
             setTimeout(() => {
                 pfpImg.src = "/home/getProfilePicture";
-            });
+            },5000);
         }
