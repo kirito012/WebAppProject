@@ -169,3 +169,22 @@
                 changeSettings.classList.remove("active");
             }, 100);
         });
+
+
+
+
+
+        let pfpToggle = document.querySelector(".image");
+        let pfpUpload = document.querySelector(".uploadPfp");
+
+        pfpToggle.addEventListener("click", () => {
+            pfpUpload.classList.add("active");
+        });
+
+
+        let fileUpload = document.querySelector(".upPfp");
+        let img = document.querySelector(".pfp");
+
+        fileUpload.addEventListener("input", () => {
+            pfp.src = "/home/getProfilePicture";
+        });

@@ -38,6 +38,8 @@
         let birthday;
 
         let newData = {};
+        
+
 
         let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
@@ -99,7 +101,7 @@
                             console.log(response);
                     });
                 });
-                
+
 
                 /*
                 setInterval(function () {

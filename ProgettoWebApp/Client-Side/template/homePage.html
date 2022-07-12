@@ -176,12 +176,18 @@
                                 <ion-icon name="pencil-outline"></ion-icon>
                             </div>
                         </div>
-                            <ul>
-                                <li>Nome: <span>{{ profileData.name }}</span></li>
-                                <li>Cognome: <span>{{ profileData.surname }}</span></li>
-                                <li>E-mail: <span>{{ profileData.email }}</span></li>
-                                <li>Data di nascita: <span>{{ profileData.birthday }}</span></li>
-                            </ul>
+                        <ul>
+                            <li>Nome: <span>{{ profileData.name }}</span></li>
+                            <li>Cognome: <span>{{ profileData.surname }}</span></li>
+                            <li>E-mail: <span>{{ profileData.email }}</span></li>
+                            <li>Data di nascita: <span>{{ profileData.birthday }}</span></li>
+                        </ul>
+                        <div class="image">
+                            <h4>Carica una foto profilo</h4>
+                            <div class="upload">
+                                <ion-icon name="arrow-up-circle-outline"></ion-icon>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="container">
@@ -237,6 +243,17 @@
                 </div>
                 <div class="submit">
                     <input type="button" class="submitValues" value="Conferma">
+                </div>
+            </form>
+        </div>
+        <div class="uploadPfp">
+            <form action="uploadpfp" method="post">
+                <div class="title">
+                    <h1>Carica il tuo file:</h1>
+                </div>
+                <div class="up">
+                    <input type="file" class="file" name="profilepicture">
+                    <input type="submit" class="upPfp" id="">
                 </div>
             </form>
         </div>
