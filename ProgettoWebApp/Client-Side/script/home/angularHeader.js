@@ -45,22 +45,6 @@
 
         let app = angular.module('myApp', []);
 
-        app.directive('ngFiles', ['$parse', function ($parse) {
-
-            function fn_link(scope, element, attrs) {
-                var onChange = $parse(attrs.ngFiles);
-                element.on('change', function (event) {
-                    onChange(scope, { $files: event.target.files });
-                });
-            };
-
-            return {
-                link: fn_link
-            }
-        } ])
-
-
-
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
@@ -124,13 +108,9 @@
 
 
                 formdata = new FormData();
-                $scope.getTheFiles = function ($files) {
-                    angular.forEach($files, function (value, key) {
-                        formdata.append(key, value);
-                    });
-                };
 
                 $scope.uploadFile = () => {
+                    formdata.append("profilepicture", document.querySelector(".fileInput").value);
                     $http.post("/uploadpfp", formdata).then(function mySuccess(response){    
                         if(response.data){    
                             console.log("dd");
