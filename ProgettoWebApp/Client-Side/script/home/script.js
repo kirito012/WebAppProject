@@ -59,7 +59,7 @@
         let focusWrites = document.querySelectorAll(".focus");
         let inputs = document.querySelectorAll(".input");
 
-        let classes = ["focus f1", "focus f2", "focus f3"];
+        let classes = ["focus f1", "focus f2", "focus f3", "focus f5", "focus f6", "focus f7", "focus f8", "focus f9", "focus f10"];
 
         function textTransition(){
             for(let key in classes){
@@ -145,4 +145,15 @@
             settigs2.classList.toggle("active");
             content1.classList.remove("active");
             content2.classList.toggle("active");
+        });
+
+
+
+
+
+        let changeSettings = document.querySelector(".inputSettings");
+        let inputToggle = document.querySelector(".settingsInfo");
+
+        inputToggle.addEventListener("click", () => {
+            changeSettings.classList.add("active");
         });
