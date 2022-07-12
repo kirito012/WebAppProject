@@ -31,7 +31,14 @@
 
         var device;
 
-        var img;
+        let button = document.querySelector(".submitValues");
+
+        let email;
+        let name;
+        let surname;
+        let birthday;
+
+        let newData = {};
 
         let app = angular.module('myApp', []);
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
@@ -67,14 +74,22 @@
                     console.log(response);
                 });
 
-                array = {};    
-                $http.post("/changeUserData", JSON.stringify(array)).then(function mySuccess(response){    
-                    if(response.data){    
-                        console.log(response.data);
-                    }
-                }, function myError(response) {    
-                        onsole.log(response);
+                button.addEventListener("click", () => {
+                    email = document.querySelector(".newI1");
+                    birthday = document.querySelector(".newI2");
+                    name = document.querySelector(".newI3");
+                    surname = document.querySelector(".newI4");
+
+                    newData = {email: email, birthday: birthday, name: name, surname: surname};
+                    $http.post("/changeUserData", JSON.stringify(newData)).then(function mySuccess(response){    
+                        if(response.data){    
+                            console.log(response.data);
+                        }
+                    }, function myError(response) {    
+                            console.log(response);
+                    });
                 });
+                
 
                 /*
                 setInterval(function () {
