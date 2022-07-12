@@ -137,9 +137,10 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
   });
 });
 
-fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req,utente) => {
+fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req, utente) => {
   let body = req.body;
 
+  if (!body.email || !body.name || !body.surname || !body.birthday){fw.redirect(res, "/home", "error", "missingInputs"); return;}
   if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/home", "error", "dataLenght"); return;}
   if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/home", "error", "emailNotCorrect"); return;}
   if (!fw.utility.dayCheck(body.birthday)) {fw.redirect(res, "/home", "error", "dateIncorrect"); return;}
