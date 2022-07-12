@@ -73,6 +73,7 @@ fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(re
   profile.surname = utente.surname;
   profile.email = utente.email;
   profile.birthday = fw.utility.formatDate(utente.birthday);
+  profile.Birthday = utente.birthday;
 
   res.send(profile);
 });
@@ -98,6 +99,7 @@ fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
 
   if (body.password != body.repeatPassword) {fw.redirect(res, "/", "error", "repeatMissType"); return;}
   if (body.password.length < 8 ||body.password.length > 30) {fw.redirect(res, "/", "error", "passwordLength"); return;}
+  if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/", "error", "dataLength"); return;}
   if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/", "error", "emailNotCorrect"); return;}
   if (!fw.utility.dayCheck(body.date)) {fw.redirect(res, "/", "error", "dateIncorrect"); return;}
 
@@ -134,6 +136,32 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
     });
   });
 });
+
+fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req,utente) => {
+  let body = req.body;
+
+  if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/home", "error", "dataLenght"); return;}
+  if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/home", "error", "emailNotCorrect"); return;}
+  if (!fw.utility.dayCheck(body.birthday)) {fw.redirect(res, "/home", "error", "dateIncorrect"); return;}
+
+  let startQuery = "UPDATE utenti SET ";
+  let middleQuery = "";
+  let endQuery = "WHERE lastsession = ? AND password = ?";
+
+  fw.utility.forEach(body, (element, key) => {
+    if (element != utente[key]){
+      middleQuery = middleQuery + key+ " = " + "'" + element + "'" + ", ";
+    }
+  }, () => {
+    middleQuery = middleQuery.substring(0, middleQuery.length - 2);
+    middleQuery = middleQuery + " ";
+    fw.queryDB(startQuery + middleQuery + endQuery,[utente.lastsession,utente.password], (result) => {
+      req.session.name = body.name;
+      res.send("getProfile");
+    })
+  });
+});
+
 
 fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, req, utente) => {
 	let body = req.body;
