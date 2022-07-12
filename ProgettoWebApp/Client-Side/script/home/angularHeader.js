@@ -59,7 +59,7 @@
                     url : "/home/getProfile"
                 }).then(function mySuccess(response) {
                     $scope.profileData = response.data;
-                    $scope.birthday = new Date(profileData.Birthday);
+                    $scope.birthday = new Date($scope.profileData.Birthday);
                 }, function myError(response) {
                     console.log(response);
                 });
