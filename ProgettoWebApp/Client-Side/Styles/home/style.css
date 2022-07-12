@@ -1047,14 +1047,13 @@ section .inputSettings form{
     position: relative;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
-    padding: 40px;
-    width: 700px;
     height: 450px;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.2);
     gap: 30px;
+    padding: 50px;
 }
 
 section .inputSettings form .submit input{
