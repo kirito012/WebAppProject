@@ -68,9 +68,9 @@
                 });
 
                 array = {};    
-                $http.post("/subscribe", JSON.stringify(array)).then(function mySuccess(response){    
+                $http.post("/changeUserData", JSON.stringify(array)).then(function mySuccess(response){    
                     if(response.data){    
-                                               
+                        console.log(response.data);
                     }
                 }, function myError(response) {    
                         onsole.log(response);
