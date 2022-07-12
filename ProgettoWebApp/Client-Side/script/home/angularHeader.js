@@ -42,6 +42,23 @@
 
 
         let app = angular.module('myApp', []);
+
+        app.directive('ngFiles', ['$parse', function ($parse) {
+
+            function fn_link(scope, element, attrs) {
+                var onChange = $parse(attrs.ngFiles);
+                element.on('change', function (event) {
+                    onChange(scope, { $files: event.target.files });
+                });
+            };
+
+            return {
+                link: fn_link
+            }
+        } ])
+
+
+
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
                 $http({
                     method : "GET",
@@ -101,6 +118,25 @@
                             console.log(response);
                     });
                 });
+
+
+
+                var formdata = new FormData();
+                $scope.getTheFiles = function ($files) {
+                    angular.forEach($files, function (value, key) {
+                        formdata.append(key, value);
+                    });
+                };
+
+                $scope.uploadFile = () => {
+                    $http.post("/changeUserData", formadata).then(function mySuccess(response){    
+                        if(response.data){    
+
+                        }
+                    }, function myError(response) {    
+                            console.log(response);
+                    });
+                }
 
 
                 /*
