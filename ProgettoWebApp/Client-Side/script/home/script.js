@@ -221,3 +221,9 @@
         });
 
 
+        let pfp = document.querySelector(".pfp");
+
+
+        function fun(){
+            pfp.src = "";
+        }
