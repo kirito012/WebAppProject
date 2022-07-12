@@ -1051,12 +1051,64 @@ section .inputSettings form{
     flex-direction: column;
     padding: 40px;
     width: 700px;
-    height: 500px;
+    height: 450px;
     background: #fff;
     border: 1px solid rgba(0, 0, 0, 0.2);
     gap: 30px;
 }
 
+section .inputSettings form .title{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+section .inputSettings form .title .iconSettings{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+section .inputSettings form .title .iconSettings .line{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 20px;
+    height: 2px;
+    background: #112d42;
+    transition: 0.5s ease;
+    transform: rotate(180deg);
+}
+
+section .inputSettings form .title .iconSettings:hover .line{
+    transform: rotate(180deg) translateX(-4px);
+}
+
+section .inputSettings form .title .iconSettings .line::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(-3px) translateX(-1.25px) rotate(-45deg);
+    background: #112d42;
+}
+
+section .inputSettings form .title .iconSettings .line::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(3px) translateX(-1.25px) rotate(45deg);
+    background: #112d42;
+}
 
 section .inputSettings form .row{
     position: relative;
@@ -1112,23 +1164,13 @@ section .inputSettings form .row .column .inputBox input:valid ~ .focus{
     color: rgba(17, 45, 66, 1);
 }
 
-section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus ~ .focus,
-section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-8px) scale(0.8);
-}
-
-section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(3) input:focus ~ .focus,
-section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(3) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-13px) scale(0.8);
-}
-
 section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(2) input:focus ~ .focus,
 section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(2) input:valid ~ .focus{
     transform: translateY(-25px) translateX(-9px) scale(0.8);
 }
 
-section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(3) input:focus ~ .focus,
-section .inputSettings form .row .column:nth-child(2) .inputBox:nth-child(3) input:valid ~ .focus{
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus ~ .focus,
+section .inputSettings form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid ~ .focus{
     transform: translateY(-25px) translateX(-13px) scale(0.8);
 }
 

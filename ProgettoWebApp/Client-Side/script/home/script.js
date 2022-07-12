@@ -153,7 +153,12 @@
 
         let changeSettings = document.querySelector(".inputSettings");
         let inputToggle = document.querySelector(".settingsInfo");
+        let closeChangeSettings = document.querySelector(".iconSettings");
 
         inputToggle.addEventListener("click", () => {
             changeSettings.classList.add("active");
+        });
+
+        closeChangeSettings.addEventListener("click", () => {
+            changeSettings.classList.remove("active");
         });
