@@ -180,14 +180,3 @@
         pfpToggle.addEventListener("click", () => {
             pfpUpload.classList.add("active");
         });
-
-
-        let fileUpload = document.querySelector(".upPfp");
-        let img = document.querySelector(".pfp");
-
-        fileUpload.addEventListener("input", () => {
-            pfp.src = "";
-            setTimeout(() => {
-                pfp.src = "/home/getProfilePicture";
-            }, 1000);
-        });
