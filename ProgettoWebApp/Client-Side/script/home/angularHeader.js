@@ -73,7 +73,21 @@
                     console.log(response);
                 });
 
-        
+                button.addEventListener("click", () => {
+                    email = document.querySelector(".newI1").value;
+                    birthday = document.querySelector(".newI2").value;
+                    newName = document.querySelector(".newI3").value;
+                    surname = document.querySelector(".newI4").value;
+
+                    newData = {email: email, birthday: birthday, name: newName, surname: surname};
+                    $http.post("/changeUserData", JSON.stringify(newData)).then(function mySuccess(response){    
+                        if(response.data){    
+                            console.log(response.data);
+                        }
+                    }, function myError(response) {    
+                            console.log(response);
+                    });
+                });
                 
 
                 /*
