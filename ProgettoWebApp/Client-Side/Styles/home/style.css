@@ -1265,6 +1265,170 @@ section .uploadPfp.active{
     display: flex;
 }
 
+section .uploadPfp form{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 40px;
+    width: 700px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    gap: 60px;
+}
+
+section .uploadPfp form .title{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+section .uploadPfp form .up{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-self: center;
+    align-self: center;
+    gap: 30px;
+}
+
+section .uploadPfp form .up .buttons{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 10px;
+}
+
+section .uploadPfp form .up label{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    border: 2px solid #112d42;
+    cursor: pointer;
+}
+
+section .uploadPfp form .up label ion-icon{
+    color: #112d42;
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+}
+
+section .uploadPfp form .up label .imgPfp{
+    display: none;
+    width: 100px;
+    height: 100px;
+}
+
+section .uploadPfp form .up label h3{
+    color: #112d42;
+}
+
+section .uploadPfp form .up label input{
+    display: none;
+}
+
+section .uploadPfp form .up .buttons input{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    color: #112d42;
+    font-size: 18px;
+    background: none;
+    border: none;
+    font-weight: bolder;
+    cursor: pointer;
+    border: 2px solid #112d42;
+    transition: 0.5s ease;
+}
+
+section .uploadPfp form .up .buttons input:hover{
+    background: #112d42;
+    color: #fff;
+}
+
+
+
+section .uploadPfp form .close{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 200px;
+}
+
+section .uploadPfp form .close h5{
+    position: relative;
+    color: #112d42;
+    opacity: 0;
+    transition: 0.5s ease;
+}
+
+section .uploadPfp form .title .imgSettings{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+section .uploadPfp form .title .imgSettings:hover ~ h5{
+    opacity: 1;
+    transform: translateX(50px);
+}
+
+section .uploadPfp form .title .imgSettings .line{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 20px;
+    height: 2px;
+    background: #112d42;
+    transition: 0.5s ease;
+    transform: rotate(180deg);
+}
+
+section .uploadPfp form .title .imgSettings:hover .line{
+    transform: rotate(180deg) translateX(-4px);
+}
+
+section .uploadPfp form .title .imgSettings .line::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(-3px) translateX(-1.25px) rotate(-45deg);
+    background: #112d42;
+}
+
+section .uploadPfp form .title .imgSettings .line::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(3px) translateX(-1.25px) rotate(45deg);
+    background: #112d42;
+}
 
 
 

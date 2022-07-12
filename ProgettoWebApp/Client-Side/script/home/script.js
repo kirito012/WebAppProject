@@ -59,7 +59,7 @@
         let focusWrites = document.querySelectorAll(".focus");
         let inputs = document.querySelectorAll(".input");
 
-        let classes = ["focus f1", "focus f2", "focus f3", "focus f5", "focus f6", "focus f7", "focus f8", "focus f9", "focus f10"];
+        let classes = ["focus f1", "focus f2", "focus f3", "focus f5", "focus f6", "focus f7", "focus f8"];
 
         function textTransition(){
             for(let key in classes){
@@ -176,7 +176,48 @@
 
         let pfpToggle = document.querySelector(".image");
         let pfpUpload = document.querySelector(".uploadPfp");
+        let imgSettingsClose = document.querySelector(".imgSettings");
+        let imgInput = document.querySelector(".upPfp");
 
         pfpToggle.addEventListener("click", () => {
             pfpUpload.classList.add("active");
         });
+
+        imgSettingsClose.addEventListener("click", () => {
+            pfpUpload.classList.remove("active");
+        });
+
+        imgInput.addEventListener("click", () => {
+            setTimeout(() => {
+                pfpUpload.classList.remove("active");
+            }, 100);
+        });
+
+
+        let file = document.querySelector(".fileInput");
+        let imgName = document.querySelector(".imgName");
+        let iconImg = document.querySelector("ion-icon.iconRemove");
+        let img = document.querySelector(".imgPfp");
+        let reset = document.querySelector(".reset");
+
+        file.addEventListener("input", () => {
+            if(file.value != ""){
+            imgName.innerHTML = file.files[0].name;
+            const [files] = file.files;
+            iconImg.style.display = "none";
+            if(file){
+                img.style.display = "flex";
+                img.src =  URL.createObjectURL(files);
+            }
+        }
+        });
+
+        reset.addEventListener("click", () => {
+            file.value = "";
+            imgName.innerHTML = "Carica la tua immagine";
+            iconImg.style.display = "flex";
+            img.style.display = "none";
+            img.src = "#";
+        });
+
+

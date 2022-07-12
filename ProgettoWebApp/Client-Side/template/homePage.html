@@ -226,17 +226,17 @@
                             </div>
                             <div class="inputBox">
                                 <input type="date" class="input newI2" name="birthday" id="" autocomplete="off" class="date" ng-model="birthday" required>
-                                <span class="focus f10">Data di nascita</span>
+                                <span class="focus f6">Data di nascita</span>
                             </div>
                         </div>
                         <div class="column">
                             <div class="inputBox">
                                 <input type="text" class="input newI3" name="name" id="" autocomplete="off" ng-model="name" required>
-                                <span class="focus f8">Nome</span>
+                                <span class="focus f7">Nome</span>
                             </div>
                             <div class="inputBox">
                                 <input type="text" class="input newI4" name="surname" id="" autocomplete="off" ng-model="surname" required>
-                                <span class="focus f9">Cognome</span>
+                                <span class="focus f8">Cognome</span>
                             </div>
                         </div>
                     </div>
@@ -250,10 +250,25 @@
             <form action="uploadpfp" method="post" enctype="multipart/form-data">
                 <div class="title">
                     <h1>Carica il tuo file:</h1>
+                    <div class="close">
+                        <div class="imgSettings">
+                            <div class="line" style="--rot: 0deg;"></div>
+                            <div class="line" style="--rot: 90deg;"></div>
+                        </div>
+                        <h5>Torna al menù</h5>
+                    </div>
                 </div>
                 <div class="up">
-                    <input type="file" class="file" name="profilepicture">
-                    <input type="submit" class="upPfp" id="">
+                    <label for="pfp">
+                        <ion-icon class="iconRemove" name="image-outline"></ion-icon>
+                        <img class="imgPfp"src="#" alt="">
+                        <h4 class="imgName">Carica la tua immagine</h4>
+                        <input type="file" class="fileInput" name="profilepicture" id="pfp">
+                    </label>
+                    <div class="buttons">
+                        <input type="submit" class="upPfp" value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
+                        <input type="button" class="reset" value="Cancella" style="--bgInput: #112d42; --color: #fff;">
+                    </div>
                 </div>
             </form>
         </div>
