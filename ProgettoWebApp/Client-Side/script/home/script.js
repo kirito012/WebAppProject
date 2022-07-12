@@ -221,9 +221,9 @@
         });
 
 
-        let pfp = document.querySelector(".pfp");
+        let pfpImg = document.querySelector(".pfp");
 
 
         function fun(){
-            pfp.src = "";
+            pfpImg.src = "";
         }
