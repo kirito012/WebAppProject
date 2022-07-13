@@ -48,6 +48,7 @@ app.controller('myController', function($scope, $http, $timeout) {
         }).then((response) => {
             response.json().then((data) => {
                 $scope.devices = data;
+                console.log(data);
             }).catch((err) => {
                 console.log(err);
             })
