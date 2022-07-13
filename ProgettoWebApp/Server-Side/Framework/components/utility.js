@@ -1,5 +1,6 @@
 let crypto = require('crypto');
 let validator = require("email-validator");
+let path = require("path");
 
 module.exports.generateRandomKey = () => {
   return crypto.randomBytes(48).toString('hex');
@@ -73,4 +74,54 @@ module.exports.forEach = (obj,callback,lastindexcallback) => {
 
 module.exports.formatDate = (date) => {
   return date.getFullYear() + "-" + ("0" + (date.getMonth() + 1)).slice(-2) + "-" + ("0" + date.getDate()).slice(-2);
+}
+
+module.exports.getModels = (fw, callback) => {
+  let jsonData = [];
+
+  fw.queryDB("SELECT * FROM modelli;",[],(results) => {
+    fw.utility.forEach(results, (model,i) => {
+      jsonData[i] = model.name;
+    }, () => {
+      callback(jsonData);
+    });
+  });
+}
+
+module.exports.getMachines = (fw, utente, callback) => {
+  fw.queryDB("selectCorrispondenze",[utente.id], (corrispondenze) => {
+    let jsonData = [];
+
+    fw.utility.forEach(corrispondenze,(corrispondenza) => {
+      jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+		}, () => {
+			callback(jsonData);
+		});
+  });
+}
+
+module.exports.getProfile = (fw, utente,callback) => {
+  let profile = {};
+
+  profile.name = utente.name;
+  profile.surname = utente.surname;
+  profile.email = utente.email;
+  profile.birthday = fw.utility.formatDate(utente.birthday);
+  profile.Birthday = utente.birthday;
+
+  callback(profile);
+}
+
+module.exports.getProfilePicture = (fw, utente, callback) => {
+  let image;
+
+  fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
+    if (results[0]) {
+      image = path.join(__dirname, ".." , ".." , "ProfilePictures", results[0].pictureroot.toString() + ".png");
+      callback(image);
+    }
+    else {
+      callback(404);
+    }
+  });
 }

@@ -42,53 +42,29 @@ fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, re
 });
 
 fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
-  let jsonData = [];
-
-  fw.queryDB("SELECT * FROM modelli;",[],(results) => {
-    fw.utility.forEach(results, (model,i) => {
-      jsonData[i] = model.name;
-    }, () => {
-      res.send(jsonData);
-    });
-  });
+  fw.utility.getModels(fw, (models) => {
+    res.send(models);
+  })
 });
 
 fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(res, req, utente) => {
-  fw.queryDB("selectCorrispondenze",[utente.id], (corrispondenze) => {
-    let jsonData = [];
-
-    fw.utility.forEach(corrispondenze,(corrispondenza) => {
-      jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
-		}, () => {
-			res.send(jsonData);
-		});
-  });
+  fw.utility.getMachines(fw,utente, (machines) => {
+    res.send(machines);
+  })
 });
 
 fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(res, req, utente) => {
-  let profile = {};
-
-  profile.name = utente.name;
-  profile.surname = utente.surname;
-  profile.email = utente.email;
-  profile.birthday = fw.utility.formatDate(utente.birthday);
-  profile.Birthday = utente.birthday;
-
-  res.send(profile);
+  fw.utility.getProfile(fw, utente, (profile) => {
+    res.send(profile);
+  })
 });
 
 fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePicture",true],(res, req, utente) => {
-  let image;
+  fw.utility.getProfilePicture(fw, utente, (image) => {
+    if (image == 404) {res.send("image not found"); return;};
 
-  fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
-    if (results[0]) {
-      image = path.join(__dirname, "ProfilePictures", results[0].pictureroot.toString() + ".png");
-      res.sendFile(image);
-    }
-    else {
-      res.send("image not found");
-    }
-  });
+    res.sendFile(image);
+  })
 });
 
 //Post requests\\
@@ -96,19 +72,19 @@ fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePict
 fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
 	let body = req.body
 
-  if (body.password != body.repeatPassword) {fw.redirect(res, "/", "error", "repeatMissType"); return;}
-  if (body.password.length < 8 ||body.password.length > 30) {fw.redirect(res, "/", "error", "passwordLength"); return;}
-  if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/", "error", "dataLength"); return;}
-  if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/", "error", "emailNotCorrect"); return;}
-  if (!fw.utility.dayCheck(body.date)) {fw.redirect(res, "/", "error", "dateIncorrect"); return;}
+  if (body.password != body.repeatPassword) {fw.redirect(res, "/login", "error", "repeatMissType"); return;}
+  if (body.password.length < 8 ||body.password.length > 30) {fw.redirect(res, "/login", "error", "passwordLength"); return;}
+  if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/login", "error", "dataLength"); return;}
+  if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/login", "error", "emailNotCorrect"); return;}
+  if (!fw.utility.dayCheck(body.date)) {fw.redirect(res, "/login", "error", "dateIncorrect"); return;}
 
   fw.queryDB("selectUsersWhereEmail",[body.email], (results) => {
     if (results.length > 0) {
-      fw.redirect(res, "/", "error", "emailExists");
+      fw.redirect(res, "/login", "error", "emailExists");
     } 
     else {
       fw.queryDB("generateUser",[body.email,body.password,body.name,body.surname,body.date,1], (results) => {
-        fw.redirect(res, "/");
+        fw.redirect(res, "/login");
       });
     }
   });
@@ -117,7 +93,7 @@ fw.newRequest(["post", "/register", false, false, "register"],(res, req) => {
 fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
 	let body = req.body;
 
-  if (!body.email || !body.password){fw.redirect(res, "/", "error", "missingInputs"); return;}
+  if (!body.email || !body.password){fw.redirect(res, "/login", "error", "missingInputs"); return;}
 
   fw.queryDB("selectEmailPsw",[body.email,body.password], (results) => {
     fw.utility.checkLength(results,() => {
@@ -131,7 +107,7 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
         fw.redirect(res, "/home");
       });
     },() => {
-      fw.redirect(res, "/", "error", "wrongPassword");
+      fw.redirect(res, "/login", "error", "wrongPassword");
     });
   });
 });
@@ -157,7 +133,9 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
     middleQuery = middleQuery + " ";
     fw.queryDB(startQuery + middleQuery + endQuery,[utente.lastsession,utente.password], (result) => {
       req.session.name = body.name;
-      res.send("getProfile");
+      fw.utility.getProfile(fw, utente, (profile) => {
+        res.send(profile);
+      })
     })
   });
 });
@@ -203,9 +181,13 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
     fw.utility.checkLength(models,() => {
       modelId = models[0].idmodelli;
 
+      if (body.name.length > 20){fw.redirect(res, "/homes", "error", "machineNameExceed"); return;};
+
       fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
         fw.queryDB("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
-          res.send("getMachines");
+          fw.utility.getMachines(fw,utente, (machines) => {
+            res.send(machines);
+          });
         })
       })
     }, () => {
@@ -223,7 +205,9 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
       if (fw.mqtt.usersTopics[user] && fw.mqtt.usersTopics[user].id == body.id) {
         fw.mqtt.disconnectFromTopic(user);
       }
-      res.send("getMachines");
+      fw.utility.getMachines(fw,utente, (machines) => {
+        res.send(machines);
+      });
     });
   });
 });
