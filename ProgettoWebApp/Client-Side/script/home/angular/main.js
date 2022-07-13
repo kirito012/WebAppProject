@@ -25,7 +25,7 @@ let app = angular.module('myApp', []);
 app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
     getMachines($scope, $http, (devices) => {
-        console.log(devices);
+        $scope.devices = devices;
     });
     getProfile($scope, $http);
 
