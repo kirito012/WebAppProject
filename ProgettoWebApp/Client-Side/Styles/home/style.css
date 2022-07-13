@@ -897,7 +897,7 @@ section .personal .profile .profileName{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 section .personal .profile .profileName h4{
