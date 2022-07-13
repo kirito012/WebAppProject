@@ -78,7 +78,7 @@
                 <div class="addDevice">
                     <form class="formMachine" action="addMachine" method="post">
                         <div class="inputBox">
-                            <input type="text" name="search" class="input" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
+                            <input type="text" name="search" class="input model" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
                             <span class="focus f1">Modello</span>
                             <div class="models">
                                 <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter:modelsFilter">
@@ -92,15 +92,15 @@
                             </div>
                         </div>
                         <div class="inputBox">
-                            <input type="text" name="id" class="input" autocomplete="off" required>
+                            <input type="text" name="id" class="input id" autocomplete="off" required>
                             <span class="focus f2">Numero di serie</span>
                         </div>
                         <div class="inputBox">
-                            <input type="text" name="name" class="input" autocomplete="off" required>
+                            <input type="text" name="name" class="input name" autocomplete="off" required>
                             <span class="focus f3">Nome personalizzato</span>
                         </div>
                         <div class="submit">
-                            <input type="submit" value="Aggiungi">
+                            <input type="button" class="submitAddMachine" value="Aggiungi">
                         </div>
                     </form>
                 </div>
