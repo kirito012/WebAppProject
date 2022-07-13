@@ -17,19 +17,22 @@ let app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
+
     getMachines($scope, $http, (device) => {
         $timeout(() => {
             $scope.devices = device;
         }, 0);
     });
+
     getProfile($scope, $http);
+
     refreshMachine($scope, ($newScope, data) => {
         $timeout(() => {
             $newScope.devices = data;
         }, 0);
     });;
 
-    button.addEventListener("click", changeProfileData($scope, $http));
+    changeProfileData($scope, $http);
 
     formProfile.addEventListener("submit", () => {
         getNewPfp($scope, $http);
