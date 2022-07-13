@@ -19,10 +19,10 @@ let submitAddMachine = document.querySelector(".submitAddMachine");
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
-export let devices;
+export var devices;
 
 
-const app = angular.module('myApp', []);
+let app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
