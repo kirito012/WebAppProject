@@ -1,12 +1,12 @@
 let dev;
 
-export let getMachines = ($scope, $http) => {
+export let getMachines = ($scope, $http, devices) => {
     $http({
         method : "GET",
         url : "/home/getMachines"
     }).then(function mySuccess(response) {
         dev = response.data;
-        $scope.devices = dev;
+        devices.response.data;
     }, function myError(response) {
         console.log(response);
     });

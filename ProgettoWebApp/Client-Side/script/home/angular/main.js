@@ -23,8 +23,10 @@ let clicked = false;
 const app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
+    $scope.devices;
+
     getModels($scope, $http);
-    getMachines($scope, $http);
+    getMachines($scope, $http, $scope.devices);
     getProfile($scope, $http);
 
     button.addEventListener("click", changeProfileData($scope, $http));
