@@ -9,13 +9,6 @@ let formProfile = document.querySelector(".form");
 
 /*    */
 
-/* machines changes */
-
-let formMachines = document.querySelector(".formMachine");
-let submitAddMachine = document.querySelector(".submitAddMachine");
-
-/*    */
-
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
@@ -35,8 +28,6 @@ app.controller('myController', function($scope, $http, $timeout) {
             $newScope.devices = data;
         }, 0);
     });;
-
-
 
     button.addEventListener("click", changeProfileData($scope, $http));
 
