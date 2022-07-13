@@ -48,7 +48,7 @@ app.controller('myController', function($scope, $http, $timeout) {
         }).then((response) => {
             response.json().then((data) => {
                 getMachines($scope, $http, (devices) => {
-                    $scope.devices = devices;
+                    $scope.devices = data;
                 });
             }).catch((err) => {
                 console.log(err);
