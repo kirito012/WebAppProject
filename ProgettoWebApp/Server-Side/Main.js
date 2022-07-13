@@ -237,7 +237,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 
       if (root){
         fw.saveFile(res, files.profilepicture, "ProfilePictures", root.pictureroot.toString(), () => {
-          res.send("workpls");
+          res.status(204).send({});
         });
       }
       else{
@@ -245,7 +245,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 
         fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
           fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
-            res.send("workpls");
+            res.status(204).send({});
           });
         })
       }

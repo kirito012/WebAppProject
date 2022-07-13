@@ -10,7 +10,7 @@
     <script src="https://kit.fontawesome.com/75e7801ae2.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
-<body ng-app="myApp" ng-controller="myCtrlDevice">
+<body ng-app="myApp" ng-controller="myController">
     <section>
         <header>
             <div class="headerContainer">
@@ -263,7 +263,7 @@
                         <ion-icon class="iconRemove" name="image-outline"></ion-icon>
                         <img class="imgPfp"src="#" alt="">
                         <h4 class="imgName">Carica la tua immagine</h4>
-                        <input type="file" class="fileInput" name="profilepicture" id="pfp">
+                        <input type="file" class="fileInput" name="profilepicture" id="pfp" required>
                     </label>
                     <div class="buttons">
                         <input type="submit" onclick="fun()" class="upPfp" ng-click="uploadFile()" value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
@@ -276,7 +276,7 @@
 
 
     <script src="../script/home/script.js"></script>
-    <script src="../script/home/angularHeader.js"></script>
+    <script type="module" src="../script/home/angular/main.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
