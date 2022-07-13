@@ -22,37 +22,39 @@ let clicked = false;
 
 let app = angular.module('myApp', []);
 
-app.controller('myController', function($rootScope, $http, ) {
-    getModels($rootScope, $http);
-    getMachines($rootScope, $http, (device) => {
-        $rootScope.devices = device;
-        $rootScope.$digest();
+app.controller('myController', function($scope, $http) {
+    getModels($scope, $http);
+    getMachines($scope, $http, (device) => {
+        $scope.$apply(() => {
+            $scope.devices = device;
+        });
     });
-    getProfile($rootScope, $http);
-    refreshMachine($rootScope, ($newrootScope, data) => {
-        $newrootScope.devices = data;
-        $rootScope.$digest();
+    getProfile($scope, $http);
+    refreshMachine($scope, ($newScope, data) => {
+        $scope.$apply(() => {
+            $newScope.devices = data;
+        });
     });;
 
 
 
-    button.addEventListener("click", changeProfileData($rootScope, $http));
+    button.addEventListener("click", changeProfileData($scope, $http));
 
     formProfile.addEventListener("submit", () => {
-        getNewPfp($rootScope, $http);
+        getNewPfp($scope, $http);
         formProfile.querySelector(".fileInput").value = "";
     });
     
     
 
-    $rootScope.myFunction = function(index){
+    $scope.myFunction = function(index){
         clicked = false;
         inputValue.value = index;
     }
-    $rootScope.disable = function(){
+    $scope.disable = function(){
         clicked = true;
     }
-    $rootScope.mouseOut = function(){
+    $scope.mouseOut = function(){
         if(!clicked){
             inputValue.value = '';
         }
