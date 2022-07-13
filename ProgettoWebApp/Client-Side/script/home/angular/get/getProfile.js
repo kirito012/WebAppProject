@@ -1,3 +1,5 @@
+let button = document.querySelector(".submitValues");
+
 let newData = {};
 
 let email;

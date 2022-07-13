@@ -4,7 +4,6 @@ import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
    
 /* profile chages */
 
-let button = document.querySelector(".submitValues");
 let formProfile = document.querySelector(".form");
 
 /*    */
