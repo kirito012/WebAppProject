@@ -1,4 +1,4 @@
-import {devices} from "./get/getMachines";
+import {devices} from "./get/getMachines.js";
 
 import {getModels} from "./get/getModels.js";
 import {getMachines} from "./get/getMachines.js";
@@ -30,7 +30,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     getMachines($scope, $http);
     getProfile($scope, $http);
 
-
+    console.log(devices);
 
     button.addEventListener("click", changeProfileData($scope, $http));
 
