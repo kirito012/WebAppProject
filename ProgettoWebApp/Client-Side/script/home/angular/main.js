@@ -47,9 +47,7 @@ app.controller('myController', function($scope, $http, $timeout) {
           body: new URLSearchParams(new FormData(event.target)),
         }).then((response) => {
             response.json().then((data) => {
-                getMachines($scope, $http, (devices) => {
-                    $scope.devices = data;
-                });
+                $scope.devices = data;
             }).catch((err) => {
                 console.log(err);
             })
