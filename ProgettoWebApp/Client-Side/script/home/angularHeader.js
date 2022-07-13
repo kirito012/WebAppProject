@@ -1,7 +1,3 @@
-        var inputValue = document.querySelector("#inputSearch");
-        var clicked = false;
-
-
         var deviceToRemove = {};
 
         var remove = true;
@@ -10,9 +6,6 @@
         var badgeNumber;
         var nameCustom;
         
-        var newMachine = {};
-
-
         var device;
 
 
