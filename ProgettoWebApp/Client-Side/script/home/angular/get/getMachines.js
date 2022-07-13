@@ -17,7 +17,7 @@ export let getMachines = ($scope, $http, callback) => {
     });
 }
 
-export let refreshMachine = ($scope) => {
+export let refreshMachine = ($scope, callback) => {
     document.forms["formMachine"].addEventListener("submit", (event, $scope) => {
         event.preventDefault();
         const resp = fetch(event.target.action, {
@@ -25,7 +25,9 @@ export let refreshMachine = ($scope) => {
           body: new URLSearchParams(new FormData(event.target)),
         }).then((response) => {
             response.json().then((data) => {
-                $scope.devices = data;
+                if(callback){
+                    callback(data);
+                }
             }).catch((err) => {
                 console.log(err);
             })
