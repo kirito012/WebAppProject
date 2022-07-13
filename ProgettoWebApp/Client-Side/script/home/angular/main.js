@@ -28,8 +28,8 @@ app.controller('myController', function($scope, $http) {
         $scope.devices = device;
     });
     getProfile($scope, $http);
-    refreshMachine($scope, (data) => {
-        $scope.devices = data;
+    refreshMachine($scope, ($newScope, data) => {
+        $newScope.devices = data;
     });;
 
 

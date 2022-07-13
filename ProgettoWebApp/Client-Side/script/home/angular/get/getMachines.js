@@ -18,7 +18,7 @@ export let getMachines = ($scope, $http, callback) => {
 }
 
 export let refreshMachine = ($scope, callback) => {
-    document.forms["formMachine"].addEventListener("submit", (event, $scope) => {
+    document.forms["formMachine"].addEventListener("submit", (event) => {
         event.preventDefault();
         const resp = fetch(event.target.action, {
           method: "POST",
@@ -26,7 +26,7 @@ export let refreshMachine = ($scope, callback) => {
         }).then((response) => {
             response.json().then((data) => {
                 if(callback){
-                    callback(data);
+                    callback($scope, data);
                 }
             }).catch((err) => {
                 console.log(err);
