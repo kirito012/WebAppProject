@@ -59,6 +59,6 @@ document.forms["formMachine"].addEventListener("submit", (event) => {
       body: new URLSearchParams(new FormData(event.target)),
     }).then((response) => {
         const body = response.json();
-        console.log(body);
+        console.log(body.PromiseResult);
     });
   });
