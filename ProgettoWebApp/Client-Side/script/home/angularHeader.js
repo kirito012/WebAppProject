@@ -1,4 +1,4 @@
-        var deviceToRemove = {};
+        /*var deviceToRemove = {};
 
         var remove = true;
 
@@ -11,11 +11,11 @@
 
 
 
-        /*let app = angular.module('myApp', []);
+        let app = angular.module('myApp', []);
 
         app.controller('myCtrlDevice', function($scope, $http, $timeout) {
 
-                /*
+                
                 setInterval(function () {
                     $http({
                         method : "GET",
@@ -64,10 +64,10 @@
                     }
                 }
 
-                */
+                
 
 
-                /*
+                
                 $scope.remove = function(){
                     $timeout(function(){
                         remove = false;
