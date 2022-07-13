@@ -22,15 +22,16 @@ let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
 
-
 let app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
-    getMachines($scope, $http);
+    getMachines($scope, $http, (devices) => {
+        console.log(devices);
+    });
     getProfile($scope, $http);
 
-    console.log(devices);
+
 
     button.addEventListener("click", changeProfileData($scope, $http));
 
