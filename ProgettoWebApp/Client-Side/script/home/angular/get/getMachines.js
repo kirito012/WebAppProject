@@ -6,7 +6,7 @@ export let getMachines = ($scope, $http, devices) => {
         url : "/home/getMachines"
     }).then(function mySuccess(response) {
         dev = response.data;
-        devices.response.data;
+        devices = response.data;
     }, function myError(response) {
         console.log(response);
     });
