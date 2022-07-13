@@ -1,11 +1,11 @@
 let registerForm = document.querySelector(".register");
-let registerActivator = document.querySelector("#enableRegister");
-registerActivator.addEventListener("change", () => {
-    if(registerActivator.checked){
-        registerForm.classList.add("active");
-    }else if(!registerActivator.checked){
-        registerForm.classList.remove("active");
-    }
+let registerActivator = document.querySelector(".enableRegister");
+let registerClose = document.querySelector(".close");
+registerActivator.addEventListener("click", () => {
+    registerForm.classList.add("active");
+});
+registerClose.addEventListener("click", () => {
+    registerForm.classList.remove("active");
 });
 
 let params = new URLSearchParams(window.location.search);
@@ -30,17 +30,25 @@ if(params.has('error')){
     }
 }
 
-let hide = document.querySelector(".hide");
-let line = document.querySelector(".line");
-let password = document.querySelector(".password")
-hide.addEventListener("click", () => {
-    line.classList.toggle("active");
-    if(line.className == "line"){
-        password.type = "text";
-    }else if(line.className == "line active"){
-        password.type = "password";
+let hide = document.querySelectorAll(".hide");
+let line = document.querySelectorAll(".line");
+let password = document.querySelectorAll(".password")
+
+let classesHide = ["eye e1", "eye e2", "eye e3"];
+
+let showPassword = () => {
+    for(let key in classesHide){
+        if(this.className == classesHide[key]){
+            console.log(this.className);
+            line[key].classList.toggle("active");
+        }
     }
-});
+}
+
+
+hide.forEach((item) => {
+    item.addEventListener("click", showPassword);
+})
 
 
 let focusWrites = document.querySelectorAll(".focus");

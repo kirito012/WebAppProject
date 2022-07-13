@@ -96,6 +96,7 @@ section .login form .inputBox .focus{
     margin-top: 10px;
 }
 
+section .register form .inputBox .hide,
 section .login form .inputBox .hide{
     position: absolute;
     display: flex;
@@ -109,6 +110,7 @@ section .login form .inputBox .hide{
     cursor: pointer;
 }
 
+section .register form .inputBox .hide .eye,
 section .login form .inputBox .hide .eye{
     position: relative;
     display: flex;
@@ -117,22 +119,24 @@ section .login form .inputBox .hide .eye{
     width: 20px;
     height: 15px;
     border-radius: 50%;
-    border: 2px solid #fff;
+    border: 2px solid var(--color);
 }
 
+section .register form .inputBox .hide .eye::after,
 section .login form .inputBox .hide .eye::after{
     content: '';
     position: absolute;
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #fff;
+    background: var(--color);
     transform-origin: center;
 }
 
+section .register form .inputBox .hide .eye hr,
 section .login form .inputBox .hide .eye hr{
     position: absolute;
-    background: #fff;
+    background: var(--color);
     height: 0px;
     width: 3px;
     transform: rotate(-45deg);
@@ -140,6 +144,7 @@ section .login form .inputBox .hide .eye hr{
     border: none;
 }
 
+section .register form .inputBox .hide .eye hr.active,
 section .login form .inputBox .hide .eye hr.active{
     height: 25px;
 }
@@ -154,6 +159,8 @@ section .login form .inputBox:nth-child(2) input:focus ~ .focus, section .login 
     color: rgba(255, 255, 255, 1);
 }
 
+section .register form .inputBox:nth-child(2) input:focus ~ .hide, section .register form .inputBox:nth-child(2) input:valid ~ .hide,
+section .register form .inputBox:nth-child(3) input:focus ~ .hide, section .register form .inputBox:nth-child(3) input:valid ~ .hide,
 section .login form .inputBox:nth-child(2) input:focus ~ .hide, section .login form .inputBox:nth-child(2) input:valid ~ .hide{
     height: 40px;
 }
@@ -187,7 +194,7 @@ section .login .inputBox:nth-child(4) .enableRegister{
     align-items: center;
 }
 
-section .login .inputBox:nth-child(4) .enableRegister label{
+section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -198,13 +205,9 @@ section .login .inputBox:nth-child(4) .enableRegister label{
     cursor: pointer;
 }
 
-section .login .inputBox:nth-child(4) .enableRegister label span{
+section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton span{
     text-transform: uppercase;
     text-decoration: underline;
-}
-
-section .login .inputBox:nth-child(4) .enableRegister label input{
-    display: none;
 }
 
 section .login form .error{
@@ -240,6 +243,34 @@ section .register.active{
     height: 500px;
     padding-left: 150px;
     padding-top: 75px;
+}
+
+section .register .title{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+section .register .title .close{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+section .register .title .close .line{
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background: #112d42;
+    transform: rotate(var(--rot));
+    transition: 0.5s ease;
 }
 
 section .register .reg{

@@ -19,8 +19,8 @@
                 <div class="inputBox">
                     <input type="password" class="input password" name="password" id="" required>
                     <span class="focus f2" >Password</span>
-                    <span class="hide">
-                        <div class="eye">
+                    <span class="hide e1">
+                        <div class="eye" style="--color: #fff;">
                             <hr class="line active">
                         </div>
                     </span>
@@ -31,30 +31,45 @@
                 <div class="inputBox submitBox">
                     <input type="submit" value="Accedi">
                     <div class="enableRegister">
-                        <label for="enableRegister">
+                        <div class="enableRegisterButton">
                             Non hai un account? Registrati&nbsp;<span>qui</span>
-                            <input type="checkbox" name="" id="enableRegister">
-                        </label>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="register">
-            <h1 class="reg">Registrati</h1>
+            <div class="title">
+                <h1 class="reg">Registrati</h1>
+                <div class="close">
+                    <div class="line" style="--rot: 45deg;"></div>
+                    <div class="line" style="--rot: -45deg;"></div>
+                </div>
+            </div>
             <form action="register" method="post">
                 <div class="row">
                     <div class="column">
                         <div class="inputBox">
-                            <input type="text" class="input" name="email" id="" required>
+                            <input type="text" class="input password" name="email" id="" required>
                             <span class="focus f3">Email</span>
                         </div>
                         <div class="inputBox">
-                            <input type="password" class="input" name="password" id="" required>
+                            <input type="password" class="input password" name="password" id="" required>
                             <span class="focus f4">Password</span>
+                            <span class="hide e2">
+                                <div class="eye" style="--color: #112d42;">
+                                    <hr class="line active">
+                                </div>
+                            </span>
                         </div>
                         <div class="inputBox">
                             <input type="password" class="input" name="repeatPassword" id="" required>
                             <span class="focus f5">Ripeti password</span>
+                            <span class="hide e3">
+                                <div class="eye" style="--color: #112d42;">
+                                    <hr class="line active">
+                                </div>
+                            </span>
                         </div>
                     </div>
                     <div class="column">
