@@ -1,4 +1,4 @@
-import {devices} from "../main.js";
+export let devices;
 
 let dev;
 

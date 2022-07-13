@@ -1,3 +1,5 @@
+import {devices} from "./get/getMachines";
+
 import {getModels} from "./get/getModels.js";
 import {getMachines} from "./get/getMachines.js";
 import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
@@ -19,7 +21,6 @@ let submitAddMachine = document.querySelector(".submitAddMachine");
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
-export var devices;
 
 
 let app = angular.module('myApp', []);
