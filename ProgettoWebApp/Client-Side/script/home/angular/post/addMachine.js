@@ -4,7 +4,7 @@ let newMachine = {};
 
 let model, id, customname;
 
-let permitted = false;
+export let permitted = false;
 
 export let addMachine = ($scope, $http) => {
     if(permitted){
