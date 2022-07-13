@@ -620,8 +620,9 @@ section .navigation .item .devicesContainer{
     align-items: flex-start;
     flex-direction: column;
     border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     width: 100%;
-    height: calc(100% - (140px));
+    height: calc(100% - (130px));
     margin-top: 50px;
 }
 
