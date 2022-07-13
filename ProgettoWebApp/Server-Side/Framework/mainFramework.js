@@ -96,6 +96,13 @@ class framework {
   saveFile = (res,file,directory,newName,callback) => {
     this.server.saveFile(res,file,directory,newName,callback);
   }
+
+  sanityCheck = (condition,res,redirect,errMsg) => {
+    if (condition){
+      this.redirect(res,redirect,"error",errMsg);
+      return;
+    }
+  }
 }
 
 module.exports.framework = framework;
