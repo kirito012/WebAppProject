@@ -264,7 +264,7 @@ section .register .title .close{
     cursor: pointer;
 }
 
-section .register .title .close .line{
+section .register .title .close .lineClose{
     position: absolute;
     width: 20px;
     height: 2px;

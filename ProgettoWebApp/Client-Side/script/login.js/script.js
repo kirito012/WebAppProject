@@ -34,20 +34,25 @@ let hide = document.querySelectorAll(".hide");
 let line = document.querySelectorAll(".line");
 let password = document.querySelectorAll(".password")
 
-let classesHide = ["eye e1", "eye e2", "eye e3"];
+let classesHide = ["hide e1", "hide e2", "hide e3"];
 
-let showPassword = () => {
+function showPassword(element){
     for(let key in classesHide){
-        if(this.className == classesHide[key]){
-            console.log(this.className);
+        if(element.className == classesHide[key]){
             line[key].classList.toggle("active");
+            if(line[key].className == "line active"){
+                password[key].type = "password";
+            }else if(line[key].className == "line"){
+                password[key].type = "text";
+            }
         }
     }
 }
 
-
 hide.forEach((item) => {
-    item.addEventListener("click", showPassword);
+    item.addEventListener("click", () => {
+        showPassword(item);
+    });
 })
 
 

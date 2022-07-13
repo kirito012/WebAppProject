@@ -34,3 +34,5 @@ export let refreshMachine = ($scope, callback) => {
         });
       });
 }
+
+
