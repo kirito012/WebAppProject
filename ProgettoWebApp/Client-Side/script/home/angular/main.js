@@ -20,6 +20,7 @@ let submitAddMachine = document.querySelector(".submitAddMachine");
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
+let restart = false;
 
 const app = angular.module('myApp', []);
 
