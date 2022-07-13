@@ -1,6 +1,8 @@
+import {devices} from "../main.js";
+
 let dev;
 
-export let getMachines = ($scope, $http, devices) => {
+export let getMachines = ($scope, $http) => {
     $http({
         method : "GET",
         url : "/home/getMachines"

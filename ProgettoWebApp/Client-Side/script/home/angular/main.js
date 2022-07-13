@@ -19,15 +19,17 @@ let submitAddMachine = document.querySelector(".submitAddMachine");
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
+export let devices;
+
 
 const app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
-    $scope.devices;
-
     getModels($scope, $http);
-    getMachines($scope, $http, $scope.devices);
+    getMachines($scope, $http, devices);
     getProfile($scope, $http);
+
+    $scope.devices = devices;
 
     button.addEventListener("click", changeProfileData($scope, $http));
 
