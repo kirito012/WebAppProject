@@ -1,4 +1,3 @@
-let button = document.querySelector(".submitValues");
 let newData = {};
 
 let email;
@@ -6,7 +5,6 @@ let newName;
 let surname;
 let birthday;
 
-let form = document.querySelector(".form");
 
 
 export let getProfile = () =>{
