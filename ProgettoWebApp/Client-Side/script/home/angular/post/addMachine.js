@@ -7,8 +7,8 @@ let model, id, customname;
 export let permitted = false;
 
 export let addMachine = ($scope, $http) => {
-    if(permitted){
-        setTimeout(() => {
+    setTimeout(() => {
+        if(permitted){
             model = document.querySelector(".input.model").value;
             id = document.querySelector(".input.id").value;
             customname = document.querySelector(".input.name").value;
@@ -20,6 +20,6 @@ export let addMachine = ($scope, $http) => {
             }, function myError(response) {    
                 console.log(response);
             });
-        }, 1000);
-    }
+        }
+    }), 1000;
 }
