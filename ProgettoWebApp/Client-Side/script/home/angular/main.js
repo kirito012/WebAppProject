@@ -1,6 +1,7 @@
 import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
-import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
+import {getProfile, changeProfileData} from "./get/getProfile.js"
+import {getNewPfp} from "./post/changePersonal.js";
    
 /* profile chages */
 
