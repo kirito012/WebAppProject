@@ -16,7 +16,7 @@ fw.createServer({
 fw.newRequest(settings,callback);
 
 settings: 
-  type of request = String: "get" - "post" - "put", // required
+  type of request = String: "get" - "post" - "put" - etc, // required
   request url = String: "/something/somethingElse", // required
   session check = boolean: true - false, // set false if you don't need a session
   session redirect = String: "/" - "/login", // can be undefined
