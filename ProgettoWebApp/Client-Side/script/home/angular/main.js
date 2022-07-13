@@ -19,21 +19,19 @@ let submitAddMachine = document.querySelector(".submitAddMachine");
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
-let devicesToRefresh;
 
 let app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http) {
     getModels($scope, $http);
     getMachines($scope, $http, (device) => {
-        devicesToRefresh = device;
+        $scope.devices = device;
     });
     getProfile($scope, $http);
     refreshMachine($scope, (data) => {
-        devicesToRefresh = data;
+        $scope.devices = data;
     });;
 
-    $scope.devices = devicesToRefresh;
 
 
     button.addEventListener("click", changeProfileData($scope, $http));
