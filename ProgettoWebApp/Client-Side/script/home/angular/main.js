@@ -22,6 +22,10 @@ let clicked = false;
 
 let restart = false;
 
+window.addEventListener("load", () => {
+    restart = true;
+});
+
 const app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
