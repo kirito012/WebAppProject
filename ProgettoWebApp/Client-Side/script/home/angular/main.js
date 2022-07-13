@@ -44,9 +44,8 @@ app.controller('myController', function($scope, $http, $timeout) {
           method: "POST",
           body: new URLSearchParams(new FormData(event.target)),
         }).then((response) => {
-            response.json().then((data) => {
+            response.json().then((data, $scope) => {
                 $scope.devices = data;
-                console.log($scope);
             }).catch((err) => {
                 console.log(err);
             })
