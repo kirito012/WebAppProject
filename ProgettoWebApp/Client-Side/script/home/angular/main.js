@@ -35,6 +35,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     });
 
     formMachines.addEventListener("submit", getMachines($scope, $http));
+    
 
     $scope.myFunction = function(index){
         clicked = false;
@@ -50,3 +51,14 @@ app.controller('myController', function($scope, $http, $timeout) {
     }
 
 });
+
+document.forms["formMachine"].addEventListener("submit", (event) => {
+    event.preventDefault();
+    const resp = fetch(event.target.action, {
+      method: "POST",
+      body: new URLSearchParams(new FormData(event.target)),
+    }).then((response) => {
+        const body = response.json();
+        console.log(body);
+    });
+  });
