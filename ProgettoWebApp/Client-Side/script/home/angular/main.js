@@ -23,9 +23,6 @@ let clicked = false;
 let app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
-
-    $scope.devices;
-
     getModels($scope, $http);
     getMachines($scope, $http, (devices) => {
         $scope.devices = devices;

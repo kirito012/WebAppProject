@@ -118,7 +118,7 @@
                         <div class="removeSelection">
                             <h4>Rimuovi selezione</h4>
                         </div>
-                        <div class="device" ng-repeat="device in devices | filter: searchDevice">
+                        <div class="device" ng-repeat="device in myController.devices | filter: searchDevice">
                             <div class="img">
                                 <img src="../images/{{ device.model + '.png' }}" alt="">
                             </div>
