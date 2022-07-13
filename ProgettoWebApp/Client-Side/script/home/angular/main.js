@@ -37,8 +37,6 @@ app.controller('myController', function($scope, $http, $timeout) {
         getNewPfp($scope, $http);
         formProfile.querySelector(".fileInput").value = "";
     });
-
-    formMachines.addEventListener("submit", getMachines($scope, $http));
     
     document.forms["formMachine"].addEventListener("submit", (event) => {
         event.preventDefault();
@@ -48,6 +46,7 @@ app.controller('myController', function($scope, $http, $timeout) {
         }).then((response) => {
             response.json().then((data) => {
                 $scope.devices = data;
+                console.log($scope.devices);
             }).catch((err) => {
                 console.log(err);
             })
