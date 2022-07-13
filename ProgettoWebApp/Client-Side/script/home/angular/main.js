@@ -26,12 +26,12 @@ app.controller('myController', function($scope, $http) {
     getModels($scope, $http);
     getMachines($scope, $http, (device) => {
         $scope.devices = device;
-        $scope.digest();
+        $scope.$digest();
     });
     getProfile($scope, $http);
     refreshMachine($scope, ($newScope, data) => {
         $newScope.devices = data;
-        $scope.digest();
+        $scope.$digest();
     });;
 
 
