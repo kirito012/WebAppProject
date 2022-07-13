@@ -4,7 +4,6 @@ import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
    
 /* profile chages */
 
-let formProfile = document.querySelector(".form");
 
 /*    */
 
@@ -33,10 +32,7 @@ app.controller('myController', function($scope, $http, $timeout) {
 
     changeProfileData($scope, $http);
 
-    formProfile.addEventListener("submit", () => {
-        getNewPfp($scope, $http);
-        formProfile.querySelector(".fileInput").value = "";
-    });
+    getNewPfp($scope, $http);
     
     
 

@@ -1,4 +1,5 @@
 let button = document.querySelector(".submitValues");
+let formProfile = document.querySelector(".form");
 
 let newData = {};
 
@@ -54,14 +55,17 @@ export let changeProfileData = ($scope, $http) => {
 }
 
 export let getNewPfp = ($scope, $http) => {
-    $http({
-        method : "GET",
-        url : "/home/getProfilePicture"
-    }).then(function mySuccess(response) {
-        if(response.data){
-            fun();
-        }
-    }, function myError(response) {
-        console.log(response);
+    formProfile.addEventListener("submit", () => {
+        $http({
+            method : "GET",
+            url : "/home/getProfilePicture"
+        }).then(function mySuccess(response) {
+            if(response.data){
+                fun();
+                formProfile.querySelector(".fileInput").value = "";
+            }
+        }, function myError(response) {
+            console.log(response);
+        });
     });
 }
