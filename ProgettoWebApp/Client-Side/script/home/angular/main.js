@@ -36,7 +36,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     });
 
     formMachines.addEventListener("submit", () => {
-        getMachines();
+        getMachines($scope, $http);
     });
 
     $scope.myFunction = function(index){
