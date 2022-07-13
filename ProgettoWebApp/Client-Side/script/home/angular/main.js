@@ -29,7 +29,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     getMachines($scope, $http);
     getProfile($scope, $http);
 
-    $scope.devices = devices;
+    console.log(devices);
 
     button.addEventListener("click", changeProfileData($scope, $http));
 
