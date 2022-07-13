@@ -1,6 +1,8 @@
 
 let dev;
 
+let formMachines = document.querySelector(".formMachine");
+
 export let getMachines = ($scope, $http, callback) => {
     $http({
         method : "GET",
@@ -13,4 +15,20 @@ export let getMachines = ($scope, $http, callback) => {
     }, function myError(response) {
         console.log(response);
     });
+}
+
+export let refreshMachine = ($scope) => {
+    document.forms["formMachine"].addEventListener("submit", (event, $scope) => {
+        event.preventDefault();
+        const resp = fetch(event.target.action, {
+          method: "POST",
+          body: new URLSearchParams(new FormData(event.target)),
+        }).then((response) => {
+            response.json().then((data) => {
+                $scope.devices = data;
+            }).catch((err) => {
+                console.log(err);
+            })
+        });
+      });
 }

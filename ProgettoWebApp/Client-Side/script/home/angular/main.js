@@ -1,5 +1,5 @@
 import {getModels} from "./get/getModels.js";
-import {getMachines} from "./get/getMachines.js";
+import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
 
 /* profile chages */
@@ -22,12 +22,13 @@ let clicked = false;
 
 let app = angular.module('myApp', []);
 
-app.controller('myController', function($scope, $http, $timeout) {
+app.controller('myController', function($scope, $http) {
     getModels($scope, $http);
     getMachines($scope, $http, (device) => {
         $scope.devices = device;
     });
     getProfile($scope, $http);
+    refreshMachine($scope);
 
 
 
@@ -38,19 +39,7 @@ app.controller('myController', function($scope, $http, $timeout) {
         formProfile.querySelector(".fileInput").value = "";
     });
     
-    document.forms["formMachine"].addEventListener("submit", (event) => {
-        event.preventDefault();
-        const resp = fetch(event.target.action, {
-          method: "POST",
-          body: new URLSearchParams(new FormData(event.target)),
-        }).then((response) => {
-            response.json().then((data, $scope) => {
-                $scope.devices = data;
-            }).catch((err) => {
-                console.log(err);
-            })
-        });
-      });
+    
 
     $scope.myFunction = function(index){
         clicked = false;
