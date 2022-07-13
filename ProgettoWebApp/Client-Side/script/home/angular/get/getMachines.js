@@ -1,6 +1,6 @@
 let dev;
 
-export let getMachines = () => {
+export let getMachines = ($scope, $http) => {
     $http({
         method : "GET",
         url : "/home/getMachines"

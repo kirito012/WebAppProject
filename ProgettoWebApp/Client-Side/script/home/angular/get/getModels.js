@@ -1,4 +1,4 @@
-export let getModels = () => {
+export let getModels = ($scope, $http) => {
     $http({
         method : "GET",
         url : "/home/getModels"

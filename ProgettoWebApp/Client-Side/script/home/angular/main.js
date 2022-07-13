@@ -9,16 +9,16 @@ let form = document.querySelector(".form");
 const app = angular.module('myApp', []);
 
 app.controller('myController', function($scope, $http, $timeout) {
-    getModels();
-    getMachines();
-    getProfile();
+    getModels($scope, $http);
+    getMachines($scope, $http);
+    getProfile($scope, $http);
 
     button.addEventListener("click", () => {
-        changeProfileData();
+        changeProfileData($scope, $http);
     });
 
     form.addEventListener("submit", () => {
-        getNewPfp();
+        getNewPfp($scope, $http);
     });
 
 

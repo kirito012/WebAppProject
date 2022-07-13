@@ -7,7 +7,7 @@ let birthday;
 
 
 
-export let getProfile = () =>{
+export let getProfile = ($scope, $http) =>{
     $http({
         method : "GET",
         url : "/home/getProfile"
@@ -22,7 +22,7 @@ export let getProfile = () =>{
     });
 }
 
-export let changeProfileData = () => {
+export let changeProfileData = ($scope, $http) => {
     email = document.querySelector(".newI1").value;
     birthday = document.querySelector(".newI2").value;
     newName = document.querySelector(".newI3").value;
@@ -49,7 +49,7 @@ export let changeProfileData = () => {
     });
 }
 
-export let getNewPfp = () => {
+export let getNewPfp = ($scope, $http) => {
     $http({
         method : "GET",
         url : "/home/getProfilePicture"
