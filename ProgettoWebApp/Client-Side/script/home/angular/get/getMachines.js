@@ -7,7 +7,9 @@ export let getMachines = ($scope, $http, callback) => {
         url : "/home/getMachines"
     }).then(function mySuccess(response) {
         dev = response.data;
-        callback(response.data);
+        if(callback){
+            callback(response.data);
+        }
     }, function myError(response) {
         console.log(response);
     });
