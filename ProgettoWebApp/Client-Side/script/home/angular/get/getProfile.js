@@ -1,3 +1,5 @@
+let formProfile = document.querySelector(".form");
+
 export let getProfile = ($scope, $http) =>{
     $http({
         method : "GET",

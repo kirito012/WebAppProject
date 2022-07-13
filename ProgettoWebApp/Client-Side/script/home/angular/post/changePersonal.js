@@ -1,5 +1,4 @@
 let button = document.querySelector(".submitValues");
-let formProfile = document.querySelector(".form");
 
 let newData = {};
 
