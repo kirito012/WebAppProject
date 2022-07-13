@@ -58,7 +58,10 @@ document.forms["formMachine"].addEventListener("submit", (event) => {
       method: "POST",
       body: new URLSearchParams(new FormData(event.target)),
     }).then((response) => {
-        const body = response.json();
-        console.log(body.PromiseResult);
+        response.then((data) => {
+            console.log(data);
+        }, (error) => {
+            throw error;
+        });
     });
   });
