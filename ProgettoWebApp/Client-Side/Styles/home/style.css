@@ -678,7 +678,15 @@ section .navigation .item.active .devices .device{
     transform: none;
 }
 
-section .navigation .item .devices .device:hover .info h3, section .navigation .item .devices .device:hover .info h5{
+section .navigation .item .devices .device .info h4{
+    font-size: 13px;
+}
+
+section .navigation .item .devices .device .info h5{
+    font-size: 10px;
+}
+
+section .navigation .item .devices .device:hover .info h4, section .navigation .item .devices .device:hover .info h5{
     color: #03a9f4;
     font-weight: 900;
 }
