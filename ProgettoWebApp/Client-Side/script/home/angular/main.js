@@ -1,3 +1,5 @@
+import {permitted} from "./post/addMachine.js";
+
 import {getModels} from "./get/getModels.js";
 import {getMachines} from "./get/getMachines.js";
 import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
@@ -53,3 +55,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     }
 
 });
+
+submitAddMachine.addEventListener("click", () => {
+    permitted = true;
+})
