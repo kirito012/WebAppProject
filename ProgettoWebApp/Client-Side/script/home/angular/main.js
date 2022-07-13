@@ -22,18 +22,18 @@ let clicked = false;
 
 let app = angular.module('myApp', []);
 
-app.controller('myController', function($scope, $http) {
+app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
     getMachines($scope, $http, (device) => {
-        $scope.$apply(() => {
+        $timeout(() => {
             $scope.devices = device;
-        });
+        }, 0);
     });
     getProfile($scope, $http);
     refreshMachine($scope, ($newScope, data) => {
-        $scope.$apply(() => {
+        $timeout(() => {
             $newScope.devices = data;
-        });
+        }, 0);
     });;
 
 
