@@ -36,6 +36,19 @@ app.controller('myController', function($scope, $http, $timeout) {
 
     formMachines.addEventListener("submit", getMachines($scope, $http));
     
+    document.forms["formMachine"].addEventListener("submit", (event) => {
+        event.preventDefault();
+        const resp = fetch(event.target.action, {
+          method: "POST",
+          body: new URLSearchParams(new FormData(event.target)),
+        }).then((response) => {
+            response.json().then((data) => {
+                $scope.devices = data;
+            }).catch((err) => {
+                console.log(err);
+            })
+        });
+      });
 
     $scope.myFunction = function(index){
         clicked = false;
@@ -51,17 +64,3 @@ app.controller('myController', function($scope, $http, $timeout) {
     }
 
 });
-
-document.forms["formMachine"].addEventListener("submit", (event) => {
-    event.preventDefault();
-    const resp = fetch(event.target.action, {
-      method: "POST",
-      body: new URLSearchParams(new FormData(event.target)),
-    }).then((response) => {
-        response.json().then((data) => {
-            console.log(data);
-        }).catch((err) => {
-            console.log(err);
-        })
-    });
-  });
