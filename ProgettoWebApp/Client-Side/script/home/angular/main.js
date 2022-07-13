@@ -1,9 +1,6 @@
-import {permitted} from "./post/addMachine.js";
-
 import {getModels} from "./get/getModels.js";
 import {getMachines} from "./get/getMachines.js";
 import {getProfile, changeProfileData, getNewPfp} from "./get/getProfile.js"
-import {addMachine} from "./post/addMachine.js";
 
 /* profile chages */
 
@@ -39,8 +36,6 @@ app.controller('myController', function($scope, $http, $timeout) {
 
     formMachines.addEventListener("submit", getMachines($scope, $http));
 
-    submitAddMachine.addEventListener("click", addMachine($scope, $http));
-
     $scope.myFunction = function(index){
         clicked = false;
         inputValue.value = index;
@@ -55,7 +50,3 @@ app.controller('myController', function($scope, $http, $timeout) {
     }
 
 });
-
-submitAddMachine.addEventListener("click", () => {
-    permitted = true;
-})
