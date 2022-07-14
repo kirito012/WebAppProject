@@ -32,7 +32,10 @@ app.controller('myController', function($scope, $http, $timeout) {
     });;
 
     refreshProfileData($scope, ($newScope, data) => {
-        console.log(data);
+        $newScope.profileData = response.data;
+        $newScope.name = $scope.profileData.name;
+        $newScope.surname = $scope.profileData.surname;
+        $newScope.email = $scope.profileData.email;
     })
 
     getNewPfp($scope, $http);
