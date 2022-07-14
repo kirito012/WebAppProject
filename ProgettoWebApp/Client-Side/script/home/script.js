@@ -42,20 +42,6 @@
             item.addEventListener("change", changeDisplay);
         });
 
-
-
-
-
-        let inputBox = document.querySelectorAll(".inputBox");
-        let delay = 1;
-        inputBox.forEach((element, i) => {
-            inputBox[i].style.transitionDelay = delay/16 + "s";
-            delay++;
-        });
-
-
-
-
         let focusWrites = document.querySelectorAll(".focus");
         let inputs = document.querySelectorAll(".input");
 

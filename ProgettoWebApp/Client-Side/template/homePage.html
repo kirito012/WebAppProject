@@ -315,17 +315,23 @@
     <script>
 
         window.onload = () => {
-            let animationTopic = anime({
-                targets: '.topicLabel',
+
+            let animationInput = anime.timeline({
+                easing: 'easeOutCirc',
+            });
+
+            animationInput
+            .add({
+                targets: '.inputBox, .submit',
                 translateY: [100, 0],
                 opacity: 1,
-                easing: 'easeOutCirc',
                 delay: anime.stagger(100),
                 duration: 500,
                 autoplay: false
-            });
-            document.querySelector(".link.l3").onclick = animationTopic.restart;
+            })
+           
 
+            document.querySelector(".link.l1").onclick = animationInput.restart;
 
             let animationDevices = anime.timeline({
                 easing: 'easeOutCirc',
@@ -338,27 +344,38 @@
                 targets: '.search',
                 translateY: [100, 0],
                 opacity: 1,
-                duration: 100,
+                duration: 500,
                 autoplay: false
             })
             .add({
                 targets: '.removeSelection',
                 translateY: [100, 0],
                 opacity: 1,
-                duration: 250,
+                duration: 500,
                 autoplay: false
             })
             .add({
                 targets: '.device',
                 translateY: [100, 0],
                 opacity: 1,
-                delay: anime.stagger(100),
+                delay: anime.stagger(100, {start: 200}),
                 duration: 500,
                 autoplay: false
             });
 
             document.querySelector(".link.l2").onclick = animationDevices.restart;
 
+
+            let animationTopic = anime({
+                targets: '.topicLabel',
+                translateY: [100, 0],
+                opacity: 1,
+                easing: 'easeOutCirc',
+                delay: anime.stagger(100),
+                duration: 500,
+                autoplay: false
+            });
+            document.querySelector(".link.l3").onclick = animationTopic.restart;
         }
 
 

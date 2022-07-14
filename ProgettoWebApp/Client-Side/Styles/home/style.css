@@ -401,13 +401,7 @@ section .navigation .item .addDevice .inputBox{
     height: 40px;
     margin: 25px 0;
     opacity: 0;
-    transform: translateY(30px);
-    transition: 0.5s ease;
-}
-
-section .navigation .item.active .addDevice .inputBox{
-    opacity: 1;
-    transform: none;
+    transform: translateY(100px);
 }
 
 section .navigation .item .addDevice .inputBox input{
@@ -523,9 +517,7 @@ section .navigation .item .addDevice .submit{
     align-items: center;
     margin-top: 50px;
     opacity: 0;
-    transform: translateY(30px);
-    transition: 0.5s ease;
-    transition-delay: 0.25s;
+    z-index: 10;
 }
 
 section .navigation .item .addDevice .submit input{
@@ -543,13 +535,6 @@ section .navigation .item .addDevice .submit input{
     font-weight: bolder;
     cursor: pointer;
     border: 2px solid #112d42;
-    transition: 0.5s ease;
-    transition: 0.5s ease;
-}
-
-section .navigation .item.active .addDevice .submit{
-    opacity: 1;
-    transform: none;
 }
 
 section .navigation .item .addDevice .submit input:hover{

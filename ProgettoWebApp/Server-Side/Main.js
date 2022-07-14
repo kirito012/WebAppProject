@@ -115,8 +115,6 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
 fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req, utente) => {
   let body = req.body;
 
-  console.log(body);
-
   if (!body.email || !body.name || !body.surname || !body.birthday){fw.redirect(res, "/home", "error", "missingInputs"); return;}
   if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/home", "error", "dataLenght"); return;}
   if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/home", "error", "emailNotCorrect"); return;}
@@ -141,7 +139,6 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
       profile.birthday = fw.utility.formatDate(utente.birthday);
 
       res.send(profile);
-      console.log(profile);
     })
   });
 });
