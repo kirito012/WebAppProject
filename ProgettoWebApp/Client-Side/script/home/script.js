@@ -95,17 +95,7 @@
             labels[i].htmlFor = "i" + i;
         });
 
-        if(labels.length > 15){
-            for(let i = 0; i < 15; i++){
-                labels[i].style.transitionDelay = dalayLabels/32 + "s";
-                delayLabels++;
-            }
-        }else{
-            labels.forEach((element, i) => {
-                labels[i].style.transitionDelay = dalayLabels/32 + "s";
-                dalayLabels++;
-            });
-        }
+     
 
 
 
@@ -170,7 +160,7 @@
             }, 100);
         });
 
-
+  
 
 
 

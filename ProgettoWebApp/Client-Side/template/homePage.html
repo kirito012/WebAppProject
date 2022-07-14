@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../Styles/home/icon.css">
     <script src="https://kit.fontawesome.com/75e7801ae2.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="../script/libraries/anime.min.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="myController">
     <section>
@@ -23,7 +24,7 @@
                     <span>Menù</span>
                 </div>
                 <div class="navigator">
-                    <label class="link active" style="--background: #c0e8ff;">
+                    <label class="link active l1" style="--background: #c0e8ff;">
                         <input class="radio addDevice" type="radio" name="visualize" checked>
                         <div class="icon">
                             <hr class="cross" style="--deg: 90deg">
@@ -31,14 +32,14 @@
                         </div>
                         <span>Aggiungi dispositivo</span>
                     </label>
-                    <label class="link" style="--background: #d1ffd4;">
+                    <label class="link l2" style="--background: #d1ffd4;">
                         <input class="radio showDevice" type="radio" name="visualize">
                         <div class="icon">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABbklEQVRoge2asUrEMBzGv9RSuOGGcAh1ddVugsvdYN/BUX0MNx3EV/AFbvQVxAM9xN3T1ckOKmS8Q/DicicISc5Y2/yb5rf1nwS+jyRfU1KgrfAsv+dZfld3fRWx7QAAu47qRqK/DKKIN0a8gWlbtvYTHr2fAdEBIDdq1KSiADAU894JHi8/VB3WdCN5mp4D7BhAtyp1FnQB9Dtsmsxen69UHQx7hB1WJKoMR7oGgxHny0lFqmvwJrW8MRIDAN/euwVj/WVRPFzr04wAPMvl94OUYzEZDZo/I4xJwPAe+eGaELrV0vwZWRCMUKN0av1XwtnsSa9TKwYAMRkN3KqxQ7UKmj8jC4IRaoSzFhlCahElGKFGSC0yhC9EogQj1AipRYaQWkRphZGiNhW/50XXYDIyrEBIWbSatHeIs/Wdmw6bJgA24f4esQBwIea9U7w9fTrWQgye5VIVzVXXV9GK1GoU9n8HSTleHgtqrbeFL8F9pZUMb+RLAAAAAElFTkSuQmCC">
                         </div>
                         <span>I tuoi dispositivi</span>
                     </label>
-                    <label class="link" style="--background: #fffed1">
+                    <label class="link l3" style="--background: #fffed1">
                         <input class="radio showTopics" type="radio" name="visualize">
                         <div class="icon">
                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAEJklEQVRoge2ZX0xbdRTHP+cWSubE9RbQrUumMUtcAmVDl2V/1EBxvshiphITk+kTJsaY7MFMXjYm+IAucQ+aaHwxLsbEYLIo6sMmhciYmbro1iJOfVATwARoSbYMhHvv8YGWdICUe0sBsZ+Xnvxyzznfb87v9ndvCwUKFFgMmY0qG/2mMdoGxhHQLUtIHVbVF8fj0bN51LdkjHRgGmOtIMeWZgJAt4jw8aaq2t35EueG2YmY4cggEBLlQCIevZgtMRiOnFY4Clzb4N94/9Dlzpv5FJoNIyMOASzFBEBioqQZiAH3Tfx981QetLkicyIKkIxF5d8vv5VAZd1OMeQSUJIHbYsxBJxJOmUt9HdMwa0Tcc14f/cVhMZU4ZUkBDSbvsTJ9EJOE1ktzMq6AxhyARhKxqJbIceJrBbJ/u6+VBhKr/0njSxE0dwFMxwZBjavghY3/DV3YaGJrHUTsIDGeRMRZH8i1vXNyujxRrAqsl+Fvsy1eRNZ6yZg4UN73dzsBSNrjXVjZN631nIS2FUbEEea1JGnRNjOzMPlL4J8PlU09daNH3pHlqtX3iZiVtc/hG38jMobIuwBgsBGoEbR48VW8W+BqronlqtfXowEw/X7UP1K4C7gnKg8avmdCr8U3a5q1IF8CtwhIh2Bqsjh5eiZ89aqqKzdbBvSrsgjwG2InlN0L4pfkLZErOtE+trrMx89QI8ZjrwCtIvwfukDtb3XL/eM5qIjp4mU7qgvswzjkiLPAVsBE5WnUe4W6Mo0MZdkLPo6SiewqXhKXspFB+RopKhYW4BtCufV4h6fNR0CPgJw0LZs+apyGkCRQ7nogBy21qbwgybwOAAWTeMD0T8AaGx8NjgwNpKMd3+dtbk1+b3tLwHY7lVHGk8TKdsZ2WPgjwPbAGZNAHR02Il49Cig2eqMXutL3TaUmuHIe4HK2l1e9IAHI+U1B0Pq0MnM29lniBP22nwOTWIY3wbDdc97SXZtxLLslxXuFDibjD18OHm1J+6lcZpkLCo+azqE6DHAUeSdYHXtXrd1vGytxwAcx2mFk46H/HmMDvQOJ692nwI5ARiOGq1ua7g2Iqn7osTn/9VtbjZ8RcaHqR773OZ6mIiOAEzq9A73uUtv4jbBy9b6EsBQafGQuyi2ZR8BEPjOba7rc0R92i62PINwyKyOdBq2tI4RvJL+6dIL5TUHQykTrQCq+qbbGq6NjP/Y83uwqv5JFf0EpcExtMFkDMIRt6VmsS17NhZ4LRHv/sJtDU8HYiLedV4tqhHeBf4E7Gw5WbghEEW1IRGLHvdSwPMjSuo0f8Fr/nKzbl51C0bWGuvSyBCk/kRZ42RoHEyvZX5rnQGaMeSCmcOZsKKofpAOfelgsmJ37waZKAbuBUpXQ5cLBlF9O6nlrzLyU65nWIEC/wv+AamKUsyqUnLkAAAAAElFTkSuQmCC">
@@ -138,6 +139,41 @@
                     <h1 class="title">Seleziona i dati da visualizzare</h1>
                 </div>
                 <div class="topicsContainer">
+                    <label class="topicLabel" for="">
+                        <input type="checkbox" class="checkbox" id="">
+                        <h4 class="topic">Nome topic</h4>
+                        <div class="checked">
+                            <div class="checkmark"></div>
+                        </div>
+                    </label>
+                    <label class="topicLabel" for="">
+                        <input type="checkbox" class="checkbox" id="">
+                        <h4 class="topic">Nome topic</h4>
+                        <div class="checked">
+                            <div class="checkmark"></div>
+                        </div>
+                    </label>
+                    <label class="topicLabel" for="">
+                        <input type="checkbox" class="checkbox" id="">
+                        <h4 class="topic">Nome topic</h4>
+                        <div class="checked">
+                            <div class="checkmark"></div>
+                        </div>
+                    </label>
+                    <label class="topicLabel" for="">
+                        <input type="checkbox" class="checkbox" id="">
+                        <h4 class="topic">Nome topic</h4>
+                        <div class="checked">
+                            <div class="checkmark"></div>
+                        </div>
+                    </label>
+                    <label class="topicLabel" for="">
+                        <input type="checkbox" class="checkbox" id="">
+                        <h4 class="topic">Nome topic</h4>
+                        <div class="checked">
+                            <div class="checkmark"></div>
+                        </div>
+                    </label>
                     <label class="topicLabel" for="">
                         <input type="checkbox" class="checkbox" id="">
                         <h4 class="topic">Nome topic</h4>
@@ -275,6 +311,58 @@
             </form>
         </div>
     </section>
+
+    <script>
+
+        window.onload = () => {
+            let animationTopic = anime({
+                targets: '.topicLabel',
+                translateY: [100, 0],
+                opacity: 1,
+                easing: 'easeOutCirc',
+                delay: anime.stagger(100),
+                duration: 500,
+                autoplay: false
+            });
+            document.querySelector(".link.l3").onclick = animationTopic.restart;
+
+
+            let animationDevices = anime.timeline({
+                easing: 'easeOutCirc',
+            });
+            
+            
+            
+            animationDevices
+            .add({
+                targets: '.search',
+                translateY: [100, 0],
+                opacity: 1,
+                duration: 500,
+                autoplay: false
+            })
+            .add({
+                targets: '.removeSelection',
+                translateY: [100, 0],
+                opacity: 1,
+                duration: 500,
+                autoplay: false
+            })
+            .add({
+                targets: '.device',
+                translateY: [100, 0],
+                opacity: 1,
+                delay: anime.stagger(100),
+                duration: 500,
+                autoplay: false
+            });
+
+            document.querySelector(".link.l2").onclick = animationDevices.restart;
+
+        }
+
+
+    </script>
 
 
     <script src="../script/home/script.js"></script>
