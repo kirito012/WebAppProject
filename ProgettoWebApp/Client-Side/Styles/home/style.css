@@ -573,7 +573,7 @@ section .navigation .item .search{
     height: 70px;
     padding: 0 25px;
     opacity: 1;
-    transform: translateY(100px);
+    transform: translateY(30px);
     opacity: 0;
 }
 
@@ -655,7 +655,7 @@ section .navigation .item .devicesContainer .devices .device{
     height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transform: translateY(100px);
+    transform: translateY(30px);
     cursor: pointer;
 }
 
