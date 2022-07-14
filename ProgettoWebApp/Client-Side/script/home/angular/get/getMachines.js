@@ -28,11 +28,9 @@ export let refreshMachine = ($scope, callback) => {
                 if(callback){
                     callback($scope, data);
                 }
-            }).catch((err) => {
-                console.log(err);
+            }).catch((data) => {
+                
             })
         });
       });
 }
-
-

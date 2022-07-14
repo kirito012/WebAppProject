@@ -102,7 +102,7 @@ module.exports.logout = data.logout = (res, req, loginRoot) => {
 
 module.exports.redirect = data.redirect = (res, url, variable , message) => {
 	if (variable && message) {
-		res.redirect(url + "? " + variable + "=" + message);
+		res.redirect(url + "?" + variable + "=" + message);
 	} else {
 		res.redirect(url);
 	}

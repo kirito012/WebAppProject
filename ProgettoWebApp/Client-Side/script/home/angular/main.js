@@ -1,7 +1,7 @@
 import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, getNewPfp} from "./get/getProfile.js"
-import {changeProfileData, refreshProfileData} from "./post/changePersonal.js";
+import {refreshProfileData} from "./post/changePersonal.js";
    
 /* profile chages */
 
@@ -23,18 +23,31 @@ app.controller('myController', function($scope, $http, $timeout) {
         }, 0);
     });
 
-    getProfile($scope, $http);
-
     refreshMachine($scope, ($newScope, data) => {
         $timeout(() => {
             $newScope.devices = data;
         }, 0);
     });;
 
+    getProfile($scope, $http, ($scope, data) => {
+        $timeout(() => {
+            $scope.profileData = data;
+            $scope.name = data.name;
+            $scope.surname = data.surname;
+            $scope.email = data.email;
+            $scope.birthday = new Date(data.Birthday);
+        }, 0);
+    });
+
     refreshProfileData($scope, ($scope, data) => {
         $timeout(() => {
+            console.log(data);
+            $scope.profileData = data;
             $scope.name = data.name;
-        });
+            $scope.surname = data.surname;
+            $scope.email = data.email;
+            $scope.birthday = new Date(data.Birthday);
+        }, 0);
     })
 
     getNewPfp($scope, $http);

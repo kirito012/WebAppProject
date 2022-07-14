@@ -1,15 +1,13 @@
 let formProfile = document.querySelector(".form");
 
-export let getProfile = ($scope, $http) =>{
+export let getProfile = ($scope, $http, callback) =>{
     $http({
         method : "GET",
         url : "/home/getProfile"
     }).then(function mySuccess(response) {
-        $scope.profileData = response.data;
-        $scope.name = $scope.profileData.name;
-        $scope.surname = $scope.profileData.surname;
-        $scope.email = $scope.profileData.email;
-        $scope.birthday = new Date($scope.profileData.Birthday);
+        if(callback){
+            callback($scope, response.data);
+        }
     }, function myError(response) {
         console.log(response);
     });
@@ -30,3 +28,4 @@ export let getNewPfp = ($scope, $http) => {
         });
     });
 }
+

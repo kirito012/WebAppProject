@@ -115,6 +115,8 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
 fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req, utente) => {
   let body = req.body;
 
+  console.log(body);
+
   if (!body.email || !body.name || !body.surname || !body.birthday){fw.redirect(res, "/home", "error", "missingInputs"); return;}
   if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/home", "error", "dataLenght"); return;}
   if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/home", "error", "emailNotCorrect"); return;}
@@ -135,10 +137,11 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
       req.session.name = body.name;
 
       let profile = body;
-      profile.birthday = utente.birthday;
+      profile.Birthday = utente.birthday;
       profile.birthday = fw.utility.formatDate(utente.birthday);
 
       res.send(profile);
+      console.log(profile);
     })
   });
 });
@@ -184,7 +187,7 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
     fw.utility.checkLength(models,() => {
       modelId = models[0].idmodelli;
 
-      if (body.name.length > 20){fw.redirect(res, "/homes", "error", "machineNameExceed"); return;};
+      if (body.name.length > 20){fw.redirect(res, "/home", "error", "machineNameExceed"); return;};
 
       fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
         fw.queryDB("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {

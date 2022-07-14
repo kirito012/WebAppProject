@@ -230,3 +230,21 @@
                 pfpImg.src = "/home/getProfilePicture";
             },1000);
         }
+
+
+
+
+
+        let paramsHome = new URLSearchParams(window.location.search);
+        let errorList = {   
+            machineNameExceed: "Nome troppo lungo"
+        }
+        let errorMassageMachine = document.querySelector(".error");
+
+        if(paramsHome.has('error')){
+            for(let key in errorList){
+                if(paramsHome.get("error") == key){
+                    errorMassageMachine.innerHTML = errorList[key];
+                }
+            }
+        }
