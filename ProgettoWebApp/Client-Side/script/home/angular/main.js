@@ -1,7 +1,7 @@
 import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, getNewPfp} from "./get/getProfile.js"
-import {changeProfileData} from "./post/changePersonal.js";
+import {changeProfileData, refreshProfileData} from "./post/changePersonal.js";
    
 /* profile chages */
 
@@ -17,7 +17,7 @@ let app = angular.module('myApp', []);
 app.controller('myController', function($scope, $http, $timeout) {
     getModels($scope, $http);
 
-    getMachines($scope, (device) => {
+    getMachines($scope, $http, (device) => {
         $timeout(() => {
             $scope.devices = device;
         }, 0);
@@ -31,7 +31,9 @@ app.controller('myController', function($scope, $http, $timeout) {
         }, 0);
     });;
 
-    changeProfileData($scope, $http);
+    refreshProfileData($scope, ($newScope, data) => {
+        console.log(data);
+    })
 
     getNewPfp($scope, $http);
     

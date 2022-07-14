@@ -1,4 +1,3 @@
-
 let dev;
 
 let formMachines = document.querySelector(".formMachine");
@@ -16,6 +15,7 @@ export let getMachines = ($scope, $http, callback) => {
         console.log(response);
     });
 }
+
 
 export let refreshMachine = ($scope, callback) => {
     document.forms["formMachine"].addEventListener("submit", (event) => {

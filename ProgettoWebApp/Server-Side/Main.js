@@ -133,9 +133,12 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
     middleQuery = middleQuery + " ";
     fw.queryDB(startQuery + middleQuery + endQuery,[utente.lastsession,utente.password], (result) => {
       req.session.name = body.name;
-      fw.utility.getProfile(fw, utente, (profile) => {
-        res.send(profile);
-      })
+
+      let profile = body;
+      profile.birthday = utente.birthday;
+      profile.birthday = fw.utility.formatDate(utente.birthday);
+
+      res.send(profile);
     })
   });
 });

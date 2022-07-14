@@ -110,6 +110,10 @@ section .login form .inputBox .hide{
     cursor: pointer;
 }
 
+section .register form .inputBox .hide{
+    right: 25px;
+}
+
 section .register form .inputBox .hide .eye,
 section .login form .inputBox .hide .eye{
     position: relative;
