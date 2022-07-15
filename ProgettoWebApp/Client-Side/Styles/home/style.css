@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+@font-face {
+    font-family: "Tim Sans Thin";
+    src: url("../../Styles/font/TIMSans-Thin.ttf");
+}
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Tim Sans Thin';
 }
 
 body{
@@ -447,7 +451,7 @@ section .navigation .item.active .title{
     opacity: 1;
     transform: none;
     color: #112d42;
-    font-weight: 900;
+    font-weight: 0;
     transition: 0.5s ease;
 }
 
@@ -489,7 +493,7 @@ section .navigation .item .addDevice .inputBox input{
     caret-color: #112d42;
     font-size: 14px;
     color: #112d42;
-    font-weight: 900;
+    font-weight: 0;
     letter-spacing: 2px;
 }
 
@@ -659,7 +663,7 @@ section .navigation .item .search input{
     caret-color: #112d42;
     font-size: 14px;
     color: #112d42;
-    font-weight: 900;
+    font-weight: 0;
     letter-spacing: 2px;
 }
 
@@ -728,6 +732,7 @@ section .navigation .item .devicesContainer .devices .device{
     opacity: 0;
     transform: translateY(100px);
     cursor: pointer;
+    color: #112d42;
 }
 
 section .navigation .item .devices .device .info h4{
@@ -740,7 +745,7 @@ section .navigation .item .devices .device .info h5{
 
 section .navigation .item .devices .device:hover .info h4, section .navigation .item .devices .device:hover .info h5{
     color: #03a9f4;
-    font-weight: 900;
+    font-weight: 0;
 }
 
 section .navigation .item.active .devices .device .img{
@@ -1104,7 +1109,7 @@ section .personal .settingsConfiguration .container .content.I1 ul li{
     justify-content: space-between;
     list-style: none;
     font-size: 13px;
-    font-weight: 900;
+    font-weight: 0;
     width: 250px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -1271,7 +1276,7 @@ section .inputSettings form .row .column .inputBox input{
     caret-color: #112d42;
     font-size: 14px;
     color: #112d42;
-    font-weight: 900;
+    font-weight: 0;
     letter-spacing: 2px;
 }
 

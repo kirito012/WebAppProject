@@ -248,3 +248,21 @@
                 }
             }
         }
+
+
+
+
+        let select = document.querySelector(".select");
+        let link2 = document.querySelector(".link.I2");
+        select.addEventListener("click", () => {
+            navigation.classList.add("active");
+            items.forEach((element) => {
+                element.classList.remove("active");
+            });
+            list.forEach((element) => {
+                element.classList.remove("active");
+                list[1].classList.add("active");
+            });
+            items[1].classList.add("active");
+            radioButton[1].checked = true;
+        })
