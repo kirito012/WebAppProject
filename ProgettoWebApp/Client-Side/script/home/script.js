@@ -266,3 +266,32 @@
             items[1].classList.add("active");
             radioButton[1].checked = true;
         })
+
+
+
+
+        let removeDevice = document.querySelector(".remove");
+        let alert = document.querySelector(".alert");
+        removeDevice.addEventListener("click", () => {
+            alert.classList.add("active");
+        });
+
+        let undo = document.querySelector(".undo");
+        undo.addEventListener("click", () => {
+            alert.classList.remove("active");
+        });
+
+
+
+
+        let up = document.querySelector(".up");
+        let dashboard = document.querySelector(".dashboard");
+        dashboard.addEventListener("scroll", () => {
+            let y = dashboard.scrollTop;
+            console.log(y);
+            if(y > 0){
+                up.style.opacity = "1";
+            }else if(y == 0){
+                up.style.opacity = "0";
+            }
+        })
