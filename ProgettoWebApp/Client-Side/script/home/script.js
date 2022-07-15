@@ -21,8 +21,10 @@
 
         let radioButton = document.querySelectorAll(".radio");
         let items = document.querySelectorAll(".item");
+        let navigation = document.querySelector(".navigation");
 
-        let name = ["radio addDevice", "radio showDevice", "radio showTopics"];
+
+        let nameInputs = ["radio addDevice", "radio showDevice", "radio showTopics"];
 
 
         function changeDisplay(){
@@ -30,8 +32,8 @@
                 element.classList.remove("active");
             });
             radioButton.forEach((element, i) => {
-                for(let key in name){
-                    if(this.className == name[key]){
+                for(let key in nameInputs){
+                    if(this.className == nameInputs[key]){
                         items[key].classList.add("active");
                     }
                 }
@@ -41,6 +43,28 @@
         radioButton.forEach((item) => {
             item.addEventListener("change", changeDisplay);
         });
+
+        radioButton.forEach((item) => {
+            item.addEventListener("click", () => {
+                navigation.classList.add("active");
+            });
+        });
+
+
+        let closeNavigation = document.querySelectorAll(".close.nav");
+
+
+        let closeNav = () => {
+            navigation.classList.remove("active");
+        }
+
+        closeNavigation.forEach((element) => {
+            element.addEventListener("click", closeNav);
+        });
+
+
+
+
 
         let focusWrites = document.querySelectorAll(".focus");
         let inputs = document.querySelectorAll(".input");

@@ -7,9 +7,12 @@
     <title>Document</title>
     <link rel="stylesheet" href="../Styles/home/style.css">
     <link rel="stylesheet" href="../Styles/home/icon.css">
+    <link rel="stylesheet" href="../Styles/home/dashboard.css">
     <script src="https://kit.fontawesome.com/75e7801ae2.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="../script/libraries/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css">
 </head>
 <body ng-app="myApp" ng-controller="myController">
     <section>
@@ -71,10 +74,15 @@
                 </div>
             </div>
         </header>
-        <div class="navigation">
+        <div class="navigation active">
             <div class="item active">
                 <div class="titleContainer">
                     <h1 class="title">Aggiungi un <br>dispositivo</h1>
+                    <div class="close nav">
+                        <div class="icon">
+                            <div class="line"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="addDevice">
                     <form class="formMachine" id="formMachine" action="addMachine" method="post">
@@ -112,6 +120,11 @@
             <div class="item">
                 <div class="titleContainer">
                     <h1 class="title">Seleziona un dispositivo</h1>
+                    <div class="close nav">
+                        <div class="icon">
+                            <div class="line"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="devicesContainer">
                     <div class="search">
@@ -137,6 +150,11 @@
             <div class="item">
                 <div class="titleContainer">
                     <h1 class="title">Seleziona i dati da visualizzare</h1>
+                    <div class="close nav">
+                        <div class="icon">
+                            <div class="line"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="topicsContainer">
                     <label class="topicLabel" for="">
@@ -185,7 +203,43 @@
             </div>
         </div>
         <div class="dashboard">
+            <div class="sectionOne">
+                <div class="column">
+                    <div class="row">
+                        <div class="title">
+                            <h1>Dashboard</h1>
+                            <div class="select">Seleziona dispositivo</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="left">
+                            <div class="infoSelected">
+                                <div class="infoDevice">
+                                    <div class="top">
+                                        <h3>Info dispositivo:</h3>
+                                    </div>
+                                    <div class="bottom">
+                                        <ul>
+                                            <li>Nome: <span>Nome</span></li>
+                                            <li>Modello: <span>Modello</span></li>
+                                            <li>Matricola: <span>Matricola</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info">
 
+                            </div>
+                        </div>
+                        <div class="right">
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sectionTwo">
+
+            </div>
         </div>
         <div class="personal">
             <div class="profile">
@@ -325,7 +379,7 @@
                 targets: '.inputBox, .submit',
                 translateY: [100, 0],
                 opacity: 1,
-                delay: anime.stagger(100),
+                delay: anime.stagger(100, {start: 300}),
                 duration: 500,
                 autoplay: false
             })
@@ -345,6 +399,7 @@
                 translateY: [100, 0],
                 opacity: 1,
                 duration: 500,
+                delay: 200,
                 autoplay: false
             })
             .add({
@@ -371,7 +426,7 @@
                 translateY: [100, 0],
                 opacity: 1,
                 easing: 'easeOutCirc',
-                delay: anime.stagger(100),
+                delay: anime.stagger(100, {start: 200}),
                 duration: 500,
                 autoplay: false
             });
@@ -379,6 +434,10 @@
         }
 
 
+    </script>
+
+    <script>
+        
     </script>
 
 

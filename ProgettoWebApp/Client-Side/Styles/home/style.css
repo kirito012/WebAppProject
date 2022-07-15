@@ -12,18 +12,16 @@ body{
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    height: 100vh;
     overflow: hidden;
-
+    height: 100vh;
 }
 
 section{
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
-    height: 100%;
     overflow: hidden;
 }
 
@@ -33,7 +31,7 @@ section header{
     justify-content: space-between;
     flex-direction: column;
     min-width: 80px;
-    height: 100%;
+    height: 100vh;
     background: #112d42;
     padding: 40px 20px;
     transition: 0.5s ease;
@@ -46,20 +44,22 @@ section .navigation{
     justify-content: center;
     align-items: flex-start;
     flex-direction: row;
-    min-width: 300px;
-    height: 100%;
+    min-width: 0;
+    height: 100vh;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    transition: 0.5s ease;
+}
+
+section .navigation.active{
+    min-width: 300px;
 }
 
 section .dashboard{
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 /* start header */
@@ -357,12 +357,86 @@ section .navigation .item.active{
 section .navigation .item .titleContainer{
     position: relative;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
     width: 100%;
     height: 70px;
     padding: 40px 15px;
 }
+
+section .navigation .item .titleContainer .close{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+section .navigation .item .titleContainer .close .icon{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+section .navigation .item .titleContainer .close .icon .line{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 20px;
+    height: 2px;
+    background: #112d42;
+    transition: 0.5s ease;
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+section .navigation .item.active .titleContainer .close .icon:hover .line{
+    transform: translateX(-4px);
+}
+
+section .navigation .item .titleContainer .close .icon .line::before{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    background: #112d42;
+    transform: translateY(-8px) translateX(-1.25px) rotate(-45deg);
+    transition: 0.5s ease;
+    opacity: 0;
+}
+
+section .navigation .item .titleContainer .close .icon .line::after{
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 2px;
+    transform: translateY(8px) translateX(-1.25px) rotate(45deg);
+    background: #112d42;
+    transition: 0.5s ease;
+    opacity: 0;
+}
+
+section .navigation .item.active .titleContainer .close .icon .line{
+    transform: translateX(0);
+    opacity: 1;
+}
+
+section .navigation .item.active .titleContainer .close .icon .line::before{
+    transform: translateY(-3px) translateX(-1.25px) rotate(-45deg);
+    opacity: 1;
+}
+
+section .navigation .item.active .titleContainer .close .icon .line::after{
+    transform: translateY(3px) translateX(-1.25px) rotate(45deg);
+    opacity: 1;
+}
+
 
 section .navigation .item .title{
     opacity: 0;
@@ -419,6 +493,18 @@ section .navigation .item .addDevice .inputBox input{
     letter-spacing: 2px;
 }
 
+section .navigation .item .addDevice .inputBox:nth-child(1) input{
+    z-index: 100;
+}
+
+section .navigation .item .addDevice .inputBox:nth-child(2) input{
+    z-index: 10;
+}
+
+section .navigation .item .addDevice .inputBox:nth-child(3) input{
+    z-index: 10;
+}
+
 section .navigation .item .addDevice .inputBox .focus{
     position: absolute;
     color: rgba(17, 45, 66, 0.8);
@@ -458,7 +544,6 @@ section .navigation .item .addDevice .inputBox:nth-child(1) .models{
     width: 250px;
     height: 0;
     background: #fff;
-    z-index: 10;
     border: none;
     transition: 0.5s ease;
     overflow-x: hidden;
@@ -474,6 +559,7 @@ section .navigation .item .addDevice .inputBox:nth-child(1) .models .model{
     height: 70px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     cursor: pointer;
+    background: #fff;
 }
 
 section .navigation .item .addDevice .inputBox:nth-child(1) .models .model .img{
@@ -517,7 +603,6 @@ section .navigation .item .addDevice .submit{
     align-items: center;
     margin-top: 50px;
     opacity: 0;
-    z-index: 10;
 }
 
 section .navigation .item .addDevice .submit input{
@@ -535,6 +620,7 @@ section .navigation .item .addDevice .submit input{
     font-weight: bolder;
     cursor: pointer;
     border: 2px solid #112d42;
+    transition: 0.5s ease;
 }
 
 section .navigation .item .addDevice .submit input:hover{
@@ -790,6 +876,7 @@ section .personal{
     overflow: hidden;
     transition: 0.5s ease;
     right: -100%;
+    background: #fff;
 }
 
 section .personal.active{
