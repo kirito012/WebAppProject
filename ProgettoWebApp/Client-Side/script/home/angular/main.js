@@ -2,14 +2,13 @@ import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, getNewPfp} from "./get/getProfile.js"
 import {refreshProfileData} from "./post/changePersonal.js";
-   
-/* profile chages */
+import {removeMachine} from "./post/removeMachine";
 
-
-/*    */
+import {index} from "../script.js";
 
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
+
 
 
 let app = angular.module('myApp', []);
@@ -51,6 +50,10 @@ app.controller('myController', function($scope, $http, $timeout) {
     })
 
     getNewPfp($scope, $http);
+
+    removeMachine($scope, $http, index, $scope.devices, ($scope, device) => {
+        $scope.devices = device;
+    });
     
     
 

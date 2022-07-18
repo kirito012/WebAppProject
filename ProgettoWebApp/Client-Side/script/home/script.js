@@ -295,3 +295,23 @@
                 up.style.opacity = "0";
             }
         })
+
+
+        export let index;
+
+        window.onload = () => {
+            var devices = document.querySelectorAll(".device");
+
+            let selection = (item, ind) => {
+                devices.forEach((element, i) => {
+                    element.classList.remove("active");
+                })
+                item.classList.add("active");
+                index = ind;
+            }
+
+
+            devices.forEach((element, i) => {
+                element.onclick = () => {selection(element, i)}
+            });
+        }

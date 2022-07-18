@@ -724,6 +724,10 @@ section .navigation .item .devicesContainer .devices .device{
     color: #112d42;
 }
 
+section .navigation .item .devicesContainer .devices .device.active{
+    color: #03a9f4;
+}
+
 section .navigation .item .devices .device .info h4{
     font-size: 14px;
 }
