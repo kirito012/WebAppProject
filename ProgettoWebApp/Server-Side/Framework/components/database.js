@@ -4,29 +4,91 @@ let queryPreset = {
   selectUsersWhereEmail: "SELECT * FROM utenti WHERE email = ?;",
   generateUser:
     "INSERT INTO utenti (email, password, name, surname, birthday, permission) VALUES (?,?,?,?,?,?);",
-  generateCorrispondeza: "INSERT INTO corrispondenze VALUES(?, ?, ?);",
+  generateCorrispondeza: "INSERT INTO corrispondenze (matricola_id, utente_id, modello_id) VALUES(?, ?, ?);",
   generateProfilePicture: "INSERT INTO profilepictures (utente_id, pictureroot) VALUES (?, ?)",
   generateSelectMatricola:
     "INSERT INTO matricole (uniqueid, parent, customname) VALUES (?,?,?); SELECT * FROM matricole WHERE uniqueid=? ;",
+  generateTopicString: `INSERT INTO
+  savedtopics (name, topicstring, corrispondenza)
+  SELECT
+    SUBSTRING_INDEX(
+      (
+          REPLACE(
+            REPLACE(
+            (
+              SELECT
+                topicstring
+              FROM
+                topics
+              WHERE
+                topics.name = ?
+            ),
+            "ID",
+            matricole.uniqueid
+          ),
+            "MODEL",
+            rtrim(modelli.name)
+          )
+        ),
+      '/',
+      -1
+    ) name,
+    (
+      SELECT
+        (
+          REPLACE(
+            REPLACE(
+            (
+              SELECT
+                topicstring
+              FROM
+                topics
+              WHERE
+                topics.name = ?
+            ),
+            "ID",
+            matricole.uniqueid
+          ),
+            "MODEL",
+            rtrim(modelli.name)
+          )
+        )
+    ),
+    corrispondenze.key
+  FROM
+    corrispondenze
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
+    JOIN utenti on corrispondenze.utente_id = utenti.id
+  WHERE
+    matricole.uniqueid = ?
+    and modelli.name = ?
+    and utenti.id = ?;
+  `,
   selectEmailPsw: "SELECT * FROM utenti WHERE email = ? AND password = ?;",
   selectSessionName: "SELECT * FROM utenti WHERE lastsession = ? AND name = ?;",
   selectModelliName: "SELECT * FROM modelli WHERE name = ?;",
   selectProfilePictureRoot: "SELECT pictureroot FROM profilepictures WHERE utente_id = ?",
   selectMatricolaId: `SELECT * FROM corrispondenze
-  JOIN matricole on corrispondenze.matricola_id = matricole.id
-  JOIN utenti on corrispondenze.utente_id = utenti.id
-  WHERE utenti.lastsession = ? AND utenti.name = ? AND matricole.uniqueid = ?;`,
-  selectCorrispondenze: `SELECT matricole.customname,  utenti.name as parentName, modelli.name as model, matricole.uniqueid
-    FROM corrispondenze JOIN matricole on corrispondenze.matricola_id = matricole.id
-                                 JOIN utenti on corrispondenze.utente_id = utenti.id
-                                 JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN utenti on corrispondenze.utente_id = utenti.id
+    WHERE utenti.lastsession = ? AND utenti.name = ? AND matricole.uniqueid = ?;`,
+  selectCorrispondenze: `SELECT matricole.customname,  utenti.name as parentName, modelli.name as model, matricole.uniqueid FROM corrispondenze 
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN utenti on corrispondenze.utente_id = utenti.id
+    JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
     WHERE corrispondenze.utente_id = ?;`,
+  selectSavedTopics: `SELECT savedtopics.name, savedtopics.topicstring FROM corrispondenze 
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN  utenti on corrispondenze.utente_id = utenti.id
+    JOIN savedtopics on corrispondenze.key = savedtopics.corrispondenza
+    WHERE corrispondenze.utente_id = ? and matricole.uniqueid = ?;`,
   updateSession:
     "UPDATE utenti SET lastsession = ? WHERE email = ? AND password = ?;",
   updateSelectedMatricola: "UPDATE utenti SET selectedmatricolaid = ? WHERE lastsession = ? AND name = ?;",
   selectDeleteCorrispondenza: `DELETE corrispondenze FROM corrispondenze 
-  JOIN matricole on corrispondenze.matricola_id = matricole.id
-  WHERE matricole.uniqueid = ?;`,
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    WHERE matricole.uniqueid = ?;`,
   selectDeleteMatricolaParent: `DELETE FROM matricole WHERE uniqueid = ? AND EXISTS(
     SELECT * FROM utenti WHERE lastsession = ? AND name = ?) LIMIT 1;`,
 };

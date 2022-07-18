@@ -240,3 +240,9 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
   }
 
 });
+
+/*
+fw.queryDB("generateTopicString",[topicName,topicName,uniqueid,modelName,idUtente], (status) => {
+
+})
+*/

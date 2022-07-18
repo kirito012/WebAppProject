@@ -1,16 +1,31 @@
-let removeButton = document.querySelector(".remove.button");
+let removeButton = document.querySelector(".confirmRemove");
+let removeSel = document.querySelector(".removeSelection");
+let deviceToRemove = {};
+
+import {alert} from "../../script.js";
 
 export let removeMachine = ($scope, $http, i, device, callback) => {
     removeButton.onclick = () => {
-        deviceToRemove = {id: device[i].id, name: device[i].customname, model: device[i].model};
+        deviceToRemove = {id: device[i].uniqueid};
         $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
-            if(response.data){
-                if(callback){
-                    callback($scope, reponse.data);
-                }
+            if(callback){
+                callback($scope, response.data);
+                alert.classList.remove("active");
             }
         }, function myError(response) {
             console.log(response);
         });
     }
+}
+
+
+export let emptyPost = ($scope, $http, callback) => {
+    let empty = {};
+    $http.post("/removeMachine", JSON.stringify(empty)).then(function mySuccess(response){
+        if(callback){
+            callback($scope, response.data);
+        }
+    }, function myError(response) {
+            console.log(response);
+    });
 }

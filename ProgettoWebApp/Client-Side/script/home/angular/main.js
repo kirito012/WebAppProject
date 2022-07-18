@@ -2,14 +2,17 @@ import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, getNewPfp} from "./get/getProfile.js"
 import {refreshProfileData} from "./post/changePersonal.js";
-import {removeMachine} from "./post/removeMachine";
+import {removeMachine, emptyPost} from "./post/removeMachine.js";
 
-import {index} from "../script.js";
+
 
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
 
+let devicesList;
+export let index;
 
+let infos = document.querySelectorAll(".infoBottom span");
 
 let app = angular.module('myApp', []);
 
@@ -19,6 +22,7 @@ app.controller('myController', function($scope, $http, $timeout) {
     getMachines($scope, $http, (device) => {
         $timeout(() => {
             $scope.devices = device;
+            devicesList = $scope.devices;
         }, 0);
     });
 
@@ -51,10 +55,40 @@ app.controller('myController', function($scope, $http, $timeout) {
 
     getNewPfp($scope, $http);
 
-    removeMachine($scope, $http, index, $scope.devices, ($scope, device) => {
-        $scope.devices = device;
-    });
-    
+
+
+
+    $scope.selected = ($index) => {
+        index = $index;
+        devicesList = $scope.devices;
+        document.querySelectorAll(".device").forEach((element) => {
+            element.classList.remove("active");
+        })
+        document.querySelectorAll(".device")[index].classList.add("active");
+        infos[0].innerHTML = devicesList[index].customname;
+        infos[1].innerHTML = devicesList[index].model;
+        infos[2].innerHTML = devicesList[index].uniqueid;
+        removeMachine($scope, $http, index, devicesList, ($scope, device) => {
+            $timeout(() => {
+                $scope.devices = device;
+            }, 0);
+        });
+    }    
+ 
+    $scope.removeSelection = () => {
+        index = undefined;
+        document.querySelectorAll(".device").forEach((element) => {
+            element.classList.remove("active");
+        })
+        infos[0].innerHTML = "";
+        infos[1].innerHTML = "";
+        infos[2].innerHTML = "";
+        emptyPost($scope, $http, () => {
+
+        });
+    }
+   
+
     
 
     $scope.myFunction = function(index){

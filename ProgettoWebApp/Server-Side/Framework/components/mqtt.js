@@ -9,7 +9,7 @@ module.exports.connectToNewTopic = (client, model, id, topics, user) => {
   usersTopics[user] = { model: model, id: id, data: {}, subbedTopics: topics };
   
   utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
-    let topic = `${model}/${id}/${key}`;
+    let topic = `cashregister/${model}/${id}/fiscal/${key}`;
 
     client.subscribe([topic], () => {
       console.log(`${user} subscribed to topic '${topic}'`);
@@ -22,7 +22,7 @@ module.exports.disconnectFromTopic = (client ,user) => {
   let id = usersTopics[user].id;
 
   utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
-    let topic = `${model}/${id}/${key}`;
+    let topic = `cashregister/${model}/${id}/fiscal/${key}`;
 
     client.unsubscribe([topic], () => {
       console.log(`${user} unsubscribed to topic '${topic}'`);

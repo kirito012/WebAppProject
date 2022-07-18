@@ -268,12 +268,14 @@
         })
 
 
-
+        import {index} from "./angular/main.js"
 
         let removeDevice = document.querySelector(".remove");
-        let alert = document.querySelector(".alert");
+        export let alert = document.querySelector(".alert");
         removeDevice.addEventListener("click", () => {
-            alert.classList.add("active");
+            if(index != undefined){
+                alert.classList.add("active");
+            }
         });
 
         let undo = document.querySelector(".undo");
@@ -288,7 +290,6 @@
         let dashboard = document.querySelector(".dashboard");
         dashboard.addEventListener("scroll", () => {
             let y = dashboard.scrollTop;
-            console.log(y);
             if(y > 0){
                 up.style.opacity = "1";
             }else if(y == 0){
@@ -296,22 +297,6 @@
             }
         })
 
+        
 
-        export let index;
-
-        window.onload = () => {
-            var devices = document.querySelectorAll(".device");
-
-            let selection = (item, ind) => {
-                devices.forEach((element, i) => {
-                    element.classList.remove("active");
-                })
-                item.classList.add("active");
-                index = ind;
-            }
-
-
-            devices.forEach((element, i) => {
-                element.onclick = () => {selection(element, i)}
-            });
-        }
+        

@@ -1,11 +1,8 @@
 window.onload = () => {
 
-    console.log("FF");
-
     let animationInput = anime.timeline({
         easing: 'easeOutCirc',
     });
-
     animationInput
     .add({
         targets: '.inputBox, .submit',
@@ -15,16 +12,14 @@ window.onload = () => {
         duration: 500,
         autoplay: false
     })
-   
+    document.querySelector(".link.l1").onclick = animationInput.start;
 
-    document.querySelector(".link.l1").onclick = animationInput.restart;
+
 
     let animationDevices = anime.timeline({
         easing: 'easeOutCirc',
     });
-    
-    
-    
+        
     animationDevices
     .add({
         targets: '.search',
@@ -40,15 +35,8 @@ window.onload = () => {
         opacity: 1,
         duration: 500,
         autoplay: false
-    })
-    .add({
-        targets: '.device',
-        translateY: [100, 0],
-        opacity: 1,
-        delay: anime.stagger(100, {start: 200}),
-        duration: 500,
-        autoplay: false
     });
+
 
     document.querySelector(".link.l2").onclick = animationDevices.restart;
     document.querySelector(".select").onclick = animationDevices.restart;
@@ -92,13 +80,13 @@ window.onload = () => {
         duration: 400,
     })
     .add({
-        targets: '.mapouter',
+        targets: '#map',
         translateX: [30, 0],
         opacity: 1,
         duration: 400,
     })
     .add({
-        targets: '.info',
+        targets: '.information',
         translateX: [-30, 0],
         opacity: 1,
         duration: 400,
@@ -122,5 +110,12 @@ window.onload = () => {
         opacity: 1,
         duration: 400,
     });
+
+    let deviceAnimation = document.querySelectorAll(".device");
+    let delay = 1500;
+    deviceAnimation.forEach((element) => {
+        element.style.transition = "transform 0.5s ease-out " + delay + "ms, " + "opacity 0.5s ease-out " + delay + "ms";
+        delay += 100;
+    })
 
 }
