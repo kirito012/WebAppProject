@@ -22,6 +22,8 @@ let queryPreset = {
                 topics
               WHERE
                 topics.name = ?
+                and topics.actiontype = ?
+                and topics.boardtype = ?
             ),
             "ID",
             matricole.uniqueid
@@ -45,6 +47,8 @@ let queryPreset = {
                 topics
               WHERE
                 topics.name = ?
+                and topics.actiontype = ?
+                and topics.boardtype = ?
             ),
             "ID",
             matricole.uniqueid
@@ -63,12 +67,29 @@ let queryPreset = {
   WHERE
     matricole.uniqueid = ?
     and modelli.name = ?
-    and utenti.id = ?;
+    and utenti.id = ?
+    and NOT EXISTS (
+      SELECT 1 
+      FROM savedtopics 
+      WHERE 
+      savedtopics.name = ?
+      and savedtopics.corrispondenza = corrispondenze.key
+    );
   `,
   selectEmailPsw: "SELECT * FROM utenti WHERE email = ? AND password = ?;",
   selectSessionName: "SELECT * FROM utenti WHERE lastsession = ? AND name = ?;",
   selectModelliName: "SELECT * FROM modelli WHERE name = ?;",
   selectProfilePictureRoot: "SELECT pictureroot FROM profilepictures WHERE utente_id = ?",
+  selectTopicsName: `select name, actiontype, boardtype from topics where boardtype = ? and actiontype = ?`,
+  selectMachineTopics: `SELECT savedtopics.name FROM corrispondenze
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
+    JOIN utenti on corrispondenze.utente_id = utenti.id
+    JOIN savedtopics on corrispondenze.key = savedtopics.corrispondenza
+  WHERE
+	  matricole.uniqueid = ?
+    and modelli.name = ?
+    and utenti.id = ?`,
   selectMatricolaId: `SELECT * FROM corrispondenze
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
@@ -91,6 +112,11 @@ let queryPreset = {
     WHERE matricole.uniqueid = ?;`,
   selectDeleteMatricolaParent: `DELETE FROM matricole WHERE uniqueid = ? AND EXISTS(
     SELECT * FROM utenti WHERE lastsession = ? AND name = ?) LIMIT 1;`,
+  selectDeletePersonalTopic: `DELETE savedtopics FROM corrispondenze 
+	  JOIN savedtopics on corrispondenze.key = savedtopics.corrispondenza
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN utenti on corrispondenze.utente_id = utenti.id
+    WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
 };
 
 module.exports.query = (con, qr, params, callback) => {

@@ -1,9 +1,14 @@
 let crypto = require('crypto');
 let validator = require("email-validator");
 let path = require("path");
+const { json } = require('stream/consumers');
 
 module.exports.generateRandomKey = () => {
   return crypto.randomBytes(48).toString('hex');
+}
+
+module.exports.capFormat = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 module.exports.dayCheck = (day) => {
@@ -94,6 +99,36 @@ module.exports.getMachines = (fw, utente, callback) => {
 
     fw.utility.forEach(corrispondenze,(corrispondenza) => {
       jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+		}, () => {
+			callback(jsonData);
+		});
+  });
+}
+
+module.exports.getTopics = (fw, callback) => {
+  fw.queryDB("selectTopicsName",["fiscal","action"], (topicList) => {
+    let jsonData = [];
+
+    fw.utility.forEach(topicList, (topicData) => {
+      let data = JSON.parse(JSON.stringify(topicData))
+      data.name = data.name.replaceAll("_", " ");
+
+      jsonData.push(data);
+		}, () => {
+			callback(jsonData);
+		});
+  });
+}
+
+module.exports.getMachineTopics = (fw,data ,utente, callback) => {
+  fw.queryDB("selectMachineTopics",[data.id,data.model,utente.id], (nameList) => {
+    let jsonData = [];
+
+    fw.utility.forEach(nameList, (topicData) => {
+      let topicN = JSON.parse(JSON.stringify(topicData))
+      topicN.name = topicN.name.replaceAll("_", " ");
+
+      jsonData.push(topicN);
 		}, () => {
 			callback(jsonData);
 		});

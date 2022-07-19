@@ -41,20 +41,6 @@ window.onload = () => {
     document.querySelector(".link.l2").onclick = animationDevices.restart;
     document.querySelector(".select").onclick = animationDevices.restart;
 
-
-    let animationTopic = anime({
-        targets: '.topicLabel',
-        translateY: [100, 0],
-        opacity: 1,
-        easing: 'easeOutCirc',
-        delay: anime.stagger(100, {start: 200}),
-        duration: 500,
-        autoplay: false
-    });
-    document.querySelector(".link.l3").onclick = animationTopic.restart;
-
-
-
     let animationTextTitle = anime.timeline({
         easing: 'easeOutCirc'
     })
@@ -118,4 +104,31 @@ window.onload = () => {
         delay += 100;
     })
 
+}
+
+
+export let textAnimation = () => {
+    anime.timeline({loop: false})
+  .add({
+    targets: '.letter',
+    scale: [10,1],
+    opacity: [0,1],
+    translateZ: 0,
+    easing: "easeOutCirc",
+    duration: 950,
+    delay: anime.stagger(50)
+  })
+}
+
+export let removeTextAnimation = () => {
+    anime.timeline({loop: false})
+  .add({
+    targets: '.letter',
+    scale: [1, 10],
+    opacity: [1, 0],
+    translateZ: 0,
+    easing: "easeOutCirc",
+    duration: 950,
+    delay: anime.stagger(50)
+  })
 }

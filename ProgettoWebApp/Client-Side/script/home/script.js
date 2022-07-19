@@ -4,11 +4,13 @@
             header.classList.toggle("active");
         });
         let list = document.querySelectorAll(".link");
+        let indicator = document.querySelector(".indicator");
         
         function activeLink(){
             list.forEach((element) => {
                 element.classList.remove("active");
                 this.classList.add("active");
+                indicator.classList.add("active");
             });
         }
 
@@ -56,6 +58,7 @@
 
         let closeNav = () => {
             navigation.classList.remove("active");
+            indicator.classList.remove("active");
         }
 
         closeNavigation.forEach((element) => {
@@ -91,25 +94,6 @@
         focusWrite.addEventListener("click", () => {
             input.focus();
         });
-
-
-
-
-        let labels = document.querySelectorAll(".topicLabel");
-        let topicCheck = document.querySelectorAll(".checkbox");
-
-        let dalayLabels = 1;
-
-        topicCheck.forEach((element, i) => {
-            element.setAttribute("id", "i" + i);
-            labels[i].htmlFor = "i" + i;
-        });
-
-     
-
-
-
-
 
 
         let profileToggle = document.querySelector(".settingContainer");
@@ -296,7 +280,3 @@
                 up.style.opacity = "0";
             }
         })
-
-        
-
-        

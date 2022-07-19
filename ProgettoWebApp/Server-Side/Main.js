@@ -59,6 +59,12 @@ fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(re
   })
 });
 
+fw.newRequest(["get", "/home/getTopics", true, "/login", "getTopics",false],(res, req) => {
+  fw.utility.getTopics(fw, (topicList) => {
+    res.send(topicList);
+  })
+});
+
 fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePicture",true],(res, req, utente) => {
   fw.utility.getProfilePicture(fw, utente, (image) => {
     if (image == 404) {res.send("image not found"); return;};
@@ -241,8 +247,26 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 
 });
 
-/*
-fw.queryDB("generateTopicString",[topicName,topicName,uniqueid,modelName,idUtente], (status) => {
+fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res, req, utente) => {
+  let body = req.body;
+  let topicName = body.topic.replaceAll(" ", "_");
 
-})
-*/
+  if (body.scope) {
+    fw.queryDB("generateTopicString",[topicName,"action","fiscal",topicName,"action","fiscal",body.id,body.model,utente.id,topicName], (status) => {
+      res.status(204).send({});
+    })
+  }
+  else {
+    fw.queryDB("selectDeletePersonalTopic",[topicName,body.id,utente.id], (status) => {
+      res.status(204).send({});
+    })
+  }
+});
+
+fw.newRequest(["post", "/getMachineTopics", true, "/login", "getMachineTopics",true],(res, req, utente) => {
+  let body = req.body;
+
+  fw.utility.getMachineTopics(fw, body, utente, (nameList) => {
+    res.send(nameList);
+  })
+});

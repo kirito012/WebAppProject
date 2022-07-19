@@ -49,7 +49,7 @@
                         </div>
                         <span>Dati da visualizzare</span>
                     </label>
-                    <div class="indicator"></div>
+                    <div class="indicator active"></div>
                 </div>
             </div>
             <div class="settings">
@@ -157,44 +157,9 @@
                     </div>
                 </div>
                 <div class="topicsContainer">
-                    <label class="topicLabel" for="">
+                    <label class="topicLabel" ng-repeat="topic in topics" ng-click="sendTopic($index)" id="" for="">
                         <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                    <label class="topicLabel" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                    <label class="topicLabel" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                    <label class="topicLabel" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                    <label class="topicLabel" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                    <label class="topicLabel" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">Nome topic</h4>
+                        <h4 class="topic">{{ topic.name }}</h4>
                         <div class="checked">
                             <div class="checkmark"></div>
                         </div>
@@ -403,17 +368,18 @@
     <script>
         window.addEventListener("load", () => {
             document.querySelector(".loading").style.display = "none";
+
         })
 
 
 
-        var map = L.map('map').setView([45, 7], 20);
+        var map = L.map('map').setView([45.4543334,7.8549798], 12);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        L.marker([51.5, -0.09]).addTo(map)
+        L.marker([45.4543334,7.8549798 ]).addTo(map)
             .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
             .openPopup();
     </script>
