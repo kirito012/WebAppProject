@@ -2,38 +2,90 @@ let mqtt = require("mqtt");
 let utility = require("./utility");
 
 let usersTopics = {};
+let user = {};
+let matricola = {};
+
+let client = mqtt.connect("mqtt://localhost:1883", {
+  clientId: utility.generateRandomKey(),
+  clean: true,
+  connectTimeout: 4000,
+  username: "User1",
+  password: "Olivetti",
+  reconnectPeriod: 1000,
+});
+
+module.exports.newMatricola = (id,name,parentId,parentName) => {
+  matricola[id] = {};
+
+  matricola[id].id = id;
+  matricola[id].name = name;
+  matricola[id].parentId = parentId;
+  matricola[id].parentName = parentName;
+  matricola[id].data = {};
+
+  if (user[parentId]) {
+    user[parentId].selectedMatricola = id;
+  }
+  else {
+    user[parentId] = {};
+    
+    user[parentId].id = parentId;
+    user[parentId].name = parentName;
+    user[parentId].selectedMatricola = id;
+  }
+}
 
 module.exports.usersTopics = () => {return usersTopics};
 
-module.exports.connectToNewTopic = (client, model, id, topics, user) => {
-  usersTopics[user] = { model: model, id: id, data: {}, subbedTopics: topics };
-  
-  utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
-    let topic = `cashregister/${model}/${id}/fiscal/${key}`;
+module.exports.connectToNewTopic = (userId,topicName,topicString) => {
+  let currentUser = user[userId];
 
-    client.subscribe([topic], () => {
-      console.log(`${user} subscribed to topic '${topic}'`);
-	  });
-  });
+  if (currentUser) {
+    if (usersTopics[topicName]){
+      usersTopics[topicName].subscribedUsers.push(userId);
+    }
+    else{
+      usersTopics[topicName] = {};
+
+      usersTopics[topicName].name = topicName;
+      usersTopics[topicName].topicString = topicString.trim();
+      usersTopics[topicName].subscribedUsers = [userId];
+
+      client.subscribe(usersTopics[topicName].topicString);
+    }
+  }
+  else {
+    console.log("mqtt user not found");
+  }
 }
 
-module.exports.disconnectFromTopic = (client ,user) => {
-  let model = usersTopics[user].model;
-  let id = usersTopics[user].id;
+module.exports.disconnectFromTopic = (userId,topicName) => {
+  let currentUser = user[userId];
 
-  utility.forEach(usersTopics[user].subbedTopics,(element,key) => {
-    let topic = `cashregister/${model}/${id}/fiscal/${key}`;
+  if (currentUser) {
+    if (usersTopics[topicName]){
+      let index = usersTopics[topicName].subscribedUsers.indexOf(userId);
 
-    client.unsubscribe([topic], () => {
-      console.log(`${user} unsubscribed to topic '${topic}'`);
-    });
-  })
+      if (index > -1) {
+        usersTopics[topicName].subscribedUsers.splice(index, 1);
+      }
 
-  usersTopics[user] = undefined;
+      if (usersTopics[topicName].length <= 0) {
+        client.unsubscribe(usersTopics[topicName].topicString);
+        usersTopics[topicName] = undefined;
+      }
+    }
+    else{
+      console.log("mqtt topic not found");
+    }
+  }
+  else {
+    console.log("mqtt user not found");
+  }
 }
 
-module.exports.connectToBroker= (connectUrl) => {
-  let client = mqtt.connect(connectUrl, {
+module.exports.connectToBroker = (connectUrl) => {
+  client = mqtt.connect(connectUrl, {
     clientId: utility.generateRandomKey(),
     clean: true,
     connectTimeout: 4000,
@@ -43,13 +95,22 @@ module.exports.connectToBroker= (connectUrl) => {
   });
 
   client.on("message", (topic, payload) => {
-    utility.forEach(usersTopics, (user) => {
-      let builtTopic = topic.split("/");
+    let splitted = topic.split("/");
+    let head = splitted[splitted.length - 1];
 
-      if (user.subbedTopics[builtTopic[builtTopic.length - 1]]) {
-        user.data[builtTopic[builtTopic.length - 1]] = payload.toString();
-      }
-    });
+    console.log(topic);
+    console.log(payload);
+
+    if(usersTopics[head]) {
+      usersTopics[head].subscribedUsers.foreach((userId) => {
+        if (user[userId]){
+          if (matricola[user[userId].selectedMatricola]) {
+            matricola[user[userId].selectedMatricola].data[head] = payload;
+            console.log(matricola);
+          }
+        }
+      })
+    }
   });
 
   client.on("connect", () => {

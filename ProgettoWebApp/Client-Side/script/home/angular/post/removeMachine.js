@@ -1,5 +1,4 @@
 let removeButton = document.querySelector(".confirmRemove");
-let removeSel = document.querySelector(".removeSelection");
 let deviceToRemove = {};
 
 import {alert} from "../../script.js";

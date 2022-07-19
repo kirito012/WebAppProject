@@ -510,6 +510,11 @@ section .navigation .item .addDevice{
     padding: 20px 10px;
 }
 
+section .navigation .item .addDevice .added{
+    margin-top: 20px;
+    color: #112d42;
+}
+
 section .navigation .item .addDevice .inputBox{
     position: relative;
     display: flex;
@@ -863,6 +868,7 @@ section .navigation .item .topicsContainer label input{
 
 section .navigation .item.active .topicsContainer label .topic{
     transition: 0.2s ease;
+    color: #112d42;
 }
 
 section .navigation .item .topicsContainer label:hover .topic{

@@ -135,6 +135,20 @@ module.exports.getMachineTopics = (fw,data ,utente, callback) => {
   });
 }
 
+module.exports.getMachinePureTopics = (fw, data, utente, callback) => {
+  fw.queryDB("selectMachineTopics",[data.id,data.model,utente.id], (list) => {
+    let jsonData = [];
+
+    fw.utility.forEach(list, (topicData) => {
+      let topicN = JSON.parse(JSON.stringify(topicData))
+
+      jsonData.push(topicN);
+		}, () => {
+			callback(jsonData);
+		});
+  });
+}
+
 module.exports.getProfile = (fw, utente,callback) => {
   let profile = {};
 

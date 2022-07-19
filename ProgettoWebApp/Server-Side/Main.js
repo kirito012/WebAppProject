@@ -33,12 +33,7 @@ callback:
 //Get requests\\
 
 fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, req, utente) => {
-  if (fw.mqtt.usersTopics[utente.name]) {
-    res.send(fw.mqtt.usersTopics[utente.name]);
-  } 
-	else {
-    res.send({});
-  }
+  
 });
 
 fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
@@ -149,39 +144,6 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
   });
 });
 
-fw.newRequest(["post", "/subscribe", true, "/login", "subscribe", true],(res, req, utente) => {
-	let body = req.body;
-	let user = utente.name;
-
-	if (fw.mqtt.usersTopics[user]) {
-		fw.mqtt.disconnectFromTopic(user);
-	}
-
-	fw.utility.checkLength(body.topics,() => {
-		fw.queryDB("selectMatricolaId",[req.session.secret,user,body.id],(resultid) => {
-			fw.utility.checkLength(resultid, () => {
-				let id = resultid[0].matricola_id
-
-				if (id) {
-					fw.queryDB("updateSelectedMatricola",[id,req.session.secret,user], () => {
-						fw.mqtt.connectToNewTopic(body.model, body.id, body.topics, user);
-						res.send(fw.mqtt.usersTopics[user]);
-					});
-				}
-				else{
-					console.log(resultid);
-				}
-			}, () => {
-				console.log("id not found");
-				console.log(resultid);
-			});
-		});
-	},() => {
-		console.log("body doesn't exitst")
-		res.send({});
-	})
-});
-
 fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, req, utente) => {
 	let body = req.body;
 	let modelId = 0;
@@ -207,15 +169,17 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
 
 fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],(res, req, utente) => {
 	let body = req.body;
-  let user = utente.name;
 
-  fw.queryDB("selectDeleteCorrispondenza",[body.id], () => {
-    fw.queryDB("selectDeleteMatricolaParent",[body.id,req.session.secret,req.session.name,body.id],(results) => {
-      if (fw.mqtt.usersTopics[user] && fw.mqtt.usersTopics[user].id == body.id) {
-        fw.mqtt.disconnectFromTopic(user);
-      }
-      fw.utility.getMachines(fw,utente, (machines) => {
-        res.send(machines);
+  fw.queryDB("selectCorrispondenzaMatricola", [body.id,utente.id],(idToKeep) => {
+    fw.utility.checkLength(idToKeep, () => {
+      fw.queryDB("selectDeleteAllPersonalTopic",[body.id,utente.id],(results) => {
+        fw.queryDB("selectDeleteMatricolaParent",[body.id,utente.id],(results) => {
+          fw.queryDB("selectDeleteCorrispondenza",[idToKeep[0].matricola_id,utente.id], (results) => {
+            fw.utility.getMachines(fw,utente, (machines) => {
+              res.send(machines);
+            });
+          });
+        });
       });
     });
   });
@@ -251,14 +215,23 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
   let body = req.body;
   let topicName = body.topic.replaceAll(" ", "_");
 
+  fw.mqtt.newMatricola(body.id,body.model,utente.id,utente.name);
+
   if (body.scope) {
     fw.queryDB("generateTopicString",[topicName,"action","fiscal",topicName,"action","fiscal",body.id,body.model,utente.id,topicName], (status) => {
-      res.status(204).send({});
+      fw.utility.getMachinePureTopics(fw, body, utente, (nameList) => {
+        fw.utility.forEach(nameList,(element) => {
+          fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
+        })
+        res.send(nameList);
+      })
     })
   }
   else {
     fw.queryDB("selectDeletePersonalTopic",[topicName,body.id,utente.id], (status) => {
-      res.status(204).send({});
+      fw.utility.getMachinePureTopics(fw, body, utente, (nameList) => {
+        res.send(nameList);
+      })
     })
   }
 });

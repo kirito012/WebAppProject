@@ -87,7 +87,7 @@
                 <div class="addDevice">
                     <form class="formMachine" id="formMachine" action="addMachine" method="post">
                         <div class="inputBox" style="z-index: 1000;">
-                            <input type="text" name="search" class="input model" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
+                            <input type="text" name="search" class="input model addMachine" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
                             <span class="focus f1">Modello</span>
                             <div class="models">
                                 <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter:modelsFilter">
@@ -101,15 +101,18 @@
                             </div>
                         </div>
                         <div class="inputBox" style="z-index: 1;">
-                            <input type="text" name="id" class="input id" autocomplete="off" required>
+                            <input type="text" name="id" class="input id addMachine" autocomplete="off" required>
                             <span class="focus f2">Numero di serie</span>
                         </div>
                         <div class="inputBox" style="z-index: 1;">
-                            <input type="text" name="name" class="input name" autocomplete="off" required>
+                            <input type="text" name="name" class="input name addMachine" autocomplete="off" required>
                             <span class="focus f3">Nome personalizzato</span>
                         </div>
                         <div class="submit">
                             <input type="submit" class="submitAddMachine" value="Aggiungi">
+                        </div>
+                        <div class="added">
+                            <h4></h4>
                         </div>
                         <div class="error">
                             

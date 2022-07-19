@@ -1,7 +1,8 @@
 import {getModels} from "./get/getModels.js";
 import {getMachines, refreshMachine} from "./get/getMachines.js";
 import {getProfile, getNewPfp} from "./get/getProfile.js"
-import {getTopics, activeTopics} from "./get/getTopics.js";
+import {getTopics} from "./get/getTopics.js";
+import {activeTopics} from "./post/machineTopics.js";
 import {refreshProfileData} from "./post/changePersonal.js";
 import {removeMachine, emptyPost} from "./post/removeMachine.js";
 import {textAnimation, removeTextAnimation} from "../animation/animate.js";
@@ -36,6 +37,14 @@ app.controller('myController', function($scope, $http, $timeout) {
         $timeout(() => {
             $newScope.devices = data;
         }, 0);
+        let inputsAddMachine = document.querySelectorAll(".input.addMachine");
+        inputsAddMachine.forEach((element) => {
+            element.value = "";
+        })
+        document.querySelector(".added h3").innerHTML = "Dispositivo aggiunto";
+        $timeout(() => {
+            document.querySelector(".added h3").innerHTML = "";
+        }, 5000);
     });;
 
     getProfile($scope, $http, ($scope, data) => {
@@ -102,7 +111,7 @@ app.controller('myController', function($scope, $http, $timeout) {
             $timeout(() => {
                 $scope.devices = device;
             }, 0);
-        });
+        }); 
         activeTopics($scope, $http, devicesList, $index, ($scope, topicsActive) => {
             topics.forEach((element) => {
                 let newClass = element.name.replaceAll(" ", "_");
