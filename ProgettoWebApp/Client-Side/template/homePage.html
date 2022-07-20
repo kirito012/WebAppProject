@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard | Olivetti SPA</title>
     <link rel="stylesheet" href="../Styles/home/style.css">
     <link rel="stylesheet" href="../Styles/home/icon.css">
     <link rel="stylesheet" href="../Styles/home/dashboard.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
+    <script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>    
     <script src="../script/libraries/anime.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
@@ -228,7 +230,9 @@
                 </div>
             </div>
             <div class="sectionTwo" id="secTwo">
+                <canvas id="canvas">
 
+                </canvas>
             </div>
             <a href="#secOne" class="up">
                 <ion-icon name="chevron-up-outline"></ion-icon>
@@ -372,6 +376,13 @@
         window.addEventListener("load", () => {
             document.querySelector(".loading").style.display = "none";
 
+            let devicesList = document.querySelectorAll(".device");
+            let delayDevices = 1200;
+            devicesList.forEach((element) => {
+                element.style.transitionDelay = delayDevices + "ms";
+                delayDevices += 100;
+            })
+
         })
 
 
@@ -382,10 +393,9 @@
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        L.marker([45.4543334,7.8549798 ]).addTo(map)
-            .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-            .openPopup();
+        L.marker([45.4543334,7.8549798]).addTo(map)
     </script>
+
 
 
 

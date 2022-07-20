@@ -5,7 +5,6 @@ export let activeTopics = ($scope, $http, device, index, callback) => {
         url : "/getMachineTopics",
         data: JSON.stringify(deviceSelected)
     }).then(function mySuccess(response) {
-        console.log(response.data);
         if(callback){
             callback($scope, response.data);
         }

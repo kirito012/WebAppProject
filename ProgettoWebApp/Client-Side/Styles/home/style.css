@@ -537,6 +537,7 @@ section .navigation .item .addDevice .inputBox input{
     padding: 0 5px;
     caret-color: #112d42;
     font-size: 14px;
+    font-weight: 900;
     color: #112d42;
     font-weight: 0;
     letter-spacing: 2px;
@@ -764,6 +765,7 @@ section .navigation .item .devicesContainer .devices .device{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     opacity: 0;
     transform: translateY(50px);
+    transition: 0.5s ease-out;
     cursor: pointer;
     color: #112d42;
 }
@@ -1331,6 +1333,7 @@ section .inputSettings form .row .column .inputBox input{
     padding: 0 5px;
     caret-color: #112d42;
     font-size: 14px;
+    font-weight: 900;
     color: #112d42;
     font-weight: 0;
     letter-spacing: 2px;

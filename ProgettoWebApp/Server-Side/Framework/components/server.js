@@ -2,6 +2,7 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let multer = require('multer');
 let session = require("express-session");
+let websockets = require('express-ws')
 let fileUpload = require("express-fileupload");
 let device = require('express-device');
 let cors = require("cors");
@@ -37,6 +38,8 @@ module.exports.newApp = data.newApp = (settings) => {
       cookie: { maxAge: settings[1] ||settings.cookieMaxAge },
     })
   );
+
+  websockets(app);
 
   return app;
 };
@@ -75,6 +78,12 @@ module.exports.newRequest = data.newRequest = (app,settings,callback) => {
 		}
 	});
 };
+
+module.exports.newWsConnection = data.newWsConnection = (app,route,callback) => {
+	app.ws(route, (ws,req) => {
+		callback(ws,req);
+	});
+}
 
 module.exports.newStatic = data.newStatic = (app,link,redirectTo,requireSession,file) => {
 	data.newRequest(app,["get",link,requireSession,redirectTo],(res,req) => {

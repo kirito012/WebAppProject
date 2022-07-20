@@ -7,7 +7,8 @@ import {refreshProfileData} from "./post/changePersonal.js";
 import {removeMachine, emptyPost} from "./post/removeMachine.js";
 import {textAnimation, removeTextAnimation} from "../animation/animate.js";
 import {updateTopics} from "./post/updateTopics.js";
-
+import {sendInfo} from "./post/machineInfos.js";
+import {getData} from "./get/getData.js";
 
 
 let inputValue = document.querySelector("#inputSearch");
@@ -18,12 +19,22 @@ export let index;
 
 let topics;
 
+let oldTopics = {}
+
+let userId;
+
+let dataStream;
+
+let closeConn = {action: "close"};
 
 let infos = document.querySelectorAll(".infoBottom span");
 
-let app = angular.module('myApp', []);
 
-app.controller('myController', function($scope, $http, $timeout) {
+let app = angular.module('myApp', ['ngWebSocket']);
+
+app.controller('myController', function($scope, $http, $timeout, $interval, $websocket) {
+
+    dataStream = $websocket('ws://192.168.0.6:8081/socketData');
     getModels($scope, $http);
 
     getMachines($scope, $http, (device) => {
@@ -36,6 +47,12 @@ app.controller('myController', function($scope, $http, $timeout) {
     refreshMachine($scope, ($newScope, data) => {
         $timeout(() => {
             $newScope.devices = data;
+            let devicesList = document.querySelectorAll(".device");
+            let delay = 1200;
+            devicesList.forEach((element) => {
+                element.style.transitionDelay = delay + "ms";
+                delay += 100;
+            })
         }, 0);
         let inputsAddMachine = document.querySelectorAll(".input.addMachine");
         inputsAddMachine.forEach((element) => {
@@ -54,6 +71,7 @@ app.controller('myController', function($scope, $http, $timeout) {
             $scope.surname = data.surname;
             $scope.email = data.email;
             $scope.birthday = new Date(data.Birthday);
+            userId = data.id;
         }, 0);
     });
 
@@ -109,7 +127,9 @@ app.controller('myController', function($scope, $http, $timeout) {
         textAnimation();
         removeMachine($scope, $http, index, devicesList, ($scope, device) => {
             $timeout(() => {
+                console.log(device);
                 $scope.devices = device;
+                $scope.removeSelection();
             }, 0);
         }); 
         activeTopics($scope, $http, devicesList, $index, ($scope, topicsActive) => {
@@ -117,13 +137,27 @@ app.controller('myController', function($scope, $http, $timeout) {
                 let newClass = element.name.replaceAll(" ", "_");
                 document.querySelector("." + newClass).checked = false;
             })
-            topicsActive.forEach((element, i) => {
-                topics.forEach((item) => {
-                    if(element.name == item.name){
-                        let newClass = element.name.replaceAll(" ", "_");
-                        document.querySelector("." + newClass).checked = true;
-                    }  
+            if(topicsActive){
+                topicsActive.forEach((element, i) => {
+                    topics.forEach((item) => {
+                        if(element.name == item.name){
+                            let newClass = element.name.replaceAll(" ", "_");
+                            document.querySelector("." + newClass).checked = true;
+                        }  
+                    })
                 })
+            }
+            sendInfo($scope, $http, devicesList, $index, topicsActive, oldTopics, userId, ($scope, userId) => {
+
+                let socketInfo = {utente_id: userId, action: "set"};
+
+                dataStream.send(JSON.stringify(socketInfo));
+
+                dataStream.onMessage((response) => {
+                    console.log(response.data);
+                })
+
+                oldTopics = topicsActive;
             })
         })
     }    
@@ -143,8 +177,10 @@ app.controller('myController', function($scope, $http, $timeout) {
             infos[2].innerHTML = "";
         }, 1000);
         removeTextAnimation();
-        emptyPost($scope, $http, () => {
-
+        emptyPost($scope, $http, oldTopics, ($scope, data) => {
+            if(dataStream){
+                dataStream.send(JSON.stringify(closeConn));
+            }
         });
         topics.forEach((element) => {
             let newClass = element.name.replaceAll(" ", "_");
@@ -184,5 +220,8 @@ app.controller('myController', function($scope, $http, $timeout) {
             inputValue.value = '';
         }
     }
+
+
+  
 
 });

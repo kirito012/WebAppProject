@@ -32,7 +32,7 @@ class framework {
 
     this.server.startApp(this.app, settings.port, () => {
       this.database.onConnect(this.connectionDB, databaseCallback);
-		  this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
+		  //this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
 
       this.newStatic({
         link: this.indexRoot,
@@ -84,6 +84,10 @@ class framework {
         }
       });
   };
+
+  newWsConnection = (settings, callback) => {
+    this.server.newWsConnection(this.app, settings[0], callback);
+  }
 
   queryDB = (qr, params, callback) => {
     this.database.query(this.connectionDB, qr, params, callback);

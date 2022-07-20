@@ -97,11 +97,15 @@ module.exports.getMachines = (fw, utente, callback) => {
   fw.queryDB("selectCorrispondenze",[utente.id], (corrispondenze) => {
     let jsonData = [];
 
-    fw.utility.forEach(corrispondenze,(corrispondenza) => {
-      jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
-		}, () => {
-			callback(jsonData);
-		});
+    fw.utility.checkLength(corrispondenze, () => {
+      fw.utility.forEach(corrispondenze,(corrispondenza) => {
+        jsonData.push(JSON.parse(JSON.stringify(corrispondenza)));
+      }, () => {
+        callback(jsonData);
+      });
+    }, () => {
+      callback(JSON.stringify([]));
+    })
   });
 }
 
@@ -124,14 +128,18 @@ module.exports.getMachineTopics = (fw,data ,utente, callback) => {
   fw.queryDB("selectMachineTopics",[data.id,data.model,utente.id], (nameList) => {
     let jsonData = [];
 
-    fw.utility.forEach(nameList, (topicData) => {
-      let topicN = JSON.parse(JSON.stringify(topicData))
-      topicN.name = topicN.name.replaceAll("_", " ");
+    fw.utility.checkLength(nameList, () => {
+      fw.utility.forEach(nameList, (topicData) => {
+        let topicN = JSON.parse(JSON.stringify(topicData))
+        topicN.name = topicN.name.replaceAll("_", " ");
 
-      jsonData.push(topicN);
-		}, () => {
-			callback(jsonData);
-		});
+        jsonData.push(topicN);
+      }, () => {
+        callback(jsonData);
+      });
+    }, () => {
+      callback(JSON.stringify([]));
+    });
   });
 }
 
@@ -139,13 +147,17 @@ module.exports.getMachinePureTopics = (fw, data, utente, callback) => {
   fw.queryDB("selectMachineTopics",[data.id,data.model,utente.id], (list) => {
     let jsonData = [];
 
-    fw.utility.forEach(list, (topicData) => {
-      let topicN = JSON.parse(JSON.stringify(topicData))
+    fw.utility.checkLength(list, () => {
+      fw.utility.forEach(list, (topicData) => {
+        let topicN = JSON.parse(JSON.stringify(topicData))
 
-      jsonData.push(topicN);
-		}, () => {
-			callback(jsonData);
-		});
+        jsonData.push(topicN);
+      }, () => {
+        callback(jsonData);
+      });
+    }, () => {
+      callback(JSON.stringify([]));
+    });
   });
 }
 
@@ -157,6 +169,7 @@ module.exports.getProfile = (fw, utente,callback) => {
   profile.email = utente.email;
   profile.birthday = fw.utility.formatDate(utente.birthday);
   profile.Birthday = utente.birthday;
+  profile.id = utente.id;
 
   callback(profile);
 }

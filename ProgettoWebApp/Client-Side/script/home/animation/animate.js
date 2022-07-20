@@ -96,14 +96,6 @@ window.onload = () => {
         opacity: 1,
         duration: 400,
     });
-
-    let deviceAnimation = document.querySelectorAll(".device");
-    let delay = 1500;
-    deviceAnimation.forEach((element) => {
-        element.style.transition = "transform 0.5s ease-out " + delay + "ms, " + "opacity 0.5s ease-out " + delay + "ms";
-        delay += 100;
-    })
-
 }
 
 
@@ -115,8 +107,7 @@ export let textAnimation = () => {
     opacity: [0,1],
     translateZ: 0,
     easing: "easeOutCirc",
-    duration: 950,
-    delay: anime.stagger(50)
+    delay: anime.stagger(25)
   })
 }
 
@@ -128,7 +119,6 @@ export let removeTextAnimation = () => {
     opacity: [1, 0],
     translateZ: 0,
     easing: "easeOutCirc",
-    duration: 950,
-    delay: anime.stagger(50)
+    delay: anime.stagger(25)
   })
 }

@@ -8,6 +8,7 @@ export let removeMachine = ($scope, $http, i, device, callback) => {
         deviceToRemove = {id: device[i].uniqueid};
         $http.post("/removeMachine", JSON.stringify(deviceToRemove)).then(function mySuccess(response){
             if(callback){
+                console.log(response.data);
                 callback($scope, response.data);
                 alert.classList.remove("active");
             }
@@ -18,8 +19,8 @@ export let removeMachine = ($scope, $http, i, device, callback) => {
 }
 
 
-export let emptyPost = ($scope, $http, callback) => {
-    let empty = {};
+export let emptyPost = ($scope, $http, topics, callback) => {
+    let empty = {oldTopics: topics};
     $http.post("/removeMachine", JSON.stringify(empty)).then(function mySuccess(response){
         if(callback){
             callback($scope, response.data);

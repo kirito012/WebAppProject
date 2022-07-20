@@ -8,23 +8,48 @@ let matricola = {};
 let client = mqtt.connect("mqtt://localhost:1883", {
   clientId: utility.generateRandomKey(),
   clean: true,
-  connectTimeout: 4000,
+  connectTimeout: 1000 * 60 * 60 * 24,
   username: "User1",
   password: "Olivetti",
   reconnectPeriod: 1000,
 });
 
+//cashregister/form100/80E10008038/fiscal/heartbeat
+//cashregister/form100/80E10002884/fiscal/heartbeat
+
+client.on("message", (topic, payload) => {
+  let splitted = topic.split("/");
+  let head = splitted[splitted.length - 1];
+  let matricola_id = splitted[2];
+
+  if(usersTopics[head + matricola_id]) {
+    for (let i in usersTopics[head + matricola_id].subscribedUsers) {
+      let userId = usersTopics[head + matricola_id].subscribedUsers[i];
+      if (user[userId]){
+        if (matricola[user[userId].selectedMatricola]) {
+          if (matricola[user[userId].selectedMatricola].id == matricola_id) {
+            user[userId].data[head] = payload.toString();
+          }
+        }
+      }
+    }
+  }
+});
+
+client.on("connect", () => {
+  console.log("Connected to the broker!");
+});
+
 module.exports.newMatricola = (id,name,parentId,parentName) => {
-  matricola[id] = {};
-
-  matricola[id].id = id;
-  matricola[id].name = name;
-  matricola[id].parentId = parentId;
-  matricola[id].parentName = parentName;
-  matricola[id].data = {};
-
   if (user[parentId]) {
     user[parentId].selectedMatricola = id;
+
+    if (!matricola[id]){
+      matricola[id] = {};
+  
+      matricola[id].id = id;
+      matricola[id].name = name;
+    }
   }
   else {
     user[parentId] = {};
@@ -32,26 +57,58 @@ module.exports.newMatricola = (id,name,parentId,parentName) => {
     user[parentId].id = parentId;
     user[parentId].name = parentName;
     user[parentId].selectedMatricola = id;
+    user[parentId].data = {};
+
+    if (!matricola[id]){
+      matricola[id] = {};
+  
+      matricola[id].id = id;
+      matricola[id].name = name;
+    }
   }
 }
 
-module.exports.usersTopics = () => {return usersTopics};
+module.exports.getMachineData = (userId,callback) => {
+  if (user[userId]) {
+    callback(user[userId].data);
+  }
+};
+
+module.exports.clearMachineData = (userId,callback) => {
+  if (user[userId]) {
+    user[userId].data = {};
+    callback();
+  }
+};
+
 
 module.exports.connectToNewTopic = (userId,topicName,topicString) => {
   let currentUser = user[userId];
+  let splitted = topicString.split("/");
+  let matricola_id = splitted[2];
 
   if (currentUser) {
-    if (usersTopics[topicName]){
-      usersTopics[topicName].subscribedUsers.push(userId);
+    if (usersTopics[topicName + matricola_id]){
+      if(usersTopics[topicName + matricola_id].subscribedUsers.indexOf(userId) >= 0){
+        return
+      }
+      else {
+        usersTopics[topicName + matricola_id].subscribedUsers.push(userId);
+      }
     }
     else{
-      usersTopics[topicName] = {};
+      usersTopics[topicName + matricola_id] = {};
 
-      usersTopics[topicName].name = topicName;
-      usersTopics[topicName].topicString = topicString.trim();
-      usersTopics[topicName].subscribedUsers = [userId];
+      usersTopics[topicName + matricola_id].name = topicName;
+      usersTopics[topicName + matricola_id].subscribedUsers = [userId];
 
-      client.subscribe(usersTopics[topicName].topicString);
+      let topicStr = topicString.split("/");
+      topicStr[1] = topicStr[1].replace(/\s/g, '');
+      topicStr[1] = topicStr[1].toLowerCase();
+      topicStr = topicStr.join("/");
+      usersTopics[topicName + matricola_id].topicString = topicStr;
+
+      client.subscribe(usersTopics[topicName + matricola_id].topicString);
     }
   }
   else {
@@ -59,20 +116,22 @@ module.exports.connectToNewTopic = (userId,topicName,topicString) => {
   }
 }
 
-module.exports.disconnectFromTopic = (userId,topicName) => {
+module.exports.disconnectFromTopic = (userId,topicName,topicString) => {
   let currentUser = user[userId];
+  let splitted = topicString.split("/");
+  let matricola_id = splitted[2];
 
   if (currentUser) {
-    if (usersTopics[topicName]){
-      let index = usersTopics[topicName].subscribedUsers.indexOf(userId);
+    if (usersTopics[topicName + matricola_id]){
+      let index = usersTopics[topicName + matricola_id].subscribedUsers.indexOf(userId);
 
       if (index > -1) {
-        usersTopics[topicName].subscribedUsers.splice(index, 1);
+        usersTopics[topicName + matricola_id].subscribedUsers.splice(index, 1);
       }
 
-      if (usersTopics[topicName].length <= 0) {
-        client.unsubscribe(usersTopics[topicName].topicString);
-        usersTopics[topicName] = undefined;
+      if (usersTopics[topicName + matricola_id].length <= 0) {
+        client.unsubscribe(usersTopics[topicName + matricola_id].topicString);
+        usersTopics[topicName + matricola_id] = undefined;
       }
     }
     else{
@@ -83,38 +142,3 @@ module.exports.disconnectFromTopic = (userId,topicName) => {
     console.log("mqtt user not found");
   }
 }
-
-module.exports.connectToBroker = (connectUrl) => {
-  client = mqtt.connect(connectUrl, {
-    clientId: utility.generateRandomKey(),
-    clean: true,
-    connectTimeout: 4000,
-    username: "User1",
-    password: "Olivetti",
-    reconnectPeriod: 1000,
-  });
-
-  client.on("message", (topic, payload) => {
-    let splitted = topic.split("/");
-    let head = splitted[splitted.length - 1];
-
-    console.log(topic);
-    console.log(payload);
-
-    if(usersTopics[head]) {
-      usersTopics[head].subscribedUsers.foreach((userId) => {
-        if (user[userId]){
-          if (matricola[user[userId].selectedMatricola]) {
-            matricola[user[userId].selectedMatricola].data[head] = payload;
-            console.log(matricola);
-          }
-        }
-      })
-    }
-  });
-
-  client.on("connect", () => {
-    console.log("Connected to the broker!");
-    return client;
-  });
-};

@@ -33,7 +33,9 @@ callback:
 //Get requests\\
 
 fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, req, utente) => {
-  
+  fw.mqtt.getMachineData(utente.id, (data) => {
+    res.send(data);
+  });
 });
 
 fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
@@ -170,6 +172,12 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
 fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],(res, req, utente) => {
 	let body = req.body;
 
+  if (body.oldTopics){
+    fw.utility.forEach(body.oldTopics,(element) => {
+      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"))
+    })
+  }
+
   fw.queryDB("selectCorrispondenzaMatricola", [body.id,utente.id],(idToKeep) => {
     fw.utility.checkLength(idToKeep, () => {
       fw.queryDB("selectDeleteAllPersonalTopic",[body.id,utente.id],(results) => {
@@ -181,6 +189,8 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
           });
         });
       });
+    }, () => {
+      res.status(204).send({});
     });
   });
 });
@@ -215,8 +225,6 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
   let body = req.body;
   let topicName = body.topic.replaceAll(" ", "_");
 
-  fw.mqtt.newMatricola(body.id,body.model,utente.id,utente.name);
-
   if (body.scope) {
     fw.queryDB("generateTopicString",[topicName,"action","fiscal",topicName,"action","fiscal",body.id,body.model,utente.id,topicName], (status) => {
       fw.utility.getMachinePureTopics(fw, body, utente, (nameList) => {
@@ -242,4 +250,62 @@ fw.newRequest(["post", "/getMachineTopics", true, "/login", "getMachineTopics",t
   fw.utility.getMachineTopics(fw, body, utente, (nameList) => {
     res.send(nameList);
   })
+});
+
+fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, utente) => {
+  let body = req.body;
+
+  fw.mqtt.newMatricola(body.id,body.model,utente.id,utente.name);
+
+  if (body.oldTopics){
+    fw.utility.forEach(body.oldTopics,(element) => {
+      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"),element.topicstring)
+    })
+  }
+
+  fw.utility.forEach(body.topics,(element) => {
+    fw.mqtt.connectToNewTopic(utente.id,element.name.replaceAll(" ","_"),element.topicstring);
+  })
+
+  res.status(204).send({});
+});
+
+// Socket connection \\
+
+fw.newWsConnection(["/socketData"], (ws,req) => {
+  let utente_id;
+  let id;
+
+  console.log("connect");
+
+  ws.on("message", (msg) => {
+    let parsed = JSON.parse(msg);
+
+    if (parsed.action == "set"){
+      utente_id = parsed.utente_id;
+
+      clearInterval(id);
+
+      setTimeout(() => {
+        id = setInterval(function(){
+          if (utente_id) {
+            fw.mqtt.getMachineData(utente_id, (data) => {
+              ws.send(JSON.stringify(data));
+            });
+          }
+        }, 1000);
+      },1000)
+    }
+    else if (parsed.action == "stop"){
+      utente_id = undefined;
+      clearInterval(id);
+    }
+    else if (parsed.action == "close"){
+      fw.mqtt.clearMachineData((utente_id) => {
+        utente_id = undefined;
+        clearInterval(id);
+        ws.close();
+      })
+    }
+  });
 });

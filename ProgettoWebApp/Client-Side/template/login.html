@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login | Olivetti SPA</title>
+    <link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
     <link rel="stylesheet" href="../Styles/login/login.css">
 </head>
 <body>
-    <!-- <iframe class="loading" src="../template/loading.html" frameborder="0"></iframe> -->
+    <iframe class="loading" src="../template/loading.html" frameborder="0"></iframe>
     <section>
         <div class="login">
             <h1 class="log">Accedi</h1>
@@ -95,7 +96,12 @@
         </div>
     </section>
 
-    
+    <script>
+        window.addEventListener("load", () => {
+            document.querySelector(".loading").style.display = "none";
+        })
+
+    </script>
 
     <script src="../script/login/script.js"></script>
 </body>
