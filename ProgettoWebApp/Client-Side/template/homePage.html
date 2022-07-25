@@ -10,8 +10,10 @@
     <link rel="stylesheet" href="../Styles/home/dashboard.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
     <link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
-    <script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>    
+    <script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">    
     <script src="../script/libraries/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
 </head>
@@ -92,7 +94,7 @@
                             <input type="text" name="search" class="input model addMachine" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
                             <span class="focus f1">Modello</span>
                             <div class="models">
-                                <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter:modelsFilter">
+                                <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter: modelsFilter">
                                     <div class="img">
                                         <img src="../images/{{ model + '.png' }}" alt="">
                                     </div>
@@ -204,7 +206,7 @@
                                     </div>
                                     <div class="bottom">
                                         <ul>
-                                            <li class="state">Stato:</li>
+                                            <li class="state s1">Stato: <span></span></li>
                                             <li class="state">Stato:</li>
                                             <li class="state">Stato:</li>
                                             <li class="state">Stato:</li>
@@ -230,9 +232,66 @@
                 </div>
             </div>
             <div class="sectionTwo" id="secTwo">
-                <canvas id="canvas">
+                <div class="column">
+                    <div class="row">
+                        <div class="title">
+                            <h1 class="overViewTitle">Overview</h1>
+                            <div class="refresh"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="top">
+                            <div class="chart">
+                                <div class="top">
+                                    <h1 class="data">Dati principali</h1>
+                                </div>
+                                <div class="bottom">
+                                    <div class="left">
+                                        <div class="writeLeft">
+                                            <ul>
+                                                <li>0</li>
+                                                <li>20<hr></li>
+                                                <li>40<hr></li>
+                                                <li>60<hr></li>
+                                                <li>80<hr></li>
+                                                <li>100<hr></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <div class="context">
+                                            <ul>
+                                                <li class="bar b1"><span></span></li>
+                                                <li class="bar b2"><span></span></li>
+                                                <li class="bar b3"><span></span></li>
+                                                <li class="bar b4"><span></span></li>
+                                            </ul>
+                                        </div>
+                                        <div class="writeBottom">
+                                            <ul>
+                                                <li>Temperatura</li>
+                                                <li>Uso CPU</li>
+                                                <li>Memoria libera</li>
+                                                <li>Ram libera</li>
+                                            </ul>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gaugeContainer">
+                                <div class="gauge">
+                                    <div class="gaugeIndicator"></div>
+                                </div>
+                                <div class="value">
+                                    <h1 class="valueNumber">0</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bottom">
 
-                </canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
             <a href="#secOne" class="up">
                 <ion-icon name="chevron-up-outline"></ion-icon>
@@ -372,30 +431,11 @@
         </div>
     </section>
 
-    <script>
+    <script type="module">
         window.addEventListener("load", () => {
             document.querySelector(".loading").style.display = "none";
-
-            let devicesList = document.querySelectorAll(".device");
-            let delayDevices = 1200;
-            devicesList.forEach((element) => {
-                element.style.transitionDelay = delayDevices + "ms";
-                delayDevices += 100;
-            })
-
         })
-
-
-
-        var map = L.map('map').setView([45.4543334,7.8549798], 12);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        L.marker([45.4543334,7.8549798]).addTo(map)
     </script>
-
 
 
 

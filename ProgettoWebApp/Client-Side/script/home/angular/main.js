@@ -8,7 +8,7 @@ import {removeMachine, emptyPost} from "./post/removeMachine.js";
 import {textAnimation, removeTextAnimation} from "../animation/animate.js";
 import {updateTopics} from "./post/updateTopics.js";
 import {sendInfo} from "./post/machineInfos.js";
-import {getData} from "./get/getData.js";
+import {getLocation} from "./get/getLocation.js";
 
 
 let inputValue = document.querySelector("#inputSearch");
@@ -27,14 +27,64 @@ let dataStream;
 
 let closeConn = {action: "close"};
 
+let closeListener = false;
+
 let infos = document.querySelectorAll(".infoBottom span");
 
+let map;
+
+let setted = false;
+
+let marker;
+
+export let dataSelected;
+let itemClasses = ["bar b1", "bar b2", "bar b3", "bar b4"];
 
 let app = angular.module('myApp', ['ngWebSocket']);
 
-app.controller('myController', function($scope, $http, $timeout, $interval, $websocket) {
+app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) => {
+
+    map = L.map('map').setView([0,0], 1);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
 
     dataStream = $websocket('ws://192.168.0.6:8081/socketData');
+    dataStream.onMessage((msg) => {
+        console.log(msg.data);
+        let data = JSON.parse(msg.data);
+        if(data.heartbeat){
+            document.querySelector(".s1 span").innerHTML = "Online";
+        }else{
+            document.querySelector(".s1 span").innerHTML = "Offline";
+        }
+
+        if(data.board_temperature){
+            document.querySelector(".b1").style.height = data.board_temperature * 2 + "px";
+            document.querySelector(".b1 span").innerHTML = data.board_temperature + "°";
+        }
+        if(data.cpu_usage_average){
+            document.querySelector(".b2").style.height = data.cpu_usage_average * 2 + "px";
+            document.querySelector(".b2 span").innerHTML = data.cpu_usage_average + "%";
+        }
+        if(data.free_storage){
+            document.querySelector(".b3").style.height = data.free_storage * 2 + "px";
+            document.querySelector(".b3 span").innerHTML = data.free_storage + "%";
+        }
+        if(data.free_memory){
+            document.querySelector(".b4").style.height = data.free_memory * 2 + "px";
+            document.querySelector(".b4 span").innerHTML = data.free_memory + "%";
+        }
+        if(data.location && !setted){
+            console.log(data.location);
+            getLocation($scope, $http, data.location, ($scope, coordinates) => {
+                map.setView([coordinates.data[0].latitude, coordinates.data[0].longitude], 12);
+                marker = L.marker([coordinates.data[0].latitude, coordinates.data[0].longitude]).addTo(map)
+            })
+            setted = true;
+        }
+    })
+
     getModels($scope, $http);
 
     getMachines($scope, $http, (device) => {
@@ -47,12 +97,6 @@ app.controller('myController', function($scope, $http, $timeout, $interval, $web
     refreshMachine($scope, ($newScope, data) => {
         $timeout(() => {
             $newScope.devices = data;
-            let devicesList = document.querySelectorAll(".device");
-            let delay = 1200;
-            devicesList.forEach((element) => {
-                element.style.transitionDelay = delay + "ms";
-                delay += 100;
-            })
         }, 0);
         let inputsAddMachine = document.querySelectorAll(".input.addMachine");
         inputsAddMachine.forEach((element) => {
@@ -130,6 +174,10 @@ app.controller('myController', function($scope, $http, $timeout, $interval, $web
                 console.log(device);
                 $scope.devices = device;
                 $scope.removeSelection();
+                if(dataStream){
+                    dataStream.send(JSON.stringify(closeConn));
+                    dataStream = undefined;
+                }
             }, 0);
         }); 
         activeTopics($scope, $http, devicesList, $index, ($scope, topicsActive) => {
@@ -148,16 +196,41 @@ app.controller('myController', function($scope, $http, $timeout, $interval, $web
                 })
             }
             sendInfo($scope, $http, devicesList, $index, topicsActive, oldTopics, userId, ($scope, userId) => {
+                if(!dataStream){
+                    dataStream = $websocket('ws://192.168.0.6:8081/socketData');
+                    dataStream.onMessage((msg) => {
+                        console.log(msg.data);
+                        let data = JSON.parse(msg.data);
+                        if(data.heartbeat){
+                            document.querySelector(".s1 span").innerHTML = "Online";
+                        }else{
+                            document.querySelector(".s1 span").innerHTML = "Offline";
+                        }
 
-                let socketInfo = {utente_id: userId, action: "set"};
-
+                        if(data.board_temperature){
+                            document.querySelector(".b1").style.height = data.board_temperature * 2 + "px";
+                            document.querySelector(".b1 span").innerHTML = data.board_temperature + "°";
+                        }
+                        if(data.cpu_usage_average){
+                            document.querySelector(".b2").style.height = data.cpu_usage_average * 2 + "px";
+                            document.querySelector(".b2 span").innerHTML = data.cpu_usage_average + "%";
+                        }
+                        if(data.free_storage){
+                            document.querySelector(".b3").style.height = data.free_storage * 2 + "px";
+                            document.querySelector(".b3 span").innerHTML = data.free_storage + "%";
+                        }
+                        if(data.free_memory){
+                            document.querySelector(".b4").style.height = data.free_memory * 2 + "px";
+                            document.querySelector(".b4 span").innerHTML = data.free_memory + "%";
+                        }
+                    })
+                }
+                let socketInfo = {utente_id: userId, action: "start"};
+                let location = {utente_id: userId, action: "get", objective: "get_location", msg: "location", responseTopic: "location"};
+                dataStream.send(JSON.stringify(location));
                 dataStream.send(JSON.stringify(socketInfo));
-
-                dataStream.onMessage((response) => {
-                    console.log(response.data);
-                })
-
                 oldTopics = topicsActive;
+                setted = false;
             })
         })
     }    
@@ -180,12 +253,25 @@ app.controller('myController', function($scope, $http, $timeout, $interval, $web
         emptyPost($scope, $http, oldTopics, ($scope, data) => {
             if(dataStream){
                 dataStream.send(JSON.stringify(closeConn));
+                dataStream = undefined;
             }
         });
         topics.forEach((element) => {
             let newClass = element.name.replaceAll(" ", "_");
             document.querySelector("." + newClass).checked = false;
         })
+        document.querySelector(".b1").style.height = 0 + "px";
+        document.querySelector(".b2").style.height = 0 + "px";
+        document.querySelector(".b3").style.height = 0 + "px";
+        document.querySelector(".b4").style.height = 0 + "px";
+        document.querySelector(".b1 span").innerHTML = "";
+        document.querySelector(".b2 span").innerHTML = "";
+        document.querySelector(".b3 span").innerHTML = "";
+        document.querySelector(".b4 span").innerHTML = "";
+        document.querySelector(".s1 span").innerHTML = "";
+        map.setView([0, 0], 1);
+        map.removeLayer(marker);
+        setted = false;
     }
    
     $scope.sendTopic = ($index) => {
@@ -221,7 +307,21 @@ app.controller('myController', function($scope, $http, $timeout, $interval, $web
         }
     }
 
-
   
+    let dataSelector = (item) => {
+        for(let key in itemClasses){
+            if(item.className == itemClasses[key]){
+                dataSelected = item.className.slice(-1);
+                let value = 180 - (document.querySelector('.' + item.className.replace(' ', '.') + ' span').innerHTML.slice(0, -1) * (1.8));
+                document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
+            }
+        }
+    }
+
+    document.querySelectorAll(".bar").forEach((element) => {
+        element.addEventListener("click", () => {
+            dataSelector(element);
+        })
+    })
 
 });

@@ -12,8 +12,7 @@ window.onload = () => {
         duration: 500,
         autoplay: false
     })
-    document.querySelector(".link.l1").onclick = animationInput.start;
-
+    document.querySelector(".link.l1").onclick = animationInput.restart;
 
 
     let animationDevices = anime.timeline({
@@ -96,6 +95,9 @@ window.onload = () => {
         opacity: 1,
         duration: 400,
     });
+
+
+
 }
 
 

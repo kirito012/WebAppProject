@@ -89,6 +89,12 @@ class framework {
     this.server.newWsConnection(this.app, settings[0], callback);
   }
 
+  newWsHandler = (ws,callback) => {
+    let wshand = new this.server.socketHandler(this,ws);
+
+    callback(wshand);
+  }
+
   queryDB = (qr, params, callback) => {
     this.database.query(this.connectionDB, qr, params, callback);
   };

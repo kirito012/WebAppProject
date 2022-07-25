@@ -39,7 +39,7 @@ section{
     padding: 150px;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to left, #112d42 0%, #112d42 50%, #03a9f4 50.000000000000000000000001%, #03a9f4 100%);
+    background: linear-gradient(to left, #112d42 0%, #112d42 60%, #fff 60.000000000000000000000001%, #fff 100%);
 }
 
 section .login{
@@ -54,6 +54,7 @@ section .login{
     padding: 25px;
     gap: 35px;
     z-index: 5;
+    box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
 }
 
 section .login .log{
@@ -251,6 +252,7 @@ section .register{
     margin-left: -120px;
     overflow: hidden;
     transition: 0.5s ease;
+    box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
 }
 
 section .register.active{

@@ -5,38 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            width: 100%;
-            flex-direction: column;
-        }
-
-        iframe.loading{
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
-        }
-    </style>
+    <title>Home page | Olivetti SPA</title>
+    <link rel="stylesheet" href="../Styles/introPage/style.css">
 </head>
-<body ng-app="myApp" ng-controller="MyCtrl">
+<body>
     <iframe class="loading" src="../template/loading.html" frameborder="0"></iframe>
-    <a href="/login">Clicca</a>
-    <form action="uploadpfp" method="post" enctype="multipart/form-data">
-        <input type="file" name="profilepicture" id="">
-        <input type="submit">
-    </form>
+    <div class="frame"></div>
+    <section>
+        <div class="content">
+            <header>
+                <img src="../images/logo_olivetti_0-4.png" alt="">
+                <ul>
+                    <li><a href="https://www.olivetti.com">Sito uffciale<span></span></a></li>
+                    <li><a href="/login">Login<span></span></a></li>
+                </ul>
+            </header>
+            <div class="bottom">
+                <div class="left">
+                    <div class="title">
+                        <h1>Gestione fiscale, ovunque ti trovi</h1>
+                    </div>
+                    <div class="description">
+                        <p></p>
+                        <div class="more">
+                            <span></span>
+                            <a href="/login">Inizia ora</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <script>
         window.addEventListener("load", () => {

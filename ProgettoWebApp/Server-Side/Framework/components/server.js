@@ -142,3 +142,106 @@ module.exports.saveFile = data.saveFile = (res,file,directory,newName,callback) 
 		callback();
 	});
 }
+
+let loopFunction = (newFw,newWs,newId) => {
+	if (newId) {
+		newFw.mqtt.getMachineData(newId, (data) => {
+			newWs.send(JSON.stringify(data));
+		});
+	}
+}
+
+class socketHandler{
+	constructor(fw, socket){
+		this.fw = fw;
+		this.socket = socket;
+		this.utente_id;
+		this.interval_id;
+
+		this.cases = {get: this.actionGet, set: this.actionSet, start: this.actionStart, stop: this.actionStop, close: this.actionClose};
+	};
+
+	actionHandler = (newCase, params, callback) => {
+		if (this.cases[newCase]) {
+			this.cases[newCase](params, callback);
+		}
+	};
+
+	actionGet = (params, callback) => {
+		this.fw.mqtt.getMatricola(params.utente_id, (matricola) => {
+			let topic = matricola.defaultTopic + "/get/" + params.objective;
+			let responseTopic = matricola.defaultTopic + "/response/" +  params.response;
+
+			this.fw.mqtt.connectToNewTopic(params.utente_id,params.response,responseTopic, () => {
+				this.fw.mqtt.publishToTopic(topic,params.msg,responseTopic);
+			});
+		});
+
+		if (callback){
+			callback();
+		}
+	};
+
+	actionSet = (params, callback) => {
+		this.fw.mqtt.getMatricola(params.utente_id, (matricola) => {
+			let topic = matricola.defaultTopic + "/set/" + params.objective;
+			let responseTopic = matricola.defaultTopic + "/response/" +  params.response;
+
+			this.fw.mqtt.connectToNewTopic(params.utente_id,params.response,responseTopic, () => {
+				this.fw.mqtt.publishToTopic(topic,params.msg,responseTopic);
+			});
+		});
+
+		if (callback){
+			callback();
+		}
+	};
+
+	actionStart = (params, callback) => {
+		this.utente_id = params.utente_id;
+
+		if (this.interval_id) {
+			this.fw.mqtt.clearMachineData(this.utente_id, () => {
+				this.interval_id = setInterval(loopFunction, 1000,this.fw,this.socket,this.utente_id);
+				
+				if (callback){
+					callback();
+				}
+			});
+		}
+		else {
+			this.fw.mqtt.clearMachineData(this.utente_id, () => {
+				loopFunction(this.fw,this.socket,this.utente_id);
+				this.interval_id = setInterval(loopFunction, 7000,this.fw,this.socket,this.utente_id);
+				if (callback){
+					callback();
+				}
+			});
+		}
+	}
+	actionStop = (params,callback) => {
+		this.utente_id = undefined;
+    clearInterval(this.interval_id);
+		this.interval_id = undefined;
+
+		if (callback) {
+			callback();
+		}
+	};
+
+	actionClose = (params,callback) => {
+		this.fw.mqtt.clearMachineData(this.utente_id, () => {
+			this.utente_id = undefined;
+			clearInterval(this.interval_id);
+			this.interval_id = undefined;
+			this.socket.close();
+
+			if (callback) {
+				callback();
+			}
+		})
+	};
+}
+
+
+module.exports.socketHandler = socketHandler;

@@ -249,6 +249,7 @@
             });
             items[1].classList.add("active");
             radioButton[1].checked = true;
+            indicator.classList.add("active");
         })
 
 

@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 section .dashboard .sectionOne{
     position: relative;
     display: flex;
@@ -6,7 +10,6 @@ section .dashboard .sectionOne{
     flex-direction: column;
     width: 100%;
     height: 100vh;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     padding: 40px;
 }
 
@@ -369,48 +372,361 @@ section .dashboard .sectionTwo{
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
-    height: 100vh;
-    z-index: 1;
+    height: 200vh;
+    padding: 20px;
 }
 
+section .dashboard .sectionTwo .column{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
 
+section .dashboard .sectionTwo .column .row{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+}
 
-.gauge-container > .gauge > .dial {
-    stroke: #334455;
-    stroke-width: 2;
-    z-index: 1000;
-  }
-  .gauge-container > .gauge > .value {
-    stroke: rgb(47, 227, 255);
-    stroke-width: 2;
-  }
-  .gauge-container > .gauge > .value-text {
-    fill: rgb(47, 227, 255);
-    font-family: sans, 'sans-serif';
-    font-weight: bold;
-    font-size: 0.6em;
-  }
+section .dashboard .sectionTwo .column .row:nth-child(2){
+    height: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+}
 
+section .dashboard .sectionTwo .column .row .title{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
 
+section .dashboard .sectionTwo .title h1{
+    position: relative;
+    color: #112d42;
+    font-family: 900;
+    font-size: 40px;
+}
 
+section .dashboard .sectionTwo .column .row .top, 
+section .dashboard .sectionTwo .column .row .bottom{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    min-width: 600px;
+    height: 65%;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .top{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    padding: 0 20px;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .top .data{
+    font-size: 25px;
+    color: #112d42;
+    font-weight: 900;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .left{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 10%;
+    height: 100%;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+    gap: calc(200px / 8);
+    margin-bottom: 5px;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft ul li{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    font-size: 12px;
+    font-weight: 900;
+    color: #112d42;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft ul li hr{
+    position: absolute;
+    left: 28px;
+    width: 470px;
+    height: 1px;
+    border: none;
+    border-top: 1px dashed rgba(0, 0, 0, 0.2);
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
 
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    height: 200px;
+    border-bottom: 2px solid #112d42;
+    border-left: 2px solid #112d42;
+}
 
-.leaflet-marker-icon{
-    content: url("");
-    width: 10px;
-    height: 20px;
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBottom{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBottom ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 38px;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBottom ul li{
+    position: relative;
+    list-style: none;
+    font-size: 12px;
+    font-weight: 900;
+    color: #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    gap: 75px;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    width: 25px;
+    height: 0;
     background: #112d42;
+    transition: 0.5s ease-out;
+    cursor: pointer;
 }
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 100%;
+    padding: 15px;
+    opacity: 0;
+    transform: translateY(-30px);
+    background: #fff;
+    font-size: 14px;
+    font-weight: 900;
+    color: #112d42;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: 0.3s ease;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li:hover span{
+    opacity: 1;
+    transform: none;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span:hover{
+    opacity: 0;
+    transform: translateY(-30px);
+    cursor: default;
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span::after{
+    content: '';
+    position: absolute;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    transform: rotate(45deg);
+    background: #112d42;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+
+
+
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 300px;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge::after{
+    content: '';
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #fff;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge::before{
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    bottom: 0;
+    background: #fff;
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    z-index: 100;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge .gaugeIndicator{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    background: #112d42;
+    top: 0;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    transform-origin: center;
+    transform: rotate(180deg);
+    transition: 0.5s ease-out;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge .gaugeIndicator::before{
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 100px;
+    bottom: 0;
+    background: #fff;
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .value{
+    position: absolute;
+    z-index: 200;
+    color: #112d42;
+    font-weight: 900;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
+const { MqttClient } = require("mqtt");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
 fw.createServer({
@@ -273,39 +274,44 @@ fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, 
 // Socket connection \\
 
 fw.newWsConnection(["/socketData"], (ws,req) => {
-  let utente_id;
-  let id;
+	fw.newWsHandler(ws,(wsHandler) => {
 
-  console.log("connect");
+		ws.on("message", (msg) => {
+			let parsed = JSON.parse(msg);
 
-  ws.on("message", (msg) => {
-    let parsed = JSON.parse(msg);
+			if (parsed.action == "start"){
+				wsHandler.actionHandler("start",{utente_id: parsed.utente_id},() => {
+					
+				});
+			}
+      else if (parsed.action == "get"){
+				wsHandler.actionHandler("get",{utente_id: parsed.utente_id,objective: parsed.objective,msg: parsed.msg,response: parsed.responseTopic},() => {
+					
+				});
+			}
+			else if (parsed.action == "stop"){
+				wsHandler.actionHandler("stop",{},() => {
+					console.log("stop");
+				});
+			}
+			else if (parsed.action == "close"){
+				wsHandler.actionHandler("close",{},() => {
+					delete wsHandler;
+					console.log("close");
+				});
+			}
+		});
+	});
+});
 
-    if (parsed.action == "set"){
-      utente_id = parsed.utente_id;
+//Database record update\\
 
-      clearInterval(id);
-
-      setTimeout(() => {
-        id = setInterval(function(){
-          if (utente_id) {
-            fw.mqtt.getMachineData(utente_id, (data) => {
-              ws.send(JSON.stringify(data));
-            });
-          }
-        }, 1000);
-      },1000)
-    }
-    else if (parsed.action == "stop"){
-      utente_id = undefined;
-      clearInterval(id);
-    }
-    else if (parsed.action == "close"){
-      fw.mqtt.clearMachineData((utente_id) => {
-        utente_id = undefined;
-        clearInterval(id);
-        ws.close();
-      })
-    }
-  });
+fw.mqtt.getClient((mqttClient) => {
+  mqttClient.on("message", (topic,payload) => {
+    fw.mqtt.getMqttVariables(topic, (topicName,matricola_id) => {
+      fw.queryDB("createTableInsertTopic",[topicName,topicName,payload.toString(),matricola_id,topicName,topic], (result) => {
+        //console.log("Updated Data");
+      });
+    });
+  })
 });

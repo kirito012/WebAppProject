@@ -90,10 +90,7 @@ let queryPreset = {
 	  matricole.uniqueid = ?
     and modelli.name = ?
     and utenti.id = ?`,
-  selectMatricolaId: `SELECT * FROM corrispondenze
-    JOIN matricole on corrispondenze.matricola_id = matricole.id
-    JOIN utenti on corrispondenze.utente_id = utenti.id
-    WHERE utenti.lastsession = ? AND utenti.name = ? AND matricole.uniqueid = ?;`,
+
   selectCorrispondenzaMatricola: `SELECT corrispondenze.matricola_id FROM corrispondenze
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
@@ -128,6 +125,19 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
+  selectValueFromTimestamp: "SELECT value FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now();",
+  createTableInsertTopic: `CREATE TABLE IF NOT EXISTS datas.?? (
+    id INT NOT NULL AUTO_INCREMENT,
+    value VARCHAR(45) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    matricola_id VARCHAR(45) NOT NULL,
+    topicname VARCHAR(45) NOT NULL,
+    topicstring VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
+    
+  INSERT INTO datas.?? (value,matricola_id,topicname,topicstring) values(?,?,?,?);
+  `,
 };
 
 module.exports.query = (con, qr, params, callback) => {

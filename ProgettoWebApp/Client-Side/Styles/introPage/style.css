@@ -1,0 +1,195 @@
+@font-face {
+    font-family: "Tim Sans Thin";
+    src: url("../../Styles/font/TIMSans-Thin.ttf");
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tim Sans Thin';
+}
+
+body{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+iframe.loading{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+
+.frame{
+    position: absolute;
+    width: 800px;
+    height: 800px;
+    border: 200px solid #112d42;
+    left: 80%;
+    transform: rotate(45deg);
+}
+
+section{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+section .content{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 900px;
+    height: 550px;
+    box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
+}
+
+section .content header{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    min-height: 70px;
+    padding: 0 150px 0 40px;
+}
+
+section .content header img{
+    transform: scale(0.6);
+}
+
+section .content header ul{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 50px;
+}
+
+section .content header ul li{
+    list-style: none;
+}
+
+section .content header ul li a{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    color: #112d42;
+    text-decoration: none;
+    font-weight: 900;
+    font-size: 15px;
+    transition: 0.5s ease-out;
+}
+
+section .content header ul li a span{
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: #112d42;
+    transition: 0.5s ease;
+}
+
+section .content header ul li:hover a span{
+    width: 100%;
+}
+
+section .content .bottom{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    gap: 40px;
+}
+
+section .content .bottom .left,
+section .content .bottom .right{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+section .content .bottom .left{
+    justify-content: flex-start;
+    padding: 40px;
+    gap: 50px;
+}
+
+section .content .bottom .left .title{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+section .content .bottom .left h1{
+    color: #112d42;
+    font-size: 40px;
+}
+
+section .content .bottom .left p{
+    color: #112d42;
+}
+
+section .content .bottom .left .description .more{
+    position: relative;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+section .content .bottom .left .description .more span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    z-index: 1;
+    background: #112d42;
+    transition: 0.5s ease-out;
+}
+
+section .content .bottom .left .description .more a{
+    position: relative;
+    padding: 5px;
+    border: 2px solid #112d42;
+    color: #112d42;
+    font-weight: 900;
+    text-decoration: none;
+    font-size: 18px;
+    z-index: 2;
+    transition: 0.5s ease-out;
+}
+
+section .content .bottom .left .description .more:hover span{
+    width: 100%;
+}
+
+section .content .bottom .left .description .more:hover a{
+    color: #fff;
+}
