@@ -199,27 +199,45 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
 fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, req, utente) => {
   let files = req.files;
 
-  if (files.profilepicture) {
-    fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
-      let root = results[0];
+  if (files){
+    if (files.profilepicture) {
+      fw.queryDB("selectProfilePictureRoot",[utente.id], (results) => {
+        let root = results[0];
 
-      if (root){
-        fw.saveFile(res, files.profilepicture, "ProfilePictures", root.pictureroot.toString(), () => {
-          res.status(204).send({});
-        });
-      }
-      else{
-        let key = fw.utility.generateRandomKey(15);
-
-        fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
-          fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
+        if (root){
+          fw.saveFile(res, files.profilepicture, "ProfilePictures", root.pictureroot.toString(), () => {
             res.status(204).send({});
           });
-        })
-      }
+        }
+        else{
+          let key = fw.utility.generateRandomKey(15);
+
+          fw.queryDB("generateProfilePicture",[utente.id,key], (status) => {
+            fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
+              res.status(204).send({});
+            });
+          })
+        }
+      });
+    }
+    else {
+      res.status(204).send({});
+    }
+  }
+  else {
+    res.status(204).send({});
+  }
+});
+
+fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, req, utente) => {
+  let body = req.body;
+  let timeElapsed = new Date(new Date().getTime() - (body.timeChoosen));
+
+  if (timeElapsed < 24 * 60 * 60 * 1000) {
+    fw.queryDB("selectValueFromTimestamp",[body.topic,body.id,timeElapsed.toDateString(),body.limit],(results) => {
+        res.send(results);
     });
   }
-
 });
 
 fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res, req, utente) => {
@@ -281,6 +299,11 @@ fw.newWsConnection(["/socketData"], (ws,req) => {
 
 			if (parsed.action == "start"){
 				wsHandler.actionHandler("start",{utente_id: parsed.utente_id},() => {
+					
+				});
+			}
+      if (parsed.action == "set"){
+				wsHandler.actionHandler("set",{utente_id: parsed.utente_id,objective: parsed.objective,msg: parsed.msg,response: parsed.responseTopic},() => {
 					
 				});
 			}

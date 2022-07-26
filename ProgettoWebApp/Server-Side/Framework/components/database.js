@@ -125,7 +125,7 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
-  selectValueFromTimestamp: "SELECT value FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now();",
+  selectValueFromTimestamp: "SELECT value,timestamp FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;",
   createTableInsertTopic: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
     value VARCHAR(45) NOT NULL,

@@ -5,10 +5,11 @@ import {getTopics} from "./get/getTopics.js";
 import {activeTopics} from "./post/machineTopics.js";
 import {refreshProfileData} from "./post/changePersonal.js";
 import {removeMachine, emptyPost} from "./post/removeMachine.js";
-import {textAnimation, removeTextAnimation} from "../animation/animate.js";
+import {textAnimation, removeTextAnimation, gaugeTextAnimation} from "../animation/animate.js";
 import {updateTopics} from "./post/updateTopics.js";
 import {sendInfo} from "./post/machineInfos.js";
 import {getLocation} from "./get/getLocation.js";
+import {updateData} from "./get/updateData.js";
 
 
 let inputValue = document.querySelector("#inputSearch");
@@ -37,8 +38,10 @@ let setted = false;
 
 let marker;
 
-export let dataSelected;
+let dataSelected;
 let itemClasses = ["bar b1", "bar b2", "bar b3", "bar b4"];
+
+let oldValue = 0;
 
 let app = angular.module('myApp', ['ngWebSocket']);
 
@@ -49,41 +52,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-    dataStream = $websocket('ws://192.168.0.6:8081/socketData');
-    dataStream.onMessage((msg) => {
-        console.log(msg.data);
-        let data = JSON.parse(msg.data);
-        if(data.heartbeat){
-            document.querySelector(".s1 span").innerHTML = "Online";
-        }else{
-            document.querySelector(".s1 span").innerHTML = "Offline";
-        }
-
-        if(data.board_temperature){
-            document.querySelector(".b1").style.height = data.board_temperature * 2 + "px";
-            document.querySelector(".b1 span").innerHTML = data.board_temperature + "°";
-        }
-        if(data.cpu_usage_average){
-            document.querySelector(".b2").style.height = data.cpu_usage_average * 2 + "px";
-            document.querySelector(".b2 span").innerHTML = data.cpu_usage_average + "%";
-        }
-        if(data.free_storage){
-            document.querySelector(".b3").style.height = data.free_storage * 2 + "px";
-            document.querySelector(".b3 span").innerHTML = data.free_storage + "%";
-        }
-        if(data.free_memory){
-            document.querySelector(".b4").style.height = data.free_memory * 2 + "px";
-            document.querySelector(".b4 span").innerHTML = data.free_memory + "%";
-        }
-        if(data.location && !setted){
-            console.log(data.location);
-            getLocation($scope, $http, data.location, ($scope, coordinates) => {
-                map.setView([coordinates.data[0].latitude, coordinates.data[0].longitude], 12);
-                marker = L.marker([coordinates.data[0].latitude, coordinates.data[0].longitude]).addTo(map)
-            })
-            setted = true;
-        }
-    })
+    
 
     getModels($scope, $http);
 
@@ -181,6 +150,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
             }, 0);
         }); 
         activeTopics($scope, $http, devicesList, $index, ($scope, topicsActive) => {
+            $scope.activeTopics = topicsActive;
             topics.forEach((element) => {
                 let newClass = element.name.replaceAll(" ", "_");
                 document.querySelector("." + newClass).checked = false;
@@ -198,37 +168,18 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
             sendInfo($scope, $http, devicesList, $index, topicsActive, oldTopics, userId, ($scope, userId) => {
                 if(!dataStream){
                     dataStream = $websocket('ws://192.168.0.6:8081/socketData');
+                    let socketInfo = {utente_id: userId, action: "start"};
+                    let responseTopic = {utente_id: userId, action: "set", objective: "set_output_display_line_1_response_topic", responseTopic: "line", msg: "display_line_1"};
+                    dataStream.send(JSON.stringify(socketInfo));
+                    dataStream.send(JSON.stringify(responseTopic));
                     dataStream.onMessage((msg) => {
                         console.log(msg.data);
                         let data = JSON.parse(msg.data);
-                        if(data.heartbeat){
-                            document.querySelector(".s1 span").innerHTML = "Online";
-                        }else{
-                            document.querySelector(".s1 span").innerHTML = "Offline";
-                        }
-
-                        if(data.board_temperature){
-                            document.querySelector(".b1").style.height = data.board_temperature * 2 + "px";
-                            document.querySelector(".b1 span").innerHTML = data.board_temperature + "°";
-                        }
-                        if(data.cpu_usage_average){
-                            document.querySelector(".b2").style.height = data.cpu_usage_average * 2 + "px";
-                            document.querySelector(".b2 span").innerHTML = data.cpu_usage_average + "%";
-                        }
-                        if(data.free_storage){
-                            document.querySelector(".b3").style.height = data.free_storage * 2 + "px";
-                            document.querySelector(".b3 span").innerHTML = data.free_storage + "%";
-                        }
-                        if(data.free_memory){
-                            document.querySelector(".b4").style.height = data.free_memory * 2 + "px";
-                            document.querySelector(".b4 span").innerHTML = data.free_memory + "%";
-                        }
+                        updateData(data, oldValue, dataSelected, setted, getLocation, gaugeTextAnimation, $scope, $http, map, marker);
                     })
                 }
-                let socketInfo = {utente_id: userId, action: "start"};
                 let location = {utente_id: userId, action: "get", objective: "get_location", msg: "location", responseTopic: "location"};
                 dataStream.send(JSON.stringify(location));
-                dataStream.send(JSON.stringify(socketInfo));
                 oldTopics = topicsActive;
                 setted = false;
             })
@@ -260,6 +211,9 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
             let newClass = element.name.replaceAll(" ", "_");
             document.querySelector("." + newClass).checked = false;
         })
+        document.querySelector(".gaugeIndicator").style.transform = "rotate(180deg)";
+        document.querySelector(".gaugeContainer h4").innerHTML = "Seleziona un dato...";
+        document.querySelector(".s2 span").innerHTML = "";
         document.querySelector(".b1").style.height = 0 + "px";
         document.querySelector(".b2").style.height = 0 + "px";
         document.querySelector(".b3").style.height = 0 + "px";
@@ -270,8 +224,10 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
         document.querySelector(".b4 span").innerHTML = "";
         document.querySelector(".s1 span").innerHTML = "";
         map.setView([0, 0], 1);
-        map.removeLayer(marker);
+        $scope.activeTopics = undefined;
         setted = false;
+        gaugeTextAnimation(oldValue, 0);
+        oldValue = 0;
     }
    
     $scope.sendTopic = ($index) => {
@@ -308,12 +264,14 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
     }
 
   
-    let dataSelector = (item) => {
+    let dataSelector = (item) => { 
         for(let key in itemClasses){
             if(item.className == itemClasses[key]){
                 dataSelected = item.className.slice(-1);
                 let value = 180 - (document.querySelector('.' + item.className.replace(' ', '.') + ' span').innerHTML.slice(0, -1) * (1.8));
                 document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
+                gaugeTextAnimation(oldValue, document.querySelector('.' + item.className.replace(' ', '.') + ' span').innerHTML);
+                document.querySelector(".gaugeContainer h4").innerHTML = document.querySelector(".n" + dataSelected).innerHTML;
             }
         }
     }

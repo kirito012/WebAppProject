@@ -934,6 +934,7 @@ section .personal{
     right: 0;
     background: #fff;
     transform: translateX(100%);
+    z-index: 1000;
 }
 
 section .personal.active{

@@ -207,7 +207,7 @@
                                     <div class="bottom">
                                         <ul>
                                             <li class="state s1">Stato: <span></span></li>
-                                            <li class="state">Stato:</li>
+                                            <li class="state s2">Modalità: <span></span></li>
                                             <li class="state">Stato:</li>
                                             <li class="state">Stato:</li>
                                         </ul>
@@ -235,60 +235,159 @@
                 <div class="column">
                     <div class="row">
                         <div class="title">
-                            <h1 class="overViewTitle">Overview</h1>
+                            <h1 class="overViewTitle">Overview<span>-realtime</span></h1>
                             <div class="refresh"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="top">
-                            <div class="chart">
-                                <div class="top">
-                                    <h1 class="data">Dati principali</h1>
-                                </div>
-                                <div class="bottom">
-                                    <div class="left">
-                                        <div class="writeLeft">
-                                            <ul>
-                                                <li>0</li>
-                                                <li>20<hr></li>
-                                                <li>40<hr></li>
-                                                <li>60<hr></li>
-                                                <li>80<hr></li>
-                                                <li>100<hr></li>
-                                            </ul>
+                            <div class="dataContainer">
+                                <div class="chart">
+                                    <div class="top">
+                                        <h1 class="data">Dati principali</h1>
+                                    </div>
+                                    <div class="bottom">
+                                        <div class="left">
+                                            <div class="writeLeft">
+                                                <ul>
+                                                    <li>0</li>
+                                                    <li>20</li>
+                                                    <li>40</li>
+                                                    <li>60</li>
+                                                    <li>80</li>
+                                                    <li>100</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="right">
+                                            <div class="context">
+                                                <ul class="line">
+                                                    <hr>
+                                                    <hr>
+                                                    <hr>
+                                                    <hr>
+                                                    <hr>
+                                                </ul>
+                                                <ul class="bars">
+                                                    <li class="bar b1"><span></span></li>
+                                                    <li class="bar b2"><span></span></li>
+                                                    <li class="bar b3"><span></span></li>
+                                                    <li class="bar b4"><span></span></li>
+                                                </ul>
+                                            </div>
+                                            <div class="writeBottom">
+                                                <ul>
+                                                    <li class="n1">Temperatura</li>
+                                                    <li class="n2">Uso CPU</li>
+                                                    <li class="n3">Memoria libera</li>
+                                                    <li class="n4">Ram libera</li>
+                                                </ul>
+                                            </div> 
                                         </div>
                                     </div>
-                                    <div class="right">
-                                        <div class="context">
-                                            <ul>
-                                                <li class="bar b1"><span></span></li>
-                                                <li class="bar b2"><span></span></li>
-                                                <li class="bar b3"><span></span></li>
-                                                <li class="bar b4"><span></span></li>
-                                            </ul>
-                                        </div>
-                                        <div class="writeBottom">
-                                            <ul>
-                                                <li>Temperatura</li>
-                                                <li>Uso CPU</li>
-                                                <li>Memoria libera</li>
-                                                <li>Ram libera</li>
-                                            </ul>
-                                        </div> 
+                                </div>
+                                <div class="gaugeContainer">
+                                    <h4>Selezion un dato...</h4>
+                                    <div class="gauge">
+                                        <div class="gaugeIndicator"></div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="gaugeContainer">
-                                <div class="gauge">
-                                    <div class="gaugeIndicator"></div>
-                                </div>
-                                <div class="value">
-                                    <h1 class="valueNumber">0</h1>
+                                    <div class="value">
+                                        <h1 class="valueNumber">0</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="bottom">
-
+                            <div class="title">
+                                <h1>Storico</h1>
+                                <div class="selectData">
+                                    <select class="time">
+                                        <option value="">30 minuti</option>
+                                        <option value="">1 ora</option>
+                                        <option value="">4 ore</option>
+                                        <option value="">8 ore</option>
+                                        <option value="">12 ore</option>
+                                        <option value="">16 ore</option>
+                                        <option value="">1 giorno</option>
+                                    </select>
+                                    <select class="topic">
+                                        <option value="" ng-repeat="topic in activeTopics">{{ topic.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="table">
+                                <div class="top1">
+                                    <div class="send">
+                                        <ion-icon name="refresh-circle-outline"></ion-icon>
+                                    </div>
+                                    <div class="topicName1">
+                                        Dati
+                                    </div>
+                                    <div class="value1">
+                                        Valori
+                                    </div>
+                                    <div class="dateTime1">
+                                        Data e ora
+                                    </div>
+                                    <div class="device1">
+                                        Dispositivo
+                                    </div>
+                                </div>
+                                <div class="down">
+                                    <div class="left">
+                                        <div class="itemNumber">1</div>
+                                        <div class="itemNumber">2</div>
+                                        <div class="itemNumber">3</div>
+                                        <div class="itemNumber">4</div>
+                                        <div class="itemNumber">5</div>
+                                        <div class="itemNumber">6</div>
+                                        <div class="itemNumber">7</div>
+                                        <div class="itemNumber">8</div>
+                                        <div class="itemNumber">9</div>
+                                    </div>
+                                    <div class="records">
+                                        <div class="record">
+                                            <div class="topicName">
+        
+                                            </div>
+                                            <div class="value">
+        
+                                            </div>
+                                            <div class="dateTime">
+        
+                                            </div>
+                                            <div class="device">
+        
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pageSelector">
+                                <div class="selector">
+                                    <div class="less">
+                                        <ion-icon name="chevron-back-outline"></ion-icon>
+                                    </div>
+                                    <div class="pages active p1">
+                                        1
+                                    </div>
+                                    <div class="pages p2">
+                                        2
+                                    </div>
+                                    <div class="pages p3">
+                                        3
+                                    </div>
+                                    <div class="pages p4">
+                                        4
+                                    </div>
+                                    <div class="pages p5">
+                                        5
+                                    </div>
+                                    <div class="more">
+                                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -407,7 +506,7 @@
                     </div>
                 </div>
                 <div class="up">
-                    <label for="pfp">
+                    <label for="pfp" ondragover="dragOver(event)" ondrop="release(event)">
                         <ion-icon class="iconRemove" name="image-outline"></ion-icon>
                         <img class="imgPfp"src="#" alt="">
                         <h4 class="imgName">Carica la tua immagine</h4>
@@ -431,11 +530,35 @@
         </div>
     </section>
 
-    <script type="module">
+    <script>
         window.addEventListener("load", () => {
             document.querySelector(".loading").style.display = "none";
         })
     </script>
+
+
+
+
+    <script>
+
+        let dragOver = (e) => {
+            e.preventDefault();
+        }
+
+        let release = (e) => {
+            e.preventDefault();
+            let file = e.dataTransfer.items[0].getAsFile();
+            document.querySelector(".fileInput").value =  file;
+            console.log(file.name);
+        }
+
+    </script>
+
+
+
+
+
+
 
 
 

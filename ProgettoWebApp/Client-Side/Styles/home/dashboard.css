@@ -418,15 +418,31 @@ section .dashboard .sectionTwo .title h1{
     font-size: 40px;
 }
 
+section .dashboard .sectionTwo .title h1 span{
+    font-size: 25px;
+}
+
 section .dashboard .sectionTwo .column .row .top, 
 section .dashboard .sectionTwo .column .row .bottom{
     position: relative;
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     height: 100%;
+    padding: 20px;
+}
+
+section .dashboard .sectionTwo .column .row .top .dataContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 65%;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
     padding: 20px;
 }
 
@@ -436,10 +452,8 @@ section .dashboard .sectionTwo .column .row .top .chart{
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: column;
-    min-width: 600px;
-    height: 65%;
-    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-    padding: 20px;
+    width: 100%;
+    height: 100%;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart .top{
@@ -510,15 +524,6 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft
     color: #112d42;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft ul li hr{
-    position: absolute;
-    left: 28px;
-    width: 470px;
-    height: 1px;
-    border: none;
-    border-top: 1px dashed rgba(0, 0, 0, 0.2);
-}
-
 section .dashboard .sectionTwo .column .row .top .chart .bottom .right{
     position: relative;
     display: flex;
@@ -566,7 +571,26 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBot
     color: #112d42;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .line{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: calc(200px/5);
+}
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .line hr{
+    width: 100%;
+    height: 1px;
+    border: none;
+    border-top: 1px dashed rgba(0, 0, 0, 0.2);
+}
+
+
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars{
     position: relative;
     display: flex;
     justify-content: center;
@@ -576,7 +600,7 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context 
     gap: 75px;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars li{
     position: relative;
     display: flex;
     justify-content: center;
@@ -585,11 +609,11 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context 
     width: 25px;
     height: 0;
     background: #112d42;
-    transition: 0.5s ease-out;
+    transition: 1s ease-out;
     cursor: pointer;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars li span{
     position: absolute;
     display: flex;
     justify-content: center;
@@ -607,18 +631,18 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context 
     transition: 0.3s ease;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li:hover span{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars li:hover span{
     opacity: 1;
     transform: none;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span:hover{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars li span:hover{
     opacity: 0;
     transform: translateY(-30px);
     cursor: default;
 }
 
-section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context ul li span::after{
+section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .bars li span::after{
     content: '';
     position: absolute;
     left: -5px;
@@ -640,8 +664,16 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 100%;
-    height: 300px;
+    width: 30%;
+    height: 300px;  
+}
+
+section .dashboard .sectionTwo .column .row .top .gaugeContainer h4{
+    position: absolute;
+    color: #112d42;
+    font-weight: 900;
+    font-size: 20px;
+    top: 10px;
 }
 
 section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge{
@@ -652,9 +684,9 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge{
     flex-direction: column;
     width: 200px;
     height: 200px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge::after{
@@ -691,7 +723,7 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge .gaugeIn
     border-top-right-radius: 100%;
     transform-origin: center;
     transform: rotate(180deg);
-    transition: 0.5s ease-out;
+    transition: 1s ease-out;
 }
 
 section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge .gaugeIndicator::before{
@@ -711,24 +743,288 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer .value{
 }
 
 
+section .dashboard .sectionTwo .column .row .bottom{
+    gap: 20px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData select{
+    position: relative;
+    font-size: 18px;
+    color: #112d42;
+    border: 2px solid #112d42;
+    outline: none;
+    padding: 5px;
+    cursor: pointer;
+    width: 150px;
+    transition: 0.5s ease-out;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData select option{
+    position: relative;
+    background: #fff;
+    color: #112d42;
+    transition: 0.5s ease-out;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData select option:hover{
+    background: #112d42;
+    color: #fff;
+}
 
 
 
 
+section .dashboard .sectionTwo .column .row .bottom .table{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 10%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .send{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 100%;
+    cursor: pointer;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .send ion-icon{
+    font-size: 25px;
+    color: #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 div{
+    color: #112d42;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .topicName1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-left: 2px solid #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .value1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+    border-left: 2px solid #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .dateTime1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-left: 2px solid #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .device1{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-left: 2px solid #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .down{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .down .left{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    border-right: 2px solid #112d42;
+    min-width: 40px;
+    height: 100%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .down .left .itemNumber{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100% / 9);
+    border-bottom: 2px solid #112d42;
+    color: #112d42;
+    font-weight: 900;
+    font-size: 18px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .down .records{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .record{
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100% / 9);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .record .topicName{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .record .value{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .record .dateTime{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .record .device{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
 
 
 
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 10%;
+}
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    color: #112d42;
+    font-weight: 900;
+    font-size: 16px;
+    transition: 0.3s ease-out;
+}
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .pages.active{
+    background: #112d42;
+    color: #fff;
+}
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div:hover{
+    background: #112d42;
+    color: #fff;
+}
 
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div:hover ion-icon{
+    color: #fff;
+}
 
-
-
-
-
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div ion-icon{
+    color: #112d42;
+    font-size: 30px;
+}
 
 
 section .dashboard .up{

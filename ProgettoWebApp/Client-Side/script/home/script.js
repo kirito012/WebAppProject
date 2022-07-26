@@ -184,14 +184,14 @@
         let img = document.querySelector(".imgPfp");
         let reset = document.querySelector(".reset");
 
-        file.addEventListener("input", () => {
+        file.addEventListener("change", () => {
             if(file.value != ""){
             imgName.innerHTML = file.files[0].name;
             const [files] = file.files;
             iconImg.style.display = "none";
             if(file){
                 img.style.display = "flex";
-                img.src =  URL.createObjectURL(files);
+                img.src = URL.createObjectURL(files);
             }
         }
         });
@@ -208,7 +208,7 @@
         let pfpImg = document.querySelector(".pfp");
 
 
-        function fun(){
+        export let fun = () => {
             pfpImg.src = "";
             setTimeout(() => {
                 pfpImg.src = "/home/getProfilePicture";
@@ -280,4 +280,47 @@
             }else if(y == 0){
                 up.style.opacity = "0";
             }
+        })
+
+
+
+
+        let pages = document.querySelectorAll(".pages");
+
+        let pageNavigator = (item) => {
+            pages.forEach((element) => {
+                element.classList.remove("active");
+            })
+            item.classList.add("active")
+        }
+
+        pages.forEach((element) => {
+            element.addEventListener("click", () => {
+                pageNavigator(element);
+            })
+        })
+
+
+
+        let less = document.querySelector(".less");
+        less.addEventListener("click", () => {
+            let page = document.querySelector(".pages.active");
+            page.classList.remove("active");
+            let num = parseInt(page.className.slice(-1)) - 1;
+            if(num == 0){
+                num = pages.length;
+            }
+            document.querySelector(".p" + num).classList.add("active");
+        })
+
+
+        let more = document.querySelector(".more");
+        more.addEventListener("click", () => {
+            let page = document.querySelector(".pages.active");
+            page.classList.remove("active");
+            let num = parseInt(page.className.slice(-1)) + 1;
+            if(num == pages.length + 1){
+                num = 1;
+            }
+            document.querySelector(".p" + num).classList.add("active");
         })

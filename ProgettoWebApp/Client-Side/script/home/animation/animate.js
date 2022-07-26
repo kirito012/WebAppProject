@@ -124,3 +124,13 @@ export let removeTextAnimation = () => {
     delay: anime.stagger(25)
   })
 }
+
+export let gaugeTextAnimation = (oldValue, value) => {
+    anime({
+        targets: '.valueNumber',
+        innerHTML: [oldValue, value],
+        round: 10,
+        easing: 'linear',
+        duration: 1000
+    })
+}

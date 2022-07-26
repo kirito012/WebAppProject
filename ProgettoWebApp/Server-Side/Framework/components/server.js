@@ -186,9 +186,10 @@ class socketHandler{
 		this.fw.mqtt.getMatricola(params.utente_id, (matricola) => {
 			let topic = matricola.defaultTopic + "/set/" + params.objective;
 			let responseTopic = matricola.defaultTopic + "/response/" +  params.response;
+			let parsedMsg = matricola.defaultTopic + "/" + params.msg;
 
 			this.fw.mqtt.connectToNewTopic(params.utente_id,params.response,responseTopic, () => {
-				this.fw.mqtt.publishToTopic(topic,params.msg,responseTopic);
+				this.fw.mqtt.publishToTopic(topic,parsedMsg,responseTopic);
 			});
 		});
 
@@ -202,7 +203,7 @@ class socketHandler{
 
 		if (this.interval_id) {
 			this.fw.mqtt.clearMachineData(this.utente_id, () => {
-				this.interval_id = setInterval(loopFunction, 1000,this.fw,this.socket,this.utente_id);
+				this.interval_id = setInterval(loopFunction, 4000,this.fw,this.socket,this.utente_id);
 				
 				if (callback){
 					callback();
@@ -212,7 +213,7 @@ class socketHandler{
 		else {
 			this.fw.mqtt.clearMachineData(this.utente_id, () => {
 				loopFunction(this.fw,this.socket,this.utente_id);
-				this.interval_id = setInterval(loopFunction, 7000,this.fw,this.socket,this.utente_id);
+				this.interval_id = setInterval(loopFunction, 4000,this.fw,this.socket,this.utente_id);
 				if (callback){
 					callback();
 				}
