@@ -1,6 +1,5 @@
 let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
-const { MqttClient } = require("mqtt");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
 fw.createServer({
@@ -9,7 +8,7 @@ fw.createServer({
   hostDB: "localhost",
   brokerHost: "mqtt://localhost:1883",
   port: 8081,
-})
+});
 
 //Request Guide\\
 /*
@@ -42,25 +41,25 @@ fw.newRequest(["get", "/home/getData", true, "/login", "getData", true],(res, re
 fw.newRequest(["get", "/home/getModels", true, "/login", "getModels"],(res, req) => {
   fw.utility.getModels(fw, (models) => {
     res.send(models);
-  })
+  });
 });
 
 fw.newRequest(["get", "/home/getMachines", true, "/login", "getMachines",true],(res, req, utente) => {
   fw.utility.getMachines(fw,utente, (machines) => {
     res.send(machines);
-  })
+  });
 });
 
 fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(res, req, utente) => {
   fw.utility.getProfile(fw, utente, (profile) => {
     res.send(profile);
-  })
+  });
 });
 
 fw.newRequest(["get", "/home/getTopics", true, "/login", "getTopics",false],(res, req) => {
   fw.utility.getTopics(fw, (topicList) => {
     res.send(topicList);
-  })
+  });
 });
 
 fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePicture",true],(res, req, utente) => {
@@ -68,7 +67,7 @@ fw.newRequest(["get", "/home/getProfilePicture", true, "/login", "getProfilePict
     if (image == 404) {res.send("image not found"); return;};
 
     res.sendFile(image);
-  })
+  });
 });
 
 //Post requests\\
@@ -143,7 +142,7 @@ fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true]
       profile.birthday = fw.utility.formatDate(utente.birthday);
 
       res.send(profile);
-    })
+    });
   });
 });
 
@@ -162,12 +161,12 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
           fw.utility.getMachines(fw,utente, (machines) => {
             res.send(machines);
           });
-        })
-      })
+        });
+      });
     }, () => {
       fw.redirect(res, "/home", "error", "machinemissing");
     });
-  })
+  });
 });
 
 fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],(res, req, utente) => {
@@ -175,8 +174,8 @@ fw.newRequest(["post", "/removeMachine", true, "/login", "removeMachine", true],
 
   if (body.oldTopics){
     fw.utility.forEach(body.oldTopics,(element) => {
-      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"))
-    })
+      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"));
+    });
   }
 
   fw.queryDB("selectCorrispondenzaMatricola", [body.id,utente.id],(idToKeep) => {
@@ -216,7 +215,7 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
             fw.saveFile(res, files.profilepicture, "ProfilePictures", key.toString(), () => {
               res.status(204).send({});
             });
-          })
+          });
         }
       });
     }
@@ -232,10 +231,21 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, req, utente) => {
   let body = req.body;
   let timeElapsed = new Date(new Date().getTime() - (body.timeChoosen));
+  let maxTime = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
+  let limit = body.limit || 1000000;
 
-  if (timeElapsed < 24 * 60 * 60 * 1000) {
-    fw.queryDB("selectValueFromTimestamp",[body.topic,body.id,timeElapsed.toDateString(),body.limit],(results) => {
-        res.send(results);
+  if (timeElapsed >=  maxTime) {
+    fw.utility.formatTime(timeElapsed, (newTime) => {
+      fw.queryDB("selectValueFromTimestamp",[body.topic,body.id,newTime,limit],(results) => {
+        fw.utility.splitArray(results,body.columns,body.page,(pageData) => {
+          fw.utility.forEach(pageData,(element) => {
+            element.id = body.id;
+            element.topic = body.topic;
+          }, () => {
+            res.send({pageData: pageData,pagesNumber: Math.floor(results.length / body.columns)});
+          });
+        });  
+      });
     });
   }
 });
@@ -251,15 +261,15 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
           fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
         })
         res.send(nameList);
-      })
-    })
+      });
+    });
   }
   else {
     fw.queryDB("selectDeletePersonalTopic",[topicName,body.id,utente.id], (status) => {
       fw.utility.getMachinePureTopics(fw, body, utente, (nameList) => {
         res.send(nameList);
-      })
-    })
+      });
+    });
   }
 });
 
@@ -278,13 +288,13 @@ fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, 
 
   if (body.oldTopics){
     fw.utility.forEach(body.oldTopics,(element) => {
-      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"),element.topicstring)
-    })
+      fw.mqtt.disconnectFromTopic(utente.id,element.name.replaceAll(" ","_"),element.topicstring);
+    });
   }
 
   fw.utility.forEach(body.topics,(element) => {
     fw.mqtt.connectToNewTopic(utente.id,element.name.replaceAll(" ","_"),element.topicstring);
-  })
+  });
 
   res.status(204).send({});
 });
@@ -299,28 +309,28 @@ fw.newWsConnection(["/socketData"], (ws,req) => {
 
 			if (parsed.action == "start"){
 				wsHandler.actionHandler("start",{utente_id: parsed.utente_id},() => {
-					
+					//console.log("start");
 				});
 			}
       if (parsed.action == "set"){
 				wsHandler.actionHandler("set",{utente_id: parsed.utente_id,objective: parsed.objective,msg: parsed.msg,response: parsed.responseTopic},() => {
-					
+					//console.log("set");
 				});
 			}
       else if (parsed.action == "get"){
 				wsHandler.actionHandler("get",{utente_id: parsed.utente_id,objective: parsed.objective,msg: parsed.msg,response: parsed.responseTopic},() => {
-					
+					//console.log("get");
 				});
 			}
 			else if (parsed.action == "stop"){
 				wsHandler.actionHandler("stop",{},() => {
-					console.log("stop");
+					//console.log("stop");
 				});
 			}
 			else if (parsed.action == "close"){
 				wsHandler.actionHandler("close",{},() => {
 					delete wsHandler;
-					console.log("close");
+					//console.log("close");
 				});
 			}
 		});
@@ -336,5 +346,5 @@ fw.mqtt.getClient((mqttClient) => {
         //console.log("Updated Data");
       });
     });
-  })
+  });
 });

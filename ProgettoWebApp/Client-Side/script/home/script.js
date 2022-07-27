@@ -285,22 +285,7 @@
 
 
 
-        let pages = document.querySelectorAll(".pages");
-
-        let pageNavigator = (item) => {
-            pages.forEach((element) => {
-                element.classList.remove("active");
-            })
-            item.classList.add("active")
-        }
-
-        pages.forEach((element) => {
-            element.addEventListener("click", () => {
-                pageNavigator(element);
-            })
-        })
-
-
+    export let tableNavigator = (pages) => {
 
         let less = document.querySelector(".less");
         less.addEventListener("click", () => {
@@ -308,7 +293,7 @@
             page.classList.remove("active");
             let num = parseInt(page.className.slice(-1)) - 1;
             if(num == 0){
-                num = pages.length;
+                num = 5;
             }
             document.querySelector(".p" + num).classList.add("active");
         })
@@ -319,8 +304,11 @@
             let page = document.querySelector(".pages.active");
             page.classList.remove("active");
             let num = parseInt(page.className.slice(-1)) + 1;
-            if(num == pages.length + 1){
+            if(num == 5){
                 num = 1;
             }
             document.querySelector(".p" + num).classList.add("active");
         })
+    }
+
+       

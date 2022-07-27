@@ -10,7 +10,11 @@ import {updateTopics} from "./post/updateTopics.js";
 import {sendInfo} from "./post/machineInfos.js";
 import {getLocation} from "./get/getLocation.js";
 import {updateData} from "./get/updateData.js";
-
+import {historicData} from "./post/historicData.js";
+import {tableNavigator} from "../script.js";
+let table = false;
+let pages;
+let newPages;
 
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
@@ -46,13 +50,13 @@ let oldValue = 0;
 let app = angular.module('myApp', ['ngWebSocket']);
 
 app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) => {
+    document.querySelector(".showMore").style.display = "none";
 
     map = L.map('map').setView([0,0], 1);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
 
-    
 
     getModels($scope, $http);
 
@@ -90,7 +94,6 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 
     refreshProfileData($scope, ($scope, data) => {
         $timeout(() => {
-            console.log(data);
             $scope.profileData = data;
             $scope.name = data.name;
             $scope.surname = data.surname;
@@ -140,7 +143,6 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
         textAnimation();
         removeMachine($scope, $http, index, devicesList, ($scope, device) => {
             $timeout(() => {
-                console.log(device);
                 $scope.devices = device;
                 $scope.removeSelection();
                 if(dataStream){
@@ -173,15 +175,84 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                     dataStream.send(JSON.stringify(socketInfo));
                     dataStream.send(JSON.stringify(responseTopic));
                     dataStream.onMessage((msg) => {
-                        console.log(msg.data);
                         let data = JSON.parse(msg.data);
-                        updateData(data, oldValue, dataSelected, setted, getLocation, gaugeTextAnimation, $scope, $http, map, marker);
+                        updateData(data, dataSelected, setted, getLocation, gaugeTextAnimation, $scope, $http, map, marker);
                     })
                 }
                 let location = {utente_id: userId, action: "get", objective: "get_location", msg: "location", responseTopic: "location"};
                 dataStream.send(JSON.stringify(location));
                 oldTopics = topicsActive;
                 setted = false;
+            })
+            document.querySelector(".send").addEventListener("click", () => {
+                let topic = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
+                let dateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
+                historicData($scope, $http, topic, dateTime, devicesList, index, 1, ($scope, res) => {
+                    $scope.pages = [];
+                    $scope.pagesNumber = res.pagesNumber;
+                    if(res.pagesNumber < 6){
+                        for(let i = 1; i <= res.pagesNumber; i++){
+                            $scope.pages.push({value: i});
+                        }
+                        document.querySelector(".showMore").style.display = "none";
+                    }else{
+                        for(let i = 1; i <= 5; i++){
+                            $scope.pages.push({value: i});
+                        }
+                        document.querySelector(".showMore").style.display = "flex";
+                    }
+                    $timeout(() => {
+                        pages = document.querySelectorAll(".pages");
+                        pages[0].classList.add("active");
+                        let pageNavigator = (item) => {
+                            pages.forEach((element) => {
+                                element.classList.remove("active");
+                            })
+                            item.classList.add("active")
+                        }
+                
+                        pages.forEach((element, i) => { 
+                            element.addEventListener("click", () => {
+                                pageNavigator(element);
+                                historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                    $scope.datas = res.pageData;
+                                })
+                            })
+                           element.classList.add("p"+ (i+1));
+                        })
+                        let pageInput = document.querySelector(".inputPage");
+                        let selectPage = document.querySelector(".selectPage");
+                        document.querySelector(".showMore").addEventListener("click", () => {
+                            selectPage.classList.add("active");
+                        })
+                        document.querySelector(".submitNewData").addEventListener("click", () => {
+                            let topicRefresh = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
+                            historicData($scope, $http, topicRefresh, dateTime, devicesList, index, pageInput.value, ($scope, res) => {
+                                $scope.datas = res.pageData;
+                                $scope.pages = [];
+                                selectPage.classList.remove("active");
+                                let maxValue = parseInt(pageInput.value) + 5;
+                                for(let i = parseInt(pageInput.value); i < maxValue; i++){
+                                    $scope.pages.push({value: i});
+                                }
+                                $timeout(() => {
+                                    newPages = document.querySelectorAll(".pages");
+                                    newPages.forEach((item, i) => {
+                                        newPages[i].classList.add("p" + (i+1));
+                                    })
+                                    newPages[0].classList.add("active");
+                                }, 0);
+                            })
+                        })
+                        if(!table){
+                            tableNavigator(pages);
+                            table = true;
+                        }
+                    }, 0);
+                    $timeout(() => {
+                        $scope.datas = res.pageData;
+                    }, 0);
+                })
             })
         })
     }    
@@ -281,5 +352,6 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
             dataSelector(element);
         })
     })
+
 
 });

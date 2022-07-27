@@ -1,6 +1,7 @@
 let modes = ["collegamento", "assettox", "assettoz", "assettoset", "assettoreg"];
+let oldValue;
 
-export let updateData = (data, oldValue, dataSelected, setted, getLocation, gaugeTextAnimation, $scope, $http, map, marker) => {
+export let updateData = (data, dataSelected, setted, getLocation, gaugeTextAnimation, $scope, $http, map, marker) => {
     if(data.heartbeat){
         document.querySelector(".s1 span").innerHTML = "Online";
         if(data.display_line_1){
@@ -18,10 +19,10 @@ export let updateData = (data, oldValue, dataSelected, setted, getLocation, gaug
         document.querySelector(".b1").style.height = data.board_temperature * 2 + "px";
         document.querySelector(".b1 span").innerHTML = data.board_temperature + "°";
         if(dataSelected == 1){
-            if(oldValue != data.board_temperature){
+            if(data.board_temperature != oldValue){
                 let value = 180 - (data.board_temperature * 1.8);
                 document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
-                gaugeTextAnimation(oldValue, data.board_temperature);
+                gaugeTextAnimation(oldValue, data.board_temperature + "°");
                 oldValue = data.board_temperature;
                 document.querySelector(".gaugeContainer h4").innerHTML = "Temperatura";
             }
@@ -31,7 +32,7 @@ export let updateData = (data, oldValue, dataSelected, setted, getLocation, gaug
         document.querySelector(".b2").style.height = data.cpu_usage_average * 2 + "px";
         document.querySelector(".b2 span").innerHTML = data.cpu_usage_average + "%";
         if(dataSelected == 2){
-            if(oldValue != data.cpu_usage_average){
+            if(data.cpu_usage_average != oldValue){
                 let value = 180 - (data.cpu_usage_average * 1.8);
                 document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
                 gaugeTextAnimation(oldValue, data.cpu_usage_average);
@@ -44,7 +45,7 @@ export let updateData = (data, oldValue, dataSelected, setted, getLocation, gaug
         document.querySelector(".b3").style.height = data.free_storage * 2 + "px";
         document.querySelector(".b3 span").innerHTML = data.free_storage + "%";
         if(dataSelected == 3){
-            if(oldValue != data.free_storage){
+            if(data.free_storage != oldValue){
                 let value = 180 - (data.free_storage * 1.8);
                 document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
                 gaugeTextAnimation(oldValue, data.free_storage);
@@ -57,7 +58,7 @@ export let updateData = (data, oldValue, dataSelected, setted, getLocation, gaug
         document.querySelector(".b4").style.height = data.free_memory * 2 + "px";
         document.querySelector(".b4 span").innerHTML = data.free_memory + "%";
         if(dataSelected == 4){
-            if(oldValue != data.free_memory){
+            if(data.free_memory != oldValue){
                 let value = 180 - (data.free_memory * 1.8);
                 document.querySelector(".gaugeIndicator").style.transform = "rotate(-" + value + "deg)";
                 gaugeTextAnimation(oldValue, data.free_memory);

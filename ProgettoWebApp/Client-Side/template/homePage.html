@@ -250,12 +250,12 @@
                                         <div class="left">
                                             <div class="writeLeft">
                                                 <ul>
-                                                    <li>0</li>
-                                                    <li>20</li>
-                                                    <li>40</li>
-                                                    <li>60</li>
-                                                    <li>80</li>
-                                                    <li>100</li>
+                                                    <li class="valueData">0</li>
+                                                    <li class="valueData">20</li>
+                                                    <li class="valueData">40</li>
+                                                    <li class="valueData">60</li>
+                                                    <li class="valueData">80</li>
+                                                    <li class="valueData">100</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -287,7 +287,7 @@
                                     </div>
                                 </div>
                                 <div class="gaugeContainer">
-                                    <h4>Selezion un dato...</h4>
+                                    <h4 class="infoDataSeleted">Selezion un dato...</h4>
                                     <div class="gauge">
                                         <div class="gaugeIndicator"></div>
                                     </div>
@@ -302,13 +302,13 @@
                                 <h1>Storico</h1>
                                 <div class="selectData">
                                     <select class="time">
-                                        <option value="">30 minuti</option>
-                                        <option value="">1 ora</option>
-                                        <option value="">4 ore</option>
-                                        <option value="">8 ore</option>
-                                        <option value="">12 ore</option>
-                                        <option value="">16 ore</option>
-                                        <option value="">1 giorno</option>
+                                        <option value="0.5">30 minuti</option>
+                                        <option value="1">1 ora</option>
+                                        <option value="4">4 ore</option>
+                                        <option value="8">8 ore</option>
+                                        <option value="12">12 ore</option>
+                                        <option value="16">16 ore</option>
+                                        <option value="24">1 giorno</option>
                                     </select>
                                     <select class="topic">
                                         <option value="" ng-repeat="topic in activeTopics">{{ topic.name }}</option>
@@ -344,20 +344,21 @@
                                         <div class="itemNumber">7</div>
                                         <div class="itemNumber">8</div>
                                         <div class="itemNumber">9</div>
+                                        <div class="itemNumber">10</div>
                                     </div>
                                     <div class="records">
-                                        <div class="record">
+                                        <div class="record" ng-repeat="data in datas">
                                             <div class="topicName">
-        
+                                                {{ data.topic }}
                                             </div>
                                             <div class="value">
-        
+                                                {{ data.value }}
                                             </div>
                                             <div class="dateTime">
-        
+                                                {{ data.timestamp }}
                                             </div>
                                             <div class="device">
-        
+                                                {{ data.id }}
                                             </div>
                                         </div>
                                     </div>
@@ -365,25 +366,23 @@
                             </div>
                             <div class="pageSelector">
                                 <div class="selector">
-                                    <div class="less">
+                                    <div class="less div">
                                         <ion-icon name="chevron-back-outline"></ion-icon>
                                     </div>
-                                    <div class="pages active p1">
-                                        1
+                                    <div class="pages div" ng-repeat="page in pages">
+                                        {{ page.value }}
                                     </div>
-                                    <div class="pages p2">
-                                        2
+                                    <div class="page showMore div">
+                                        ...
+                                        <div class="selectPage">
+                                            <div class="numbers">
+                                                <input type="number" class="inputPage" min="1" max="{{ pagesNumber }}">
+                                                <h1>/ {{ pagesNumber }}</h1>
+                                            </div>
+                                            <input type="button" class="submitNewData" value="Cerca">
+                                        </div>
                                     </div>
-                                    <div class="pages p3">
-                                        3
-                                    </div>
-                                    <div class="pages p4">
-                                        4
-                                    </div>
-                                    <div class="pages p5">
-                                        5
-                                    </div>
-                                    <div class="more">
+                                    <div class="more div">
                                         <ion-icon name="chevron-forward-outline"></ion-icon>
                                     </div>
                                 </div>

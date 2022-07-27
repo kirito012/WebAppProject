@@ -49,52 +49,127 @@ window.onload = () => {
         targets: '.dashboardTitle',
         translateX: [-30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
         delay: 200
     })
     .add({
         targets: '.infoSelected',
         translateX: [-30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     })
     .add({
         targets: '.select',
         translateX: [30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     })
     .add({
         targets: '#map',
         translateX: [30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     })
     .add({
         targets: '.information',
         translateX: [-30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     })
     .add({
         targets: '.state, .infoBottom',
         scale: [1.3, 1],
         opacity: 1,
-        duration: 400,
+        duration: 260,
         delay: anime.stagger(100)
     })
     .add({
         targets: '.button.remove',
         translateX: [-30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     })
     .add({
         targets: '.button.goTo',
         translateX: [30, 0],
         opacity: 1,
-        duration: 400,
+        duration: 260,
     });
+
+
+
+    let once = false;
+
+    
+    let dashboard = document.querySelector(".dashboard");
+    dashboard.addEventListener("scroll", () => {
+        let y = dashboard.scrollTop;
+        if(y > window.innerHeight/1.6){
+            if(!once){
+                let dataAnimation = anime.timeline({
+                    autoplay: true,
+                    easing: 'easeOutCirc',
+                    loop: false,
+                })
+            
+                dataAnimation
+                .add({
+                    targets: '.overViewTitle',
+                    translateX: [-30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                    delay: 200
+                })
+                .add({
+                    targets: '.dataContainer',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                })
+                .add({
+                    targets: '.data',
+                    translateX: [-30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                })
+                .add({
+                    targets: '.context',
+                    translateX: [-30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                })
+                .add({
+                    targets: '.valueData',
+                    translateY: [-100, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                    delay: anime.stagger(50)
+                })
+                .add({
+                    targets: '.writeBottom ul li',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                    delay: anime.stagger(50)
+                })
+                .add({
+                    targets: '.gaugeContainer',
+                    translateX: [30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                })
+                .add({
+                    targets: '.infoDataSeleted',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                })
+
+                once = true;
+            }
+        }
+        
+    })
 
 
 

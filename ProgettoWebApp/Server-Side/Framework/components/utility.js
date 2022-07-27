@@ -51,12 +51,15 @@ module.exports.checkLength = (obj,callback,error) => {
   }
 };
 
-module.exports.forEach = (obj,callback,lastindexcallback) => {
+module.exports.forEach = forEach = (obj,callback,lastindexcallback) => {
+  let index = 0;
+
   if (typeof obj == "object"){
     let keys = Object.keys(obj);
 
     for (let key in obj) {
-      callback(obj[key],key);
+      index++;
+      callback(obj[key],key,index);
 
       if (key == keys[keys.length - 1] && lastindexcallback != undefined){
         lastindexcallback();
@@ -65,7 +68,7 @@ module.exports.forEach = (obj,callback,lastindexcallback) => {
   }
   else if (Array.isArray(obj)){
     for (let i = 0; i < obj.length;i++){
-      callback(obj[i],i);
+      callback(obj[i],i,i);
 
       if (i == obj.length -1 && lastindexcallback != undefined) {
         lastindexcallback();
@@ -186,4 +189,39 @@ module.exports.getProfilePicture = (fw, utente, callback) => {
       callback(404);
     }
   });
+}
+
+module.exports.splitArray = (array,maxEntry,page,callback) => {
+  let newPage = [];
+  let divided = 0;
+  let state = false;
+
+  this.forEach(array,(element,key,index) => {
+    if (index %maxEntry == 0 || divided == 0) {
+      if (divided == page) {
+        state = true;
+        newPage.push(element);
+      }
+      else {
+        if (state && divided == 1) {
+          newPage.push(element);
+        }
+        state = false;
+      }
+      divided++;
+    }
+    else {
+      if (state){
+        newPage.push(element);
+      }
+    }
+  }, () => {
+    callback(newPage);
+  })
+}
+
+module.exports.formatTime = (time,callback) => {
+  let newTime = time.getFullYear() + "-" + ("0" + (time.getMonth() + 1)).slice(-2) + "-" + ("0" + time.getDate()).slice(-2) + "T" + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds() + "." + time.getMilliseconds() + "Z";
+
+  callback(newTime);
 }

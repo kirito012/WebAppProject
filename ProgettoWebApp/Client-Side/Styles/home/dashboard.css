@@ -411,11 +411,13 @@ section .dashboard .sectionTwo .column .row .title{
     width: 100%;
 }
 
-section .dashboard .sectionTwo .title h1{
+section .dashboard .sectionTwo .title .overViewTitle{
     position: relative;
     color: #112d42;
     font-family: 900;
     font-size: 40px;
+    transform: translateX(-30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .title h1 span{
@@ -430,8 +432,16 @@ section .dashboard .sectionTwo .column .row .bottom{
     align-items: flex-start;
     flex-direction: column;
     width: 100%;
-    height: 100%;
     padding: 20px;
+}
+
+section .dashboard .sectionTwo .column .row .top{
+    height: 80%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom{
+    height: 100%;
+    margin-top: 30px;
 }
 
 section .dashboard .sectionTwo .column .row .top .dataContainer{
@@ -441,9 +451,11 @@ section .dashboard .sectionTwo .column .row .top .dataContainer{
     align-items: center;
     flex-direction: row;
     width: 100%;
-    height: 65%;
+    height: 80%;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    transform: translateY(30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart{
@@ -470,6 +482,8 @@ section .dashboard .sectionTwo .column .row .top .chart .top .data{
     font-size: 25px;
     color: #112d42;
     font-weight: 900;
+    transform: translateX(-30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart .bottom{
@@ -522,6 +536,8 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .left .writeLeft
     font-size: 12px;
     font-weight: 900;
     color: #112d42;
+    transform: translateY(-100px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart .bottom .right{
@@ -543,6 +559,8 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context{
     height: 200px;
     border-bottom: 2px solid #112d42;
     border-left: 2px solid #112d42;
+    transform: translateX(-30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBottom{
@@ -569,6 +587,8 @@ section .dashboard .sectionTwo .column .row .top .chart .bottom .right .writeBot
     font-size: 12px;
     font-weight: 900;
     color: #112d42;
+    transform: translateY(30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .chart .bottom .right .context .line{
@@ -666,6 +686,8 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer{
     flex-direction: column;
     width: 30%;
     height: 300px;  
+    transform: translateX(30px);
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .gaugeContainer h4{
@@ -674,6 +696,7 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer h4{
     font-weight: 900;
     font-size: 20px;
     top: 10px;
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .top .gaugeContainer .gauge{
@@ -756,6 +779,13 @@ section .dashboard .sectionTwo .column .row .bottom .title{
     width: 100%;
 }
 
+section .dashboard .sectionTwo .column .row .bottom .title h1{
+    position: relative;
+    color: #112d42;
+    font-family: 900;
+    font-size: 40px;
+}
+
 section .dashboard .sectionTwo .column .row .bottom .title .selectData{
     position: relative;
     display: flex;
@@ -828,7 +858,7 @@ section .dashboard .sectionTwo .column .row .bottom .table .top1 .send ion-icon{
     color: #112d42;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .table .top1 div{
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .div{
     color: #112d42;
     font-weight: 900;
     font-size: 18px;
@@ -902,7 +932,7 @@ section .dashboard .sectionTwo .column .row .bottom .table .down .left .itemNumb
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: calc(100% / 9);
+    height: calc(100% / 10);
     border-bottom: 2px solid #112d42;
     color: #112d42;
     font-weight: 900;
@@ -926,7 +956,7 @@ section .dashboard .sectionTwo .column .row .bottom .table .record{
     align-items: center;
     flex-direction: row;
     width: 100%;
-    height: calc(100% / 9);
+    height: calc(100% / 10);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -938,6 +968,9 @@ section .dashboard .sectionTwo .column .row .bottom .table .record .topicName{
     width: 30%;
     height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    color: #112d42;
+    font-size: 16px;
+    font-weight: 900;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .record .value{
@@ -948,6 +981,8 @@ section .dashboard .sectionTwo .column .row .bottom .table .record .value{
     width: 10%;
     height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    font-weight: 900;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .record .dateTime{
@@ -958,6 +993,8 @@ section .dashboard .sectionTwo .column .row .bottom .table .record .dateTime{
     width: 30%;
     height: 100%;
     border-right: 1px solid rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    font-weight: 900;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .record .device{
@@ -967,6 +1004,8 @@ section .dashboard .sectionTwo .column .row .bottom .table .record .device{
     align-items: center;
     width: 30%;
     height: 100%;
+    font-size: 16px;
+    font-weight: 900;
 }
 
 
@@ -992,7 +1031,7 @@ section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector{
     height: 100%;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div{
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .div{
     position: relative;
     display: flex;
     justify-content: center;
@@ -1012,18 +1051,72 @@ section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .pag
     color: #fff;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div:hover{
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage{
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    bottom: 100%;
+    width: 150px;
+    height: 100px;
+    background: #fff;
+    gap: 20px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage h1{
+    font-weight: 900;
+    font-size: 16px;
+    color: #112d42;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage .numbers{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage.active{
+    display: flex;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage input{
+    outline: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: #112d42;
+    font-weight: 900;
+    border-bottom: 2px solid #112d42;
+    font-size: 16px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .page .selectPage .submitNewData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+    cursor: pointer;
+    border: 1px solid #112d42;
+    color: #112d42;
+    font-size: 14px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .div:hover{
     background: #112d42;
     color: #fff;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div:hover ion-icon{
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .div:hover ion-icon{
     color: #fff;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector div ion-icon{
+section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .div ion-icon{
     color: #112d42;
     font-size: 30px;
+    transition: 0.3s ease-out;
 }
 
 
