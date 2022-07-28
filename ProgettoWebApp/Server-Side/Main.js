@@ -57,7 +57,7 @@ fw.newRequest(["get", "/home/getProfile", true, "/login", "getProfile",true],(re
 });
 
 fw.newRequest(["get", "/home/getTopics", true, "/login", "getTopics",false],(res, req) => {
-  fw.utility.getTopics(fw, (topicList) => {
+  fw.utility.getTopics(fw, "fiscal", "action", (topicList) => {
     res.send(topicList);
   });
 });
@@ -241,6 +241,10 @@ fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, re
           fw.utility.forEach(pageData,(element) => {
             element.id = body.id;
             element.topic = body.topic;
+
+            fw.utility.formatCleanTime(new Date(element.timestamp), (formattedTime) => {
+              element.formattedDate = formattedTime;
+            });
           }, () => {
             res.send({pageData: pageData,pagesNumber: Math.floor(results.length / body.columns)});
           });
@@ -261,6 +265,11 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
           fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
         })
         res.send(nameList);
+        fw.utility.getTopics(fw,"fiscal","warning", (topicList) => {
+          fw.utility.forEach(topicList,(element) => {
+            fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
+          })
+        });
       });
     });
   }
@@ -297,6 +306,14 @@ fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, 
   });
 
   res.status(204).send({});
+});
+
+fw.newRequest(["post", "getWarnings", true, "/login", "getWarnings",false],(res, req) => {
+  let body = req.body;
+
+  fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
+    res.send(data);
+  });
 });
 
 // Socket connection \\

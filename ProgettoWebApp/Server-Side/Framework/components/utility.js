@@ -112,8 +112,8 @@ module.exports.getMachines = (fw, utente, callback) => {
   });
 }
 
-module.exports.getTopics = (fw, callback) => {
-  fw.queryDB("selectTopicsName",["fiscal","action"], (topicList) => {
+module.exports.getTopics = (fw,board, type, callback) => {
+  fw.queryDB("selectTopicsName",[board,type], (topicList) => {
     let jsonData = [];
 
     fw.utility.forEach(topicList, (topicData) => {
@@ -121,6 +121,31 @@ module.exports.getTopics = (fw, callback) => {
       data.name = data.name.replaceAll("_", " ");
 
       jsonData.push(data);
+		}, () => {
+			callback(jsonData);
+		});
+  });
+}
+
+module.exports.getWarnings = (fw,board, type, matricola_id, callback) => {
+  fw.queryDB("selectTopicsName",[board,type], (topicList) => {
+    let jsonData = [];
+
+    fw.utility.forEach(topicList, (topicData) => {
+      fw.queryDB("selectWarning",[topicData.name,matricola_id], (result) => {
+        if (result.length > 0){
+          data = {};
+          data.name = result.topicname;
+          data.value = result.value;
+          data.timestamp = result.timestamp;
+          data.matricola_id = matricola_id;
+          this.formatCleanTime(new Date(result.timestamp), (newTime) => {
+            data.formattedTime = newTime;
+          });
+
+          jsonData.push(data);
+        }
+      });
 		}, () => {
 			callback(jsonData);
 		});
@@ -222,6 +247,12 @@ module.exports.splitArray = (array,maxEntry,page,callback) => {
 
 module.exports.formatTime = (time,callback) => {
   let newTime = time.getFullYear() + "-" + ("0" + (time.getMonth() + 1)).slice(-2) + "-" + ("0" + time.getDate()).slice(-2) + "T" + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds() + "." + time.getMilliseconds() + "Z";
+
+  callback(newTime);
+}
+
+module.exports.formatCleanTime = formatCleanTime = (time, callback) => {
+  let newTime = time.getFullYear() + "-" + ("0" + (time.getMonth() + 1)).slice(-2) + "-" + ("0" + time.getDate()).slice(-2) + " " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
 
   callback(newTime);
 }

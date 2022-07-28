@@ -285,7 +285,7 @@
 
 
 
-    export let tableNavigator = (pages) => {
+    export let tableNavigator = ($scope, max, refreshTable, nextPage, previusPage) => {
 
         let less = document.querySelector(".less");
         less.addEventListener("click", () => {
@@ -293,9 +293,20 @@
             page.classList.remove("active");
             let num = parseInt(page.className.slice(-1)) - 1;
             if(num == 0){
+                if(previusPage){
+                    let previusValue = parseInt(document.querySelector(".p1").innerHTML) - 1;
+                    if(previusValue > 0){
+                        previusPage($scope, previusValue);
+                    }
+                }
                 num = 5;
             }
-            document.querySelector(".p" + num).classList.add("active");
+            let newPage = document.querySelector(".p" + num);
+            newPage.classList.add("active");
+            let pageIndex = parseInt(newPage.innerHTML);
+            if(refreshTable){
+                refreshTable($scope, pageIndex);
+            }
         })
 
 
@@ -303,12 +314,40 @@
         more.addEventListener("click", () => {
             let page = document.querySelector(".pages.active");
             page.classList.remove("active");
-            let num = parseInt(page.className.slice(-1)) + 1;
-            if(num == 5){
+            let num = parseInt(page.className.substring(31, 32)) + 1;
+            if(num == 6){
+                if(nextPage){
+                    let nextValue = parseInt(document.querySelector(".p5").innerHTML) + 1;
+                    if(nextValue <= max){
+                        nextPage($scope, nextValue);
+                    }
+                }
                 num = 1;
             }
-            document.querySelector(".p" + num).classList.add("active");
+            let newPage = document.querySelector(".p" + num);
+            newPage.classList.add("active");
+            let pageIndex = parseInt(newPage.innerHTML);
+            if(refreshTable){
+                refreshTable($scope, pageIndex);
+            } 
         })
     }
 
        
+
+    export let indexUpdate = () => {
+        let indexes = document.querySelectorAll(".itemNumber");
+        let page = document.querySelector(".pages.active");
+        indexes.forEach((element, i) => {
+            if(page){
+                setTimeout(() => {
+                    element.innerHTML = (i+1) + (10 * parseInt(page.innerHTML-1));
+                    console.log(page.innerHTML-1);
+                }, 0);
+            }else{
+                setTimeout(() => {
+                        element.innerHTML = (i+1);
+                }, 0);
+            }
+        })
+    }

@@ -11,10 +11,11 @@ import {sendInfo} from "./post/machineInfos.js";
 import {getLocation} from "./get/getLocation.js";
 import {updateData} from "./get/updateData.js";
 import {historicData} from "./post/historicData.js";
-import {tableNavigator} from "../script.js";
+import {tableNavigator, indexUpdate} from "../script.js";
 let table = false;
 let pages;
 let newPages;
+let newIndicator;
 
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
@@ -202,6 +203,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                         document.querySelector(".showMore").style.display = "flex";
                     }
                     $timeout(() => {
+                        indexUpdate();
                         pages = document.querySelectorAll(".pages");
                         pages[0].classList.add("active");
                         let pageNavigator = (item) => {
@@ -216,6 +218,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                 pageNavigator(element);
                                 historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
                                     $scope.datas = res.pageData;
+                                    indexUpdate();
                                 })
                             })
                            element.classList.add("p"+ (i+1));
@@ -232,20 +235,113 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                 $scope.pages = [];
                                 selectPage.classList.remove("active");
                                 let maxValue = parseInt(pageInput.value) + 5;
-                                for(let i = parseInt(pageInput.value); i < maxValue; i++){
-                                    $scope.pages.push({value: i});
+                                if(maxValue <= res.pagesNumber-5){
+                                    for(let i = parseInt(pageInput.value); i < maxValue; i++){
+                                        $scope.pages.push({value: i});
+                                    }
+                                }else{
+                                    for(let i = res.pagesNumber-4; i <= res.pagesNumber; i++){
+                                        $scope.pages.push({value: i});
+                                    }
                                 }
                                 $timeout(() => {
+                                    indexUpdate();
                                     newPages = document.querySelectorAll(".pages");
+                                    let newPageNavigator = (item) => {
+                                        newPages.forEach((element) => {
+                                            element.classList.remove("active");
+                                        })
+                                        item.classList.add("active")
+                                    }
                                     newPages.forEach((item, i) => {
+                                        item.addEventListener("click", () => {
+                                            newPageNavigator(item);
+                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                                indexUpdate();
+                                                $scope.datas = res.pageData;
+                                            })
+                                        })
                                         newPages[i].classList.add("p" + (i+1));
+                                        if(parseInt(newPages[i].innerHTML) == parseInt(pageInput.value)){
+                                            newPages[i].classList.add("active");
+                                        }
                                     })
-                                    newPages[0].classList.add("active");
-                                }, 0);
+                                    
+                                }, 0); 
                             })
                         })
                         if(!table){
-                            tableNavigator(pages);
+                            tableNavigator($scope, res.pagesNumber, ($scope, page) => {
+                                let topicRefresh = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
+                                historicData($scope, $http, topicRefresh, dateTime, devicesList, index, page, ($scope, res) => {
+                                    $scope.datas = res.pageData;
+                                    indexUpdate();
+                                })
+                            }, ($scope, num) => {
+                                $scope.pages = [];
+                                if(num <= res.pagesNumber-4){
+                                    for(let i = num; i < (num+5); i++){
+                                        $scope.pages.push({value: i});
+                                    }
+                                }else{
+                                    for(let i = num-4; i < num+1; i++){
+                                        $scope.pages.push({value: i});
+                                    }
+                                }
+                                $timeout(() => {
+                                    newIndicator = document.querySelectorAll(".pages");
+                                    let newnewPageNavigator = (item) => {
+                                        newIndicator.forEach((element) => {
+                                            element.classList.remove("active");
+                                        })
+                                        item.classList.add("active")
+                                    }
+                                    newIndicator.forEach((item, i) => {
+                                        item.addEventListener("click", () => {
+                                            newnewPageNavigator(item);
+                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                                indexUpdate();
+                                                $scope.datas = res.pageData;
+                                            })
+                                        })
+                                        newIndicator[i].classList.add("p" + (i+1));
+                                    })
+                                    newIndicator[0].classList.add("active");
+                                    indexUpdate();
+                                }, 100);
+                            }, ($scope, num) => {
+                                $scope.pages = [];
+                                if(num > 5){
+                                    for(let i = (num-4); i <= num; i++){
+                                        $scope.pages.push({value: i});
+                                    }
+                                }else{
+                                    for(let i = 1; i <= 5; i++){
+                                        $scope.pages.push({value: i});
+                                    }
+                                }
+                                $timeout(() => {
+                                    newIndicator = document.querySelectorAll(".pages");
+                                    let newnewPageNavigator = (item) => {
+                                        newIndicator.forEach((element) => {
+                                            element.classList.remove("active");
+                                        })
+                                        item.classList.add("active")
+                                    }
+                                    newIndicator.forEach((item, i) => {
+                                        item.addEventListener("click", () => {
+                                            newnewPageNavigator(item);
+                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                                indexUpdate();
+                                                $scope.datas = res.pageData;
+                                            })
+                                        })
+                                        newIndicator[i].classList.add("p" + (i+1));
+                                    })
+                                    newIndicator[4].classList.add("active");
+                                    indexUpdate();
+                                }, 100);
+                            });
                             table = true;
                         }
                     }, 0);

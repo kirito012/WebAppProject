@@ -125,7 +125,9 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
-  selectValueFromTimestamp: "SELECT value,timestamp FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;",
+  deleteWarning: "DELETE FROM datas.?? WHERE id = ? and matricola_id = ?",
+  selectValueFromTimestamp: "SELECT value,timestamp,id FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;",
+  selectWarning: "SELECT value,topicname,timestamp FROM datas.?? WHERE matricola_id = ?;",
   createTableInsertTopic: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
     value VARCHAR(45) NOT NULL,
@@ -146,11 +148,19 @@ module.exports.query = (con, qr, params, callback) => {
   if (!query) {
     query = qr;
   }
-
-  con.query(query, params, (error, results, fields) => {
-    if (error) throw error;
-    callback(results);
-  });
+  try {
+    con.query(query, params, (error, results, fields) => {
+      if (error) {
+        throw error;
+      }
+      else{
+        callback(results);
+      }
+    });
+  }
+  catch(err){
+    console.error(err);
+  }
 };
 
 module.exports.connectToDB = (host, db) => {
