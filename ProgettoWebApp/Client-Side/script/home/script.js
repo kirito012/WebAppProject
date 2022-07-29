@@ -216,26 +216,6 @@
         }
 
 
-
-
-
-        let paramsHome = new URLSearchParams(window.location.search);
-        let errorList = {   
-            machineNameExceed: "Nome troppo lungo"
-        }
-        let errorMassageMachine = document.querySelector(".error");
-
-        if(paramsHome.has('error')){
-            for(let key in errorList){
-                if(paramsHome.get("error") == key){
-                    errorMassageMachine.innerHTML = errorList[key];
-                }
-            }
-        }
-
-
-
-
         let select = document.querySelector(".select");
         let link2 = document.querySelector(".link.I2");
         select.addEventListener("click", () => {
@@ -293,13 +273,19 @@
             page.classList.remove("active");
             let num = parseInt(page.className.slice(-1)) - 1;
             if(num == 0){
-                if(previusPage){
-                    let previusValue = parseInt(document.querySelector(".p1").innerHTML) - 1;
-                    if(previusValue > 0){
-                        previusPage($scope, previusValue);
+                if(max){
+                    if(previusPage && max >= 5){
+                        let previusValue = parseInt(document.querySelector(".p1").innerHTML) - 1;
+                        if(previusValue > 0){
+                            previusPage($scope, previusValue);
+                        }
                     }
                 }
-                num = 5;
+                if(max <= 5){
+                    num = max;
+                }else{
+                    num = 5;   
+                }
             }
             let newPage = document.querySelector(".p" + num);
             newPage.classList.add("active");
@@ -316,12 +302,16 @@
             page.classList.remove("active");
             let num = parseInt(page.className.substring(31, 32)) + 1;
             if(num == 6){
-                if(nextPage){
-                    let nextValue = parseInt(document.querySelector(".p5").innerHTML) + 1;
-                    if(nextValue <= max){
-                        nextPage($scope, nextValue);
+                if(max){
+                    if(nextPage && max >= 5){
+                        let nextValue = parseInt(document.querySelector(".p5").innerHTML) + 1;
+                        if(nextValue <= max){
+                            nextPage($scope, nextValue);
+                        }
                     }
                 }
+                num = 1;
+            }else if(num > max){
                 num = 1;
             }
             let newPage = document.querySelector(".p" + num);
@@ -342,7 +332,6 @@
             if(page){
                 setTimeout(() => {
                     element.innerHTML = (i+1) + (10 * parseInt(page.innerHTML-1));
-                    console.log(page.innerHTML-1);
                 }, 0);
             }else{
                 setTimeout(() => {

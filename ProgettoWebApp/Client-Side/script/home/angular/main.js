@@ -11,6 +11,7 @@ import {sendInfo} from "./post/machineInfos.js";
 import {getLocation} from "./get/getLocation.js";
 import {updateData} from "./get/updateData.js";
 import {historicData} from "./post/historicData.js";
+import {getAlert, removeAlert} from "./post/postError.js";
 import {tableNavigator, indexUpdate} from "../script.js";
 let table = false;
 let pages;
@@ -25,6 +26,8 @@ export let index;
 
 let topics;
 
+let button = document.querySelector(".submitAddMachine");
+
 let oldTopics = {}
 
 let userId;
@@ -32,8 +35,6 @@ let userId;
 let dataStream;
 
 let closeConn = {action: "close"};
-
-let closeListener = false;
 
 let infos = document.querySelectorAll(".infoBottom span");
 
@@ -70,16 +71,31 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 
     refreshMachine($scope, ($newScope, data) => {
         $timeout(() => {
-            $newScope.devices = data;
+            if(data.error){
+                let error = {
+                    machineNameExceed: "Nome macchina troppo lungo",
+                    machineMissing: "Modello non disponibile",
+                }
+                document.querySelector(".error").innerHTML = error[data.error];
+                setTimeout(() => {
+                    document.querySelector(".error").innerHTML = "";
+                }, 5000)
+                button.classList.add("error");
+                $timeout(() => {
+                    button.classList.remove("error");
+                }, 500)
+            }else{
+                $newScope.devices = data;
+            }
+            button.classList.add("success");
+            $timeout(() => {
+                button.classList.remove("success");
+            }, 500)
         }, 0);
         let inputsAddMachine = document.querySelectorAll(".input.addMachine");
         inputsAddMachine.forEach((element) => {
             element.value = "";
         })
-        document.querySelector(".added h3").innerHTML = "Dispositivo aggiunto";
-        $timeout(() => {
-            document.querySelector(".added h3").innerHTML = "";
-        }, 5000);
     });;
 
     getProfile($scope, $http, ($scope, data) => {
@@ -142,6 +158,11 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
             infos[i].innerHTML = infos[i].textContent.replace(/\S/g, "<span class='letter'>$&</span>");
         })
         textAnimation();
+
+
+
+
+
         removeMachine($scope, $http, index, devicesList, ($scope, device) => {
             $timeout(() => {
                 $scope.devices = device;
@@ -152,6 +173,11 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                 }
             }, 0);
         }); 
+
+
+
+
+
         activeTopics($scope, $http, devicesList, $index, ($scope, topicsActive) => {
             $scope.activeTopics = topicsActive;
             topics.forEach((element) => {
@@ -168,6 +194,10 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                     })
                 })
             }
+
+
+
+
             sendInfo($scope, $http, devicesList, $index, topicsActive, oldTopics, userId, ($scope, userId) => {
                 if(!dataStream){
                     dataStream = $websocket('ws://192.168.0.6:8081/socketData');
@@ -185,7 +215,28 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                 oldTopics = topicsActive;
                 setted = false;
             })
-            document.querySelector(".send").addEventListener("click", () => {
+
+
+
+            getAlert($scope, $http, devicesList, $index, ($scope, res) => {
+                if(res.length != 0){
+                    $scope.warnings = res;
+                    document.querySelector(".noNotify").style.display = "none";
+                    $scope.getIndex = (index) => {
+                        document.querySelectorAll(".removeAlert")[index].onclick = () => {
+                            removeAlert($scope, $http, devicesList, $index, res.name, res.timestamp, res.errorId, ($scope, newRes) => {
+                                $scope.warnings = newRes;
+                            })
+                        }
+                    }
+                }
+            })
+
+
+
+
+            document.querySelector(".send").onclick = () => {
+                //refresh button
                 let topic = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
                 let dateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
                 historicData($scope, $http, topic, dateTime, devicesList, index, 1, ($scope, res) => {
@@ -206,6 +257,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                         indexUpdate();
                         pages = document.querySelectorAll(".pages");
                         pages[0].classList.add("active");
+                        // page navigator
                         let pageNavigator = (item) => {
                             pages.forEach((element) => {
                                 element.classList.remove("active");
@@ -214,29 +266,41 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                         }
                 
                         pages.forEach((element, i) => { 
-                            element.addEventListener("click", () => {
+                            element.onclick = () => {
                                 pageNavigator(element);
                                 historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
                                     $scope.datas = res.pageData;
+                                    if(topic == "heartbeat"){
+                                        $scope.datas.forEach((element, i) => {
+                                            $scope.datas[i].value = "Online";
+                                        });
+                                    }
                                     indexUpdate();
                                 })
-                            })
+                            }
                            element.classList.add("p"+ (i+1));
                         })
                         let pageInput = document.querySelector(".inputPage");
                         let selectPage = document.querySelector(".selectPage");
-                        document.querySelector(".showMore").addEventListener("click", () => {
+                        document.querySelector(".showMore").onclick = () => {
                             selectPage.classList.add("active");
-                        })
-                        document.querySelector(".submitNewData").addEventListener("click", () => {
+                        }
+                        //search page
+                        document.querySelector(".submitNewData").onclick = () => {
+                            let newDateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
                             let topicRefresh = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
-                            historicData($scope, $http, topicRefresh, dateTime, devicesList, index, pageInput.value, ($scope, res) => {
+                            historicData($scope, $http, topicRefresh, newDateTime, devicesList, index, pageInput.value, ($scope, res) => {
                                 $scope.datas = res.pageData;
+                                if(topicRefresh == "heartbeat"){
+                                    $scope.datas.forEach((element, i) => {
+                                        $scope.datas[i].value = "Online";
+                                    });
+                                }
                                 $scope.pages = [];
                                 selectPage.classList.remove("active");
-                                let maxValue = parseInt(pageInput.value) + 5;
-                                if(maxValue <= res.pagesNumber-5){
-                                    for(let i = parseInt(pageInput.value); i < maxValue; i++){
+                                let maxValue = parseInt(pageInput.value) + 4;
+                                if(maxValue <= res.pagesNumber){
+                                    for(let i = parseInt(pageInput.value); i <= maxValue; i++){
                                         $scope.pages.push({value: i});
                                     }
                                 }else{
@@ -244,8 +308,8 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                         $scope.pages.push({value: i});
                                     }
                                 }
+                                // page navigator
                                 $timeout(() => {
-                                    indexUpdate();
                                     newPages = document.querySelectorAll(".pages");
                                     let newPageNavigator = (item) => {
                                         newPages.forEach((element) => {
@@ -254,27 +318,39 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                         item.classList.add("active")
                                     }
                                     newPages.forEach((item, i) => {
-                                        item.addEventListener("click", () => {
+                                        item.onclick = () => {
                                             newPageNavigator(item);
-                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                            historicData($scope, $http, topicRefresh, newDateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
                                                 indexUpdate();
                                                 $scope.datas = res.pageData;
+                                                if(topicRefresh == "heartbeat"){
+                                                    $scope.datas.forEach((element, i) => {
+                                                        $scope.datas[i].value = "Online";
+                                                    });
+                                                }
                                             })
-                                        })
+                                        }
                                         newPages[i].classList.add("p" + (i+1));
                                         if(parseInt(newPages[i].innerHTML) == parseInt(pageInput.value)){
                                             newPages[i].classList.add("active");
                                         }
                                     })
-                                    
+                                    indexUpdate();
                                 }, 0); 
                             })
-                        })
+                        }
                         if(!table){
+                            //bottom indicator arrow
                             tableNavigator($scope, res.pagesNumber, ($scope, page) => {
+                                let newDateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
                                 let topicRefresh = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
-                                historicData($scope, $http, topicRefresh, dateTime, devicesList, index, page, ($scope, res) => {
+                                historicData($scope, $http, topicRefresh, newDateTime, devicesList, index, page, ($scope, res) => {
                                     $scope.datas = res.pageData;
+                                    if(topicRefresh == "heartbeat"){
+                                        $scope.datas.forEach((element, i) => {
+                                            $scope.datas[i].value = "Online";
+                                        });
+                                    }
                                     indexUpdate();
                                 })
                             }, ($scope, num) => {
@@ -290,6 +366,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                 }
                                 $timeout(() => {
                                     newIndicator = document.querySelectorAll(".pages");
+                                    //page navigator
                                     let newnewPageNavigator = (item) => {
                                         newIndicator.forEach((element) => {
                                             element.classList.remove("active");
@@ -298,12 +375,18 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                     }
                                     newIndicator.forEach((item, i) => {
                                         item.addEventListener("click", () => {
+                                            let newDateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
                                             newnewPageNavigator(item);
-                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                            historicData($scope, $http, topicRefresh, newDateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
                                                 indexUpdate();
                                                 $scope.datas = res.pageData;
+                                                if(topicRefresh == "heartbeat"){
+                                                    $scope.datas.forEach((element, i) => {
+                                                        $scope.datas[i].value = "Online";
+                                                    });
+                                                }
                                             })
-                                        })
+                                        });
                                         newIndicator[i].classList.add("p" + (i+1));
                                     })
                                     newIndicator[0].classList.add("active");
@@ -322,6 +405,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                 }
                                 $timeout(() => {
                                     newIndicator = document.querySelectorAll(".pages");
+                                    //page navigator
                                     let newnewPageNavigator = (item) => {
                                         newIndicator.forEach((element) => {
                                             element.classList.remove("active");
@@ -329,13 +413,19 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                                         item.classList.add("active")
                                     }
                                     newIndicator.forEach((item, i) => {
-                                        item.addEventListener("click", () => {
+                                        item.onclick = () => {
+                                            let newDateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
                                             newnewPageNavigator(item);
-                                            historicData($scope, $http, topic, dateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
+                                            historicData($scope, $http, topicRefresh, newDateTime, devicesList, index, $scope.pages[i].value, ($scope, res) => {
                                                 indexUpdate();
                                                 $scope.datas = res.pageData;
+                                                if(topicRefresh == "heartbeat"){
+                                                    $scope.datas.forEach((element, i) => {
+                                                        $scope.datas[i].value = "Online";
+                                                    });
+                                                }
                                             })
-                                        })
+                                        }
                                         newIndicator[i].classList.add("p" + (i+1));
                                     })
                                     newIndicator[4].classList.add("active");
@@ -347,9 +437,14 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
                     }, 0);
                     $timeout(() => {
                         $scope.datas = res.pageData;
+                        if(topic == "heartbeat"){
+                            $scope.datas.forEach((element, i) => {
+                                $scope.datas[i].value = "Online";
+                            });
+                        }
                     }, 0);
                 })
-            })
+            }
         })
     }    
  
@@ -444,9 +539,9 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
     }
 
     document.querySelectorAll(".bar").forEach((element) => {
-        element.addEventListener("click", () => {
+        element.onclick = () => {
             dataSelector(element);
-        })
+        }
     })
 
 

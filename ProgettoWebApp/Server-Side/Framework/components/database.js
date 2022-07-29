@@ -125,9 +125,38 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
-  deleteWarning: "DELETE FROM datas.?? WHERE id = ? and matricola_id = ?",
-  selectValueFromTimestamp: "SELECT value,timestamp,id FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;",
-  selectWarning: "SELECT value,topicname,timestamp FROM datas.?? WHERE matricola_id = ?;",
+  deleteWarning: `CREATE TABLE IF NOT EXISTS datas.?? (
+    id INT NOT NULL AUTO_INCREMENT,
+    value VARCHAR(45) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    matricola_id VARCHAR(45) NOT NULL,
+    topicname VARCHAR(45) NOT NULL,
+    topicstring VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
+
+    DELETE FROM datas.?? WHERE timestamp = ? and matricola_id = ? and id = ?;`,
+  selectValueFromTimestamp: `CREATE TABLE IF NOT EXISTS datas.?? (
+    id INT NOT NULL AUTO_INCREMENT,
+    value VARCHAR(45) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    matricola_id VARCHAR(45) NOT NULL,
+    topicname VARCHAR(45) NOT NULL,
+    topicstring VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
+    SELECT value,timestamp,id FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;`,
+  selectWarning: `CREATE TABLE IF NOT EXISTS datas.?? (
+    id INT NOT NULL AUTO_INCREMENT,
+    value VARCHAR(45) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    matricola_id VARCHAR(45) NOT NULL,
+    topicname VARCHAR(45) NOT NULL,
+    topicstring VARCHAR(500) NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
+
+    SELECT value,topicname,timestamp,id FROM datas.?? WHERE matricola_id = ?;`,
   createTableInsertTopic: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
     value VARCHAR(45) NOT NULL,

@@ -690,6 +690,16 @@ section .dashboard .sectionTwo .column .row .top .gaugeContainer{
     opacity: 0;
 }
 
+section .dashboard .sectionTwo .column .row .top .gaugeContainer .goHistory{
+    position: absolute;
+    bottom: 20px;
+    font-size: 16px;
+    color: #112d42;
+    font-weight: 900;
+    opacity: 0;
+    text-decoration: none;
+}
+
 section .dashboard .sectionTwo .column .row .top .gaugeContainer h4{
     position: absolute;
     color: #112d42;
@@ -784,6 +794,7 @@ section .dashboard .sectionTwo .column .row .bottom .title h1{
     color: #112d42;
     font-family: 900;
     font-size: 40px;
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .title .selectData{
@@ -795,7 +806,7 @@ section .dashboard .sectionTwo .column .row .bottom .title .selectData{
     gap: 30px;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .title .selectData select{
+section .dashboard .sectionTwo .column .row .bottom .title .selectData .selectHistory{
     position: relative;
     font-size: 18px;
     color: #112d42;
@@ -804,19 +815,8 @@ section .dashboard .sectionTwo .column .row .bottom .title .selectData select{
     padding: 5px;
     cursor: pointer;
     width: 150px;
-    transition: 0.5s ease-out;
-}
-
-section .dashboard .sectionTwo .column .row .bottom .title .selectData select option{
-    position: relative;
-    background: #fff;
-    color: #112d42;
-    transition: 0.5s ease-out;
-}
-
-section .dashboard .sectionTwo .column .row .bottom .title .selectData select option:hover{
-    background: #112d42;
-    color: #fff;
+    opacity: 0;
+    transform: translateY(-30px);
 }
 
 
@@ -831,6 +831,11 @@ section .dashboard .sectionTwo .column .row .bottom .table{
     width: 100%;
     height: 100%;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table .a{
+    opacity: 0;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .top1{

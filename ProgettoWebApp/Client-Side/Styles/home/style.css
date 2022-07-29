@@ -84,6 +84,7 @@ section .dashboard{
     width: 100%;
     height: 100vh;
     overflow-y: scroll;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     background: var(--backgroundActive);
 }
@@ -661,6 +662,22 @@ section .navigation .item .addDevice .submit input{
     transition: 0.5s ease;
 }
 
+section .navigation .item .addDevice .submit input.success{
+    background: #1da140;
+}
+
+section .navigation .item .addDevice .submit input.success:hover{
+    background: #1da140;
+}
+
+section .navigation .item .addDevice .submit input.error{
+    background: #bf0606;
+}
+
+section .navigation .item .addDevice .submit input.error:hover{
+    background: #bf0606;
+}
+
 section .navigation .item .addDevice .submit input:hover{
     background: #112d42;
     color: #fff;
@@ -1175,6 +1192,75 @@ section .personal .settingsConfiguration .container .content.I1 ul li{
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
+section .personal .settingsConfiguration .container .content.I2{
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0;
+}
+
+section .personal .settingsConfiguration .container .content.I2 .noNotify{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    color: #112d42;
+    font-weight: 900;
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 70px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: 0.5s ease box-shadow;
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify:hover{
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify h5{
+    font-family: 900;
+    color: #112d42;
+    font-size: 14px;
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify .removeAlert{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify .removeAlert .iconContairer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+section .personal .settingsConfiguration .container .content.I2 .notify .removeAlert .iconContairer ion-icon{
+    font-size: 22px;
+    color: #bf0606;
+}
+
 section .inputSettings{
     position: absolute;
     display: flex;
@@ -1587,4 +1673,10 @@ input[type=date]:required:invalid::-webkit-datetime-edit {
 input[type=date]:focus::-webkit-datetime-edit {
     color: #112d42 !important;
     font-size: 14px;
+}
+
+.error{
+    font-size: 16px;
+    font-weight: 900;
+    color: #112d42;
 }

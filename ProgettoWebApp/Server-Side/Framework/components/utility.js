@@ -1,7 +1,6 @@
 let crypto = require('crypto');
 let validator = require("email-validator");
 let path = require("path");
-const { json } = require('stream/consumers');
 
 module.exports.generateRandomKey = () => {
   return crypto.randomBytes(48).toString('hex');
@@ -132,18 +131,21 @@ module.exports.getWarnings = (fw,board, type, matricola_id, callback) => {
     let jsonData = [];
 
     fw.utility.forEach(topicList, (topicData) => {
-      fw.queryDB("selectWarning",[topicData.name,matricola_id], (result) => {
-        if (result.length > 0){
-          data = {};
-          data.name = result.topicname;
-          data.value = result.value;
-          data.timestamp = result.timestamp;
-          data.matricola_id = matricola_id;
-          this.formatCleanTime(new Date(result.timestamp), (newTime) => {
-            data.formattedTime = newTime;
-          });
+      fw.queryDB("selectWarning",[topicData.name,topicData.name,matricola_id], (result) => {
+        if (result[1]){
+          this.checkLength(result[1],() => {
+            data = {};
+            data.name = result[1].topicname;
+            data.value = result[1].value;
+            data.timestamp = result[1].timestamp;
+            data.errorId = result[1].id;
+            data.matricola_id = matricola_id;
+            this.formatCleanTime(new Date(result[1].timestamp), (newTime) => {
+              data.formattedTime = newTime;
+            });
 
-          jsonData.push(data);
+            jsonData.push(data);
+          });
         }
       });
 		}, () => {

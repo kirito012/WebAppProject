@@ -208,8 +208,6 @@
                                         <ul>
                                             <li class="state s1">Stato: <span></span></li>
                                             <li class="state s2">Modalità: <span></span></li>
-                                            <li class="state">Stato:</li>
-                                            <li class="state">Stato:</li>
                                         </ul>
                                         <div class="buttonsContainer">
                                             <div class="button remove">
@@ -294,14 +292,17 @@
                                     <div class="value">
                                         <h1 class="valueNumber">0</h1>
                                     </div>
+                                    <a href="#history" class="goHistory">
+                                        Visualizza storico
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <div class="bottom">
+                        <div class="bottom" id="history">
                             <div class="title">
-                                <h1>Storico</h1>
+                                <h1 class="historic">Storico</h1>
                                 <div class="selectData">
-                                    <select class="time">
+                                    <select class="time selectHistory">
                                         <option value="0.5">30 minuti</option>
                                         <option value="1">1 ora</option>
                                         <option value="4">4 ore</option>
@@ -310,26 +311,26 @@
                                         <option value="16">16 ore</option>
                                         <option value="24">1 giorno</option>
                                     </select>
-                                    <select class="topic">
+                                    <select class="topic selectHistory">
                                         <option value="" ng-repeat="topic in activeTopics">{{ topic.name }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="table">
                                 <div class="top1">
-                                    <div class="send">
+                                    <div class="send a">
                                         <ion-icon name="refresh-circle-outline"></ion-icon>
                                     </div>
-                                    <div class="topicName1">
+                                    <div class="topicName1 a">
                                         Dati
                                     </div>
-                                    <div class="value1">
+                                    <div class="value1 a">
                                         Valori
                                     </div>
-                                    <div class="dateTime1">
+                                    <div class="dateTime1 a">
                                         Data e ora
                                     </div>
-                                    <div class="device1">
+                                    <div class="device1 a">
                                         Dispositivo
                                     </div>
                                 </div>
@@ -439,14 +440,28 @@
                 </div>
                 <div class="container">
                     <div class="itemSetting i2">
-                        <h3>Impostazioni notifiche</h3>
+                        <h3>Notifiche</h3>
                         <div class="icon">
                             <div class="line" style="--rot: 0deg;"></div>
                             <div class="line" style="--rot: 90deg;"></div>
                         </div>
                     </div>
                     <div class="content I2">
-                            
+                        <div class="noNotify">
+                            Nessuna notifica in arrivo
+                        </div>
+                        <div class="notify" ng-repeat="warning in warnings" ng-click="getIndex($index)">
+                            <div>
+                                <h5>{{ warning.matricola_id }}</h5>
+                                <h5>{{ warning.name + " - " + warning.value}}</h5>
+                                <h5>{{ warning.formattedTime }}</h5>
+                            </div>
+                            <div class="removeAlert">
+                                <div class="iconContairer">
+                                    <ion-icon name="trash-outline"></ion-icon>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

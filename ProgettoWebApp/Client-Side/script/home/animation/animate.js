@@ -99,7 +99,7 @@ window.onload = () => {
 
 
     let once = false;
-
+    let newOnce = false;
     
     let dashboard = document.querySelector(".dashboard");
     dashboard.addEventListener("scroll", () => {
@@ -164,8 +164,64 @@ window.onload = () => {
                     opacity: [0, 1],
                     duration: 260,
                 })
-
+                .add({
+                    targets: '.goHistory',
+                    translateY: [30, 0],
+                    opacity: [0, 1],
+                    duration: 260,
+                });
                 once = true;
+            }
+            if(y > window.innerHeight/0.8){
+                if(!newOnce){
+                    let tableAnimation = anime.timeline({
+                        autoplay: true,
+                        easing: 'easeOutCirc',
+                        loop: false,
+                    })
+
+                    tableAnimation
+                    .add({
+                        targets: '.historic',
+                        translateX: [-30, 0],
+                        opacity: [0, 1],
+                        duration: 260,
+                        delay: 200
+                    })
+                    .add({
+                        targets: '.selectHistory',
+                        translateY: [-30, 0],
+                        opacity: [0, 1],
+                        duration: 260,
+                        delay: anime.stagger(100)
+                    })
+                    .add({
+                        targets: '.table',
+                        translateY: [30, 0],
+                        opacity: [0, 1],
+                        duration: 260,
+                    })
+                    .add({
+                        targets: '.itemNumber',
+                        translateY: [30, 0],
+                        scale: [4, 1],
+                        opacity: [0, 1],
+                        duration: 260,
+                        delay: anime.stagger(50)
+                    })
+                    .add({
+                        targets: '.a',
+                        translateX: [30, 0],
+                        scale: [4, 1],
+                        opacity: [0, 1],
+                        duration: 260,
+                        delay: anime.stagger(100)
+                    })
+
+
+
+                    newOnce = true;
+                }
             }
         }
         

@@ -118,10 +118,10 @@ fw.newRequest(["post", "/log", false, false, "log"],(res, req) => {
 fw.newRequest(["post", "/changeUserData", true, "/login", "changeUserData",true],(res, req, utente) => {
   let body = req.body;
 
-  if (!body.email || !body.name || !body.surname || !body.birthday){fw.redirect(res, "/home", "error", "missingInputs"); return;}
-  if (body.name.length > 30 || body.surname.length > 30) {fw.redirect(res, "/home", "error", "dataLenght"); return;}
-  if (!fw.utility.checkEmail(body.email)){fw.redirect(res, "/home", "error", "emailNotCorrect"); return;}
-  if (!fw.utility.dayCheck(body.birthday)) {fw.redirect(res, "/home", "error", "dateIncorrect"); return;}
+  if (!body.email || !body.name || !body.surname || !body.birthday){res.send({error: "missingInputs"}); return;}
+  if (body.name.length > 30 || body.surname.length > 30) {res.send({error: "dataLength"}); return;}
+  if (!fw.utility.checkEmail(body.email)){res.send({error: "emailNotCorrect"}); return;}
+  if (!fw.utility.dayCheck(body.birthday)) {res.send({error: "dateIncorrect"});return;}
 
   let startQuery = "UPDATE utenti SET ";
   let middleQuery = "";
@@ -154,7 +154,7 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
     fw.utility.checkLength(models,() => {
       modelId = models[0].idmodelli;
 
-      if (body.name.length > 20){fw.redirect(res, "/home", "error", "machineNameExceed"); return;};
+      if (body.name.length > 20){res.send({error: "machineNameExceed"}); return;};
 
       fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
         fw.queryDB("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
@@ -164,7 +164,7 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
         });
       });
     }, () => {
-      fw.redirect(res, "/home", "error", "machinemissing");
+      res.send({error: "machineMissing"});
     });
   });
 });
@@ -231,13 +231,13 @@ fw.newRequest(["post", "/uploadpfp", true, "/login", "uploadpfp", true],(res, re
 fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, req, utente) => {
   let body = req.body;
   let timeElapsed = new Date(new Date().getTime() - (body.timeChoosen));
-  let maxTime = new Date(new Date().getTime() - (24 * 60 * 60 * 1000));
+  let maxTime = new Date(new Date().getTime() - (48 * 60 * 60 * 1000));
   let limit = body.limit || 1000000;
 
   if (timeElapsed >=  maxTime) {
     fw.utility.formatTime(timeElapsed, (newTime) => {
-      fw.queryDB("selectValueFromTimestamp",[body.topic,body.id,newTime,limit],(results) => {
-        fw.utility.splitArray(results,body.columns,body.page,(pageData) => {
+      fw.queryDB("selectValueFromTimestamp",[body.topic,body.topic,body.id,newTime,limit],(results) => {
+        fw.utility.splitArray(results[1],body.columns,body.page,(pageData) => {
           fw.utility.forEach(pageData,(element) => {
             element.id = body.id;
             element.topic = body.topic;
@@ -246,7 +246,7 @@ fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, re
               element.formattedDate = formattedTime;
             });
           }, () => {
-            res.send({pageData: pageData,pagesNumber: Math.floor(results.length / body.columns)});
+            res.send({pageData: pageData,pagesNumber: Math.floor(results[1].length / body.columns)});
           });
         });  
       });
@@ -266,6 +266,11 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
         })
         res.send(nameList);
         fw.utility.getTopics(fw,"fiscal","warning", (topicList) => {
+          fw.utility.forEach(topicList,(element) => {
+            fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
+          })
+        });
+        fw.utility.getTopics(fw,"fiscal","alarm", (topicList) => {
           fw.utility.forEach(topicList,(element) => {
             fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
           })
@@ -308,11 +313,30 @@ fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, 
   res.status(204).send({});
 });
 
-fw.newRequest(["post", "getWarnings", true, "/login", "getWarnings",false],(res, req) => {
+fw.newRequest(["post", "/getWarnings", true, "/login", "getWarnings",false],(res, req) => {
   let body = req.body;
 
   fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
-    res.send(data);
+    fw.utility.getWarnings(fw, "fiscal", "alarm", body.matricola_id, (data2) => {
+      res.send(data.concat(data2));
+    });
+  });
+});
+
+fw.newRequest(["post", "/deleteWarnings", true, "/login", "deleteWarnings",false],(res, req) => {
+  let body = req.body;
+
+  fw.queryDB("deleteWarning",[body.name,body.name,body.timestamp,body.matricola_id, body.errorId], (results) => {
+    if (results) {
+      fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
+        fw.utility.getWarnings(fw, "fiscal", "alarm", body.matricola_id, (data2) => {
+          res.send(data.concat(data2));
+        });
+      });
+    }
+    else{
+      res.send({error: "deleteWarningError"});
+    }
   });
 });
 
