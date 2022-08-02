@@ -20,8 +20,9 @@ export let dinamicTable = ($scope, $http, $timeout, topic, dateTime, devicesList
 			}
 			$timeout(() => {
 				let pages = document.querySelectorAll(".pages");
-				pages[0].classList.add("active");
-				updateNavigator($scope, $http, pages, topic, dateTime, devicesList, index, getTopicTime, indexUpdate, historicData);
+				updateNavigator($scope, $http, pages, topic, dateTime, devicesList, index, 1, getTopicTime, indexUpdate, historicData, () => {
+					pages[0].classList.add("active");
+				});
 			}, 0);
 		})
 	})
@@ -46,14 +47,17 @@ export let dinamicTable = ($scope, $http, $timeout, topic, dateTime, devicesList
 	}
 	document.querySelector(".less").onclick = () => {
 		getTopicTime(topic, dateTime, (newTopic, newDateTime) => {
-			previusPage($scope, $http, devicesList, index, newTopic, newDateTime, historicData, ($scope, res, active) => {
-				$scope.datas = res.pageData;
-				document.querySelector(".pages").forEach((element) => {
-					element.classList.remove("active");
-				})
-				active.classList.add("active");
+			previusPage($scope, $http, devicesList, index, newTopic, newDateTime, historicData, indexUpdate, () => {
+
 			});
-		})
+		});
+	}
+	document.querySelector(".more").onclick = () => {
+		getTopicTime(topic, dateTime, (newTopic, newDateTime) => {
+			nextPage($scope, $http, devicesList, index, newTopic, newDateTime, historicData, indexUpdate, () => {
+
+			});
+		});
 	}
 }
 
@@ -120,17 +124,37 @@ let generateIndicator = ($scope, numPages, pagesNumber, indexUpdate) => {
 
 
 
-export let previusPage = ($scope, $http, devicesList, index, newTopic, newDateTime, historicData, callback) => {
-	let previusValue = document.querySelector(".pages.active");; 
-	if(parseInt(previusValue.innerHTML)-1 > 0){
-		historicData($scope, $http, newTopic, newDateTime, devicesList, index, previusValue, ($scope, res) => {
-			if(callback){
-				callback($scope, res, previusValue);
-			}
+export let previusPage = ($scope, $http, devicesList, index, newTopic, newDateTime, historicData, indexUpdate, callback) => {
+	let page = document.querySelector(".pages.active");
+	let pageNumber = parseInt(page.className.substring(31, 32))
+	if (pageNumber > 1) {
+		historicData($scope, $http, newTopic, newDateTime, devicesList, index, pageNumber - 1, ($scope, res) => {
+			$scope.datas = res.pageData;
+			veifyHeartbeat(newTopic, $scope.datas);
+			let previusValue = parseInt(page.className.substring(31, 32)) - 1;
+			page.classList.remove("active");
+			document.querySelector(".p" + previusValue).classList.add("active");
+			indexUpdate();
 		})
 	}
 }
 
+
+export let nextPage = ($scope, $http, devicesList, index, newTopic, newDateTime, historicData, indexUpdate, callback) => {
+	let page = document.querySelector(".pages.active");
+	let pageNumber = parseInt(page.className.substring(31, 32))
+	console.log(pageNumber);
+	if (pageNumber < 5) {
+		historicData($scope, $http, newTopic, newDateTime, devicesList, index, pageNumber+1, ($scope, res) => {
+			$scope.datas = res.pageData;
+			veifyHeartbeat(newTopic, $scope.datas);
+			let nextValue = parseInt(page.className.substring(31, 32)) + 1;
+			page.classList.remove("active");
+			document.querySelector(".p" + nextValue).classList.add("active");
+			indexUpdate();
+		})
+	}
+}
 
 
 export let tableNavigator = ($scope, max, refreshTable, nextPage, previusPage) => {

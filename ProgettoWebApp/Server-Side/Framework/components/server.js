@@ -188,6 +188,9 @@ class socketHandler{
 			let responseTopic = matricola.defaultTopic + "/response/" +  params.response;
 			let parsedMsg = matricola.defaultTopic + "/" + params.msg;
 
+			console.log(topic + " - " + responseTopic)
+			console.log(parsedMsg)
+
 			this.fw.mqtt.connectToNewTopic(params.utente_id,params.response,responseTopic, () => {
 				this.fw.mqtt.publishToTopic(topic,parsedMsg,responseTopic);
 			});

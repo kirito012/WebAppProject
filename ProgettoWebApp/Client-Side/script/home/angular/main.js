@@ -200,28 +200,33 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 
 
 			sendInfo($scope, $http, devicesList, $index, topicsActive, oldTopics, userId, ($scope, userId) => {
+				setted = false;
+				if(marker){
+					map.removeLayer(marker);
+					map.setView([0, 0], 1);
+				}
 				if (!dataStream) {
 					dataStream = $websocket('ws://192.168.0.6:8081/socketData');
 					let socketInfo = { utente_id: userId, action: "start" };
-					let responseTopic = { utente_id: userId, action: "set", objective: "set_output_display_line_1_response_topic", responseTopic: "line", msg: "display_line_1" };
 					dataStream.send(JSON.stringify(socketInfo));
-					dataStream.send(JSON.stringify(responseTopic));
 					dataStream.onMessage((msg) => {
 						let data = JSON.parse(msg.data);
-						console.log(data);
 						updateData(data, dataSelected, gaugeTextAnimation, $scope, $http);
-						if (data.location && !setted) {
-							getLocation($scope, $http, data.location, ($scope, coordinates) => {
-								map.setView([coordinates.data[0].latitude, coordinates.data[0].longitude], 12);
-								marker = L.marker([coordinates.data[0].latitude, coordinates.data[0].longitude]).addTo(map)
-								console.log("fff");
-							})
-							setted = true;
+						if(!setted){
+							if (data.location) {
+								getLocation($scope, $http, data.location, ($scope, coordinates) => {
+									map.setView([coordinates.data[0].latitude, coordinates.data[0].longitude], 12);
+									marker = L.marker([coordinates.data[0].latitude, coordinates.data[0].longitude]).addTo(map)
+								})
+								setted = true;
+							}
 						}
 					})
 				}
+				let responseTopic = { utente_id: userId, action: "set", objective: "set_output_display_line_1_response_topic", responseTopic: "line", msg: "display_line_1" };
 				let location = { utente_id: userId, action: "get", objective: "get_location", msg: "location", responseTopic: "location" };
 				dataStream.send(JSON.stringify(location));
+				dataStream.send(JSON.stringify(responseTopic));
 				oldTopics = topicsActive;
 			})
 
@@ -248,12 +253,12 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 
 
 			document.querySelector(".send").onclick = () => {
-				//let topic, dateTime;
-				//dinamicTable($scope, $http, $timeout, topic, dateTime, devicesList, index, indexUpdate, historicData);
+				let topic, dateTime;
+				dinamicTable($scope, $http, $timeout, topic, dateTime, devicesList, index, indexUpdate, historicData);
 				//refresh button
-				let topic = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
-				let dateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
-				historicData($scope, $http, topic, dateTime, devicesList, index, 1, ($scope, res) => {
+				//let topic = document.querySelector("select.topic").options[document.querySelector("select.topic").selectedIndex].text.replaceAll(" ", "_");
+				//let dateTime = parseFloat(document.querySelector("select.time").options[document.querySelector("select.time").selectedIndex].value) * 3600 * 1000;
+				/*historicData($scope, $http, topic, dateTime, devicesList, index, 1, ($scope, res) => {
 					$scope.pages = [];
 					$scope.pagesNumber = res.pagesNumber;
 					if (res.pagesNumber < 6) {
@@ -459,7 +464,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 							});
 						}
 					}, 0);
-				})
+				})*/
 			}
 		})
 	}
@@ -502,6 +507,7 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 		document.querySelector(".b4 span").innerHTML = "";
 		document.querySelector(".s1 span").innerHTML = "";
 		map.setView([0, 0], 1);
+		map.removeLayer(marker);
 		$scope.activeTopics = undefined;
 		setted = false;
 		gaugeTextAnimation(oldValue, 0);
