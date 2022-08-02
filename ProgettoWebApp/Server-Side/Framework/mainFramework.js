@@ -26,7 +26,7 @@ class framework {
 		this.nameDB = nameDB;
   }
 
-  createServer = (settings, serverCallback, databaseCallback) => {
+  createServer = (settings, databaseCallback) => {
     this.app = this.server.newApp([settings.staticRoot, settings.cookieMaxAge]);
     this.connectionDB = this.database.connectToDB(settings.hostDB, this.nameDB);
 

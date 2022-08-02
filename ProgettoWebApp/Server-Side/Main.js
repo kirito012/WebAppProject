@@ -8,7 +8,43 @@ fw.createServer({
   hostDB: "localhost",
   brokerHost: "mqtt://localhost:1883",
   port: 8081,
+}, () => {
+  fw.queryDB("selectAllCorrispondenze",[], (stuff) => {
+    fw.utility.forEach(stuff,(data) => {
+      fw.mqtt.newMatricola(data.id,data.name,data.parentid,data.parentName, (matricolaVariable) => {
+        fw.utility.getTopics(fw,"fiscal","warning", (topicList) => {
+          fw.utility.forEach(topicList,(element) => {
+            fw.queryDB("Select id FROM utenti;",[], (utenti) => {
+              fw.utility.forEach(utenti, (utente) => {
+								let splitted = element.topicstring.split("/");
+								splitted[1] = data.model;
+								splitted[2] = data.id;
+								splitted = splitted.join("/");
+
+                fw.mqtt.connectToNewTopic(utente.id,element.name,splitted);
+              });
+            });
+          });
+        });
+        fw.utility.getTopics(fw,"fiscal","alarm", (topicList) => {
+          fw.utility.forEach(topicList,(element) => {
+            fw.queryDB("Select id FROM utenti;",[], (utenti) => {
+              fw.utility.forEach(utenti, (utente) => {
+								let splitted = element.topicstring.split("/");
+								splitted[1] = data.model;
+								splitted[2] = data.id;
+								splitted = splitted.join("/");
+
+                fw.mqtt.connectToNewTopic(utente.id,element.name,splitted);
+              });
+            });
+          });
+        });
+     });
+    });
+  });
 });
+
 
 //Request Guide\\
 /*
@@ -156,7 +192,7 @@ fw.newRequest(["post", "/addMachine", true, "/login", "addMachine", true],(res, 
 
       if (body.name.length > 20){res.send({error: "machineNameExceed"}); return;};
 
-      fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id], (matricola) => {
+      fw.queryDB("generateSelectMatricola",[body.id,utente.id,body.name,body.id,utente.id], (matricola) => {
         fw.queryDB("generateCorrispondeza",[matricola[1][0].id, utente.id, modelId],() => {
           fw.utility.getMachines(fw,utente, (machines) => {
             res.send(machines);
@@ -265,6 +301,7 @@ fw.newRequest(["post", "/updateTopic", true, "/login", "updateTopic", true],(res
           fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
         })
         res.send(nameList);
+
         fw.utility.getTopics(fw,"fiscal","warning", (topicList) => {
           fw.utility.forEach(topicList,(element) => {
             fw.mqtt.connectToNewTopic(utente.id,element.name,element.topicstring);
@@ -313,24 +350,28 @@ fw.newRequest(["post", "/sendInfo", true, "/login", "sendInfo",true],(res, req, 
   res.status(204).send({});
 });
 
-fw.newRequest(["post", "/getWarnings", true, "/login", "getWarnings",false],(res, req) => {
+fw.newRequest(["post", "/getWarnings", true, "/login", "getWarnings",true],(res, req,utente) => {
   let body = req.body;
 
-  fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
-    fw.utility.getWarnings(fw, "fiscal", "alarm", body.matricola_id, (data2) => {
-      res.send(data.concat(data2));
-    });
-  });
+	fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
+		fw.utility.getWarnings(fw, "fiscal", "alarm", body.matricola_id, (data2) => {
+			res.send(data.concat(data2));
+		});
+	});
 });
 
-fw.newRequest(["post", "/deleteWarnings", true, "/login", "deleteWarnings",false],(res, req) => {
+fw.newRequest(["post", "/deleteWarnings", true, "/login", "deleteWarnings",true],(res, req,utente) => {
   let body = req.body;
 
-  fw.queryDB("deleteWarning",[body.name,body.name,body.timestamp,body.matricola_id, body.errorId], (results) => {
+  fw.queryDB("deleteWarning",[body.name,body.timestamp,body.matricola_id, body.errorId], (results) => {
     if (results) {
       fw.utility.getWarnings(fw, "fiscal", "warning", body.matricola_id, (data) => {
         fw.utility.getWarnings(fw, "fiscal", "alarm", body.matricola_id, (data2) => {
-          res.send(data.concat(data2));
+					res.send(data.concat(data2));
+					fw.mqtt.getTopicString(body.name, utente.id, (topicString) => {
+						fw.mqtt.publishToTopic("/warning/" + topicString, "", false, true);
+						fw.mqtt.publishToTopic("/alarm/" + topicString, "", false, true);
+					});
         });
       });
     }

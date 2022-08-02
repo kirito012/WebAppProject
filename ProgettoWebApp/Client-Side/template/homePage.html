@@ -1,585 +1,599 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Olivetti SPA</title>
-    <link rel="stylesheet" href="../Styles/home/style.css">
-    <link rel="stylesheet" href="../Styles/home/icon.css">
-    <link rel="stylesheet" href="../Styles/home/dashboard.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
-    <link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
-    <script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">    
-    <script src="../script/libraries/anime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard | Olivetti SPA</title>
+	<link rel="stylesheet" href="../Styles/home/style.css">
+	<link rel="stylesheet" href="../Styles/home/icon.css">
+	<link rel="stylesheet" href="../Styles/home/dashboard.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+	<link rel="shortcut icon" href="https://www.olivetti.com/sites/default/files/favicon-32x32_0.png" type="image/png" />
+	<script src="https://cdn.rawgit.com/gdi2290/angular-websocket/v1.0.9/angular-websocket.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+	<script src="../script/libraries/anime.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+		integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+		crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
+		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
+		crossorigin=""></script>
 </head>
+
 <body ng-app="myApp" ng-controller="myController">
-    <iframe class="loading" src="../template/loading.html" frameborder="0"></iframe>
-    <section>
-        <header>
-            <div class="headerContainer">
-                <div class="menuContainer">
-                    <div class="menu">
-                        <hr class="line" style="--i: 1;">
-                        <hr class="line">
-                        <hr class="line" style="--i: -1;">
-                    </div>
-                    <span>Menù</span>
-                </div>
-                <div class="navigator">
-                    <label class="link active l1" style="--background: #c0e8ff;">
-                        <input class="radio addDevice" type="radio" name="visualize" checked>
-                        <div class="icon">
-                            <hr class="cross" style="--deg: 90deg">
-                            <hr class="cross" style="--deg: 0deg">
-                        </div>
-                        <span>Aggiungi dispositivo</span>
-                    </label>
-                    <label class="link l2" style="--background: #d1ffd4;">
-                        <input class="radio showDevice" type="radio" name="visualize">
-                        <div class="icon">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABbklEQVRoge2asUrEMBzGv9RSuOGGcAh1ddVugsvdYN/BUX0MNx3EV/AFbvQVxAM9xN3T1ckOKmS8Q/DicicISc5Y2/yb5rf1nwS+jyRfU1KgrfAsv+dZfld3fRWx7QAAu47qRqK/DKKIN0a8gWlbtvYTHr2fAdEBIDdq1KSiADAU894JHi8/VB3WdCN5mp4D7BhAtyp1FnQB9Dtsmsxen69UHQx7hB1WJKoMR7oGgxHny0lFqmvwJrW8MRIDAN/euwVj/WVRPFzr04wAPMvl94OUYzEZDZo/I4xJwPAe+eGaELrV0vwZWRCMUKN0av1XwtnsSa9TKwYAMRkN3KqxQ7UKmj8jC4IRaoSzFhlCahElGKFGSC0yhC9EogQj1AipRYaQWkRphZGiNhW/50XXYDIyrEBIWbSatHeIs/Wdmw6bJgA24f4esQBwIea9U7w9fTrWQgye5VIVzVXXV9GK1GoU9n8HSTleHgtqrbeFL8F9pZUMb+RLAAAAAElFTkSuQmCC">
-                        </div>
-                        <span>I tuoi dispositivi</span>
-                    </label>
-                    <label class="link l3" style="--background: #fffed1">
-                        <input class="radio showTopics" type="radio" name="visualize">
-                        <div class="icon">
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAEJklEQVRoge2ZX0xbdRTHP+cWSubE9RbQrUumMUtcAmVDl2V/1EBxvshiphITk+kTJsaY7MFMXjYm+IAucQ+aaHwxLsbEYLIo6sMmhciYmbro1iJOfVATwARoSbYMhHvv8YGWdICUe0sBsZ+Xnvxyzznfb87v9ndvCwUKFFgMmY0qG/2mMdoGxhHQLUtIHVbVF8fj0bN51LdkjHRgGmOtIMeWZgJAt4jw8aaq2t35EueG2YmY4cggEBLlQCIevZgtMRiOnFY4Clzb4N94/9Dlzpv5FJoNIyMOASzFBEBioqQZiAH3Tfx981QetLkicyIKkIxF5d8vv5VAZd1OMeQSUJIHbYsxBJxJOmUt9HdMwa0Tcc14f/cVhMZU4ZUkBDSbvsTJ9EJOE1ktzMq6AxhyARhKxqJbIceJrBbJ/u6+VBhKr/0njSxE0dwFMxwZBjavghY3/DV3YaGJrHUTsIDGeRMRZH8i1vXNyujxRrAqsl+Fvsy1eRNZ6yZg4UN73dzsBSNrjXVjZN631nIS2FUbEEea1JGnRNjOzMPlL4J8PlU09daNH3pHlqtX3iZiVtc/hG38jMobIuwBgsBGoEbR48VW8W+BqronlqtfXowEw/X7UP1K4C7gnKg8avmdCr8U3a5q1IF8CtwhIh2Bqsjh5eiZ89aqqKzdbBvSrsgjwG2InlN0L4pfkLZErOtE+trrMx89QI8ZjrwCtIvwfukDtb3XL/eM5qIjp4mU7qgvswzjkiLPAVsBE5WnUe4W6Mo0MZdkLPo6SiewqXhKXspFB+RopKhYW4BtCufV4h6fNR0CPgJw0LZs+apyGkCRQ7nogBy21qbwgybwOAAWTeMD0T8AaGx8NjgwNpKMd3+dtbk1+b3tLwHY7lVHGk8TKdsZ2WPgjwPbAGZNAHR02Il49Cig2eqMXutL3TaUmuHIe4HK2l1e9IAHI+U1B0Pq0MnM29lniBP22nwOTWIY3wbDdc97SXZtxLLslxXuFDibjD18OHm1J+6lcZpkLCo+azqE6DHAUeSdYHXtXrd1vGytxwAcx2mFk46H/HmMDvQOJ692nwI5ARiOGq1ua7g2Iqn7osTn/9VtbjZ8RcaHqR773OZ6mIiOAEzq9A73uUtv4jbBy9b6EsBQafGQuyi2ZR8BEPjOba7rc0R92i62PINwyKyOdBq2tI4RvJL+6dIL5TUHQykTrQCq+qbbGq6NjP/Y83uwqv5JFf0EpcExtMFkDMIRt6VmsS17NhZ4LRHv/sJtDU8HYiLedV4tqhHeBf4E7Gw5WbghEEW1IRGLHvdSwPMjSuo0f8Fr/nKzbl51C0bWGuvSyBCk/kRZ42RoHEyvZX5rnQGaMeSCmcOZsKKofpAOfelgsmJ37waZKAbuBUpXQ5cLBlF9O6nlrzLyU65nWIEC/wv+AamKUsyqUnLkAAAAAElFTkSuQmCC">
-                        </div>
-                        <span>Dati da visualizzare</span>
-                    </label>
-                    <div class="indicator active"></div>
-                </div>
-            </div>
-            <div class="settings">
-                <div class="settingContainer">
-                    <div class="profileSettings">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACAElEQVRYhe2XOUsDURSFR1OkCKldEiEQUBBttFWxj2CT0t5SCxM7G7XzP9jnD2ijEEsNirWSLhCrGKO4NJ+FZ+CSzO6G4IHhzjvvbnPfOo7zj78IoM0g2j8VPO8R3EUurr/hBDnMSx4NCY7jHPf1fWsCi5JXhruUXErgbxBAAWgAO8CkuFngzJS7bPTLhq8Ds+In5aMBFOIkUOsb22vgWe83wAaQMfoZcTfSeZaNRS1q8GUZdIFDoKP2G7AF+A4bMCydN9l05KOr9nJY8JTJvCouDawCC9Hq5zjAgmzSaldNJVNBhuvma/MBeivACfAI9PReCtDPm6qsByUwBTTNWBc9dPbwx66HftHMjSYw5ZuADEaAcxncoVVgvhzgRWM9pqciDlsJPlbBnfhzYCQwuDHMAC0ZThv+VNyWh407zieGmxbXwqyaqEncyzhruJ64UQ/9UfU9GC4r7t4vTtydEMkhj75Un46fXngCKteTmhOm60JyzcPM5RqGc1fSU+QhCJmEJTMJq8C4nm3g1WMSFmNNQqItw1388bllSPSNqMTH5tPjizei392KpRx0GFUIP4yqJD2MjKOg4/gW2GTwON5UH3zmOJZDvwtJ3TgMupDMiE92IQlJ7kCB9g23L+4grr8kd8IzyTnDuZfRegJ/8QDk8Mf4tyegJH7vx+QfX413XWNlKuWL1D8AAAAASUVORK5CYII=">
-                    </div>
-                    <span>Impostazioni</span>
-                </div>
-                <div class="logoutContainer">
-                    <label for="logout" class="logout">
-                        <div class="rect">
-                            <div class="white">
-                                <div class="arrow"></div>
-                            </div>
-                        </div>
-                        <form action="logout" method="post">
-                            <input type="submit" name="" id="logout">
-                        </form>
-                    </label>
-                    <span>Logout</span>
-                </div>
-            </div>
-        </header>
-        <div class="navigation active">
-            <div class="item active">
-                <div class="titleContainer">
-                    <h1 class="title">Aggiungi un <br>dispositivo</h1>
-                    <div class="close nav">
-                        <div class="icon">
-                            <div class="line"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="addDevice">
-                    <form class="formMachine" id="formMachine" action="addMachine" method="post">
-                        <div class="inputBox" style="z-index: 1000;">
-                            <input type="text" name="search" class="input model addMachine" id="inputSearch" ng-model="modelsFilter" autocomplete="off" required>
-                            <span class="focus f1">Modello</span>
-                            <div class="models">
-                                <div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()" ng-click="disable()" ng-repeat="model in models | filter: modelsFilter">
-                                    <div class="img">
-                                        <img src="../images/{{ model + '.png' }}" alt="">
-                                    </div>
-                                    <div class="modelName">
-                                        <h4>{{ model }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inputBox" style="z-index: 1;">
-                            <input type="text" name="id" class="input id addMachine" autocomplete="off" required>
-                            <span class="focus f2">Numero di serie</span>
-                        </div>
-                        <div class="inputBox" style="z-index: 1;">
-                            <input type="text" name="name" class="input name addMachine" autocomplete="off" required>
-                            <span class="focus f3">Nome personalizzato</span>
-                        </div>
-                        <div class="submit">
-                            <input type="submit" class="submitAddMachine" value="Aggiungi">
-                        </div>
-                        <div class="added">
-                            <h4></h4>
-                        </div>
-                        <div class="error">
-                            
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="item">
-                <div class="titleContainer">
-                    <h1 class="title">Seleziona un dispositivo</h1>
-                    <div class="close nav">
-                        <div class="icon">
-                            <div class="line"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="devicesContainer">
-                    <div class="search">
-                        <input type="text" class="searchInput" ng-model="searchDevice" required>
-                        <span class="focus f4">Cerca un dispositivo...</span>
-                    </div>
-                    <div class="devices">
-                        <div class="removeSelection" ng-click="removeSelection()">
-                            <h4>Rimuovi selezione</h4>
-                        </div>
-                        <div class="device" ng-click="selected($index)" ng-repeat="device in devices | filter:searchDevice">
-                            <div class="img">
-                                <img src="../images/{{ device.model + '.png' }}" alt="">
-                            </div>
-                            <div class="info">
-                                <h4>{{ device.customname + " - " + device.model  }}</h4>
-                                <h5>{{ device.uniqueid }}</h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="titleContainer">
-                    <h1 class="title">Seleziona i dati da visualizzare</h1>
-                    <div class="close nav">
-                        <div class="icon">
-                            <div class="line"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="topicsContainer">
-                    <label class="topicLabel" ng-repeat="topic in topics" ng-click="sendTopic($index)" id="" for="">
-                        <input type="checkbox" class="checkbox" id="">
-                        <h4 class="topic">{{ topic.name }}</h4>
-                        <div class="checked">
-                            <div class="checkmark"></div>
-                        </div>
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="dashboard">
-            <div class="sectionOne" id="secOne">
-                <div class="column">
-                    <div class="row">
-                        <div class="title">
-                            <h1 class="dashboardTitle">Dashboard</h1>
-                            <div class="select">Seleziona dispositivo</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="left">
-                            <div class="infoSelected">
-                                <div class="infoDevice">
-                                    <div class="top">
-                                        <h3>Info dispositivo:</h3>
-                                    </div>
-                                    <div class="bottom">
-                                        <ul>
-                                            <li class="infoBottom">Nome: <span></span></li>
-                                            <li class="infoBottom">Modello: <span></span></li>
-                                            <li class="infoBottom">Matricola: <span></span></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="information">
-                                <div class="status">
-                                    <div class="top">
-                                        <h3>Stato dispositivo:</h3>
-                                    </div>
-                                    <div class="bottom">
-                                        <ul>
-                                            <li class="state s1">Stato: <span></span></li>
-                                            <li class="state s2">Modalità: <span></span></li>
-                                        </ul>
-                                        <div class="buttonsContainer">
-                                            <div class="button remove">
-                                                Rimuovi
-                                            </div>
-                                            <a href="#secTwo" class="button goTo">
-                                                Visualizza
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <div id="map">
+	<iframe class="loading" src="../template/loading.html" frameborder="0"></iframe>
+	<section>
+		<header>
+			<div class="headerContainer">
+				<div class="menuContainer">
+					<div class="menu">
+						<hr class="line" style="--i: 1;">
+						<hr class="line">
+						<hr class="line" style="--i: -1;">
+					</div>
+					<span>Menù</span>
+				</div>
+				<div class="navigator">
+					<label class="link active l1" style="--background: #c0e8ff;">
+						<input class="radio addDevice" type="radio" name="visualize" checked>
+						<div class="icon">
+							<hr class="cross" style="--deg: 90deg">
+							<hr class="cross" style="--deg: 0deg">
+						</div>
+						<span>Aggiungi dispositivo</span>
+					</label>
+					<label class="link l2" style="--background: #d1ffd4;">
+						<input class="radio showDevice" type="radio" name="visualize">
+						<div class="icon">
+							<img
+								src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABbklEQVRoge2asUrEMBzGv9RSuOGGcAh1ddVugsvdYN/BUX0MNx3EV/AFbvQVxAM9xN3T1ckOKmS8Q/DicicISc5Y2/yb5rf1nwS+jyRfU1KgrfAsv+dZfld3fRWx7QAAu47qRqK/DKKIN0a8gWlbtvYTHr2fAdEBIDdq1KSiADAU894JHi8/VB3WdCN5mp4D7BhAtyp1FnQB9Dtsmsxen69UHQx7hB1WJKoMR7oGgxHny0lFqmvwJrW8MRIDAN/euwVj/WVRPFzr04wAPMvl94OUYzEZDZo/I4xJwPAe+eGaELrV0vwZWRCMUKN0av1XwtnsSa9TKwYAMRkN3KqxQ7UKmj8jC4IRaoSzFhlCahElGKFGSC0yhC9EogQj1AipRYaQWkRphZGiNhW/50XXYDIyrEBIWbSatHeIs/Wdmw6bJgA24f4esQBwIea9U7w9fTrWQgye5VIVzVXXV9GK1GoU9n8HSTleHgtqrbeFL8F9pZUMb+RLAAAAAElFTkSuQmCC">
+						</div>
+						<span>I tuoi dispositivi</span>
+					</label>
+					<label class="link l3" style="--background: #fffed1">
+						<input class="radio showTopics" type="radio" name="visualize">
+						<div class="icon">
+							<img
+								src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAEJklEQVRoge2ZX0xbdRTHP+cWSubE9RbQrUumMUtcAmVDl2V/1EBxvshiphITk+kTJsaY7MFMXjYm+IAucQ+aaHwxLsbEYLIo6sMmhciYmbro1iJOfVATwARoSbYMhHvv8YGWdICUe0sBsZ+Xnvxyzznfb87v9ndvCwUKFFgMmY0qG/2mMdoGxhHQLUtIHVbVF8fj0bN51LdkjHRgGmOtIMeWZgJAt4jw8aaq2t35EueG2YmY4cggEBLlQCIevZgtMRiOnFY4Clzb4N94/9Dlzpv5FJoNIyMOASzFBEBioqQZiAH3Tfx981QetLkicyIKkIxF5d8vv5VAZd1OMeQSUJIHbYsxBJxJOmUt9HdMwa0Tcc14f/cVhMZU4ZUkBDSbvsTJ9EJOE1ktzMq6AxhyARhKxqJbIceJrBbJ/u6+VBhKr/0njSxE0dwFMxwZBjavghY3/DV3YaGJrHUTsIDGeRMRZH8i1vXNyujxRrAqsl+Fvsy1eRNZ6yZg4UN73dzsBSNrjXVjZN631nIS2FUbEEea1JGnRNjOzMPlL4J8PlU09daNH3pHlqtX3iZiVtc/hG38jMobIuwBgsBGoEbR48VW8W+BqronlqtfXowEw/X7UP1K4C7gnKg8avmdCr8U3a5q1IF8CtwhIh2Bqsjh5eiZ89aqqKzdbBvSrsgjwG2InlN0L4pfkLZErOtE+trrMx89QI8ZjrwCtIvwfukDtb3XL/eM5qIjp4mU7qgvswzjkiLPAVsBE5WnUe4W6Mo0MZdkLPo6SiewqXhKXspFB+RopKhYW4BtCufV4h6fNR0CPgJw0LZs+apyGkCRQ7nogBy21qbwgybwOAAWTeMD0T8AaGx8NjgwNpKMd3+dtbk1+b3tLwHY7lVHGk8TKdsZ2WPgjwPbAGZNAHR02Il49Cig2eqMXutL3TaUmuHIe4HK2l1e9IAHI+U1B0Pq0MnM29lniBP22nwOTWIY3wbDdc97SXZtxLLslxXuFDibjD18OHm1J+6lcZpkLCo+azqE6DHAUeSdYHXtXrd1vGytxwAcx2mFk46H/HmMDvQOJ692nwI5ARiOGq1ua7g2Iqn7osTn/9VtbjZ8RcaHqR773OZ6mIiOAEzq9A73uUtv4jbBy9b6EsBQafGQuyi2ZR8BEPjOba7rc0R92i62PINwyKyOdBq2tI4RvJL+6dIL5TUHQykTrQCq+qbbGq6NjP/Y83uwqv5JFf0EpcExtMFkDMIRt6VmsS17NhZ4LRHv/sJtDU8HYiLedV4tqhHeBf4E7Gw5WbghEEW1IRGLHvdSwPMjSuo0f8Fr/nKzbl51C0bWGuvSyBCk/kRZ42RoHEyvZX5rnQGaMeSCmcOZsKKofpAOfelgsmJ37waZKAbuBUpXQ5cLBlF9O6nlrzLyU65nWIEC/wv+AamKUsyqUnLkAAAAAElFTkSuQmCC">
+						</div>
+						<span>Dati da visualizzare</span>
+					</label>
+					<div class="indicator active"></div>
+				</div>
+			</div>
+			<div class="settings">
+				<div class="settingContainer">
+					<div class="profileSettings">
+						<img
+							src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAACAElEQVRYhe2XOUsDURSFR1OkCKldEiEQUBBttFWxj2CT0t5SCxM7G7XzP9jnD2ijEEsNirWSLhCrGKO4NJ+FZ+CSzO6G4IHhzjvvbnPfOo7zj78IoM0g2j8VPO8R3EUurr/hBDnMSx4NCY7jHPf1fWsCi5JXhruUXErgbxBAAWgAO8CkuFngzJS7bPTLhq8Ds+In5aMBFOIkUOsb22vgWe83wAaQMfoZcTfSeZaNRS1q8GUZdIFDoKP2G7AF+A4bMCydN9l05KOr9nJY8JTJvCouDawCC9Hq5zjAgmzSaldNJVNBhuvma/MBeivACfAI9PReCtDPm6qsByUwBTTNWBc9dPbwx66HftHMjSYw5ZuADEaAcxncoVVgvhzgRWM9pqciDlsJPlbBnfhzYCQwuDHMAC0ZThv+VNyWh407zieGmxbXwqyaqEncyzhruJ64UQ/9UfU9GC4r7t4vTtydEMkhj75Un46fXngCKteTmhOm60JyzcPM5RqGc1fSU+QhCJmEJTMJq8C4nm3g1WMSFmNNQqItw1388bllSPSNqMTH5tPjizei392KpRx0GFUIP4yqJD2MjKOg4/gW2GTwON5UH3zmOJZDvwtJ3TgMupDMiE92IQlJ7kCB9g23L+4grr8kd8IzyTnDuZfRegJ/8QDk8Mf4tyegJH7vx+QfX413XWNlKuWL1D8AAAAASUVORK5CYII=">
+					</div>
+					<span>Impostazioni</span>
+				</div>
+				<div class="logoutContainer">
+					<label for="logout" class="logout">
+						<div class="rect">
+							<div class="white">
+								<div class="arrow"></div>
+							</div>
+						</div>
+						<form action="logout" method="post">
+							<input type="submit" name="" id="logout">
+						</form>
+					</label>
+					<span>Logout</span>
+				</div>
+			</div>
+		</header>
+		<div class="navigation active">
+			<div class="item active">
+				<div class="titleContainer">
+					<h1 class="title">Aggiungi un <br>dispositivo</h1>
+					<div class="close nav">
+						<div class="icon">
+							<div class="line"></div>
+						</div>
+					</div>
+				</div>
+				<div class="addDevice">
+					<form class="formMachine" id="formMachine" action="addMachine" method="post">
+						<div class="inputBox" style="z-index: 1000;">
+							<input type="text" name="search" class="input model addMachine" id="inputSearch" ng-model="modelsFilter"
+								autocomplete="off" required>
+							<span class="focus f1">Modello</span>
+							<div class="models">
+								<div class="model" ng-mouseover="myFunction(models[$index])" ng-mouseout="mouseOut()"
+									ng-click="disable()" ng-repeat="model in models | filter: modelsFilter">
+									<div class="img">
+										<img src="../images/{{ model + '.png' }}" alt="">
+									</div>
+									<div class="modelName">
+										<h4>{{ model }}</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="inputBox" style="z-index: 1;">
+							<input type="text" name="id" class="input id addMachine" autocomplete="off" required>
+							<span class="focus f2">Numero di serie</span>
+						</div>
+						<div class="inputBox" style="z-index: 1;">
+							<input type="text" name="name" class="input name addMachine" autocomplete="off" required>
+							<span class="focus f3">Nome personalizzato</span>
+						</div>
+						<div class="submit">
+							<input type="submit" class="submitAddMachine" value="Aggiungi">
+						</div>
+						<div class="added">
+							<h4></h4>
+						</div>
+						<div class="error">
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sectionTwo" id="secTwo">
-                <div class="column">
-                    <div class="row">
-                        <div class="title">
-                            <h1 class="overViewTitle">Overview<span>-realtime</span></h1>
-                            <div class="refresh"></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="top">
-                            <div class="dataContainer">
-                                <div class="chart">
-                                    <div class="top">
-                                        <h1 class="data">Dati principali</h1>
-                                    </div>
-                                    <div class="bottom">
-                                        <div class="left">
-                                            <div class="writeLeft">
-                                                <ul>
-                                                    <li class="valueData">0</li>
-                                                    <li class="valueData">20</li>
-                                                    <li class="valueData">40</li>
-                                                    <li class="valueData">60</li>
-                                                    <li class="valueData">80</li>
-                                                    <li class="valueData">100</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="context">
-                                                <ul class="line">
-                                                    <hr>
-                                                    <hr>
-                                                    <hr>
-                                                    <hr>
-                                                    <hr>
-                                                </ul>
-                                                <ul class="bars">
-                                                    <li class="bar b1"><span></span></li>
-                                                    <li class="bar b2"><span></span></li>
-                                                    <li class="bar b3"><span></span></li>
-                                                    <li class="bar b4"><span></span></li>
-                                                </ul>
-                                            </div>
-                                            <div class="writeBottom">
-                                                <ul>
-                                                    <li class="n1">Temperatura</li>
-                                                    <li class="n2">Uso CPU</li>
-                                                    <li class="n3">Memoria libera</li>
-                                                    <li class="n4">Ram libera</li>
-                                                </ul>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gaugeContainer">
-                                    <h4 class="infoDataSeleted">Selezion un dato...</h4>
-                                    <div class="gauge">
-                                        <div class="gaugeIndicator"></div>
-                                    </div>
-                                    <div class="value">
-                                        <h1 class="valueNumber">0</h1>
-                                    </div>
-                                    <a href="#history" class="goHistory">
-                                        Visualizza storico
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="bottom" id="history">
-                            <div class="title">
-                                <h1 class="historic">Storico</h1>
-                                <div class="selectData">
-                                    <select class="time selectHistory">
-                                        <option value="0.5">30 minuti</option>
-                                        <option value="1">1 ora</option>
-                                        <option value="4">4 ore</option>
-                                        <option value="8">8 ore</option>
-                                        <option value="12">12 ore</option>
-                                        <option value="16">16 ore</option>
-                                        <option value="24">1 giorno</option>
-                                    </select>
-                                    <select class="topic selectHistory">
-                                        <option value="" ng-repeat="topic in activeTopics">{{ topic.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="table">
-                                <div class="top1">
-                                    <div class="send a">
-                                        <ion-icon name="refresh-circle-outline"></ion-icon>
-                                    </div>
-                                    <div class="topicName1 a">
-                                        Dati
-                                    </div>
-                                    <div class="value1 a">
-                                        Valori
-                                    </div>
-                                    <div class="dateTime1 a">
-                                        Data e ora
-                                    </div>
-                                    <div class="device1 a">
-                                        Dispositivo
-                                    </div>
-                                </div>
-                                <div class="down">
-                                    <div class="left">
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                        <div class="itemNumber"></div>
-                                    </div>
-                                    <div class="records">
-                                        <div class="record" ng-repeat="data in datas">
-                                            <div class="topicName">
-                                                {{ data.topic }}
-                                            </div>
-                                            <div class="value">
-                                                {{ data.value }}
-                                            </div>
-                                            <div class="dateTime">
-                                                {{ data.formattedDate  }}
-                                            </div>
-                                            <div class="device">
-                                                {{ data.id }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pageSelector">
-                                <div class="selector">
-                                    <div class="less div">
-                                        <ion-icon name="chevron-back-outline"></ion-icon>
-                                    </div>
-                                    <div class="pages div" ng-repeat="page in pages">
-                                        {{ page.value }}
-                                    </div>
-                                    <div class="page showMore div">
-                                        ...
-                                        <div class="selectPage">
-                                            <div class="numbers">
-                                                <input type="number" class="inputPage" min="1" max="{{ pagesNumber }}">
-                                                <h1>/ {{ pagesNumber }}</h1>
-                                            </div>
-                                            <input type="button" class="submitNewData" value="Cerca">
-                                        </div>
-                                    </div>
-                                    <div class="more div">
-                                        <ion-icon name="chevron-forward-outline"></ion-icon>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a href="#secOne" class="up">
-                <ion-icon name="chevron-up-outline"></ion-icon>
-            </a>
-        </div>
-        <div class="personal">
-            <div class="profile">
-                <div class="notification">
-                    <div class="line"></div>
-                </div>
-                <div class="profileName">
-                    <h4>{{ profileData.name + " " + profileData.surname}}</h4>
-                </div>
-                <div class="profilePicture">
-                    <img class="pfp" src="/home/getProfilePicture" alt="">
-                </div>
-            </div>
-            <div class="settingsConfiguration">
-                <div class="container">
-                    <div class="itemSetting i1">
-                        <h3>Impostazioni profilo</h3>
-                        <div class="icon">
-                            <div class="line" style="--rot: 0deg;"></div>
-                            <div class="line" style="--rot: 90deg;"></div>
-                        </div>
-                    </div>
-                    <div class="content I1">
-                        <div class="settingsInfo">
-                            <h4>Informazioni personali</h4>
-                            <div class="changeSettings">
-                                <ion-icon name="pencil-outline"></ion-icon>
-                            </div>
-                        </div>
-                        <ul>
-                            <li>Nome: <span>{{ profileData.name }}</span></li>
-                            <li>Cognome: <span>{{ profileData.surname }}</span></li>
-                            <li>E-mail: <span>{{ profileData.email }}</span></li>
-                            <li>Data di nascita: <span>{{ profileData.birthday }}</span></li>
-                        </ul>
-                        <div class="image">
-                            <h4>Carica una foto profilo</h4>
-                            <div class="upload">
-                                <ion-icon name="arrow-up-circle-outline"></ion-icon>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="itemSetting i2">
-                        <h3>Notifiche</h3>
-                        <div class="icon">
-                            <div class="line" style="--rot: 0deg;"></div>
-                            <div class="line" style="--rot: 90deg;"></div>
-                        </div>
-                    </div>
-                    <div class="content I2">
-                        <div class="noNotify">
-                            Nessuna notifica in arrivo
-                        </div>
-                        <div class="notify" ng-repeat="warning in warnings" ng-click="getIndex($index)">
-                            <div>
-                                <h5>{{ warning.matricola_id }}</h5>
-                                <h5>{{ warning.name + " - " + warning.value}}</h5>
-                                <h5>{{ warning.formattedTime }}</h5>
-                            </div>
-                            <div class="removeAlert">
-                                <div class="iconContairer">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="inputSettings">
-            <form id="formSettings" action="changeUserData" method="post">
-                <div class="title">
-                    <h1>Cambia i tuoi dati:</h1>
-                    <div class="close">
-                        <div class="iconSettings">
-                            <div class="line" style="--rot: 0deg;"></div>
-                            <div class="line" style="--rot: 90deg;"></div>
-                        </div>
-                        <h5>Torna al menù</h5>
-                    </div>
-                </div>
-                <div class="inputs">
-                    <div class="row">
-                        <div class="column">
-                            <div class="inputBox">
-                                <input type="text" class="input newI1" name="email" autocomplete="off" id="" ng-model="email" required>
-                                <span class="focus f5">Email</span>
-                            </div>
-                            <div class="inputBox">
-                                <input type="date" class="input newI2" name="birthday" id="" autocomplete="off" class="date" ng-model="birthday" required>
-                                <span class="focus f6">Data di nascita</span>
-                            </div>
-                        </div>
-                        <div class="column">
-                            <div class="inputBox">
-                                <input type="text" class="input newI3" name="name" id="" autocomplete="off" ng-model="name" required>
-                                <span class="focus f7">Nome</span>
-                            </div>
-                            <div class="inputBox">
-                                <input type="text" class="input newI4" name="surname" id="" autocomplete="off" ng-model="surname" required>
-                                <span class="focus f8">Cognome</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="submit">
-                    <input type="submit" class="submitValues" value="Conferma">
-                </div>
-            </form>
-        </div>
-        <div class="uploadPfp">
-            <form action="uploadpfp" class="form" method="post" enctype="multipart/form-data">
-                <div class="title">
-                    <h1>Carica il tuo file:</h1>
-                    <div class="close">
-                        <div class="imgSettings">
-                            <div class="line" style="--rot: 0deg;"></div>
-                            <div class="line" style="--rot: 90deg;"></div>
-                        </div>
-                        <h5>Torna al menù</h5>
-                    </div>
-                </div>
-                <div class="up">
-                    <label for="pfp" ondragover="dragOver(event)" ondrop="release(event)">
-                        <ion-icon class="iconRemove" name="image-outline"></ion-icon>
-                        <img class="imgPfp"src="#" alt="">
-                        <h4 class="imgName">Carica la tua immagine</h4>
-                        <input type="file" class="fileInput" name="profilepicture" id="pfp">
-                    </label>
-                    <div class="buttons">
-                        <input type="submit" class="upPfp"  value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
-                        <input type="button" class="reset" value="Cancella" style="--bgInput: #112d42; --color: #fff;">
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="alert">
-            <div class="confirm">
-                <h1 class="title">Conferma rimozione</h1>
-                <div class="confirmButton">
-                    <div class="b confirmRemove">Conferma</div>
-                    <div class="b undo">Annulla</div>
-                </div>
-            </div>
-        </div>
-    </section>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="item">
+				<div class="titleContainer">
+					<h1 class="title">Seleziona un dispositivo</h1>
+					<div class="close nav">
+						<div class="icon">
+							<div class="line"></div>
+						</div>
+					</div>
+				</div>
+				<div class="devicesContainer">
+					<div class="search">
+						<input type="text" class="searchInput" ng-model="searchDevice" required>
+						<span class="focus f4">Cerca un dispositivo...</span>
+					</div>
+					<div class="devices">
+						<div class="removeSelection" ng-click="removeSelection()">
+							<h4>Rimuovi selezione</h4>
+						</div>
+						<div class="device" ng-click="selected($index)" ng-repeat="device in devices | filter:searchDevice">
+							<div class="img">
+								<img src="../images/{{ device.model + '.png' }}" alt="">
+							</div>
+							<div class="info">
+								<h4>{{ device.customname + " - " + device.model }}</h4>
+								<h5>{{ device.uniqueid }}</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="item">
+				<div class="titleContainer">
+					<h1 class="title">Seleziona i dati da visualizzare</h1>
+					<div class="close nav">
+						<div class="icon">
+							<div class="line"></div>
+						</div>
+					</div>
+				</div>
+				<div class="topicsContainer">
+					<label class="topicLabel" ng-repeat="topic in topics" ng-click="sendTopic($index)" id="" for="">
+						<input type="checkbox" class="checkbox" id="">
+						<h4 class="topic">{{ topic.name }}</h4>
+						<div class="checked">
+							<div class="checkmark"></div>
+						</div>
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="dashboard">
+			<div class="sectionOne" id="secOne">
+				<div class="column">
+					<div class="row">
+						<div class="title">
+							<h1 class="dashboardTitle">Dashboard</h1>
+							<div class="select">Seleziona dispositivo</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="left">
+							<div class="infoSelected">
+								<div class="infoDevice">
+									<div class="top">
+										<h3>Info dispositivo:</h3>
+									</div>
+									<div class="bottom">
+										<ul>
+											<li class="infoBottom">Nome: <span></span></li>
+											<li class="infoBottom">Modello: <span></span></li>
+											<li class="infoBottom">Matricola: <span></span></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="information">
+								<div class="status">
+									<div class="top">
+										<h3>Stato dispositivo:</h3>
+									</div>
+									<div class="bottom">
+										<ul>
+											<li class="state s1">Stato: <span></span></li>
+											<li class="state s2">Modalità: <span></span></li>
+										</ul>
+										<div class="buttonsContainer">
+											<div class="button remove">
+												Rimuovi
+											</div>
+											<a href="#secTwo" class="button goTo">
+												Visualizza
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="right">
+							<div id="map">
 
-    <script>
-        window.addEventListener("load", () => {
-            document.querySelector(".loading").style.display = "none";
-        })
-    </script>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="sectionTwo" id="secTwo">
+				<div class="column">
+					<div class="row">
+						<div class="title">
+							<h1 class="overViewTitle">Overview<span>-realtime</span></h1>
+							<div class="refresh"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="top">
+							<div class="dataContainer">
+								<div class="chart">
+									<div class="top">
+										<h1 class="data">Dati principali</h1>
+									</div>
+									<div class="bottom">
+										<div class="left">
+											<div class="writeLeft">
+												<ul>
+													<li class="valueData">0</li>
+													<li class="valueData">20</li>
+													<li class="valueData">40</li>
+													<li class="valueData">60</li>
+													<li class="valueData">80</li>
+													<li class="valueData">100</li>
+												</ul>
+											</div>
+										</div>
+										<div class="right">
+											<div class="context">
+												<ul class="line">
+													<hr>
+													<hr>
+													<hr>
+													<hr>
+													<hr>
+												</ul>
+												<ul class="bars">
+													<li class="bar b1"><span></span></li>
+													<li class="bar b2"><span></span></li>
+													<li class="bar b3"><span></span></li>
+													<li class="bar b4"><span></span></li>
+												</ul>
+											</div>
+											<div class="writeBottom">
+												<ul>
+													<li class="n1">Temperatura</li>
+													<li class="n2">Uso CPU</li>
+													<li class="n3">Memoria libera</li>
+													<li class="n4">Ram libera</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="gaugeContainer">
+									<h4 class="infoDataSeleted">Selezion un dato...</h4>
+									<div class="gauge">
+										<div class="gaugeIndicator"></div>
+									</div>
+									<div class="value">
+										<h1 class="valueNumber">0</h1>
+									</div>
+									<a href="#history" class="goHistory">
+										Visualizza storico
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="bottom" id="history">
+							<div class="title">
+								<h1 class="historic">Storico</h1>
+								<div class="selectData">
+									<select class="time selectHistory">
+										<option value="0.5">30 minuti</option>
+										<option value="1">1 ora</option>
+										<option value="4">4 ore</option>
+										<option value="8">8 ore</option>
+										<option value="12">12 ore</option>
+										<option value="16">16 ore</option>
+										<option value="24">1 giorno</option>
+									</select>
+									<select class="topic selectHistory">
+										<option value="" ng-repeat="topic in activeTopics">{{ topic.name }}</option>
+									</select>
+								</div>
+							</div>
+							<div class="table">
+								<div class="top1">
+									<div class="send a">
+										<ion-icon name="refresh-circle-outline"></ion-icon>
+									</div>
+									<div class="topicName1 a">
+										Dati
+									</div>
+									<div class="value1 a">
+										Valori
+									</div>
+									<div class="dateTime1 a">
+										Data e ora
+									</div>
+									<div class="device1 a">
+										Dispositivo
+									</div>
+								</div>
+								<div class="down">
+									<div class="left">
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+										<div class="itemNumber"></div>
+									</div>
+									<div class="records">
+										<div class="record" ng-repeat="data in datas">
+											<div class="topicName">
+												{{ data.topic }}
+											</div>
+											<div class="value">
+												{{ data.value }}
+											</div>
+											<div class="dateTime">
+												{{ data.formattedDate }}
+											</div>
+											<div class="device">
+												{{ data.id }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="pageSelector">
+								<div class="selector">
+									<div class="less div">
+										<ion-icon name="chevron-back-outline"></ion-icon>
+									</div>
+									<div class="pages div" ng-repeat="page in pages">
+										{{ page.value }}
+									</div>
+									<div class="page showMore div">
+										...
+										<div class="selectPage">
+											<div class="numbers">
+												<input type="number" class="inputPage" min="1" max="{{ pagesNumber }}">
+												<h1>/ {{ pagesNumber }}</h1>
+											</div>
+											<input type="button" class="submitNewData" value="Cerca">
+										</div>
+									</div>
+									<div class="more div">
+										<ion-icon name="chevron-forward-outline"></ion-icon>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a href="#secOne" class="up">
+				<ion-icon name="chevron-up-outline"></ion-icon>
+			</a>
+		</div>
+		<div class="personal">
+			<div class="profile">
+				<div class="notification">
+					<div class="line"></div>
+				</div>
+				<div class="profileName">
+					<h4>{{ profileData.name + " " + profileData.surname}}</h4>
+				</div>
+				<div class="profilePicture">
+					<img class="pfp" src="/home/getProfilePicture" alt="">
+				</div>
+			</div>
+			<div class="settingsConfiguration">
+				<div class="container">
+					<div class="itemSetting i1">
+						<h3>Impostazioni profilo</h3>
+						<div class="icon">
+							<div class="line" style="--rot: 0deg;"></div>
+							<div class="line" style="--rot: 90deg;"></div>
+						</div>
+					</div>
+					<div class="content I1">
+						<div class="settingsInfo">
+							<h4>Informazioni personali</h4>
+							<div class="changeSettings">
+								<ion-icon name="pencil-outline"></ion-icon>
+							</div>
+						</div>
+						<ul>
+							<li>Nome: <span>{{ profileData.name }}</span></li>
+							<li>Cognome: <span>{{ profileData.surname }}</span></li>
+							<li>E-mail: <span>{{ profileData.email }}</span></li>
+							<li>Data di nascita: <span>{{ profileData.birthday }}</span></li>
+						</ul>
+						<div class="image">
+							<h4>Carica una foto profilo</h4>
+							<div class="upload">
+								<ion-icon name="arrow-up-circle-outline"></ion-icon>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container">
+					<div class="itemSetting i2">
+						<h3>Notifiche</h3>
+						<div class="icon">
+							<div class="line" style="--rot: 0deg;"></div>
+							<div class="line" style="--rot: 90deg;"></div>
+						</div>
+					</div>
+					<div class="content I2">
+						<div class="noNotify">
+							Nessuna notifica in arrivo
+						</div>
+						<div class="notify" ng-repeat="warning in warnings">
+							<div>
+								<h5>{{ warning.matricola_id }}</h5>
+								<h5>{{ warning.name }}</h5>
+								<h5>{{ warning.formattedTime }}</h5>
+							</div>
+							<div class="removeAlert" ng-click="getIndex($index)">
+								<div class="iconContairer">
+									<ion-icon name="trash-outline"></ion-icon>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="inputSettings">
+			<form id="formSettings" action="changeUserData" method="post">
+				<div class="title">
+					<h1>Cambia i tuoi dati:</h1>
+					<div class="close">
+						<div class="iconSettings">
+							<div class="line" style="--rot: 0deg;"></div>
+							<div class="line" style="--rot: 90deg;"></div>
+						</div>
+						<h5>Torna al menù</h5>
+					</div>
+				</div>
+				<div class="inputs">
+					<div class="row">
+						<div class="column">
+							<div class="inputBox">
+								<input type="text" class="input newI1" name="email" autocomplete="off" id="" ng-model="email" required>
+								<span class="focus f5">Email</span>
+							</div>
+							<div class="inputBox">
+								<input type="date" class="input newI2" name="birthday" id="" autocomplete="off" class="date"
+									ng-model="birthday" required>
+								<span class="focus f6">Data di nascita</span>
+							</div>
+						</div>
+						<div class="column">
+							<div class="inputBox">
+								<input type="text" class="input newI3" name="name" id="" autocomplete="off" ng-model="name" required>
+								<span class="focus f7">Nome</span>
+							</div>
+							<div class="inputBox">
+								<input type="text" class="input newI4" name="surname" id="" autocomplete="off" ng-model="surname"
+									required>
+								<span class="focus f8">Cognome</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="submit">
+					<input type="submit" class="submitValues" value="Conferma">
+				</div>
+			</form>
+		</div>
+		<div class="uploadPfp">
+			<form action="uploadpfp" class="form" method="post" enctype="multipart/form-data">
+				<div class="title">
+					<h1>Carica il tuo file:</h1>
+					<div class="close">
+						<div class="imgSettings">
+							<div class="line" style="--rot: 0deg;"></div>
+							<div class="line" style="--rot: 90deg;"></div>
+						</div>
+						<h5>Torna al menù</h5>
+					</div>
+				</div>
+				<div class="up">
+					<label for="pfp" ondragover="dragOver(event)" ondrop="release(event)">
+						<ion-icon class="iconRemove" name="image-outline"></ion-icon>
+						<img class="imgPfp" src="#" alt="">
+						<h4 class="imgName">Carica la tua immagine</h4>
+						<input type="file" class="fileInput" name="profilepicture" id="pfp">
+					</label>
+					<div class="buttons">
+						<input type="submit" class="upPfp" value="Conferma" id="" style="--bgInput: #fff; --color: #112d42;">
+						<input type="button" class="reset" value="Cancella" style="--bgInput: #112d42; --color: #fff;">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="alert">
+			<div class="confirm">
+				<h1 class="title">Conferma rimozione</h1>
+				<div class="confirmButton">
+					<div class="b confirmRemove">Conferma</div>
+					<div class="b undo">Annulla</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-
-
-
-    <script>
-
-        let dragOver = (e) => {
-            e.preventDefault();
-        }
-
-        let release = (e) => {
-            e.preventDefault();
-            let file = e.dataTransfer.items[0].getAsFile();
-            document.querySelector(".fileInput").value =  file;
-            console.log(file.name);
-        }
-
-    </script>
+	<script>
+		window.addEventListener("load", () => {
+			document.querySelector(".loading").style.display = "none";
+		})
+	</script>
 
 
 
 
+	<script>
+
+		let dragOver = (e) => {
+			e.preventDefault();
+		}
+
+		let release = (e) => {
+			e.preventDefault();
+			let file = e.dataTransfer.items[0].getAsFile();
+			document.querySelector(".fileInput").value = file;
+			console.log(file.name);
+		}
+
+	</script>
 
 
 
 
 
-    <script type="module" src="../script/home/script.js"></script>
-    <script type="module" src="../script/home/angular/main.js"></script>
-    <script type="module" src="../script/home/animation/animate.js"></script>
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+
+
+
+	<script type="module" src="../script/home/script.js"></script>
+	<script type="module" src="../script/home/angular/main.js"></script>
+	<script type="module" src="../script/home/animation/animate.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
+
 </html>

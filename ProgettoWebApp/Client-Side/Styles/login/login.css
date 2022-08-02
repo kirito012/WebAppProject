@@ -1,414 +1,421 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+
 @font-face {
-    font-family: "Tim Sans Thin";
-    src: url("../../Styles/font/TIMSans-Thin.ttf");
+	font-family: "Tim Sans Thin";
+	src: url("../../Styles/font/TIMSans-Thin.ttf");
 }
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Tim Sans Thin';
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Tim Sans Thin';
 }
 
-input{
-    outline: none;
+input {
+	outline: none;
 }
 
-body{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow: hidden;
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100vh;
+	overflow: hidden;
 }
 
-iframe.loading{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
+iframe.loading {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
 }
 
-section{
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 150px;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(to left, #112d42 0%, #112d42 60%, #fff 60.000000000000000000000001%, #fff 100%);
+section {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 150px;
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(to left, #112d42 0%, #112d42 60%, #fff 60.000000000000000000000001%, #fff 100%);
 }
 
-section .login{
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 320px;
-    height: 400px;
-    background: #112d42;
-    padding: 25px;
-    gap: 35px;
-    z-index: 5;
-    box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
+section .login {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 320px;
+	height: 400px;
+	background: #112d42;
+	padding: 25px;
+	gap: 35px;
+	z-index: 5;
+	box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
 }
 
-section .login .log{
-    color: #fff;
-    font-size: 27px;
+section .login .log {
+	color: #fff;
+	font-size: 27px;
 }
 
-section .login form{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 30px;
+section .login form {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	gap: 30px;
 }
 
-section .login form .inputBox{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: row;
+section .login form .inputBox {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: row;
 }
 
-section .login form .inputBox.submitBox{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
+section .login form .inputBox.submitBox {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
 }
 
-section .login form .inputBox input{
-    position: relative;
-    width: 250px;
-    height: 40px;
-    border: none;
-    border-bottom: 2px solid #fff;
-    background: transparent;
-    padding: 0 5px;
-    caret-color: #fff;
-    font-size: 14px;
-    color: #fff;
-    font-weight: 900;
-    letter-spacing: 2px;
+section .login form .inputBox input {
+	position: relative;
+	width: 250px;
+	height: 40px;
+	border: none;
+	border-bottom: 2px solid #fff;
+	background: transparent;
+	padding: 0 5px;
+	caret-color: #fff;
+	font-size: 14px;
+	color: #fff;
+	font-weight: 900;
+	letter-spacing: 2px;
 }
 
-section .login form .inputBox .focus{
-    position: absolute;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 700;
-    letter-spacing: 2px;
-    transition: 0.5s ease;
-    margin-top: 10px;
+section .login form .inputBox .focus {
+	position: absolute;
+	color: rgba(255, 255, 255, 0.5);
+	font-weight: 700;
+	letter-spacing: 2px;
+	transition: 0.5s ease;
+	margin-top: 10px;
 }
 
 section .register form .inputBox .hide,
-section .login form .inputBox .hide{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 0px;
-    right: 45px;
-    transition: 0.5s ease;
-    overflow: hidden;
-    cursor: pointer;
+section .login form .inputBox .hide {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 0px;
+	right: 45px;
+	transition: 0.5s ease;
+	overflow: hidden;
+	cursor: pointer;
 }
 
-section .register form .inputBox .hide{
-    right: 25px;
+section .register form .inputBox .hide {
+	right: 25px;
 }
 
 section .register form .inputBox .hide .eye,
-section .login form .inputBox .hide .eye{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 20px;
-    height: 15px;
-    border-radius: 50%;
-    border: 2px solid var(--color);
+section .login form .inputBox .hide .eye {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 15px;
+	border-radius: 50%;
+	border: 2px solid var(--color);
 }
 
 section .register form .inputBox .hide .eye::after,
-section .login form .inputBox .hide .eye::after{
-    content: '';
-    position: absolute;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--color);
-    transform-origin: center;
+section .login form .inputBox .hide .eye::after {
+	content: '';
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--color);
+	transform-origin: center;
 }
 
 section .register form .inputBox .hide .eye hr,
-section .login form .inputBox .hide .eye hr{
-    position: absolute;
-    background: var(--color);
-    height: 0px;
-    width: 3px;
-    transform: rotate(-45deg);
-    transition: 0.5s ease;
-    border: none;
+section .login form .inputBox .hide .eye hr {
+	position: absolute;
+	background: var(--color);
+	height: 0px;
+	width: 3px;
+	transform: rotate(-45deg);
+	transition: 0.5s ease;
+	border: none;
 }
 
 section .register form .inputBox .hide .eye hr.active,
-section .login form .inputBox .hide .eye hr.active{
-    height: 25px;
+section .login form .inputBox .hide .eye hr.active {
+	height: 25px;
 }
 
-section .login form .inputBox:nth-child(1) input:focus ~ .focus, section .login form .inputBox:nth-child(1) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-5px) scale(0.8);
-    color: rgba(255, 255, 255, 1);
+section .login form .inputBox:nth-child(1) input:focus~.focus,
+section .login form .inputBox:nth-child(1) input:valid~.focus {
+	transform: translateY(-25px) translateX(-5px) scale(0.8);
+	color: rgba(255, 255, 255, 1);
 }
 
-section .login form .inputBox:nth-child(2) input:focus ~ .focus, section .login form .inputBox:nth-child(2) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-7px) scale(0.8);
-    color: rgba(255, 255, 255, 1);
+section .login form .inputBox:nth-child(2) input:focus~.focus,
+section .login form .inputBox:nth-child(2) input:valid~.focus {
+	transform: translateY(-25px) translateX(-7px) scale(0.8);
+	color: rgba(255, 255, 255, 1);
 }
 
-section .register form .inputBox:nth-child(2) input:focus ~ .hide, section .register form .inputBox:nth-child(2) input:valid ~ .hide,
-section .register form .inputBox:nth-child(3) input:focus ~ .hide, section .register form .inputBox:nth-child(3) input:valid ~ .hide,
-section .login form .inputBox:nth-child(2) input:focus ~ .hide, section .login form .inputBox:nth-child(2) input:valid ~ .hide{
-    height: 40px;
+section .register form .inputBox:nth-child(2) input:focus~.hide,
+section .register form .inputBox:nth-child(2) input:valid~.hide,
+section .register form .inputBox:nth-child(3) input:focus~.hide,
+section .register form .inputBox:nth-child(3) input:valid~.hide,
+section .login form .inputBox:nth-child(2) input:focus~.hide,
+section .login form .inputBox:nth-child(2) input:valid~.hide {
+	height: 40px;
 }
 
-section .login .inputBox:nth-child(4) input{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 40px;
-    padding: 5px;
-    color: #fff;
-    font-size: 18px;
-    background: none;
-    border: none;
-    font-weight: bolder;
-    cursor: pointer;
-    border: 2px solid #fff;
-    transition: 0.5s ease;
+section .login .inputBox:nth-child(4) input {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 40px;
+	padding: 5px;
+	color: #fff;
+	font-size: 18px;
+	background: none;
+	border: none;
+	font-weight: bolder;
+	cursor: pointer;
+	border: 2px solid #fff;
+	transition: 0.5s ease;
 }
 
-section .login .inputBox:nth-child(4) input:hover{
-    background: #fff;
-    color: #112d42;
+section .login .inputBox:nth-child(4) input:hover {
+	background: #fff;
+	color: #112d42;
 }
 
-section .login .inputBox:nth-child(4) .enableRegister{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+section .login .inputBox:nth-child(4) .enableRegister {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: row;
-    color: #fff;
-    font-size: 16px;
-    margin-top: 5px;
-    cursor: pointer;
+section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: row;
+	color: #fff;
+	font-size: 16px;
+	margin-top: 5px;
+	cursor: pointer;
 }
 
-section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton span{
-    text-transform: uppercase;
-    text-decoration: underline;
+section .login .inputBox:nth-child(4) .enableRegister .enableRegisterButton span {
+	text-transform: uppercase;
+	text-decoration: underline;
 }
 
-section .login form .error{
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 250px;
-    height: 30px;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 900;
-    letter-spacing: 2px;
+section .login form .error {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	width: 250px;
+	height: 30px;
+	color: #fff;
+	font-size: 12px;
+	font-weight: 900;
+	letter-spacing: 2px;
 }
 
-section .register{
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
-    width: 40px;
-    height: 400px;
-    background: #fff;
-    z-index: 1;
-    margin-left: -120px;
-    overflow: hidden;
-    transition: 0.5s ease;
-    box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
+section .register {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
+	width: 40px;
+	height: 400px;
+	background: #fff;
+	z-index: 1;
+	margin-left: -120px;
+	overflow: hidden;
+	transition: 0.5s ease;
+	box-shadow: 30px 30px 40px rgba(0, 0, 0, 0.4), -10px -10px 40px rgba(0, 0, 0, 0.2);
 }
 
-section .register.active{
-    width: 800px;
-    height: 500px;
-    padding-left: 150px;
-    padding-top: 75px;
+section .register.active {
+	width: 800px;
+	height: 500px;
+	padding-left: 150px;
+	padding-top: 75px;
 }
 
-section .register .title{
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
+section .register .title {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 90%;
 }
 
-section .register .title .close{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    cursor: pointer;
+section .register .title .close {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	cursor: pointer;
 }
 
-section .register .title .close .lineClose{
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: #112d42;
-    transform: rotate(var(--rot));
-    transition: 0.5s ease;
+section .register .title .close .lineClose {
+	position: absolute;
+	width: 20px;
+	height: 2px;
+	background: #112d42;
+	transform: rotate(var(--rot));
+	transition: 0.5s ease;
 }
 
-section .register .reg{
-    color: #112d42;
-    font-size: 27px;
-    font-weight: 900;
+section .register .reg {
+	color: #112d42;
+	font-size: 27px;
+	font-weight: 900;
 }
 
-section .register form{
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-end;
-    flex-direction: column;
+section .register form {
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-end;
+	flex-direction: column;
 }
 
-section .register form .row{
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: row;
+section .register form .row {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
 }
 
-section .register form .row .column{
-    position: relative;
-    font-display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
+section .register form .row .column {
+	position: relative;
+	font-display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
 }
 
-section .register form .row .column .inputBox{
-    margin: 30px 25px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-direction: column;
+section .register form .row .column .inputBox {
+	margin: 30px 25px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-direction: column;
 }
 
-section .register form .row .column .inputBox input{
-    position: relative;
-    width: 250px;
-    height: 40px;
-    border: none;
-    border-bottom: 2px solid #112d42;
-    background: transparent;
-    padding: 0 5px;
-    caret-color: #112d42;
-    font-size: 14px;
-    color: #112d42;
-    font-weight: 900;
-    letter-spacing: 2px;
+section .register form .row .column .inputBox input {
+	position: relative;
+	width: 250px;
+	height: 40px;
+	border: none;
+	border-bottom: 2px solid #112d42;
+	background: transparent;
+	padding: 0 5px;
+	caret-color: #112d42;
+	font-size: 14px;
+	color: #112d42;
+	font-weight: 900;
+	letter-spacing: 2px;
 }
 
-section .register form .row .column .inputBox .focus{
-    position: absolute;
-    color: rgba(17, 45, 66, 0.8);
-    font-weight: 700;
-    letter-spacing: 2px;
-    transition: 0.5s ease;
-    margin-top: 10px;
+section .register form .row .column .inputBox .focus {
+	position: absolute;
+	color: rgba(17, 45, 66, 0.8);
+	font-weight: 700;
+	letter-spacing: 2px;
+	transition: 0.5s ease;
+	margin-top: 10px;
 }
 
-section .register form .row .column .inputBox input:focus ~ .focus,
-section .register form .row .column .inputBox input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-5px) scale(0.8);
-    color: rgba(17, 45, 66, 1);
+section .register form .row .column .inputBox input:focus~.focus,
+section .register form .row .column .inputBox input:valid~.focus {
+	transform: translateY(-25px) translateX(-5px) scale(0.8);
+	color: rgba(17, 45, 66, 1);
 }
 
-section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus ~ .focus,
-section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-8px) scale(0.8);
+section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:focus~.focus,
+section .register form .row .column:nth-child(1) .inputBox:nth-child(2) input:valid~.focus {
+	transform: translateY(-25px) translateX(-8px) scale(0.8);
 }
 
-section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:focus ~ .focus,
-section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-13px) scale(0.8);
+section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:focus~.focus,
+section .register form .row .column:nth-child(1) .inputBox:nth-child(3) input:valid~.focus {
+	transform: translateY(-25px) translateX(-13px) scale(0.8);
 }
 
-section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:focus ~ .focus,
-section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-9px) scale(0.8);
+section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:focus~.focus,
+section .register form .row .column:nth-child(2) .inputBox:nth-child(2) input:valid~.focus {
+	transform: translateY(-25px) translateX(-9px) scale(0.8);
 }
 
-section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:focus ~ .focus,
-section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:valid ~ .focus{
-    transform: translateY(-25px) translateX(-13px) scale(0.8);
+section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:focus~.focus,
+section .register form .row .column:nth-child(2) .inputBox:nth-child(3) input:valid~.focus {
+	transform: translateY(-25px) translateX(-13px) scale(0.8);
 }
 
-section .register form .submit input{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 40px;
-    padding: 5px;
-    color: #112d42;
-    font-size: 18px;
-    background: none;
-    border: none;
-    font-weight: bolder;
-    cursor: pointer;
-    border: 2px solid #112d42;
-    transition: 0.5s ease;
+section .register form .submit input {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 40px;
+	padding: 5px;
+	color: #112d42;
+	font-size: 18px;
+	background: none;
+	border: none;
+	font-weight: bolder;
+	cursor: pointer;
+	border: 2px solid #112d42;
+	transition: 0.5s ease;
 }
 
-section .register form .submit input:hover{
-    background: #112d42;
-    color: #fff;
+section .register form .submit input:hover {
+	background: #112d42;
+	color: #fff;
 }
 
 input[type=date]:required:invalid::-webkit-datetime-edit {
-    color: transparent;
+	color: transparent;
 }
+
 input[type=date]:focus::-webkit-datetime-edit {
-    color: #112d42 !important;
-    font-size: 14px;
+	color: #112d42 !important;
+	font-size: 14px;
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:focus{
-    transition: background 6000000s 0s, color 600000000s 0s;
+input:-webkit-autofill:focus {
+	transition: background 6000000s 0s, color 600000000s 0s;
 }

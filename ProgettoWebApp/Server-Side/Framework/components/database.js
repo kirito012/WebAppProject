@@ -7,7 +7,7 @@ let queryPreset = {
   generateCorrispondeza: "INSERT INTO corrispondenze (matricola_id, utente_id, modello_id) VALUES(?, ?, ?);",
   generateProfilePicture: "INSERT INTO profilepictures (utente_id, pictureroot) VALUES (?, ?)",
   generateSelectMatricola:
-    "INSERT INTO matricole (uniqueid, parent, customname) VALUES (?,?,?); SELECT * FROM matricole WHERE uniqueid=? ;",
+    "INSERT INTO matricole (uniqueid, parent, customname) VALUES (?,?,?); SELECT * FROM matricole WHERE uniqueid=? and parent=?;",
   generateTopicString: `INSERT INTO
   savedtopics (name, topicstring, corrispondenza)
   SELECT
@@ -80,7 +80,7 @@ let queryPreset = {
   selectSessionName: "SELECT * FROM utenti WHERE lastsession = ? AND name = ?;",
   selectModelliName: "SELECT * FROM modelli WHERE name = ?;",
   selectProfilePictureRoot: "SELECT pictureroot FROM profilepictures WHERE utente_id = ?",
-  selectTopicsName: `select name, actiontype, boardtype from topics where boardtype = ? and actiontype = ?`,
+  selectTopicsName: `select name, actiontype, boardtype, topicstring from topics where boardtype = ? and actiontype = ?`,
   selectMachineTopics: `SELECT savedtopics.name,savedtopics.topicstring FROM corrispondenze
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
@@ -95,11 +95,15 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE matricole.uniqueid = ? and utenti.id = ?;`,
-  selectCorrispondenze: `SELECT matricole.customname,  utenti.name as parentName, modelli.name as model, matricole.uniqueid FROM corrispondenze 
+  selectCorrispondenze: `SELECT matricole.customname, utenti.name as parentName, modelli.name as model, matricole.uniqueid FROM corrispondenze 
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
     WHERE corrispondenze.utente_id = ?;`,
+  selectAllCorrispondenze: `SELECT matricole.customname as name, utenti.id as parentid, utenti.name as parentName, modelli.name as model, matricole.uniqueid as id FROM corrispondenze 
+    JOIN matricole on corrispondenze.matricola_id = matricole.id
+    JOIN modelli on corrispondenze.modello_id = modelli.idmodelli
+    JOIN utenti on corrispondenze.utente_id = utenti.id;`,
   selectSavedTopics: `SELECT savedtopics.name, savedtopics.topicstring FROM corrispondenze 
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN  utenti on corrispondenze.utente_id = utenti.id
@@ -125,33 +129,23 @@ let queryPreset = {
     JOIN matricole on corrispondenze.matricola_id = matricole.id
     JOIN utenti on corrispondenze.utente_id = utenti.id
     WHERE savedtopics.name = ? and matricole.uniqueid = ? and utenti.id = ?`,
-  deleteWarning: `CREATE TABLE IF NOT EXISTS datas.?? (
-    id INT NOT NULL AUTO_INCREMENT,
-    value VARCHAR(45) NOT NULL,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    matricola_id VARCHAR(45) NOT NULL,
-    topicname VARCHAR(45) NOT NULL,
-    topicstring VARCHAR(500) NOT NULL,
-    PRIMARY KEY (id),
-    UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
-
-    DELETE FROM datas.?? WHERE timestamp = ? and matricola_id = ? and id = ?;`,
+  deleteWarning: `DELETE FROM datas.?? WHERE timestamp = ? and matricola_id = ? and id = ?;`,
   selectValueFromTimestamp: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
-    value VARCHAR(45) NOT NULL,
+    value LONGTEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    matricola_id VARCHAR(45) NOT NULL,
-    topicname VARCHAR(45) NOT NULL,
+    matricola_id VARCHAR(500) NOT NULL,
+    topicname VARCHAR(500) NOT NULL,
     topicstring VARCHAR(500) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
     SELECT value,timestamp,id FROM datas.?? WHERE matricola_id = ? and timestamp between ? and now() LIMIT ?;`,
   selectWarning: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
-    value VARCHAR(45) NOT NULL,
+    value LONGTEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    matricola_id VARCHAR(45) NOT NULL,
-    topicname VARCHAR(45) NOT NULL,
+    matricola_id VARCHAR(500) NOT NULL,
+    topicname VARCHAR(500) NOT NULL,
     topicstring VARCHAR(500) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);
@@ -159,10 +153,10 @@ let queryPreset = {
     SELECT value,topicname,timestamp,id FROM datas.?? WHERE matricola_id = ?;`,
   createTableInsertTopic: `CREATE TABLE IF NOT EXISTS datas.?? (
     id INT NOT NULL AUTO_INCREMENT,
-    value VARCHAR(45) NOT NULL,
+    value LONGTEXT NOT NULL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    matricola_id VARCHAR(45) NOT NULL,
-    topicname VARCHAR(45) NOT NULL,
+    matricola_id VARCHAR(500) NOT NULL,
+    topicname VARCHAR(500) NOT NULL,
     topicstring VARCHAR(500) NOT NULL,
     PRIMARY KEY (id),
     UNIQUE INDEX id_UNIQUE (id ASC) VISIBLE);

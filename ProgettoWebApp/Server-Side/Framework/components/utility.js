@@ -134,17 +134,20 @@ module.exports.getWarnings = (fw,board, type, matricola_id, callback) => {
       fw.queryDB("selectWarning",[topicData.name,topicData.name,matricola_id], (result) => {
         if (result[1]){
           this.checkLength(result[1],() => {
-            data = {};
-            data.name = result[1].topicname;
-            data.value = result[1].value;
-            data.timestamp = result[1].timestamp;
-            data.errorId = result[1].id;
-            data.matricola_id = matricola_id;
-            this.formatCleanTime(new Date(result[1].timestamp), (newTime) => {
-              data.formattedTime = newTime;
-            });
+            this.forEach(result[1], (element) => {
+              data = {};
+              data.name = element.topicname;
+              data.value = element.value;
+              data.timestamp = element.timestamp;
+              data.errorId = element.id;
+              data.matricola_id = matricola_id;
+              this.formatCleanTime(new Date(element.timestamp), (newTime) => {
+                data.formattedTime = newTime;
+              });
 
-            jsonData.push(data);
+            
+             jsonData.push(data);
+            });
           });
         }
       });

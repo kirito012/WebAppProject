@@ -33,6 +33,22 @@ module.exports.getMqttVariables = getMqttVariables = (topic,callback) => {
   callback(head,matricola_id);
 }
 
+module.exports.fixTopicString = fixTopicString = (topic,callback) => {
+  let topicStr = topic.split("/");
+  if ( topicStr.length >= 4) {
+    topicStr[1] = topicStr[1].replace(/\s/g, '');
+    topicStr[1] = topicStr[1].toLowerCase();
+    topicStr = topicStr.join("/");
+
+    callback(topicStr);
+  }
+  else{
+    callback(topic);
+  }
+}
+
+
+
 //cashregister/form100/80E10008038/fiscal/heartbeat
 //cashregister/form100/80E10002884/fiscal/heartbeat
 
@@ -61,7 +77,7 @@ module.exports.getClient = (callback) => {
   callback(client);
 }
 
-module.exports.newMatricola = (id,name,parentId,parentName) => {
+module.exports.newMatricola = (id,name,parentId,parentName,callback) => {
   if (user[parentId]) {
     user[parentId].selectedMatricola = id;
 
@@ -71,6 +87,10 @@ module.exports.newMatricola = (id,name,parentId,parentName) => {
       matricola[id].id = id;
       matricola[id].name = name;
       matricola[id].defaultTopic = "cashregister/" + name + "/" + id + "/fiscal";
+
+      if (callback) {
+        callback();
+      }
     }
   }
   else {
@@ -86,7 +106,16 @@ module.exports.newMatricola = (id,name,parentId,parentName) => {
   
       matricola[id].id = id;
       matricola[id].name = name;
-      matricola[id].defaultTopic = "cashregister/" + name.replace(/\s/g, '').toLowerCase() + "/" + id + "/fiscal";
+      matricola[id].defaultTopic = "cashregister/" + name.replace(" ", '').toLowerCase() + "/" + id + "/fiscal";
+    
+      if (callback) {
+        callback();
+      }
+    }
+    else{
+      if (callback) {
+        callback();
+      }
     }
   }
 }
@@ -96,6 +125,12 @@ module.exports.getMachineData = (userId,callback) => {
     callback(user[userId].data);
   }
 };
+
+module.exports.getTopicString = (topicName,userId,callback) => {
+  if (user[userId]) {
+    callback(matricola[user[userId].selectedMatricola].defaultTopic + topicName);
+  }
+}
 
 module.exports.getMatricola = (userId, callback) => {
   callback(matricola[user[userId].selectedMatricola]);
@@ -114,6 +149,9 @@ module.exports.connectToNewTopic = (userId,topicName,topicString,callback) => {
   let currentUser = user[userId];
   getMqttVariables(topicString, (head,matricola_id) => {
     if (currentUser) {
+      topicName = topicName.replaceAll(" ", "_");
+      topicName = topicName.toLowerCase();
+
       if (usersTopics[topicName + matricola_id]){
         if(usersTopics[topicName + matricola_id].subscribedUsers.indexOf(userId) >= 0){
           if (callback) {
@@ -135,21 +173,19 @@ module.exports.connectToNewTopic = (userId,topicName,topicString,callback) => {
         usersTopics[topicName + matricola_id].id = matricola_id
         usersTopics[topicName + matricola_id].subscribedUsers = [userId];
   
-        let topicStr = topicString.split("/");
-        topicStr[1] = topicStr[1].replace(/\s/g, '');
-        topicStr[1] = topicStr[1].toLowerCase();
-        topicStr = topicStr.join("/");
-        usersTopics[topicName + matricola_id].topicString = topicStr;
+        fixTopicString(topicString,(topicStr) => {
+          usersTopics[topicName + matricola_id].topicString = topicStr;
   
-        client.subscribe(usersTopics[topicName + matricola_id].topicString,{},() => {
-          if (callback) {
-            callback();
-          }
+          client.subscribe(usersTopics[topicName + matricola_id].topicString,{},() => {
+            if (callback) {
+              callback();
+            }
+          });
         });
       }
     }
     else {
-      console.log("mqtt user not found");
+      //console.log("mqtt user not found");
     }
   });
 }
@@ -185,20 +221,31 @@ module.exports.disconnectFromTopic = (userId,topicName,topicString) => {
         }
   
         if (usersTopics[topicName + matricola_id].length <= 0) {
-          client.unsubscribe(usersTopics[topicName + matricola_id].topicString);
-          usersTopics[topicName + matricola_id] = undefined;
+          if (!usersTopics[topicName + matricola_id].topicString.contains("alarm") || !usersTopics[topicName + matricola_id].topicString.contains("warning")){
+            client.unsubscribe(usersTopics[topicName + matricola_id].topicString);
+            usersTopics[topicName + matricola_id] = undefined;
+          }
+          else{
+            console.log("can't delete an alarm or warning");
+          }
         }
       }
       else{
-        console.log("mqtt topic not found");
+        //console.log("mqtt topic not found");
       }
     }
     else {
-      console.log("mqtt user not found");
+      //console.log("mqtt user not found");
     }
   });
 }
 
-module.exports.publishToTopic = (topic,msg,responseTopic) => {
-  client.publish(topic,msg,{qos: 0, retain: false, properties: {responseTopic: responseTopic, correlationData: "test"}})
+module.exports.publishToTopic = (topic,msg,responseTopic, retain) => {
+  fixTopicString(topic, (topicStr) => {
+    fixTopicString(msg, (messageT) => {
+      fixTopicString(responseTopic, (responseT) => {
+        client.publish(topicStr,messageT,{qos: 0, retain: retain || false, properties: {responseTopic: responseT, correlationData: "test"}})
+      });
+    });
+  });
 }

@@ -1,61 +1,61 @@
 /* logout */
 
-section header .settings .logout .rect{
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 17px;
-    height: 23px;
-    border: 1px solid #fff;
-    border-radius: 5px;
-    margin-right: 5px;
+section header .settings .logout .rect {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 17px;
+	height: 23px;
+	border: 1px solid #fff;
+	border-radius: 5px;
+	margin-right: 5px;
 }
 
-section header .settings .logout .rect .white{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 5px;
-    height: 14px;
-    right: -2px;
-    background: #112d42;
+section header .settings .logout .rect .white {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 5px;
+	height: 14px;
+	right: -2px;
+	background: #112d42;
 }
 
-section header .settings .logout .rect .white .arrow{
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 13px;
-    height: 1.75px;
-    background: #fff;
-    transition: 0.5s ease;
+section header .settings .logout .rect .white .arrow {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 13px;
+	height: 1.75px;
+	background: #fff;
+	transition: 0.5s ease;
 }
 
-section header .settings .logout .rect .white .arrow::before{
-    content: '';
-    position: absolute;
-    right: 0;
-    height: 6px;
-    width: 1.5px;
-    background: #fff;
-    transform:translateY(-1.5px) translateX(-1.5px) rotate(-45deg);
+section header .settings .logout .rect .white .arrow::before {
+	content: '';
+	position: absolute;
+	right: 0;
+	height: 6px;
+	width: 1.5px;
+	background: #fff;
+	transform: translateY(-1.5px) translateX(-1.5px) rotate(-45deg);
 }
 
-section header .settings .logout .rect .white .arrow::after{
-    content: '';
-    position: absolute;
-    right: 0;
-    height: 6px;
-    width: 1.5px;
-    background: #fff;
-    transform:translateY(1.5px) translateX(-1.5px) rotate(45deg);
+section header .settings .logout .rect .white .arrow::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	height: 6px;
+	width: 1.5px;
+	background: #fff;
+	transform: translateY(1.5px) translateX(-1.5px) rotate(45deg);
 }
 
-section header .settings .logout:hover .rect .white .arrow{
-    transform: translateX(5px);
+section header .settings .logout:hover .rect .white .arrow {
+	transform: translateX(5px);
 }
 
 /* end logout */
