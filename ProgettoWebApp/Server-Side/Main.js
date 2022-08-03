@@ -273,7 +273,7 @@ fw.newRequest(["post", "/tableData", true, "/login", "tableData", true],(res, re
   if (timeElapsed >=  maxTime) {
     fw.utility.formatTime(timeElapsed, (newTime) => {
       fw.queryDB("selectValueFromTimestamp",[body.topic,body.topic,body.id,newTime,limit],(results) => {
-        fw.utility.splitArray(results[1],body.columns,body.page,(pageData) => {
+        fw.utility.splitArray(results[1],body.columns || 1000000,body.page,(pageData) => {
           fw.utility.forEach(pageData,(element) => {
             element.id = body.id;
             element.topic = body.topic;

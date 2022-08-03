@@ -266,68 +266,6 @@ dashboard.addEventListener("scroll", () => {
 })
 
 
-
-
-export let tableNavigator = ($scope, max, refreshTable, nextPage, previusPage) => {
-
-	let less = document.querySelector(".less");
-	less.addEventListener("click", () => {
-		let page = document.querySelector(".pages.active");
-		page.classList.remove("active");
-		let num = parseInt(page.className.slice(-1)) - 1;
-		if (num == 0) {
-			if (max) {
-				if (previusPage && max >= 5) {
-					let previusValue = parseInt(document.querySelector(".p1").innerHTML) - 1;
-					if (previusValue > 0) {
-						previusPage($scope, previusValue);
-					}
-				}
-			}
-			if (max <= 5) {
-				num = max;
-			} else {
-				num = 5;
-			}
-		}
-		let newPage = document.querySelector(".p" + num);
-		newPage.classList.add("active");
-		let pageIndex = parseInt(newPage.innerHTML);
-		if (refreshTable) {
-			refreshTable($scope, pageIndex);
-		}
-	})
-
-
-	let more = document.querySelector(".more");
-	more.addEventListener("click", () => {
-		let page = document.querySelector(".pages.active");
-		page.classList.remove("active");
-		let num = parseInt(page.className.substring(31, 32)) + 1;
-		if (num == 6) {
-			if (max) {
-				if (nextPage && max >= 5) {
-					let nextValue = parseInt(document.querySelector(".p5").innerHTML) + 1;
-					if (nextValue <= max) {
-						nextPage($scope, nextValue);
-					}
-				}
-			}
-			num = 1;
-		} else if (num > max) {
-			num = 1;
-		}
-		let newPage = document.querySelector(".p" + num);
-		newPage.classList.add("active");
-		let pageIndex = parseInt(newPage.innerHTML);
-		if (refreshTable) {
-			refreshTable($scope, pageIndex);
-		}
-	})
-}
-
-
-
 export let indexUpdate = () => {
 	let indexes = document.querySelectorAll(".itemNumber");
 	let page = document.querySelector(".pages.active");
@@ -342,4 +280,35 @@ export let indexUpdate = () => {
 			}, 0);
 		}
 	})
+}
+
+
+
+
+
+let chartType = document.querySelector(".chartSelector");
+let tableType = document.querySelector(".tableSelector");
+
+let chart = document.querySelector(".historicChart");
+let table = document.querySelector(".table");
+let pageSelector = document.querySelector(".pageSelector");
+
+chartType.onclick = () => {
+	tableType.classList.remove("active");
+	chartType.classList.add("active");
+	table.classList.remove("active");
+	pageSelector.classList.remove("active");
+	setTimeout(() => {
+		chart.classList.add("active");
+	}, 500);
+}
+
+tableType.onclick = () => {
+	chartType.classList.remove("active");
+	tableType.classList.add("active");
+	chart.classList.remove("active");
+	setTimeout(() => {
+		table.classList.add("active");
+		pageSelector.classList.add("active");
+	}, 500);
 }

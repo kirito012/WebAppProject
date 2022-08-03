@@ -196,7 +196,7 @@ window.onload = () => {
 							delay: anime.stagger(100)
 						})
 						.add({
-							targets: '.table',
+							targets: '.typeContainer',
 							translateY: [30, 0],
 							opacity: [0, 1],
 							duration: 260,
@@ -251,7 +251,7 @@ export let removeTextAnimation = () => {
 			scale: [1, 10],
 			opacity: [1, 0],
 			translateZ: 0,
-			easing: "easeOutCirc",
+			easing: 'easeOutCirc',
 			delay: anime.stagger(25)
 		})
 }
@@ -265,3 +265,5 @@ export let gaugeTextAnimation = (oldValue, value) => {
 		duration: 1000
 	})
 }
+
+

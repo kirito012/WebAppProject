@@ -781,6 +781,72 @@ section .dashboard .sectionTwo .column .row .bottom {
 	gap: 20px;
 }
 
+section .dashboard .sectionTwo .column .row .bottom .titleContainer {
+	position: relative;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	flex-direction: row;
+	gap: 40px;
+	height: 100%;
+	width: 40%;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 10px;
+	height: 40px;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .typeIndicator {
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	background: #112d42;
+	z-index: 1;
+	left: 0;
+	transform: translateX(50px);
+	transition: 0.3s ease;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .chartSelector, 
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .tableSelector {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	z-index: 10;
+	cursor: pointer;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .chartSelector.active ~ .typeIndicator {
+	transform: translateX(0);
+}
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .tableSelector.active ~ .typeIndicator {
+	transform: translateX(50px);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .chartSelector.active .fa,
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .tableSelector.active .fa{
+	color: #fff;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .chartSelector .fa, 
+section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType .tableSelector .fa{
+	position: relative;
+	font-size: 22px;
+	color: #112d42;
+	z-index: 10;
+	transition: 0.3s ease;
+}
+
+
 section .dashboard .sectionTwo .column .row .bottom .title {
 	position: relative;
 	display: flex;
@@ -807,6 +873,38 @@ section .dashboard .sectionTwo .column .row .bottom .title .selectData {
 	gap: 30px;
 }
 
+section .dashboard .sectionTwo .column .row .bottom .title .selectData .send {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData .send span {
+  position: absolute;
+  font-weight: 900;
+  font-size: 14px;
+  color: #112d42;
+  transform: translateX(-150px);
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData .send:hover span {
+  transform: translateX(-50px);
+  opacity: 1;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .title .selectData .send ion-icon {
+	font-size: 25px;
+	color: #112d42;
+}
+
 section .dashboard .sectionTwo .column .row .bottom .title .selectData .selectHistory {
 	position: relative;
 	font-size: 18px;
@@ -820,19 +918,38 @@ section .dashboard .sectionTwo .column .row .bottom .title .selectData .selectHi
 	transform: translateY(-30px);
 }
 
+section .dashboard .sectionTwo .column .row .bottom .typeContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  overflow: hidden;
+}
 
 
 
 section .dashboard .sectionTwo .column .row .bottom .table {
-	position: relative;
+	position: absolute;
 	display: flex;
 	justify-content: flex-end;
 	align-items: flex-end;
 	flex-direction: column;
 	width: 100%;
 	height: 100%;
-	box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
-	opacity: 0;
+	opacity: 1;
+  left: 100%;
+  transition: 0.5s ease 0.5s, 0.5s ease transform;
+  transform: scale(0.7);
+  background: #fff;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .table.active {
+  left: 0;
+  transform: none;
+  transition: 0.5s ease , 0.5s ease transform 0.5s;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .a {
@@ -849,7 +966,7 @@ section .dashboard .sectionTwo .column .row .bottom .table .top1 {
 	height: 10%;
 }
 
-section .dashboard .sectionTwo .column .row .bottom .table .top1 .send {
+section .dashboard .sectionTwo .column .row .bottom .table .top1 .space {
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -857,11 +974,6 @@ section .dashboard .sectionTwo .column .row .bottom .table .top1 .send {
 	width: 40px;
 	height: 100%;
 	cursor: pointer;
-}
-
-section .dashboard .sectionTwo .column .row .bottom .table .top1 .send ion-icon {
-	font-size: 25px;
-	color: #112d42;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .table .top1 .div {
@@ -1025,6 +1137,15 @@ section .dashboard .sectionTwo .column .row .bottom .pageSelector {
 	flex-direction: row;
 	width: 100%;
 	height: 10%;
+  transition: 0.5s ease;
+  opacity: 0;
+  transform: translateY(-100px);
+}
+
+section .dashboard .sectionTwo .column .row .bottom .pageSelector.active {
+  transform: none;
+  opacity: 1;
+  transition: 0.5s ease 0.5s;
 }
 
 section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector {
@@ -1124,6 +1245,49 @@ section .dashboard .sectionTwo .column .row .bottom .pageSelector .selector .div
 	font-size: 30px;
 	transition: 0.3s ease-out;
 }
+
+
+
+
+
+section .dashboard .sectionTwo .column .row .bottom .historicChart {
+	position: absolute;
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+  left: -100%;
+  transition: 0.5s ease 0.5s, 0.5s ease transform;
+  transform: scale(0.7);
+  padding: 20px ;
+}
+
+section .dashboard .sectionTwo .column .row .bottom .historicChart.active {
+  left: 0;
+  transform: none;
+  transition: 0.5s ease , 0.5s ease transform 0.5s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 section .dashboard .up {

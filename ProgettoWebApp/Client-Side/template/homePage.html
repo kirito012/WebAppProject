@@ -21,6 +21,7 @@
 	<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"
 		integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="
 		crossorigin=""></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body ng-app="myApp" ng-controller="myController">
@@ -311,8 +312,23 @@
 						</div>
 						<div class="bottom" id="history">
 							<div class="title">
-								<h1 class="historic">Storico</h1>
+								<div class="titleContainer">
+									<h1 class="historic">Storico</h1>
+									<div class="selectType">
+										<div class="chartSelector active">
+											<i class="fa fa-line-chart"></i>
+										</div>
+										<div class="tableSelector">
+											<i class="fa fa-table"></i>
+										</div>
+										<div class="typeIndicator"></div>
+									</div>
+								</div>
 								<div class="selectData">
+									<div class="send">
+										<span>Aggiorna</span>
+										<ion-icon name="refresh-circle-outline"></ion-icon>
+									</div>
 									<select class="time selectHistory">
 										<option value="0.5">30 minuti</option>
 										<option value="1">1 ora</option>
@@ -327,50 +343,53 @@
 									</select>
 								</div>
 							</div>
-							<div class="table">
-								<div class="top1">
-									<div class="send a">
-										<ion-icon name="refresh-circle-outline"></ion-icon>
-									</div>
-									<div class="topicName1 a">
-										Dati
-									</div>
-									<div class="value1 a">
-										Valori
-									</div>
-									<div class="dateTime1 a">
-										Data e ora
-									</div>
-									<div class="device1 a">
-										Dispositivo
-									</div>
+							<div class="typeContainer">
+								<div class="historicChart active">
+									<canvas id="chart"></canvas>
 								</div>
-								<div class="down">
-									<div class="left">
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
-										<div class="itemNumber"></div>
+								<div class="table">
+									<div class="top1">
+										<div class="space"></div>
+										<div class="topicName1 a">
+											Dati
+										</div>
+										<div class="value1 a">
+											Valori
+										</div>
+										<div class="dateTime1 a">
+											Data e ora
+										</div>
+										<div class="device1 a">
+											Dispositivo
+										</div>
 									</div>
-									<div class="records">
-										<div class="record" ng-repeat="data in datas">
-											<div class="topicName">
-												{{ data.topic }}
-											</div>
-											<div class="value">
-												{{ data.value }}
-											</div>
-											<div class="dateTime">
-												{{ data.formattedDate }}
-											</div>
-											<div class="device">
-												{{ data.id }}
+									<div class="down">
+										<div class="left">
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+											<div class="itemNumber"></div>
+										</div>
+										<div class="records">
+											<div class="record" ng-repeat="data in datas">
+												<div class="topicName">
+													{{ data.topic }}
+												</div>
+												<div class="value">
+													{{ data.value }}
+												</div>
+												<div class="dateTime">
+													{{ data.formattedDate }}
+												</div>
+												<div class="device">
+													{{ data.id }}
+												</div>
 											</div>
 										</div>
 									</div>
@@ -389,7 +408,7 @@
 										<div class="selectPage">
 											<div class="numbers">
 												<input type="number" class="inputPage" min="1" max="{{ pagesNumber }}">
-												<h1>/ {{ pagesNumber }}</h1>
+												<h1 class="numPages">/ {{ pagesNumber }}</h1>
 											</div>
 											<input type="button" class="submitNewData" value="Cerca">
 										</div>
@@ -533,7 +552,7 @@
 					</div>
 				</div>
 				<div class="up">
-					<label for="pfp" ondragover="dragOver(event)" ondrop="release(event)">
+					<label for="pfp">
 						<ion-icon class="iconRemove" name="image-outline"></ion-icon>
 						<img class="imgPfp" src="#" alt="">
 						<h4 class="imgName">Carica la tua immagine</h4>
@@ -561,24 +580,6 @@
 		window.addEventListener("load", () => {
 			document.querySelector(".loading").style.display = "none";
 		})
-	</script>
-
-
-
-
-	<script>
-
-		let dragOver = (e) => {
-			e.preventDefault();
-		}
-
-		let release = (e) => {
-			e.preventDefault();
-			let file = e.dataTransfer.items[0].getAsFile();
-			document.querySelector(".fileInput").value = file;
-			console.log(file.name);
-		}
-
 	</script>
 
 
