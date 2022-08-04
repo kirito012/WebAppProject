@@ -26,13 +26,17 @@ class framework {
 		this.nameDB = nameDB;
   }
 
-  createServer = (settings, databaseCallback) => {
+  createServer = (settings) => {
     this.app = this.server.newApp([settings.staticRoot, settings.cookieMaxAge]);
     this.connectionDB = this.database.connectToDB(settings.hostDB, this.nameDB);
 
     this.server.startApp(this.app, settings.port, () => {
-      this.database.onConnect(this.connectionDB, databaseCallback);
+      this.database.onConnect(this.connectionDB);
 		  //this.mqttClient = this.mqtt.connectToBroker(settings.brokerHost);
+
+      if (this.event) {
+        this.event();
+      }
 
       this.newStatic({
         link: this.indexRoot,
@@ -59,6 +63,14 @@ class framework {
       });
     });
   };
+
+  onConnect = (event,callback) => {
+    this.event = event;
+    
+    if (callback) {
+      callback();
+    }
+  }
 
   newStatic = (settings) => {
     this.server.newStatic(

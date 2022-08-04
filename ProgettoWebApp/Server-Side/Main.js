@@ -2,13 +2,8 @@ let BertaFramework = require("./Framework/mainFramework.js");
 let path = require("path");
 
 let fw = new BertaFramework.framework("/","/login","/home","databasev1");
-fw.createServer({
-  staticRoot: path.resolve(__dirname +  "/../Client-Side"),
-  cookieMaxAge: 1000 * 60 * 60,
-  hostDB: "localhost",
-  brokerHost: "mqtt://localhost:1883",
-  port: 8081,
-}, () => {
+
+fw.onConnect(() => {
   fw.queryDB("selectAllCorrispondenze",[], (stuff) => {
     fw.utility.forEach(stuff,(data) => {
       fw.mqtt.newMatricola(data.id,data.name,data.parentid,data.parentName, (matricolaVariable) => {
@@ -43,8 +38,15 @@ fw.createServer({
      });
     });
   });
+}, () => {
+  fw.createServer({
+    staticRoot: path.resolve(__dirname +  "/../Client-Side"),
+    cookieMaxAge: 1000 * 60 * 60,
+    hostDB: "localhost",
+    brokerHost: "mqtt://localhost:1883",
+    port: 8081,
+  });
 });
-
 
 //Request Guide\\
 /*

@@ -104,7 +104,7 @@ module.exports.newStatic = data.newStatic = (app,link,redirectTo,requireSession,
 
 module.exports.logout = data.logout = (res, req, loginRoot) => {
     if (req.session) {
-      req.session.secret = undefined;
+      req.session.destroy();
       data.redirect(res, loginRoot);
     }
 };
