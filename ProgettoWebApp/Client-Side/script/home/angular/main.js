@@ -14,7 +14,7 @@ import { historicData, historicDataAll } from "./post/historicData.js";
 import { getAlert, removeAlert } from "./post/postError.js";
 import { indexUpdate } from "../script.js";
 import { dinamicTable } from "./dinamicTable.js";
-import { createChart } from "../chart.js"
+import { createChart, resetChart, myChart } from "../chart.js"
 
 let inputValue = document.querySelector("#inputSearch");
 let clicked = false;
@@ -300,11 +300,13 @@ app.controller('myController', ($scope, $http, $timeout, $interval, $websocket) 
 		document.querySelector(".b3 span").innerHTML = "";
 		document.querySelector(".b4 span").innerHTML = "";
 		document.querySelector(".s1 span").innerHTML = "";
-		//map.setView([0, 0], 1);
-		//map.removeLayer(marker);
+		map.setView([0, 0], 1);
+		map.removeLayer(marker);
 		$scope.activeTopics = undefined;
 		$scope.pages = [];
 		$scope.datas = [];
+		$scope.warnings = [];
+		resetChart(myChart);
 		document.querySelector(".showMore").style.display = "none";
 		setted = false;
 		gaugeTextAnimation(oldValue, 0);
