@@ -69,7 +69,7 @@ let addData = (chart, label, newData, topic) => {
 	});
 	newData.forEach((element) => {
     console.log(element);
-    console.log(chart.data.datasets[0].data);
+    console.log(chart.data.datasets[0].data);  
     chart.data.datasets[0].data.push(element);
 	});
 	chart.data.datasets[0].label = topic;
@@ -82,6 +82,6 @@ let addData = (chart, label, newData, topic) => {
 export let resetChart = (chart) => {
   chart.data.labels = [];
   chart.data.datasets[0].data = [];
-  chart.data.datasets[0].label = "Scegli un dato da visualizzare";
+  chart.data.datasets[0].label = "Scegli un dato da visualizzare"; 
   chart.update();
 }

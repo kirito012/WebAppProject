@@ -1,0 +1,52 @@
+Server - NodeJs - express e custom framework creato da me come wrapper
+Client - html-css-js - Angular con diversi moduli come angular-http e angular-websockets
+
+Index.html - starting page
+get /login al server ritorna login.html
+
+se ce una sessione precedente attiva redirect to /home
+
+post /log o /register al server
+
+/log redirect a /home se da successo se no ritorna un errore come response
+/register salva nel database e fa un redirect a /login di nuovo se da successo se no ritorna un errore come response
+
+/home display della pagina home.html
+
+all'apertura:
+
+get /getModels - /getMachines - /getProfile al server ritornano dati statici / dell'utente
+
+(in praticamente tutti i post/get è presente un controllo per la sessione dell'utente, se non è presente redirect to /login)
+
+post /home/addMachine al server aggiunge una nuova macchina al database e manda la lista di macchine dell'utente oppure ritorna un errore e non salva nulla
+post /home/changeUserData cambia i dati personali dell'utente e aggiorna il database, ci sono diversi casi di errori gestiti che vengono mandati come response in caso avvengano
+post /home/removeMachine rimuovi da database e manda come response le macchine rimaste dell'utente in caso di errore manda una lista vuota
+post /home/uploadpfp salva un immagine inserita dall'utente convertendola da base64 e salvala con una key personale dell'utente
+post /home/tableData ottieni e manda al client i dati richiesti di una specifica macchina in un lasso di tempo dal database
+post /home/updateTopic aggiorna i topic salvati di una macchina e manda la lista di nomi indietro
+post /home/getMachineTopics ottieni tutti i topic salvati di una macchina in particolare(usiamo un post perchè ce bisogno di certi dati dal body)
+post /home/sendInfo dice al server di selezionare una specifica macchina aggiungendola anche alla parte del framework mqtt response vuota
+post /home/getWarnings ottieni tutti gli errori della macchina selezionata attualmente
+post /home/deleteWarnings cancella uno degli errori presenti sulla macchina ritorna la lista aggiornata e in caso di errore ritorna esso
+
+websockets:
+
+il server manda un oggetto: {action, utente_id, objective, msg, responseTopic}
+action types : start - get - set - stop - close
+
+con lo start inizia il loop di raccolta dati e mandalo al client ogni 4 secondi
+
+con il get prendi dati specifici richiesti dal client come la location o il display line
+
+con il set setta una certa proprietà della macchina tramite mqtt
+
+con lo stop metti in pausa il ciclo
+
+con il close chiudi la connessione websocket
+
+
+
+
+
+
