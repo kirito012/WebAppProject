@@ -217,6 +217,12 @@ window.onload = () => {
 							duration: 260,
 							delay: anime.stagger(100)
 						})
+						.add({
+							targets: '.selectType, .send',
+							translateX: [30, 0],
+							opacity: [0, 1],
+							duration: 260
+						})
 
 
 

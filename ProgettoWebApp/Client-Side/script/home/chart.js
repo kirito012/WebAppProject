@@ -49,8 +49,8 @@ export let createChart = ($scope, $http, topic, date, device, index, historicDat
 				value = 0;
 			}
 
-			for (let i = 0; i < time; i++) {
-				labels.push(res.pageData[time*i].formattedDate);
+			for (let i = 0; i < 15; i++) {
+				labels.push(res.pageData[count*i].formattedDate);
 			}
 
 			addData(myChart, labels, newValues, newTopic.replaceAll("_", " "));
@@ -73,7 +73,7 @@ let addData = (chart, label, newData, topic) => {
     chart.data.datasets[0].data.push(element);
 	});
 	chart.data.datasets[0].label = topic;
-	chart.update();
+	chart.update(); 
 }
 
 

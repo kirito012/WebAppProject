@@ -799,6 +799,7 @@ section .dashboard .sectionTwo .column .row .bottom .titleContainer .selectType 
 	align-items: center;
 	flex-direction: row;
 	gap: 10px;
+	opacity: 0;
 	height: 40px;
 }
 
@@ -882,6 +883,7 @@ section .dashboard .sectionTwo .column .row .bottom .title .selectData .send {
   cursor: pointer;
   width: 40px;
   height: 40px;
+  opacity: 0;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
@@ -1270,8 +1272,6 @@ section .dashboard .sectionTwo .column .row .bottom .historicChart.active {
   transform: none;
   transition: 0.5s ease , 0.5s ease transform 0.5s;
 }
-
-
 
 
 

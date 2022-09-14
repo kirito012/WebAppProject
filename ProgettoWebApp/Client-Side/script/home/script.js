@@ -12,6 +12,8 @@ function activeLink() {
 		this.classList.add("active");
 		indicator.classList.add("active");
 	});
+	document.querySelector(".typeContainer").style.height = "100%";
+	document.querySelector(".sectionTwo").style.height = "200vh";
 }
 
 list.forEach((item) => {
@@ -62,6 +64,8 @@ let closeNav = () => {
 	items.forEach((element) => {
 		element.classList.remove("active");
 	})
+	document.querySelector(".typeContainer").style.height = "70%";
+	document.querySelector(".sectionTwo").style.height = "300vh";
 }
 
 closeNavigation.forEach((element) => {
