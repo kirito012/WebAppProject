@@ -783,7 +783,7 @@ section .navigation .item.active .devicesContainer .devices .device {
 	opacity: 1;
 	transition-delay: 1.0s;
 }
-
+  
 
 section .navigation .item .devicesContainer .devices .device.active {
 	color: #03a9f4;
